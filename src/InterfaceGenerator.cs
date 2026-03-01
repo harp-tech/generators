@@ -14,16 +14,16 @@ public sealed class InterfaceGenerator
 
     /// <summary>
     /// Initializes a new instance of the <see cref="InterfaceGenerator"/> class with the
-    /// specified path to the device metadata file and target namespace for generated code.
+    /// specified device metadata and target namespace for generated code.
     /// </summary>
-    /// <param name="metadataFileName">The path to the file containing the device metadata.</param>
+    /// <param name="deviceMetadata">The device metadata object.</param>
     /// <param name="ns">The target namespace to use for all generated code.</param>
-    public InterfaceGenerator(string metadataFileName, string ns)
+    public InterfaceGenerator(DeviceInfo deviceMetadata, string ns)
     {
         var session = new Dictionary<string, object>
         {
             { "Namespace", ns },
-            { "MetadataPath", Path.GetFullPath(metadataFileName) }
+            { "DeviceMetadata", deviceMetadata }
         };
         _deviceTemplate.Session = session;
         _asyncDeviceTemplate.Session = session;

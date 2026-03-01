@@ -1,5 +1,5 @@
 ﻿<#@ template debug="true" hostspecific="false" visibility="internal" language="C#" inherits="TemplateBase" #>
-<#@ parameter name="RegisterMetadataPath" type="string" #>
+<#@ parameter name="DeviceMetadata" type="DeviceInfo" #>
 <#@ import namespace="Harp.Generators" #>
 <#@ import namespace="System.IO" #>
 <#@ import namespace="System.Linq" #>
@@ -10,8 +10,7 @@
 #include "app_ios_and_regs.h"
 #include "hwbp_core.h"
 <#
-var deviceMetadata = TemplateHelper.ReadDeviceMetadata(RegisterMetadataPath);
-var deviceRegisters = deviceMetadata.Registers;
+var deviceRegisters = DeviceMetadata.Registers;
 int registerIndex;
 #>
 

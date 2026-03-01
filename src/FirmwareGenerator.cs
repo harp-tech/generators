@@ -19,16 +19,16 @@ public class FirmwareGenerator
 
     /// <summary>
     /// Initializes a new instance of the <see cref="FirmwareGenerator"/> class with the
-    /// specified paths to device metadata and IO pin configuration files.
+    /// specified device metadata and IO pin configuration.
     /// </summary>
-    /// <param name="registerMetadataFileName">The path to the file containing the device metadata.</param>
-    /// <param name="iosMetadataFileName">The path to the file containing the IO pin configuration.</param>
-    public FirmwareGenerator(string registerMetadataFileName, string iosMetadataFileName)
+    /// <param name="deviceMetadata">The device metadata object.</param>
+    /// <param name="portPinMetadata">The IO pin configuration map.</param>
+    public FirmwareGenerator(DeviceInfo deviceMetadata, Dictionary<string, PortPinInfo> portPinMetadata)
     {
         var session = new Dictionary<string, object>
         {
-            { "RegisterMetadataPath", Path.GetFullPath(registerMetadataFileName) },
-            { "IOMetadataPath", Path.GetFullPath(iosMetadataFileName) }
+            { "DeviceMetadata", deviceMetadata },
+            { "PortPinMetadata", portPinMetadata }
         };
         _appTemplate.Session = session;
         _appImplTemplate.Session = session;

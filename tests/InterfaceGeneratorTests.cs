@@ -23,7 +23,8 @@ public sealed class InterfaceGeneratorTests
     public void DeviceTemplate_GenerateAndBuildWithoutErrors(string metadataFileName)
     {
         metadataFileName = TestHelper.GetMetadataPath(metadataFileName);
-        var generator = new InterfaceGenerator(metadataFileName, typeof(InterfaceGeneratorTests).Namespace);
+        var deviceMetadata = TestHelper.ReadDeviceMetadata(metadataFileName);
+        var generator = new InterfaceGenerator(deviceMetadata, typeof(InterfaceGeneratorTests).Namespace);
         var implementation = generator.GenerateImplementation();
         var outputFileName = $"{Path.GetFileNameWithoutExtension(metadataFileName)}.cs";
         var customImplementation = TestHelper.GetManifestResourceText($"EmbeddedSources.{outputFileName}");

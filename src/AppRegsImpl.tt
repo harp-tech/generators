@@ -1,6 +1,6 @@
 ﻿<#@ template debug="true" hostspecific="false" visibility="internal" language="C#" inherits="TemplateBase" #>
-<#@ parameter name="RegisterMetadataPath" type="string" #>
-<#@ parameter name="IOMetadataPath" type="string" #>
+<#@ parameter name="DeviceMetadata" type="DeviceInfo" #>
+<#@ parameter name="PortPinMetadata" type="Dictionary<string, PortPinInfo>" #>
 <#@ import namespace="Harp.Generators" #>
 <#@ import namespace="System.IO" #>
 <#@ import namespace="System.Linq" #>
@@ -13,12 +13,10 @@
 
 extern AppRegs app_regs;
 <#
-var deviceMetadata = TemplateHelper.ReadDeviceMetadata(RegisterMetadataPath);
-var portPinMetadata = TemplateHelper.ReadPortPinMetadata(IOMetadataPath);
-var inputPins = TemplateHelper.GetPortPinsOfType<InputPinInfo>(portPinMetadata).ToList();
-var outputPins = TemplateHelper.GetPortPinsOfType<OutputPinInfo>(portPinMetadata).ToList();
-var deviceRegisters = deviceMetadata.Registers;
-var deviceName = deviceMetadata.Device;
+var inputPins = TemplateHelper.GetPortPinsOfType<InputPinInfo>(PortPinMetadata).ToList();
+var outputPins = TemplateHelper.GetPortPinsOfType<OutputPinInfo>(PortPinMetadata).ToList();
+var deviceRegisters = DeviceMetadata.Registers;
+var deviceName = DeviceMetadata.Device;
 int registerIndex;
 
 int maxRegisterNameLength = 0;

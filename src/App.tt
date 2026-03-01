@@ -1,5 +1,5 @@
 ﻿<#@ template debug="true" hostspecific="false" visibility="internal" language="C#" inherits="TemplateBase" #>
-<#@ parameter name="RegisterMetadataPath" type="string" #>
+<#@ parameter name="DeviceMetadata" type="DeviceInfo" #>
 <#@ import namespace="Harp.Generators" #>
 <#@ import namespace="System.IO" #>
 <#@ output extension=".h" #>
@@ -11,20 +11,17 @@
 /************************************************************************/
 /* Define versions                                                      */
 /************************************************************************/
-<#
-var deviceMetadata = TemplateHelper.ReadDeviceMetadata(RegisterMetadataPath);
-#>
 #ifndef MAJOR_HW_VERSION
-#define MAJOR_HW_VERSION <#= deviceMetadata.HardwareTargets.Major #>
+#define MAJOR_HW_VERSION <#= DeviceMetadata.HardwareTargets.Major #>
 #endif
 #ifndef MINOR_HW_VERSION
-#define MINOR_HW_VERSION <#= deviceMetadata.HardwareTargets.Minor #>
+#define MINOR_HW_VERSION <#= DeviceMetadata.HardwareTargets.Minor #>
 #endif
 #ifndef MAJOR_FW_VERSION
-#define MAJOR_FW_VERSION <#= deviceMetadata.FirmwareVersion.Major #>
+#define MAJOR_FW_VERSION <#= DeviceMetadata.FirmwareVersion.Major #>
 #endif
 #ifndef MINOR_FW_VERSION
-#define MINOR_FW_VERSION <#= deviceMetadata.FirmwareVersion.Minor #>
+#define MINOR_FW_VERSION <#= DeviceMetadata.FirmwareVersion.Minor #>
 #endif
 #ifndef ASSEMBLY_VERSION
 #define ASSEMBLY_VERSION 0

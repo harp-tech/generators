@@ -1,6 +1,6 @@
 ﻿<#@ template debug="true" hostspecific="false" visibility="internal" language="C#" inherits="TemplateBase" #>
 <#@ parameter name="Namespace" type="string" #>
-<#@ parameter name="MetadataPath" type="string" #>
+<#@ parameter name="DeviceMetadata" type="DeviceInfo" #>
 <#@ import namespace="YamlDotNet.Serialization.NamingConventions" #>
 <#@ import namespace="Harp.Generators" #>
 <#@ import namespace="System.IO" #>
@@ -9,10 +9,9 @@
 <#@ import namespace="System.Collections.Generic" #>
 <#@ output extension=".Generated.cs" #>
 <#
-var deviceMetadata = TemplateHelper.ReadDeviceMetadata(MetadataPath);
-var publicRegisters = deviceMetadata.Registers.Where(register => register.Value.Visibility == RegisterVisibility.Public).ToList();
-var deviceRegisters = deviceMetadata.Registers;
-var deviceName = deviceMetadata.Device;
+var publicRegisters = DeviceMetadata.Registers.Where(register => register.Value.Visibility == RegisterVisibility.Public).ToList();
+var deviceRegisters = DeviceMetadata.Registers;
+var deviceName = DeviceMetadata.Device;
 #>
 using Bonsai;
 using Bonsai.Harp;
@@ -38,7 +37,7 @@ namespace <#= Namespace #>
         /// Represents the unique identity class of the <see cref="<#= deviceName #>"/> device.
         /// This field is constant.
         /// </summary>
-        public const int WhoAmI = <#= deviceMetadata.WhoAmI #>;
+        public const int WhoAmI = <#= DeviceMetadata.WhoAmI #>;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Device"/> class.
@@ -479,7 +478,7 @@ if (isPrivate)
                 member.Value,
                 "payload",
                 register,
-                deviceMetadata);
+                DeviceMetadata);
 #>
             result.<#= member.Key #> = <#= memberConversion #>;
 <#
@@ -919,7 +918,7 @@ foreach (var registerMetadata in deviceRegisters)
 }
 #>
 <#
-foreach (var bitMask in deviceMetadata.BitMasks)
+foreach (var bitMask in DeviceMetadata.BitMasks)
 {
     var mask = bitMask.Value;
 #>
@@ -974,7 +973,7 @@ foreach (var bitMask in deviceMetadata.BitMasks)
 }
 #>
 <#
-foreach (var groupMask in deviceMetadata.GroupMasks)
+foreach (var groupMask in DeviceMetadata.GroupMasks)
 {
     var mask = groupMask.Value;
 #>

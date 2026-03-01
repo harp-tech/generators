@@ -1,5 +1,5 @@
 ﻿<#@ template debug="true" hostspecific="false" visibility="internal" language="C#" inherits="TemplateBase" #>
-<#@ parameter name="RegisterMetadataPath" type="string" #>
+<#@ parameter name="DeviceMetadata" type="DeviceInfo" #>
 <#@ import namespace="Harp.Generators" #>
 <#@ import namespace="System.IO" #>
 <#@ output extension=".c" #>
@@ -24,10 +24,7 @@ extern bool (*app_func_wr_pointer[])(void*);
 /************************************************************************/
 /* Initialize app                                                       */
 /************************************************************************/
-<#
-var deviceMetadata = TemplateHelper.ReadDeviceMetadata(RegisterMetadataPath);
-#>
-static const uint8_t default_device_name[] = "<#= deviceMetadata.Device #>";
+static const uint8_t default_device_name[] = "<#= DeviceMetadata.Device #>";
 
 void hwbp_app_initialize(void)
 {
@@ -40,7 +37,7 @@ void hwbp_app_initialize(void)
     
    	/* Start core */
     core_func_start_core(
-        <#= deviceMetadata.WhoAmI #>,
+        <#= DeviceMetadata.WhoAmI #>,
         hwH, hwL,
         fwH, fwL,
         ass,

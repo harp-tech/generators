@@ -1,5 +1,5 @@
 ﻿<#@ template debug="true" hostspecific="false" visibility="internal" language="C#" inherits="TemplateBase" #>
-<#@ parameter name="RegisterMetadataPath" type="string" #>
+<#@ parameter name="DeviceMetadata" type="DeviceInfo" #>
 <#@ import namespace="Harp.Generators" #>
 <#@ import namespace="System.IO" #>
 <#@ import namespace="System.Linq" #>
@@ -24,15 +24,12 @@
 	#define false 0
 #endif
 
-<#
-var deviceMetadata = TemplateHelper.ReadDeviceMetadata(RegisterMetadataPath);
-#>
 
 /************************************************************************/
 /* Prototypes                                                           */
 /************************************************************************/
 <#
-foreach (var registerMetadata in deviceMetadata.Registers)
+foreach (var registerMetadata in DeviceMetadata.Registers)
 {
     var registerName = FirmwareNamingConvention.Instance.Apply(registerMetadata.Key);
 #>
@@ -42,7 +39,7 @@ void app_read_REG_<#= registerName #>(void);
 #>
 
 <#
-foreach (var registerMetadata in deviceMetadata.Registers)
+foreach (var registerMetadata in DeviceMetadata.Registers)
 {
     var registerName = FirmwareNamingConvention.Instance.Apply(registerMetadata.Key);
 #>

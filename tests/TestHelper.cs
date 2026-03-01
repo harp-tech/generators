@@ -1,4 +1,5 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using YamlDotNet.Core;
 
 namespace Harp.Generators.Tests;
 
@@ -24,6 +25,19 @@ static class TestHelper
     public static string GetMetadataPath(string fileName)
     {
         return Path.Combine("Metadata", fileName);
+    }
+
+    public static DeviceInfo ReadDeviceMetadata(string path)
+    {
+        using var reader = new StreamReader(path);
+        var parser = new MergingParser(new Parser(reader));
+        return MetadataDeserializer.Instance.Deserialize<DeviceInfo>(parser);
+    }
+
+    public static Dictionary<string, PortPinInfo> ReadPortPinMetadata(string path)
+    {
+        using var reader = new StreamReader(path);
+        return MetadataDeserializer.Instance.Deserialize<Dictionary<string, PortPinInfo>>(reader);
     }
 
     public static void AssertExpectedOutput(string actual, string outputFileName)

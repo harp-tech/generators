@@ -1,6 +1,6 @@
 ﻿<#@ template debug="true" hostspecific="false" visibility="internal" language="C#" inherits="TemplateBase" #>
 <#@ parameter name="Namespace" type="string" #>
-<#@ parameter name="MetadataPath" type="string" #>
+<#@ parameter name="DeviceMetadata" type="DeviceInfo" #>
 <#@ import namespace="Harp.Generators" #>
 <#@ import namespace="System.IO" #>
 <#@ import namespace="System.Linq" #>
@@ -8,9 +8,8 @@
 <#@ import namespace="System.Collections.Generic" #>
 <#@ output extension=".Generated.cs" #>
 <#
-var deviceMetadata = TemplateHelper.ReadDeviceMetadata(MetadataPath);
-var publicRegisters = deviceMetadata.Registers.Where(register => register.Value.Visibility == RegisterVisibility.Public).ToList();
-var deviceName = deviceMetadata.Device;
+var publicRegisters = DeviceMetadata.Registers.Where(register => register.Value.Visibility == RegisterVisibility.Public).ToList();
+var deviceName = DeviceMetadata.Device;
 #>
 using Bonsai.Harp;
 using System.Threading;

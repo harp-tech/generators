@@ -21,7 +21,9 @@ public sealed class FirmwareGeneratorTests
     {
         metadataFileName = TestHelper.GetMetadataPath(metadataFileName);
         var iosMetadataFileName = Path.ChangeExtension(metadataFileName, ".ios.yml");
-        var generator = new FirmwareGenerator(metadataFileName, iosMetadataFileName);
+        var deviceMetadata = TestHelper.ReadDeviceMetadata(metadataFileName);
+        var portPinMetadata = TestHelper.ReadPortPinMetadata(iosMetadataFileName);
+        var generator = new FirmwareGenerator(deviceMetadata, portPinMetadata);
         var headers = generator.GenerateHeaders();
         var implementation = generator.GenerateImplementation();
 

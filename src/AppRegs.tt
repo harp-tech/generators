@@ -1,6 +1,6 @@
 ﻿<#@ template debug="true" hostspecific="false" visibility="internal" language="C#" inherits="TemplateBase" #>
-<#@ parameter name="RegisterMetadataPath" type="string" #>
-<#@ parameter name="IOMetadataPath" type="string" #>
+<#@ parameter name="DeviceMetadata" type="DeviceInfo" #>
+<#@ parameter name="PortPinMetadata" type="Dictionary<string, PortPinInfo>" #>
 <#@ import namespace="Harp.Generators" #>
 <#@ import namespace="System.IO" #>
 <#@ import namespace="System.Linq" #>
@@ -11,17 +11,15 @@
 #define _APP_IOS_AND_REGS_H_
 #include "cpu.h"
 <#
-var deviceMetadata = TemplateHelper.ReadDeviceMetadata(RegisterMetadataPath);
-var portPinMetadata = TemplateHelper.ReadPortPinMetadata(IOMetadataPath);
-var inputPins = TemplateHelper.GetPortPinsOfType<InputPinInfo>(portPinMetadata).ToList();
-var outputPins = TemplateHelper.GetPortPinsOfType<OutputPinInfo>(portPinMetadata).ToList();
-var deviceName = deviceMetadata.Device;
+var inputPins = TemplateHelper.GetPortPinsOfType<InputPinInfo>(PortPinMetadata).ToList();
+var outputPins = TemplateHelper.GetPortPinsOfType<OutputPinInfo>(PortPinMetadata).ToList();
+var deviceName = DeviceMetadata.Device;
 
 int maxRegisterNameLength = 0;
 int minRegisterAddress = byte.MaxValue;
 int maxRegisterAddress = 32;
 int totalRegisterSize = 0;
-foreach (var registerMetadata in deviceMetadata.Registers)
+foreach (var registerMetadata in DeviceMetadata.Registers)
 {
     var register = registerMetadata.Value;
     var registerName = FirmwareNamingConvention.Instance.Apply(registerMetadata.Key);
@@ -113,7 +111,7 @@ if (outputPins.Count > 0)
 typedef struct
 {
 <#
-foreach (var registerMetadata in deviceMetadata.Registers)
+foreach (var registerMetadata in DeviceMetadata.Registers)
 {
     var register = registerMetadata.Value;
     var registerName = FirmwareNamingConvention.Instance.Apply(registerMetadata.Key);
@@ -131,7 +129,7 @@ foreach (var registerMetadata in deviceMetadata.Registers)
 /************************************************************************/
 /* Registers */
 <#
-foreach (var registerMetadata in deviceMetadata.Registers)
+foreach (var registerMetadata in DeviceMetadata.Registers)
 {
     var register = registerMetadata.Value;
     var registerName = FirmwareNamingConvention.Instance.Apply(registerMetadata.Key);
@@ -159,18 +157,18 @@ foreach (var registerMetadata in deviceMetadata.Registers)
 /* Registers' bits                                                      */
 /************************************************************************/
 <#
-var maxBitNameLength = deviceMetadata.BitMasks.Values
+var maxBitNameLength = DeviceMetadata.BitMasks.Values
     .SelectMany(mask => mask.Bits)
     .Select(bitField => FirmwareNamingConvention.Instance.Apply(bitField.Key).Length)
     .Prepend(0).Max();
-var maxMemberNameLength = (from groupMask in deviceMetadata.GroupMasks
+var maxMemberNameLength = (from groupMask in DeviceMetadata.GroupMasks
                            let maskName = FirmwareGroupMaskNamingConvention.Instance.Apply(groupMask.Key)
                            from member in groupMask.Value.Values
                            let memberName = FirmwareNamingConvention.Instance.Apply(member.Key)
                            select maskName.Length + memberName.Length)
                            .Prepend(0).Max();
 var maxBitMemberNameLength = Math.Max(maxBitNameLength, maxMemberNameLength);
-foreach (var bitMask in deviceMetadata.BitMasks)
+foreach (var bitMask in DeviceMetadata.BitMasks)
 {
     var mask = bitMask.Value;
     foreach (var bitField in mask.Bits)
@@ -187,7 +185,7 @@ foreach (var bitMask in deviceMetadata.BitMasks)
 }
 #>
 <#
-foreach (var groupMask in deviceMetadata.GroupMasks)
+foreach (var groupMask in DeviceMetadata.GroupMasks)
 {
     var mask = groupMask.Value;
     var maskSelect = TemplateHelper.GetMaskSelect(mask).ToString("X2");
