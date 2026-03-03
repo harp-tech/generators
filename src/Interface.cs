@@ -154,16 +154,6 @@ public class RegisterInfo
     public string MaskType;
 
     /// <summary>
-    /// Specifies the name of the type used to represent the payload value in the high-level interface.
-    /// </summary>
-    public string InterfaceType;
-
-    /// <summary>
-    /// Specifies a custom converter which will be used to parse or format the payload value.
-    /// </summary>
-    public MemberConverter Converter;
-
-    /// <summary>
     /// Specifies the minimum allowable value for the payload.
     /// </summary>
     public float? MinValue;
@@ -177,6 +167,16 @@ public class RegisterInfo
     /// Specifies the default value for the payload.
     /// </summary>
     public float? DefaultValue;
+
+    /// <summary>
+    /// Specifies the name of the type used to represent the payload value in the high-level interface.
+    /// </summary>
+    public string InterfaceType;
+
+    /// <summary>
+    /// Specifies a custom converter which will be used to parse or format the payload value.
+    /// </summary>
+    public MemberConverter Converter;
 
     /// <summary>
     /// Specifies a summary description of the register function.
@@ -211,12 +211,6 @@ public class RegisterInfo
 public class PayloadMemberInfo
 {
     /// <summary>
-    /// Specifies the mask used to read and write this payload member.
-    /// </summary>
-    [YamlConverter(typeof(HexValueTypeConverter))]
-    public int? Mask;
-
-    /// <summary>
     /// Specifies the zero-based index at which encoding of this payload member starts.
     /// </summary>
     public int? Offset;
@@ -227,19 +221,15 @@ public class PayloadMemberInfo
     public int? Length;
 
     /// <summary>
+    /// Specifies the mask used to read and write this payload member.
+    /// </summary>
+    [YamlConverter(typeof(HexValueTypeConverter))]
+    public int? Mask;
+
+    /// <summary>
     /// Specifies the name of the bit mask or group mask used to represent this payload member.
     /// </summary>
     public string MaskType;
-
-    /// <summary>
-    /// Specifies the name of the type used to represent this payload member in the high-level interface.
-    /// </summary>
-    public string InterfaceType;
-
-    /// <summary>
-    /// Specifies a custom converter which will be used to parse or format this payload member.
-    /// </summary>
-    public MemberConverter Converter;
 
     /// <summary>
     /// Specifies the minimum allowable value for this payload member.
@@ -255,6 +245,16 @@ public class PayloadMemberInfo
     /// Specifies the default value for this payload member.
     /// </summary>
     public float? DefaultValue;
+
+    /// <summary>
+    /// Specifies the name of the type used to represent this payload member in the high-level interface.
+    /// </summary>
+    public string InterfaceType;
+
+    /// <summary>
+    /// Specifies a custom converter which will be used to parse or format this payload member.
+    /// </summary>
+    public MemberConverter Converter;
 
     /// <summary>
     /// Specifies a summary description of this payload member.
