@@ -48,7 +48,9 @@ namespace Harp.Generators.Tests
             { 40, typeof(Counter0) },
             { 41, typeof(PortDIOSet) },
             { 42, typeof(PulseDOPort0) },
-            { 43, typeof(PulseDO0) }
+            { 43, typeof(PulseDO0) },
+            { 37, typeof(StartPulse) },
+            { 38, typeof(StartPulseTrain) }
         };
 
         /// <summary>
@@ -275,6 +277,8 @@ namespace Harp.Generators.Tests
     /// <seealso cref="PortDIOSet"/>
     /// <seealso cref="PulseDOPort0"/>
     /// <seealso cref="PulseDO0"/>
+    /// <seealso cref="StartPulse"/>
+    /// <seealso cref="StartPulseTrain"/>
     [XmlInclude(typeof(DigitalInputs))]
     [XmlInclude(typeof(AnalogData))]
     [XmlInclude(typeof(ComplexConfiguration))]
@@ -287,6 +291,8 @@ namespace Harp.Generators.Tests
     [XmlInclude(typeof(PortDIOSet))]
     [XmlInclude(typeof(PulseDOPort0))]
     [XmlInclude(typeof(PulseDO0))]
+    [XmlInclude(typeof(StartPulse))]
+    [XmlInclude(typeof(StartPulseTrain))]
     [Description("Filters register-specific messages reported by the Tests device.")]
     public class FilterRegister : FilterRegisterBuilder, INamedElement
     {
@@ -320,6 +326,8 @@ namespace Harp.Generators.Tests
     /// <seealso cref="PortDIOSet"/>
     /// <seealso cref="PulseDOPort0"/>
     /// <seealso cref="PulseDO0"/>
+    /// <seealso cref="StartPulse"/>
+    /// <seealso cref="StartPulseTrain"/>
     [XmlInclude(typeof(DigitalInputs))]
     [XmlInclude(typeof(AnalogData))]
     [XmlInclude(typeof(ComplexConfiguration))]
@@ -332,6 +340,8 @@ namespace Harp.Generators.Tests
     [XmlInclude(typeof(PortDIOSet))]
     [XmlInclude(typeof(PulseDOPort0))]
     [XmlInclude(typeof(PulseDO0))]
+    [XmlInclude(typeof(StartPulse))]
+    [XmlInclude(typeof(StartPulseTrain))]
     [XmlInclude(typeof(TimestampedDigitalInputs))]
     [XmlInclude(typeof(TimestampedAnalogData))]
     [XmlInclude(typeof(TimestampedComplexConfiguration))]
@@ -344,6 +354,8 @@ namespace Harp.Generators.Tests
     [XmlInclude(typeof(TimestampedPortDIOSet))]
     [XmlInclude(typeof(TimestampedPulseDOPort0))]
     [XmlInclude(typeof(TimestampedPulseDO0))]
+    [XmlInclude(typeof(TimestampedStartPulse))]
+    [XmlInclude(typeof(TimestampedStartPulseTrain))]
     [Description("Filters and selects specific messages reported by the Tests device.")]
     public partial class Parse : ParseBuilder, INamedElement
     {
@@ -374,6 +386,8 @@ namespace Harp.Generators.Tests
     /// <seealso cref="PortDIOSet"/>
     /// <seealso cref="PulseDOPort0"/>
     /// <seealso cref="PulseDO0"/>
+    /// <seealso cref="StartPulse"/>
+    /// <seealso cref="StartPulseTrain"/>
     [XmlInclude(typeof(DigitalInputs))]
     [XmlInclude(typeof(AnalogData))]
     [XmlInclude(typeof(ComplexConfiguration))]
@@ -386,6 +400,8 @@ namespace Harp.Generators.Tests
     [XmlInclude(typeof(PortDIOSet))]
     [XmlInclude(typeof(PulseDOPort0))]
     [XmlInclude(typeof(PulseDO0))]
+    [XmlInclude(typeof(StartPulse))]
+    [XmlInclude(typeof(StartPulseTrain))]
     [Description("Formats a sequence of values as specific Tests register messages.")]
     public partial class Format : FormatBuilder, INamedElement
     {
@@ -1677,6 +1693,237 @@ namespace Harp.Generators.Tests
     }
 
     /// <summary>
+    /// Represents a register that manipulates messages from register StartPulse.
+    /// </summary>
+    [Description("")]
+    public partial class StartPulse
+    {
+        /// <summary>
+        /// Represents the address of the <see cref="StartPulse"/> register. This field is constant.
+        /// </summary>
+        public const int Address = 37;
+
+        /// <summary>
+        /// Represents the payload type of the <see cref="StartPulse"/> register. This field is constant.
+        /// </summary>
+        public const PayloadType RegisterType = PayloadType.U16;
+
+        /// <summary>
+        /// Represents the length of the <see cref="StartPulse"/> register. This field is constant.
+        /// </summary>
+        public const int RegisterLength = 1;
+
+        static StartPulsePayload ParsePayload(ushort payload)
+        {
+            StartPulsePayload result;
+            result.DigitalOutput = (PwmPort)(ushort)((payload & 0xC00) >> 10);
+            result.PulseWidth = (ushort)(ushort)(payload & 0x3FF);
+            return result;
+        }
+
+        static ushort FormatPayload(StartPulsePayload value)
+        {
+            ushort result;
+            result = (ushort)(((ushort)value.DigitalOutput << 10) & 0xC00);
+            result |= (ushort)((ushort)value.PulseWidth & 0x3FF);
+            return result;
+        }
+
+        /// <summary>
+        /// Returns the payload data for <see cref="StartPulse"/> register messages.
+        /// </summary>
+        /// <param name="message">A <see cref="HarpMessage"/> object representing the register message.</param>
+        /// <returns>A value representing the message payload.</returns>
+        public static StartPulsePayload GetPayload(HarpMessage message)
+        {
+            return ParsePayload(message.GetPayloadUInt16());
+        }
+
+        /// <summary>
+        /// Returns the timestamped payload data for <see cref="StartPulse"/> register messages.
+        /// </summary>
+        /// <param name="message">A <see cref="HarpMessage"/> object representing the register message.</param>
+        /// <returns>A value representing the timestamped message payload.</returns>
+        public static Timestamped<StartPulsePayload> GetTimestampedPayload(HarpMessage message)
+        {
+            var payload = message.GetTimestampedPayloadUInt16();
+            return Timestamped.Create(ParsePayload(payload.Value), payload.Seconds);
+        }
+
+        /// <summary>
+        /// Returns a Harp message for the <see cref="StartPulse"/> register.
+        /// </summary>
+        /// <param name="messageType">The type of the Harp message.</param>
+        /// <param name="value">The value to be stored in the message payload.</param>
+        /// <returns>
+        /// A <see cref="HarpMessage"/> object for the <see cref="StartPulse"/> register
+        /// with the specified message type and payload.
+        /// </returns>
+        public static HarpMessage FromPayload(MessageType messageType, StartPulsePayload value)
+        {
+            return HarpMessage.FromUInt16(Address, messageType, FormatPayload(value));
+        }
+
+        /// <summary>
+        /// Returns a timestamped Harp message for the <see cref="StartPulse"/>
+        /// register.
+        /// </summary>
+        /// <param name="timestamp">The timestamp of the message payload, in seconds.</param>
+        /// <param name="messageType">The type of the Harp message.</param>
+        /// <param name="value">The value to be stored in the message payload.</param>
+        /// <returns>
+        /// A <see cref="HarpMessage"/> object for the <see cref="StartPulse"/> register
+        /// with the specified message type, timestamp, and payload.
+        /// </returns>
+        public static HarpMessage FromPayload(double timestamp, MessageType messageType, StartPulsePayload value)
+        {
+            return HarpMessage.FromUInt16(Address, timestamp, messageType, FormatPayload(value));
+        }
+    }
+
+    /// <summary>
+    /// Provides methods for manipulating timestamped messages from the
+    /// StartPulse register.
+    /// </summary>
+    /// <seealso cref="StartPulse"/>
+    [Description("Filters and selects timestamped messages from the StartPulse register.")]
+    public partial class TimestampedStartPulse
+    {
+        /// <summary>
+        /// Represents the address of the <see cref="StartPulse"/> register. This field is constant.
+        /// </summary>
+        public const int Address = StartPulse.Address;
+
+        /// <summary>
+        /// Returns timestamped payload data for <see cref="StartPulse"/> register messages.
+        /// </summary>
+        /// <param name="message">A <see cref="HarpMessage"/> object representing the register message.</param>
+        /// <returns>A value representing the timestamped message payload.</returns>
+        public static Timestamped<StartPulsePayload> GetPayload(HarpMessage message)
+        {
+            return StartPulse.GetTimestampedPayload(message);
+        }
+    }
+
+    /// <summary>
+    /// Represents a register that manipulates messages from register StartPulseTrain.
+    /// </summary>
+    [Description("")]
+    public partial class StartPulseTrain
+    {
+        /// <summary>
+        /// Represents the address of the <see cref="StartPulseTrain"/> register. This field is constant.
+        /// </summary>
+        public const int Address = 38;
+
+        /// <summary>
+        /// Represents the payload type of the <see cref="StartPulseTrain"/> register. This field is constant.
+        /// </summary>
+        public const PayloadType RegisterType = PayloadType.U16;
+
+        /// <summary>
+        /// Represents the length of the <see cref="StartPulseTrain"/> register. This field is constant.
+        /// </summary>
+        public const int RegisterLength = 2;
+
+        static StartPulseTrainPayload ParsePayload(ushort[] payload)
+        {
+            StartPulseTrainPayload result;
+            result.DigitalOutput = (PwmPort)(ushort)((payload[0] & 0xC00) >> 10);
+            result.PulseWidth = (ushort)(ushort)(payload[0] & 0x3FF);
+            result.Frequency = (byte)(ushort)((payload[1] & 0xFF00) >> 8);
+            result.PulseCount = (byte)(ushort)(payload[1] & 0xFF);
+            return result;
+        }
+
+        static ushort[] FormatPayload(StartPulseTrainPayload value)
+        {
+            ushort[] result;
+            result = new ushort[2];
+            result[0] = (ushort)(((ushort)value.DigitalOutput << 10) & 0xC00);
+            result[0] |= (ushort)((ushort)value.PulseWidth & 0x3FF);
+            result[1] = (ushort)(((ushort)value.Frequency << 8) & 0xFF00);
+            result[1] |= (ushort)((ushort)value.PulseCount & 0xFF);
+            return result;
+        }
+
+        /// <summary>
+        /// Returns the payload data for <see cref="StartPulseTrain"/> register messages.
+        /// </summary>
+        /// <param name="message">A <see cref="HarpMessage"/> object representing the register message.</param>
+        /// <returns>A value representing the message payload.</returns>
+        public static StartPulseTrainPayload GetPayload(HarpMessage message)
+        {
+            return ParsePayload(message.GetPayloadArray<ushort>());
+        }
+
+        /// <summary>
+        /// Returns the timestamped payload data for <see cref="StartPulseTrain"/> register messages.
+        /// </summary>
+        /// <param name="message">A <see cref="HarpMessage"/> object representing the register message.</param>
+        /// <returns>A value representing the timestamped message payload.</returns>
+        public static Timestamped<StartPulseTrainPayload> GetTimestampedPayload(HarpMessage message)
+        {
+            var payload = message.GetTimestampedPayloadArray<ushort>();
+            return Timestamped.Create(ParsePayload(payload.Value), payload.Seconds);
+        }
+
+        /// <summary>
+        /// Returns a Harp message for the <see cref="StartPulseTrain"/> register.
+        /// </summary>
+        /// <param name="messageType">The type of the Harp message.</param>
+        /// <param name="value">The value to be stored in the message payload.</param>
+        /// <returns>
+        /// A <see cref="HarpMessage"/> object for the <see cref="StartPulseTrain"/> register
+        /// with the specified message type and payload.
+        /// </returns>
+        public static HarpMessage FromPayload(MessageType messageType, StartPulseTrainPayload value)
+        {
+            return HarpMessage.FromUInt16(Address, messageType, FormatPayload(value));
+        }
+
+        /// <summary>
+        /// Returns a timestamped Harp message for the <see cref="StartPulseTrain"/>
+        /// register.
+        /// </summary>
+        /// <param name="timestamp">The timestamp of the message payload, in seconds.</param>
+        /// <param name="messageType">The type of the Harp message.</param>
+        /// <param name="value">The value to be stored in the message payload.</param>
+        /// <returns>
+        /// A <see cref="HarpMessage"/> object for the <see cref="StartPulseTrain"/> register
+        /// with the specified message type, timestamp, and payload.
+        /// </returns>
+        public static HarpMessage FromPayload(double timestamp, MessageType messageType, StartPulseTrainPayload value)
+        {
+            return HarpMessage.FromUInt16(Address, timestamp, messageType, FormatPayload(value));
+        }
+    }
+
+    /// <summary>
+    /// Provides methods for manipulating timestamped messages from the
+    /// StartPulseTrain register.
+    /// </summary>
+    /// <seealso cref="StartPulseTrain"/>
+    [Description("Filters and selects timestamped messages from the StartPulseTrain register.")]
+    public partial class TimestampedStartPulseTrain
+    {
+        /// <summary>
+        /// Represents the address of the <see cref="StartPulseTrain"/> register. This field is constant.
+        /// </summary>
+        public const int Address = StartPulseTrain.Address;
+
+        /// <summary>
+        /// Returns timestamped payload data for <see cref="StartPulseTrain"/> register messages.
+        /// </summary>
+        /// <param name="message">A <see cref="HarpMessage"/> object representing the register message.</param>
+        /// <returns>A value representing the timestamped message payload.</returns>
+        public static Timestamped<StartPulseTrainPayload> GetPayload(HarpMessage message)
+        {
+            return StartPulseTrain.GetTimestampedPayload(message);
+        }
+    }
+
+    /// <summary>
     /// Represents an operator which creates standard message payloads for the
     /// Tests device.
     /// </summary>
@@ -1692,6 +1939,8 @@ namespace Harp.Generators.Tests
     /// <seealso cref="CreatePortDIOSetPayload"/>
     /// <seealso cref="CreatePulseDOPort0Payload"/>
     /// <seealso cref="CreatePulseDO0Payload"/>
+    /// <seealso cref="CreateStartPulsePayload"/>
+    /// <seealso cref="CreateStartPulseTrainPayload"/>
     [XmlInclude(typeof(CreateDigitalInputsPayload))]
     [XmlInclude(typeof(CreateAnalogDataPayload))]
     [XmlInclude(typeof(CreateComplexConfigurationPayload))]
@@ -1704,6 +1953,8 @@ namespace Harp.Generators.Tests
     [XmlInclude(typeof(CreatePortDIOSetPayload))]
     [XmlInclude(typeof(CreatePulseDOPort0Payload))]
     [XmlInclude(typeof(CreatePulseDO0Payload))]
+    [XmlInclude(typeof(CreateStartPulsePayload))]
+    [XmlInclude(typeof(CreateStartPulseTrainPayload))]
     [XmlInclude(typeof(CreateTimestampedDigitalInputsPayload))]
     [XmlInclude(typeof(CreateTimestampedAnalogDataPayload))]
     [XmlInclude(typeof(CreateTimestampedComplexConfigurationPayload))]
@@ -1716,6 +1967,8 @@ namespace Harp.Generators.Tests
     [XmlInclude(typeof(CreateTimestampedPortDIOSetPayload))]
     [XmlInclude(typeof(CreateTimestampedPulseDOPort0Payload))]
     [XmlInclude(typeof(CreateTimestampedPulseDO0Payload))]
+    [XmlInclude(typeof(CreateTimestampedStartPulsePayload))]
+    [XmlInclude(typeof(CreateTimestampedStartPulseTrainPayload))]
     [Description("Creates standard message payloads for the Tests device.")]
     public partial class CreateMessage : CreateMessageBuilder, INamedElement
     {
@@ -2484,6 +2737,148 @@ namespace Harp.Generators.Tests
     }
 
     /// <summary>
+    /// Represents an operator that creates a message payload
+    /// for register StartPulse.
+    /// </summary>
+    [DisplayName("StartPulsePayload")]
+    [Description("Creates a message payload for register StartPulse.")]
+    public partial class CreateStartPulsePayload
+    {
+        /// <summary>
+        /// Gets or sets a value to write on payload member DigitalOutput.
+        /// </summary>
+        [Description("")]
+        public PwmPort DigitalOutput { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value to write on payload member PulseWidth.
+        /// </summary>
+        [Description("")]
+        public ushort PulseWidth { get; set; }
+
+        /// <summary>
+        /// Creates a message payload for the StartPulse register.
+        /// </summary>
+        /// <returns>The created message payload value.</returns>
+        public StartPulsePayload GetPayload()
+        {
+            StartPulsePayload value;
+            value.DigitalOutput = DigitalOutput;
+            value.PulseWidth = PulseWidth;
+            return value;
+        }
+
+        /// <summary>
+        /// Creates a message for register StartPulse.
+        /// </summary>
+        /// <param name="messageType">Specifies the type of the created message.</param>
+        /// <returns>A new message for the StartPulse register.</returns>
+        public HarpMessage GetMessage(MessageType messageType)
+        {
+            return Harp.Generators.Tests.StartPulse.FromPayload(messageType, GetPayload());
+        }
+    }
+
+    /// <summary>
+    /// Represents an operator that creates a timestamped message payload
+    /// for register StartPulse.
+    /// </summary>
+    [DisplayName("TimestampedStartPulsePayload")]
+    [Description("Creates a timestamped message payload for register StartPulse.")]
+    public partial class CreateTimestampedStartPulsePayload : CreateStartPulsePayload
+    {
+        /// <summary>
+        /// Creates a timestamped message for register StartPulse.
+        /// </summary>
+        /// <param name="timestamp">The timestamp of the message payload, in seconds.</param>
+        /// <param name="messageType">Specifies the type of the created message.</param>
+        /// <returns>A new timestamped message for the StartPulse register.</returns>
+        public HarpMessage GetMessage(double timestamp, MessageType messageType)
+        {
+            return Harp.Generators.Tests.StartPulse.FromPayload(timestamp, messageType, GetPayload());
+        }
+    }
+
+    /// <summary>
+    /// Represents an operator that creates a message payload
+    /// for register StartPulseTrain.
+    /// </summary>
+    [DisplayName("StartPulseTrainPayload")]
+    [Description("Creates a message payload for register StartPulseTrain.")]
+    public partial class CreateStartPulseTrainPayload
+    {
+        /// <summary>
+        /// Gets or sets a value to write on payload member DigitalOutput.
+        /// </summary>
+        [Description("")]
+        public PwmPort DigitalOutput { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value to write on payload member PulseWidth.
+        /// </summary>
+        [Description("")]
+        public ushort PulseWidth { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value to write on payload member Frequency.
+        /// </summary>
+        [Range(min: 1, max: 255)]
+        [Editor(DesignTypes.NumericUpDownEditor, DesignTypes.UITypeEditor)]
+        [Description("")]
+        public byte Frequency { get; set; } = 1;
+
+        /// <summary>
+        /// Gets or sets a value to write on payload member PulseCount.
+        /// </summary>
+        [Description("")]
+        public byte PulseCount { get; set; }
+
+        /// <summary>
+        /// Creates a message payload for the StartPulseTrain register.
+        /// </summary>
+        /// <returns>The created message payload value.</returns>
+        public StartPulseTrainPayload GetPayload()
+        {
+            StartPulseTrainPayload value;
+            value.DigitalOutput = DigitalOutput;
+            value.PulseWidth = PulseWidth;
+            value.Frequency = Frequency;
+            value.PulseCount = PulseCount;
+            return value;
+        }
+
+        /// <summary>
+        /// Creates a message for register StartPulseTrain.
+        /// </summary>
+        /// <param name="messageType">Specifies the type of the created message.</param>
+        /// <returns>A new message for the StartPulseTrain register.</returns>
+        public HarpMessage GetMessage(MessageType messageType)
+        {
+            return Harp.Generators.Tests.StartPulseTrain.FromPayload(messageType, GetPayload());
+        }
+    }
+
+    /// <summary>
+    /// Represents an operator that creates a timestamped message payload
+    /// for register StartPulseTrain.
+    /// </summary>
+    [DisplayName("TimestampedStartPulseTrainPayload")]
+    [Description("Creates a timestamped message payload for register StartPulseTrain.")]
+    public partial class CreateTimestampedStartPulseTrainPayload : CreateStartPulseTrainPayload
+    {
+        /// <summary>
+        /// Creates a timestamped message for register StartPulseTrain.
+        /// </summary>
+        /// <param name="timestamp">The timestamp of the message payload, in seconds.</param>
+        /// <param name="messageType">Specifies the type of the created message.</param>
+        /// <returns>A new timestamped message for the StartPulseTrain register.</returns>
+        public HarpMessage GetMessage(double timestamp, MessageType messageType)
+        {
+            return Harp.Generators.Tests.StartPulseTrain.FromPayload(timestamp, messageType, GetPayload());
+        }
+    }
+
+    /// <summary>
     /// Represents the payload of the AnalogData register.
     /// </summary>
     public struct AnalogDataPayload
@@ -2776,6 +3171,114 @@ namespace Harp.Generators.Tests
             return "BitmaskSplitterPayload { " +
                 "Low = " + Low + ", " +
                 "High = " + High + " " +
+            "}";
+        }
+    }
+
+    /// <summary>
+    /// Represents the payload of the StartPulse register.
+    /// </summary>
+    public struct StartPulsePayload
+    {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="StartPulsePayload"/> structure.
+        /// </summary>
+        /// <param name="digitalOutput"></param>
+        /// <param name="pulseWidth"></param>
+        public StartPulsePayload(
+            PwmPort digitalOutput,
+            ushort pulseWidth)
+        {
+            DigitalOutput = digitalOutput;
+            PulseWidth = pulseWidth;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public PwmPort DigitalOutput;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public ushort PulseWidth;
+
+        /// <summary>
+        /// Returns a <see cref="string"/> that represents the payload of
+        /// the StartPulse register.
+        /// </summary>
+        /// <returns>
+        /// A <see cref="string"/> that represents the payload of the
+        /// StartPulse register.
+        /// </returns>
+        public override string ToString()
+        {
+            return "StartPulsePayload { " +
+                "DigitalOutput = " + DigitalOutput + ", " +
+                "PulseWidth = " + PulseWidth + " " +
+            "}";
+        }
+    }
+
+    /// <summary>
+    /// Represents the payload of the StartPulseTrain register.
+    /// </summary>
+    public struct StartPulseTrainPayload
+    {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="StartPulseTrainPayload"/> structure.
+        /// </summary>
+        /// <param name="digitalOutput"></param>
+        /// <param name="pulseWidth"></param>
+        /// <param name="frequency"></param>
+        /// <param name="pulseCount"></param>
+        public StartPulseTrainPayload(
+            PwmPort digitalOutput,
+            ushort pulseWidth,
+            byte frequency,
+            byte pulseCount)
+        {
+            DigitalOutput = digitalOutput;
+            PulseWidth = pulseWidth;
+            Frequency = frequency;
+            PulseCount = pulseCount;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public PwmPort DigitalOutput;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public ushort PulseWidth;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public byte Frequency;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public byte PulseCount;
+
+        /// <summary>
+        /// Returns a <see cref="string"/> that represents the payload of
+        /// the StartPulseTrain register.
+        /// </summary>
+        /// <returns>
+        /// A <see cref="string"/> that represents the payload of the
+        /// StartPulseTrain register.
+        /// </returns>
+        public override string ToString()
+        {
+            return "StartPulseTrainPayload { " +
+                "DigitalOutput = " + DigitalOutput + ", " +
+                "PulseWidth = " + PulseWidth + ", " +
+                "Frequency = " + Frequency + ", " +
+                "PulseCount = " + PulseCount + " " +
             "}";
         }
     }

@@ -32,6 +32,8 @@ void app_read_REG_COUNTER0(void);
 void app_read_REG_PORT_DIO_SET(void);
 void app_read_REG_PULSE_DO_PORT0(void);
 void app_read_REG_PULSE_DO0(void);
+void app_read_REG_START_PULSE(void);
+void app_read_REG_START_PULSE_TRAIN(void);
 
 bool app_write_REG_DIGITAL_INPUTS(void *a);
 bool app_write_REG_ANALOG_DATA(void *a);
@@ -45,6 +47,8 @@ bool app_write_REG_COUNTER0(void *a);
 bool app_write_REG_PORT_DIO_SET(void *a);
 bool app_write_REG_PULSE_DO_PORT0(void *a);
 bool app_write_REG_PULSE_DO0(void *a);
+bool app_write_REG_START_PULSE(void *a);
+bool app_write_REG_START_PULSE_TRAIN(void *a);
 
 
 #endif /* _APP_FUNCTIONS_H_ */

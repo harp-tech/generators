@@ -127,6 +127,37 @@ registers:
   PulseDO0:
     <<: *pulseDO
     address: 43
+  StartPulse:
+    address: 37
+    type: U16
+    access: Write
+    payloadSpec: &startPulse
+      DigitalOutput:
+        offset: 0
+        mask: 0xC00
+        maskType: PwmPort
+      PulseWidth:
+        offset: 0
+        mask: 0x3FF
+        interfaceType: ushort
+  StartPulseTrain:
+    address: 38
+    type: U16
+    length: 2
+    access: Write
+    payloadSpec:
+      <<: *startPulse
+      Frequency:
+        offset: 1
+        mask: 0xFF00
+        minValue: 1
+        maxValue: 255
+        defaultValue: 1
+        interfaceType: byte
+      PulseCount:
+        offset: 1
+        mask: 0xFF
+        interfaceType: byte
 bitMasks:
   PortDigitalIOS:
     bits:

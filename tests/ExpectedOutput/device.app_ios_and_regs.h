@@ -136,6 +136,8 @@ typedef struct
     uint8_t REG_PORT_DIO_SET;
     uint16_t REG_PULSE_DO_PORT0;
     uint16_t REG_PULSE_DO0;
+    uint16_t REG_START_PULSE;
+    uint16_t REG_START_PULSE_TRAIN[2];
 } AppRegs;
 
 /************************************************************************/
@@ -154,6 +156,8 @@ typedef struct
 #define ADD_REG_PORT_DIO_SET               41 // U8     
 #define ADD_REG_PULSE_DO_PORT0             42 // U16    
 #define ADD_REG_PULSE_DO0                  43 // U16    
+#define ADD_REG_START_PULSE                37 // U16    
+#define ADD_REG_START_PULSE_TRAIN          38 // U16    
 
 /************************************************************************/
 /* Tests registers' memory limits                                       */
@@ -164,7 +168,7 @@ typedef struct
 /* Memory limits */
 #define APP_REGS_ADD_MIN                    0x20
 #define APP_REGS_ADD_MAX                    0x2B
-#define APP_NBYTES_OF_REG_BANK              111
+#define APP_NBYTES_OF_REG_BANK              117
 
 /************************************************************************/
 /* Registers' bits                                                      */

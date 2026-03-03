@@ -584,9 +584,9 @@ internal static partial class TemplateHelper
             else
                 expression = $"PayloadMarshal.GetSubArray({expression}, {memberOffset}, {memberLength})";
         }
-        else if (member.Offset.HasValue)
+        else if (register.Length > 0 && member.Offset.HasValue)
         {
-            expression = $"{expression}[{member.Offset.GetValueOrDefault()}]";
+            expression = $"{expression}[{memberOffset}]";
         }
         if (member.Mask.HasValue)
         {
@@ -642,7 +642,7 @@ internal static partial class TemplateHelper
             }
             else
                 memberConversion = $" = {memberConversion}";
-            var memberIndexer = member.Offset.HasValue ? $"[{memberOffset}]" : string.Empty;
+            var memberIndexer = register.Length > 0 && member.Offset.HasValue ? $"[{memberOffset}]" : string.Empty;
             return $"{expression}{memberIndexer}{memberConversion}";
         }
     }
