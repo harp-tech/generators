@@ -26,17 +26,21 @@ public sealed class InterfaceGeneratorTests
         var deviceMetadata = TestHelper.ReadDeviceMetadata(metadataFileName);
         var generator = new InterfaceGenerator(deviceMetadata, typeof(InterfaceGeneratorTests).Namespace);
         var implementation = generator.GenerateImplementation();
-        var outputFileName = $"{Path.GetFileNameWithoutExtension(metadataFileName)}.cs";
-        var customImplementation = TestHelper.GetManifestResourceText($"EmbeddedSources.{outputFileName}");
+        var outputFileName = Path.GetFileNameWithoutExtension(metadataFileName);
+        var deviceOutputFileName = $"{outputFileName}.cs";
+        var asyncDeviceOutputFileName = $"{outputFileName}.async.cs";
+        var customImplementation = TestHelper.GetManifestResourceText($"EmbeddedSources.{outputFileName}.cs");
         try
         {
             CompilerTestHelper.CompileFromSource(implementation.Device, implementation.AsyncDevice, payloadExtensions, customImplementation);
-            TestHelper.AssertExpectedOutput(implementation.Device, outputFileName);
+            TestHelper.AssertExpectedOutput(implementation.Device, deviceOutputFileName);
+            TestHelper.AssertExpectedOutput(implementation.AsyncDevice, asyncDeviceOutputFileName);
         }
         catch (AssertFailedException)
         {
             outputDirectory.Create();
-            File.WriteAllText(Path.Combine(outputDirectory.FullName, outputFileName), implementation.Device);
+            File.WriteAllText(Path.Combine(outputDirectory.FullName, deviceOutputFileName), implementation.Device);
+            File.WriteAllText(Path.Combine(outputDirectory.FullName, asyncDeviceOutputFileName), implementation.AsyncDevice);
             throw;
         }
     }
