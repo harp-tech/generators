@@ -49,7 +49,7 @@ namespace Harp.Generators.Tests
         }
 
         /// <summary>
-        /// Asynchronously reads the contents of the DigitalInputs register.
+        /// Asynchronously reads the contents of the <see cref="DigitalInputs"/> register.
         /// </summary>
         /// <param name="cancellationToken">
         /// A <see cref="CancellationToken"/> which can be used to cancel the operation.
@@ -65,7 +65,7 @@ namespace Harp.Generators.Tests
         }
 
         /// <summary>
-        /// Asynchronously reads the timestamped contents of the DigitalInputs register.
+        /// Asynchronously reads the timestamped contents of the <see cref="DigitalInputs"/> register.
         /// </summary>
         /// <param name="cancellationToken">
         /// A <see cref="CancellationToken"/> which can be used to cancel the operation.
@@ -81,7 +81,7 @@ namespace Harp.Generators.Tests
         }
 
         /// <summary>
-        /// Asynchronously reads the contents of the AnalogData register.
+        /// Asynchronously reads the contents of the <see cref="AnalogData"/> register.
         /// </summary>
         /// <param name="cancellationToken">
         /// A <see cref="CancellationToken"/> which can be used to cancel the operation.
@@ -97,7 +97,7 @@ namespace Harp.Generators.Tests
         }
 
         /// <summary>
-        /// Asynchronously reads the timestamped contents of the AnalogData register.
+        /// Asynchronously reads the timestamped contents of the <see cref="AnalogData"/> register.
         /// </summary>
         /// <param name="cancellationToken">
         /// A <see cref="CancellationToken"/> which can be used to cancel the operation.
@@ -113,7 +113,7 @@ namespace Harp.Generators.Tests
         }
 
         /// <summary>
-        /// Asynchronously reads the contents of the ComplexConfiguration register.
+        /// Asynchronously reads the contents of the <see cref="ComplexConfiguration"/> register.
         /// </summary>
         /// <param name="cancellationToken">
         /// A <see cref="CancellationToken"/> which can be used to cancel the operation.
@@ -129,7 +129,7 @@ namespace Harp.Generators.Tests
         }
 
         /// <summary>
-        /// Asynchronously reads the timestamped contents of the ComplexConfiguration register.
+        /// Asynchronously reads the timestamped contents of the <see cref="ComplexConfiguration"/> register.
         /// </summary>
         /// <param name="cancellationToken">
         /// A <see cref="CancellationToken"/> which can be used to cancel the operation.
@@ -145,7 +145,7 @@ namespace Harp.Generators.Tests
         }
 
         /// <summary>
-        /// Asynchronously writes a value to the ComplexConfiguration register.
+        /// Asynchronously writes a value to the <see cref="ComplexConfiguration"/> register.
         /// </summary>
         /// <param name="value">The value to be stored in the register.</param>
         /// <param name="cancellationToken">
@@ -159,7 +159,7 @@ namespace Harp.Generators.Tests
         }
 
         /// <summary>
-        /// Asynchronously reads the contents of the Version register.
+        /// Asynchronously reads the contents of the <see cref="Version"/> register.
         /// </summary>
         /// <param name="cancellationToken">
         /// A <see cref="CancellationToken"/> which can be used to cancel the operation.
@@ -175,7 +175,7 @@ namespace Harp.Generators.Tests
         }
 
         /// <summary>
-        /// Asynchronously reads the timestamped contents of the Version register.
+        /// Asynchronously reads the timestamped contents of the <see cref="Version"/> register.
         /// </summary>
         /// <param name="cancellationToken">
         /// A <see cref="CancellationToken"/> which can be used to cancel the operation.
@@ -191,7 +191,7 @@ namespace Harp.Generators.Tests
         }
 
         /// <summary>
-        /// Asynchronously reads the contents of the CustomPayload register.
+        /// Asynchronously reads the contents of the <see cref="CustomPayload"/> register.
         /// </summary>
         /// <param name="cancellationToken">
         /// A <see cref="CancellationToken"/> which can be used to cancel the operation.
@@ -207,7 +207,7 @@ namespace Harp.Generators.Tests
         }
 
         /// <summary>
-        /// Asynchronously reads the timestamped contents of the CustomPayload register.
+        /// Asynchronously reads the timestamped contents of the <see cref="CustomPayload"/> register.
         /// </summary>
         /// <param name="cancellationToken">
         /// A <see cref="CancellationToken"/> which can be used to cancel the operation.
@@ -223,7 +223,7 @@ namespace Harp.Generators.Tests
         }
 
         /// <summary>
-        /// Asynchronously reads the contents of the CustomRawPayload register.
+        /// Asynchronously reads the contents of the <see cref="CustomRawPayload"/> register.
         /// </summary>
         /// <param name="cancellationToken">
         /// A <see cref="CancellationToken"/> which can be used to cancel the operation.
@@ -239,7 +239,7 @@ namespace Harp.Generators.Tests
         }
 
         /// <summary>
-        /// Asynchronously reads the timestamped contents of the CustomRawPayload register.
+        /// Asynchronously reads the timestamped contents of the <see cref="CustomRawPayload"/> register.
         /// </summary>
         /// <param name="cancellationToken">
         /// A <see cref="CancellationToken"/> which can be used to cancel the operation.
@@ -255,7 +255,7 @@ namespace Harp.Generators.Tests
         }
 
         /// <summary>
-        /// Asynchronously reads the contents of the CustomMemberConverter register.
+        /// Asynchronously reads the contents of the <see cref="CustomMemberConverter"/> register.
         /// </summary>
         /// <param name="cancellationToken">
         /// A <see cref="CancellationToken"/> which can be used to cancel the operation.
@@ -271,7 +271,7 @@ namespace Harp.Generators.Tests
         }
 
         /// <summary>
-        /// Asynchronously reads the timestamped contents of the CustomMemberConverter register.
+        /// Asynchronously reads the timestamped contents of the <see cref="CustomMemberConverter"/> register.
         /// </summary>
         /// <param name="cancellationToken">
         /// A <see cref="CancellationToken"/> which can be used to cancel the operation.
@@ -287,7 +287,7 @@ namespace Harp.Generators.Tests
         }
 
         /// <summary>
-        /// Asynchronously reads the contents of the BitmaskSplitter register.
+        /// Asynchronously reads the contents of the <see cref="BitmaskSplitter"/> register.
         /// </summary>
         /// <param name="cancellationToken">
         /// A <see cref="CancellationToken"/> which can be used to cancel the operation.
@@ -303,7 +303,7 @@ namespace Harp.Generators.Tests
         }
 
         /// <summary>
-        /// Asynchronously reads the timestamped contents of the BitmaskSplitter register.
+        /// Asynchronously reads the timestamped contents of the <see cref="BitmaskSplitter"/> register.
         /// </summary>
         /// <param name="cancellationToken">
         /// A <see cref="CancellationToken"/> which can be used to cancel the operation.
@@ -319,7 +319,7 @@ namespace Harp.Generators.Tests
         }
 
         /// <summary>
-        /// Asynchronously writes a value to the BitmaskSplitter register.
+        /// Asynchronously writes a value to the <see cref="BitmaskSplitter"/> register.
         /// </summary>
         /// <param name="value">The value to be stored in the register.</param>
         /// <param name="cancellationToken">
@@ -333,7 +333,7 @@ namespace Harp.Generators.Tests
         }
 
         /// <summary>
-        /// Asynchronously reads the contents of the Counter0 register.
+        /// Asynchronously reads the contents of the <see cref="Counter0"/> register.
         /// </summary>
         /// <param name="cancellationToken">
         /// A <see cref="CancellationToken"/> which can be used to cancel the operation.
@@ -349,7 +349,7 @@ namespace Harp.Generators.Tests
         }
 
         /// <summary>
-        /// Asynchronously reads the timestamped contents of the Counter0 register.
+        /// Asynchronously reads the timestamped contents of the <see cref="Counter0"/> register.
         /// </summary>
         /// <param name="cancellationToken">
         /// A <see cref="CancellationToken"/> which can be used to cancel the operation.
@@ -365,7 +365,7 @@ namespace Harp.Generators.Tests
         }
 
         /// <summary>
-        /// Asynchronously reads the contents of the PortDIOSet register.
+        /// Asynchronously reads the contents of the <see cref="PortDIOSet"/> register.
         /// </summary>
         /// <param name="cancellationToken">
         /// A <see cref="CancellationToken"/> which can be used to cancel the operation.
@@ -381,7 +381,7 @@ namespace Harp.Generators.Tests
         }
 
         /// <summary>
-        /// Asynchronously reads the timestamped contents of the PortDIOSet register.
+        /// Asynchronously reads the timestamped contents of the <see cref="PortDIOSet"/> register.
         /// </summary>
         /// <param name="cancellationToken">
         /// A <see cref="CancellationToken"/> which can be used to cancel the operation.
@@ -397,7 +397,7 @@ namespace Harp.Generators.Tests
         }
 
         /// <summary>
-        /// Asynchronously writes a value to the PortDIOSet register.
+        /// Asynchronously writes a value to the <see cref="PortDIOSet"/> register.
         /// </summary>
         /// <param name="value">The value to be stored in the register.</param>
         /// <param name="cancellationToken">
@@ -411,7 +411,7 @@ namespace Harp.Generators.Tests
         }
 
         /// <summary>
-        /// Asynchronously reads the contents of the PulseDOPort0 register.
+        /// Asynchronously reads the contents of the <see cref="PulseDOPort0"/> register.
         /// </summary>
         /// <param name="cancellationToken">
         /// A <see cref="CancellationToken"/> which can be used to cancel the operation.
@@ -427,7 +427,7 @@ namespace Harp.Generators.Tests
         }
 
         /// <summary>
-        /// Asynchronously reads the timestamped contents of the PulseDOPort0 register.
+        /// Asynchronously reads the timestamped contents of the <see cref="PulseDOPort0"/> register.
         /// </summary>
         /// <param name="cancellationToken">
         /// A <see cref="CancellationToken"/> which can be used to cancel the operation.
@@ -443,7 +443,7 @@ namespace Harp.Generators.Tests
         }
 
         /// <summary>
-        /// Asynchronously writes a value to the PulseDOPort0 register.
+        /// Asynchronously writes a value to the <see cref="PulseDOPort0"/> register.
         /// </summary>
         /// <param name="value">The value to be stored in the register.</param>
         /// <param name="cancellationToken">
@@ -457,7 +457,7 @@ namespace Harp.Generators.Tests
         }
 
         /// <summary>
-        /// Asynchronously reads the contents of the PulseDO0 register.
+        /// Asynchronously reads the contents of the <see cref="PulseDO0"/> register.
         /// </summary>
         /// <param name="cancellationToken">
         /// A <see cref="CancellationToken"/> which can be used to cancel the operation.
@@ -473,7 +473,7 @@ namespace Harp.Generators.Tests
         }
 
         /// <summary>
-        /// Asynchronously reads the timestamped contents of the PulseDO0 register.
+        /// Asynchronously reads the timestamped contents of the <see cref="PulseDO0"/> register.
         /// </summary>
         /// <param name="cancellationToken">
         /// A <see cref="CancellationToken"/> which can be used to cancel the operation.
@@ -489,7 +489,7 @@ namespace Harp.Generators.Tests
         }
 
         /// <summary>
-        /// Asynchronously writes a value to the PulseDO0 register.
+        /// Asynchronously writes a value to the <see cref="PulseDO0"/> register.
         /// </summary>
         /// <param name="value">The value to be stored in the register.</param>
         /// <param name="cancellationToken">
@@ -503,7 +503,7 @@ namespace Harp.Generators.Tests
         }
 
         /// <summary>
-        /// Asynchronously reads the contents of the StartPulse register.
+        /// Asynchronously reads the contents of the <see cref="StartPulse"/> register.
         /// </summary>
         /// <param name="cancellationToken">
         /// A <see cref="CancellationToken"/> which can be used to cancel the operation.
@@ -519,7 +519,7 @@ namespace Harp.Generators.Tests
         }
 
         /// <summary>
-        /// Asynchronously reads the timestamped contents of the StartPulse register.
+        /// Asynchronously reads the timestamped contents of the <see cref="StartPulse"/> register.
         /// </summary>
         /// <param name="cancellationToken">
         /// A <see cref="CancellationToken"/> which can be used to cancel the operation.
@@ -535,7 +535,7 @@ namespace Harp.Generators.Tests
         }
 
         /// <summary>
-        /// Asynchronously writes a value to the StartPulse register.
+        /// Asynchronously writes a value to the <see cref="StartPulse"/> register.
         /// </summary>
         /// <param name="value">The value to be stored in the register.</param>
         /// <param name="cancellationToken">
@@ -549,7 +549,7 @@ namespace Harp.Generators.Tests
         }
 
         /// <summary>
-        /// Asynchronously reads the contents of the StartPulseTrain register.
+        /// Asynchronously reads the contents of the <see cref="StartPulseTrain"/> register.
         /// </summary>
         /// <param name="cancellationToken">
         /// A <see cref="CancellationToken"/> which can be used to cancel the operation.
@@ -565,7 +565,7 @@ namespace Harp.Generators.Tests
         }
 
         /// <summary>
-        /// Asynchronously reads the timestamped contents of the StartPulseTrain register.
+        /// Asynchronously reads the timestamped contents of the <see cref="StartPulseTrain"/> register.
         /// </summary>
         /// <param name="cancellationToken">
         /// A <see cref="CancellationToken"/> which can be used to cancel the operation.
@@ -581,7 +581,7 @@ namespace Harp.Generators.Tests
         }
 
         /// <summary>
-        /// Asynchronously writes a value to the StartPulseTrain register.
+        /// Asynchronously writes a value to the <see cref="StartPulseTrain"/> register.
         /// </summary>
         /// <param name="value">The value to be stored in the register.</param>
         /// <param name="cancellationToken">
