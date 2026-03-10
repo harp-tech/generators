@@ -19,31 +19,23 @@ extern bool (*app_func_wr_pointer[])(void*);
 /************************************************************************/
 /* Initialize app                                                       */
 /************************************************************************/
-static const uint8_t default_device_name[] = "Tests";
+static const uint8_t default_device_name[] = DEVICE_NAME;
 
 void hwbp_app_initialize(void)
-{
-    /* Define versions */
-    uint8_t hwH = MAJOR_HW_VERSION;
-    uint8_t hwL = MINOR_HW_VERSION;
-    uint8_t fwH = MAJOR_FW_VERSION;
-    uint8_t fwL = MINOR_FW_VERSION;
-    uint8_t ass = ASSEMBLY_VERSION;
-    
+{   
    	/* Start core */
-    core_func_start_core(
-        0,
-        hwH, hwL,
-        fwH, fwL,
-        ass,
-        (uint8_t*)(&app_regs),
-        APP_NBYTES_OF_REG_BANK,
-        APP_REGS_ADD_MAX - APP_REGS_ADD_MIN + 1,
+   	core_func_start_core_V2(
+   	    WHO_AM_I,
+   	    MAJOR_HW_VERSION, MINOR_HW_VERSION, PATCH_HW_VERSION,
+   	    MAJOR_FW_VERSION, MINOR_FW_VERSION, PATCH_FW_VERSION,
+   	    (uint8_t*)(&app_regs),
+   	    APP_NBYTES_OF_REG_BANK,
+   	    APP_REGS_ADD_MAX - APP_REGS_ADD_MIN + 1,
    	    default_device_name,
    	    false,	// The device is _not_ able to repeat the harp timestamp clock
    	    false,	// The device is _not_ able to generate the harp timestamp clock
    	    0		// Default timestamp offset
-    );
+   	);
 }
 
 /************************************************************************/
