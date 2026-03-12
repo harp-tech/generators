@@ -156,8 +156,8 @@ typedef struct
 #define ADD_REG_PORT_DIO_SET               41 // U8     
 #define ADD_REG_PULSE_DO_PORT0             42 // U16    
 #define ADD_REG_PULSE_DO0                  43 // U16    
-#define ADD_REG_START_PULSE                37 // U16    
-#define ADD_REG_START_PULSE_TRAIN          38 // U16    
+#define ADD_REG_START_PULSE               100 // U16    Starts a PWM pulse.
+#define ADD_REG_START_PULSE_TRAIN         101 // U16    Starts a PWM pulse train.
 
 /************************************************************************/
 /* Tests registers' memory limits                                       */
@@ -167,7 +167,7 @@ typedef struct
 /************************************************************************/
 /* Memory limits */
 #define APP_REGS_ADD_MIN                    0x20
-#define APP_REGS_ADD_MAX                    0x2B
+#define APP_REGS_ADD_MAX                    0x65
 #define APP_NBYTES_OF_REG_BANK              117
 
 /************************************************************************/

@@ -128,9 +128,10 @@ registers:
     <<: *pulseDO
     address: 43
   StartPulse:
-    address: 37
+    address: 100
     type: U16
     access: Write
+    description: Starts a PWM pulse.
     payloadSpec: &startPulse
       DigitalOutput:
         offset: 0
@@ -141,10 +142,11 @@ registers:
         mask: 0x3FF
         interfaceType: ushort
   StartPulseTrain:
-    address: 38
+    address: 101
     type: U16
     length: 2
     access: Write
+    description: Starts a PWM pulse train.
     payloadSpec:
       <<: *startPulse
       Frequency:

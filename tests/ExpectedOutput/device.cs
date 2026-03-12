@@ -49,8 +49,8 @@ namespace Harp.Generators.Tests
             { 41, typeof(PortDIOSet) },
             { 42, typeof(PulseDOPort0) },
             { 43, typeof(PulseDO0) },
-            { 37, typeof(StartPulse) },
-            { 38, typeof(StartPulseTrain) }
+            { 100, typeof(StartPulse) },
+            { 101, typeof(StartPulseTrain) }
         };
 
         /// <summary>
@@ -1693,15 +1693,15 @@ namespace Harp.Generators.Tests
     }
 
     /// <summary>
-    /// Represents a register that manipulates messages from register StartPulse.
+    /// Represents a register that starts a PWM pulse.
     /// </summary>
-    [Description("")]
+    [Description("Starts a PWM pulse.")]
     public partial class StartPulse
     {
         /// <summary>
         /// Represents the address of the <see cref="StartPulse"/> register. This field is constant.
         /// </summary>
-        public const int Address = 37;
+        public const int Address = 100;
 
         /// <summary>
         /// Represents the payload type of the <see cref="StartPulse"/> register. This field is constant.
@@ -1806,15 +1806,15 @@ namespace Harp.Generators.Tests
     }
 
     /// <summary>
-    /// Represents a register that manipulates messages from register StartPulseTrain.
+    /// Represents a register that starts a PWM pulse train.
     /// </summary>
-    [Description("")]
+    [Description("Starts a PWM pulse train.")]
     public partial class StartPulseTrain
     {
         /// <summary>
         /// Represents the address of the <see cref="StartPulseTrain"/> register. This field is constant.
         /// </summary>
-        public const int Address = 38;
+        public const int Address = 101;
 
         /// <summary>
         /// Represents the payload type of the <see cref="StartPulseTrain"/> register. This field is constant.
@@ -2738,10 +2738,10 @@ namespace Harp.Generators.Tests
 
     /// <summary>
     /// Represents an operator that creates a message payload
-    /// for register StartPulse.
+    /// that starts a PWM pulse.
     /// </summary>
     [DisplayName("StartPulsePayload")]
-    [Description("Creates a message payload for register StartPulse.")]
+    [Description("Creates a message payload that starts a PWM pulse.")]
     public partial class CreateStartPulsePayload
     {
         /// <summary>
@@ -2769,7 +2769,7 @@ namespace Harp.Generators.Tests
         }
 
         /// <summary>
-        /// Creates a message for register StartPulse.
+        /// Creates a message that starts a PWM pulse.
         /// </summary>
         /// <param name="messageType">Specifies the type of the created message.</param>
         /// <returns>A new message for the StartPulse register.</returns>
@@ -2781,14 +2781,14 @@ namespace Harp.Generators.Tests
 
     /// <summary>
     /// Represents an operator that creates a timestamped message payload
-    /// for register StartPulse.
+    /// that starts a PWM pulse.
     /// </summary>
     [DisplayName("TimestampedStartPulsePayload")]
-    [Description("Creates a timestamped message payload for register StartPulse.")]
+    [Description("Creates a timestamped message payload that starts a PWM pulse.")]
     public partial class CreateTimestampedStartPulsePayload : CreateStartPulsePayload
     {
         /// <summary>
-        /// Creates a timestamped message for register StartPulse.
+        /// Creates a timestamped message that starts a PWM pulse.
         /// </summary>
         /// <param name="timestamp">The timestamp of the message payload, in seconds.</param>
         /// <param name="messageType">Specifies the type of the created message.</param>
@@ -2801,10 +2801,10 @@ namespace Harp.Generators.Tests
 
     /// <summary>
     /// Represents an operator that creates a message payload
-    /// for register StartPulseTrain.
+    /// that starts a PWM pulse train.
     /// </summary>
     [DisplayName("StartPulseTrainPayload")]
-    [Description("Creates a message payload for register StartPulseTrain.")]
+    [Description("Creates a message payload that starts a PWM pulse train.")]
     public partial class CreateStartPulseTrainPayload
     {
         /// <summary>
@@ -2848,7 +2848,7 @@ namespace Harp.Generators.Tests
         }
 
         /// <summary>
-        /// Creates a message for register StartPulseTrain.
+        /// Creates a message that starts a PWM pulse train.
         /// </summary>
         /// <param name="messageType">Specifies the type of the created message.</param>
         /// <returns>A new message for the StartPulseTrain register.</returns>
@@ -2860,14 +2860,14 @@ namespace Harp.Generators.Tests
 
     /// <summary>
     /// Represents an operator that creates a timestamped message payload
-    /// for register StartPulseTrain.
+    /// that starts a PWM pulse train.
     /// </summary>
     [DisplayName("TimestampedStartPulseTrainPayload")]
-    [Description("Creates a timestamped message payload for register StartPulseTrain.")]
+    [Description("Creates a timestamped message payload that starts a PWM pulse train.")]
     public partial class CreateTimestampedStartPulseTrainPayload : CreateStartPulseTrainPayload
     {
         /// <summary>
-        /// Creates a timestamped message for register StartPulseTrain.
+        /// Creates a timestamped message that starts a PWM pulse train.
         /// </summary>
         /// <param name="timestamp">The timestamp of the message payload, in seconds.</param>
         /// <param name="messageType">Specifies the type of the created message.</param>

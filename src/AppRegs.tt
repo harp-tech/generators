@@ -132,12 +132,13 @@ foreach (var registerMetadata in DeviceMetadata.Registers)
 foreach (var registerMetadata in DeviceMetadata.Registers)
 {
     var register = registerMetadata.Value;
+    var registerAddress = register.Address.ToString();
     var registerName = FirmwareNamingConvention.Instance.Apply(registerMetadata.Key);
     var registerType = TemplateHelper.GetFirmwareRegisterType(register.Type);
-    var addressOffset = new string(' ', maxRegisterNameLength - registerName.Length + 4);
+    var addressOffset = new string(' ', maxRegisterNameLength - registerName.Length - registerAddress.Length + 6);
     var descriptionOffset = new string(' ', 7 - registerType.Length);
 #>
-#define ADD_REG_<#= registerName #><#= addressOffset #><#= register.Address #> // <#= registerType #><#= descriptionOffset #><#= register.Description #>
+#define ADD_REG_<#= registerName #><#= addressOffset #><#= registerAddress #> // <#= registerType #><#= descriptionOffset #><#= register.Description #>
 <#
 }
 #>
