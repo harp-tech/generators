@@ -3293,7 +3293,11 @@ namespace Harp.Generators.Tests
         DIO0 = 0x1,
         DIO1 = 0x2,
         DIO2 = 0x4,
-        DIO3 = 0x400
+        DIO3 = 0x8,
+        DIPort0 = 0x100,
+        TestDIPort1 = 0x200,
+        SupplyPort0 = 0x400,
+        PortDIO1 = 0x800
     }
 
     /// <summary>

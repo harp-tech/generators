@@ -396,6 +396,9 @@ public sealed class FirmwareNamingConvention : INamingConvention
         var startIndex = 0;
         while (startIndex < value.Length && (char.IsUpper(value[startIndex]) || !char.IsLetter(value[startIndex])))
         {
+            if (startIndex > 1 && (startIndex + 1) < value.Length &&
+                char.IsLetter(value[startIndex + 1]) && char.IsLower(value[startIndex + 1]))
+                break;
             startIndex++;
         }
 

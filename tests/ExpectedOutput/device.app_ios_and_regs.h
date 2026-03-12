@@ -173,14 +173,18 @@ typedef struct
 /************************************************************************/
 /* Registers' bits                                                      */
 /************************************************************************/
-#define B_DIO0              (1<<0)       // 
-#define B_DIO1              (1<<1)       // 
-#define B_DIO2              (1<<2)       // 
-#define B_DIO3              (1<<10)      // 
-#define MSK_PWM_PORT_SEL    0x0F         // 
-#define GM_PWM_PORT_PWM0    0x01         // 
-#define GM_PWM_PORT_PWM1    0x02         // 
-#define GM_PWM_PORT_PWM2    0x04         // 
-#define GM_PWM_PORT_PWM3    0x0A         // 
+#define B_DIO0               (1<<0)       // 
+#define B_DIO1               (1<<1)       // 
+#define B_DIO2               (1<<2)       // 
+#define B_DIO3               (1<<3)       // 
+#define B_DI_PORT0           (1<<8)       // 
+#define B_TEST_DI_PORT1      (1<<9)       // 
+#define B_SUPPLY_PORT0       (1<<10)      // 
+#define B_PORT_DIO1          (1<<11)      // 
+#define MSK_PWM_PORT_SEL     0x0F         // 
+#define GM_PWM_PORT_PWM0     0x01         // 
+#define GM_PWM_PORT_PWM1     0x02         // 
+#define GM_PWM_PORT_PWM2     0x04         // 
+#define GM_PWM_PORT_PWM3     0x0A         // 
 
 #endif /* _APP_REGS_H_ */
