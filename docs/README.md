@@ -6,7 +6,7 @@ Provides a device and IO pin configuration metadata model and a set of [T4 runti
 
 Installation can be done through the `Harp.Generators` NuGet package.
 ```
-dotnet new install Harp.Generators
+dotnet add package Harp.Generators
 ```
 
 ## Editing device metadata
