@@ -61,7 +61,7 @@ static class TestHelper
         {
             var warningString = error.IsWarning ? "warning" : "error";
             errorLog.AppendLine($"{error.FileName}: {warningString}: {error.ErrorText}");
-        }     
+        }
     }
 
     public static void AssertNoGeneratorErrors(CompilerErrorCollection errors)

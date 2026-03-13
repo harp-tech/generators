@@ -1,4 +1,4 @@
-#pragma warning disable IDE0005
+﻿#pragma warning disable IDE0005
 using System;
 #pragma warning restore IDE0005
 using Bonsai.Harp;

@@ -468,7 +468,7 @@ internal static partial class TemplateHelper
     {
         defaultValue ??= minValue;
         var suffix = payloadType == PayloadType.Float ? "F" : string.Empty;
-        return defaultValue.HasValue? $" = {defaultValue}{suffix};" : string.Empty;
+        return defaultValue.HasValue ? $" = {defaultValue}{suffix};" : string.Empty;
     }
 
     public static string GetParseConversion(RegisterInfo register, string expression)
@@ -655,7 +655,7 @@ internal static partial class TemplateHelper
     {
         if (member.HasConverter)
             expression = $"FormatPayload{name}({expression})";
-        
+
         if (member.Length > 0)
             return expression;
 
@@ -835,7 +835,7 @@ class RegisterAccessTypeConverter : IYamlTypeConverter
                 emitter.Emit(new Scalar(access.ToString()));
                 return;
         }
-        
+
         emitter.Emit(new SequenceStart(AnchorName.Empty, TagName.Empty, isImplicit: true, SequenceStyle.Flow));
         if ((access | RegisterAccess.Read) != 0)
             emitter.Emit(new Scalar(nameof(RegisterAccess.Read)));
