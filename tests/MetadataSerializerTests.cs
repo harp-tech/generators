@@ -34,15 +34,16 @@ public sealed class MetadataSerializerTests
     }
 
     [DataTestMethod]
-    [DataRow("core.yml")]
-    [DataRow("device.yml")]
-    public void DeviceMetadata_RoundTripSerializes(string metadataFileName)
+    [DataRow("core.yml", typeof(DeviceInfo))]
+    [DataRow("device.yml", typeof(DeviceInfo))]
+    [DataRow("device.ios.yml", typeof(Dictionary<string, PortPinInfo>))]
+    public void Metadata_RoundTripSerializes(string metadataFileName, Type type)
     {
         metadataFileName = TestHelper.GetMetadataPath(metadataFileName);
         var metadataContents = File.ReadAllText(metadataFileName);
         metadataContents = NormalizeYaml(metadataContents);
 
-        var deviceMetadata = MetadataDeserializer.Instance.Deserialize<DeviceInfo>(metadataContents);
+        var deviceMetadata = MetadataDeserializer.Instance.Deserialize(metadataContents, type);
         var roundTripContents = MetadataSerializer.Instance.Serialize(deviceMetadata);
         try
         {

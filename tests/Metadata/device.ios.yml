@@ -1,5 +1,3 @@
-%YAML 1.1
----
 # yaml-language-server: $schema=https://harp-tech.org/draft-02/schema/ios.json
 DO3:
   port: PORTC
@@ -56,19 +54,19 @@ POKE0_IR:
   port: PORTD
   pinNumber: 4
   direction: input
-  interruptNumber: 0
-  interruptPriority: low
-  triggerMode: toggle
   pinMode: pullup
+  triggerMode: toggle
+  interruptPriority: low
+  interruptNumber: 0
   description: Poke 0 infrared
 POKE0_IO:
   port: PORTD
   pinNumber: 5
   direction: input
-  interruptNumber: 0
-  interruptPriority: "off"
-  triggerMode: toggle
   pinMode: pullup
+  triggerMode: toggle
+  interruptPriority: "off"
+  interruptNumber: 0
   description: Poke 0 DIO
 POKE0_LED:
   port: PORTD
@@ -88,19 +86,19 @@ POKE1_IR:
   port: PORTE
   pinNumber: 4
   direction: input
-  interruptNumber: 0
-  interruptPriority: low
-  triggerMode: toggle
   pinMode: pullup
+  triggerMode: toggle
+  interruptPriority: low
+  interruptNumber: 0
   description: Poke 1 infrared
 POKE1_IO:
   port: PORTE
   pinNumber: 5
   direction: input
-  interruptNumber: 0
-  interruptPriority: "off"
-  triggerMode: toggle
   pinMode: pullup
+  triggerMode: toggle
+  interruptPriority: "off"
+  interruptNumber: 0
   description: Poke 1 DIO
 POKE1_LED:
   port: PORTE
@@ -120,19 +118,19 @@ POKE2_IR:
   port: PORTF
   pinNumber: 4
   direction: input
-  interruptNumber: 0
-  interruptPriority: low
-  triggerMode: toggle
   pinMode: pullup
+  triggerMode: toggle
+  interruptPriority: low
+  interruptNumber: 0
   description: Poke 2 infrared
 POKE2_IO:
   port: PORTF
   pinNumber: 5
   direction: input
-  interruptNumber: 0
-  interruptPriority: "off"
-  triggerMode: toggle
   pinMode: pullup
+  triggerMode: toggle
+  interruptPriority: "off"
+  interruptNumber: 0
   description: Poke 2 DIO
 POKE2_LED:
   port: PORTF
@@ -152,17 +150,17 @@ ADC1_AVAILABLE:
   port: PORTJ
   pinNumber: 0
   direction: input
-  interruptNumber: 0
-  interruptPriority: "off"
-  triggerMode: toggle
   pinMode: pulldown
+  triggerMode: toggle
+  interruptPriority: "off"
+  interruptNumber: 0
   description: ADC1 is available on hardware
 DI3:
   port: PORTH
   pinNumber: 0
   direction: input
-  interruptNumber: 0
-  interruptPriority: low
-  triggerMode: toggle
   pinMode: tristate
+  triggerMode: toggle
+  interruptPriority: low
+  interruptNumber: 0
   description: Input DI3
