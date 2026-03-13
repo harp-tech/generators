@@ -39,6 +39,7 @@ void init_ios(void)
     io_pin2out(&PORTE, 7, OUT_IO_DIGITAL, IN_EN_IO_EN);                  // POKE1_VALVE
     io_pin2out(&PORTF, 6, OUT_IO_DIGITAL, IN_EN_IO_EN);                  // POKE2_LED
     io_pin2out(&PORTF, 7, OUT_IO_DIGITAL, IN_EN_IO_EN);                  // POKE2_VALVE
+    io_pin2out(&PORTC, 0, OUT_IO_WIREDAND, IN_EN_IO_EN);                 // CS0_1
 
     /* Initialize output pins */
     clr_DO3;
@@ -54,6 +55,7 @@ void init_ios(void)
     clr_POKE1_VALVE;
     clr_POKE2_LED;
     clr_POKE2_VALVE;
+    set_CS0_1;
 }
 
 /************************************************************************/

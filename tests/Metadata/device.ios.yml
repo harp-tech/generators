@@ -164,3 +164,11 @@ DI3:
   interruptPriority: low
   interruptNumber: 0
   description: Input DI3
+CS0_1:
+  port: PORTC
+  pinNumber: 0
+  direction: output
+  allowRead: true
+  pinMode: wiredAnd
+  initialState: high
+  description: CS0_1 / CS_ADC0

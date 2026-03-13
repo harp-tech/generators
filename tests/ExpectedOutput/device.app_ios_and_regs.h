@@ -40,6 +40,7 @@ void init_ios(void);
 // POKE1_VALVE             Description: Poke 1 Valve
 // POKE2_LED               Description: Poke 2 digital output
 // POKE2_VALVE             Description: Poke 2 Valve
+// CS0_1                   Description: CS0_1 / CS_ADC0
 
 /* DO3 */
 #define set_DO3 set_io(PORTC, 0)
@@ -118,6 +119,12 @@ void init_ios(void);
 #define clr_POKE2_VALVE clear_io(PORTF, 7)
 #define tgl_POKE2_VALVE toggle_io(PORTF, 7)
 #define read_POKE2_VALVE read_io(PORTF, 7)
+
+/* CS0_1 */
+#define set_CS0_1 set_io(PORTC, 0)
+#define clr_CS0_1 clear_io(PORTC, 0)
+#define tgl_CS0_1 toggle_io(PORTC, 0)
+#define read_CS0_1 read_io(PORTC, 0)
 
 /************************************************************************/
 /* Registers' structure                                                 */
