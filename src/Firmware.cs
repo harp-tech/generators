@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using Bonsai.Harp;
 using YamlDotNet.Core;
+using YamlDotNet.Core.Events;
 using YamlDotNet.Serialization;
 using YamlDotNet.Serialization.NamingConventions;
 
@@ -167,16 +168,20 @@ public class PortPinInfo
     /// <summary>
     /// Specifies the microcontroller port where the pin is located.
     /// </summary>
+    [YamlMember(Order = -1)]
     public string Port;
 
     /// <summary>
     /// Specifies the unique pin number in the defined port.
     /// </summary>
+    [YamlMember(Order = -1, DefaultValuesHandling = DefaultValuesHandling.Preserve)]
     public int PinNumber;
 
     /// <summary>
     /// Specifies whether the pin will be used as input or output.
     /// </summary>
+    [YamlConverter(typeof(LowerCaseEnumTypeConverter))]
+    [YamlMember(Order = -1, DefaultValuesHandling = DefaultValuesHandling.Preserve)]
     public PinDirection Direction;
 
     /// <summary>
@@ -193,21 +198,27 @@ public class InputPinInfo : PortPinInfo
     /// <summary>
     /// Specifies how the input pin is configured to handle floating inputs.
     /// </summary>
+    [YamlConverter(typeof(LowerCaseEnumTypeConverter))]
+    [YamlMember(DefaultValuesHandling = DefaultValuesHandling.Preserve)]
     public InputPinMode PinMode;
 
     /// <summary>
     /// Specifies when the interrupt event for this pin should be triggered.
     /// </summary>
+    [YamlConverter(typeof(LowerCaseEnumTypeConverter))]
     public TriggerMode TriggerMode;
 
     /// <summary>
     /// Specifies the priority of the interrupt event for this pin.
     /// </summary>
+    [YamlConverter(typeof(LowerCaseEnumTypeConverter))]
+    [YamlMember(DefaultValuesHandling = DefaultValuesHandling.Preserve)]
     public InterruptPriority InterruptPriority;
 
     /// <summary>
     /// Specifies the interrupt number associated with this pin.
     /// </summary>
+    [YamlMember(DefaultValuesHandling = DefaultValuesHandling.Preserve)]
     public int InterruptNumber;
 }
 
@@ -219,16 +230,20 @@ public class OutputPinInfo : PortPinInfo
     /// <summary>
     /// Specifies whether reading the state of the output pin is allowed.
     /// </summary>
+    [YamlMember(DefaultValuesHandling = DefaultValuesHandling.Preserve)]
     public bool AllowRead;
 
     /// <summary>
     /// Specifies the output pin wiring configuration.
     /// </summary>
+    [YamlConverter(typeof(CamelCaseEnumTypeConverter))]
     public OutputPinMode PinMode;
 
     /// <summary>
     /// Specifies the initial state of the output pin at boot time.
     /// </summary>
+    [YamlConverter(typeof(LowerCaseEnumTypeConverter))]
+    [YamlMember(DefaultValuesHandling = DefaultValuesHandling.Preserve)]
     public LogicState InitialState;
 
     /// <summary>
@@ -370,6 +385,38 @@ class PortPinInfoTypeConverter(IDeserializer deserializer) : IYamlTypeConverter
     public void WriteYaml(IEmitter emitter, object value, Type type, ObjectSerializer serializer)
     {
         throw new NotImplementedException();
+    }
+}
+
+class LowerCaseEnumTypeConverter : IYamlTypeConverter
+{
+    public static readonly LowerCaseEnumTypeConverter Instance = new();
+
+    public bool Accepts(Type type) => false;
+
+    public object? ReadYaml(IParser parser, Type type, ObjectDeserializer rootDeserializer) => rootDeserializer(type);
+
+    public void WriteYaml(IEmitter emitter, object? value, Type type, ObjectSerializer serializer)
+    {
+        var scalarStyle = ScalarStyle.Any;
+        var scalarValue = LowerCaseNamingConvention.Instance.Apply(value.ToString());
+        if (scalarValue == "off")
+            scalarStyle = ScalarStyle.DoubleQuoted;
+        emitter.Emit(new Scalar(AnchorName.Empty, TagName.Empty, scalarValue, scalarStyle, true, true));
+    }
+}
+
+class CamelCaseEnumTypeConverter : IYamlTypeConverter
+{
+    public static readonly CamelCaseEnumTypeConverter Instance = new();
+
+    public bool Accepts(Type type) => false;
+
+    public object? ReadYaml(IParser parser, Type type, ObjectDeserializer rootDeserializer) => rootDeserializer(type);
+
+    public void WriteYaml(IEmitter emitter, object? value, Type type, ObjectSerializer serializer)
+    {
+        emitter.Emit(new Scalar(CamelCaseNamingConvention.Instance.Apply(value.ToString())));
     }
 }
 

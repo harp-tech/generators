@@ -18,6 +18,8 @@ public static class MetadataSerializer
         .WithTypeConverter(MaskValueTypeConverter.Instance)
         .WithTypeConverter(HarpVersionTypeConverter.Instance)
         .WithTypeConverter(HexValueTypeConverter.Instance)
+        .WithTypeConverter(LowerCaseEnumTypeConverter.Instance)
+        .WithTypeConverter(CamelCaseEnumTypeConverter.Instance)
         .ConfigureDefaultValuesHandling(
             DefaultValuesHandling.OmitNull |
             DefaultValuesHandling.OmitDefaults |

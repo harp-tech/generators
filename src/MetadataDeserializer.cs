@@ -18,6 +18,8 @@ public static class MetadataDeserializer
         .WithTypeConverter(MaskValueTypeConverter.Instance)
         .WithTypeConverter(HarpVersionTypeConverter.Instance)
         .WithTypeConverter(HexValueTypeConverter.Instance)
+        .WithTypeConverter(LowerCaseEnumTypeConverter.Instance)
+        .WithTypeConverter(CamelCaseEnumTypeConverter.Instance)
         .WithPortPinInfoTypeConverter()
         .Build();
 
