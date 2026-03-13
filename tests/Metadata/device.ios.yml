@@ -153,7 +153,6 @@ ADC1_AVAILABLE:
   pinMode: pulldown
   triggerMode: toggle
   interruptPriority: "off"
-  interruptNumber: 0
   description: ADC1 is available on hardware
 DI3:
   port: PORTH
