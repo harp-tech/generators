@@ -109,8 +109,9 @@ if (outputPins.Count > 0)
     foreach (var pin in outputPins)
     {
         var pinName = FirmwareNamingConvention.Instance.Apply(pin.Key);
+        var pinState = pin.Value.InitialState > 0 ? "set" : "clr";
 #>
-    clr_<#= pinName #>;
+    <#= pinState #>_<#= pinName #>;
 <#
     }
 #>
