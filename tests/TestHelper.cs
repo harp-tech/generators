@@ -1,4 +1,6 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using System.CodeDom.Compiler;
+using System.Text;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using YamlDotNet.Core;
 
 namespace Harp.Generators.Tests;
@@ -50,6 +52,21 @@ static class TestHelper
             {
                 Assert.Fail($"The generated output has diverged from the reference: {outputFileName}");
             }
+        }
+    }
+
+    public static void AssertNoGeneratorErrors(CompilerErrorCollection errors)
+    {
+        if (errors.Count > 0)
+        {
+            var errorLog = new StringBuilder();
+            errorLog.AppendLine("Code generation has completed with errors:");
+            foreach (CompilerError error in errors)
+            {
+                var warningString = error.IsWarning ? "warning" : "error";
+                errorLog.AppendLine($"{error.FileName}: {warningString}: {error.ErrorText}");
+            }
+            Assert.Fail(errorLog.ToString());
         }
     }
 }

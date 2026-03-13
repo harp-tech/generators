@@ -32,6 +32,7 @@ public sealed class InterfaceGeneratorTests
         var customImplementation = TestHelper.GetManifestResourceText($"EmbeddedSources.{outputFileName}.cs");
         try
         {
+            TestHelper.AssertNoGeneratorErrors(generator.Errors);
             CompilerTestHelper.CompileFromSource(implementation.Device, implementation.AsyncDevice, payloadExtensions, customImplementation);
             TestHelper.AssertExpectedOutput(implementation.Device, deviceOutputFileName);
             TestHelper.AssertExpectedOutput(implementation.AsyncDevice, asyncDeviceOutputFileName);

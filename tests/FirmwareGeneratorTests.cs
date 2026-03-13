@@ -37,6 +37,7 @@ public sealed class FirmwareGeneratorTests
         var interruptsOutputFileName = $"{outputFileName}.{FirmwareImplementation.InterruptsFileName}";
         try
         {
+            TestHelper.AssertNoGeneratorErrors(generator.Errors);
             TestHelper.AssertExpectedOutput(headers.App, appOutputFileName);
             TestHelper.AssertExpectedOutput(implementation.App, appImplOutputFileName);
             TestHelper.AssertExpectedOutput(headers.AppFuncs, appFuncsOutputFileName);
