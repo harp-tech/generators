@@ -13,6 +13,8 @@ internal abstract class TemplateBase
     private Stack<int> indents;
     
     public virtual IDictionary<string, object> Session { get; set; }
+
+    public string FileName { get; set; } = string.Empty;
     
     public StringBuilder GenerationEnvironment
     {
@@ -20,7 +22,11 @@ internal abstract class TemplateBase
         set => builder = value;
     }
     
-    protected CompilerErrorCollection Errors => errors ??= [];
+    public CompilerErrorCollection Errors
+    {
+        get => errors ??= [];
+        set => errors = value;
+    }
     
     public string CurrentIndent => currentIndent;
     
@@ -31,15 +37,23 @@ internal abstract class TemplateBase
     public abstract string TransformText();
 
     public virtual void Initialize() { }
+
+    public void Initialize(string fileName, CompilerErrorCollection errors, Dictionary<string, object> session)
+    {
+        FileName = fileName;
+        Errors = errors;
+        Session = session;
+        Initialize();
+    }
     
     public void Error(string message)
     {
-        Errors.Add(new CompilerError(null, -1, -1, null, message));
+        Errors.Add(new CompilerError(FileName, -1, -1, null, message));
     }
     
     public void Warning(string message)
     {
-        Errors.Add(new CompilerError(null, -1, -1, null, message)
+        Errors.Add(new CompilerError(FileName, -1, -1, null, message)
         {
             IsWarning = true
         });

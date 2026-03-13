@@ -1,6 +1,6 @@
-﻿using System.Collections;
+﻿using System.CodeDom.Compiler;
+using System.Collections;
 using System.Collections.Generic;
-using System.IO;
 
 namespace Harp.Generators;
 
@@ -11,6 +11,7 @@ public sealed class InterfaceGenerator
 {
     readonly Device _deviceTemplate = new();
     readonly AsyncDevice _asyncDeviceTemplate = new();
+    readonly CompilerErrorCollection errors = [];
 
     /// <summary>
     /// Initializes a new instance of the <see cref="InterfaceGenerator"/> class with the
@@ -25,11 +26,14 @@ public sealed class InterfaceGenerator
             { "Namespace", ns },
             { "DeviceMetadata", deviceMetadata }
         };
-        _deviceTemplate.Session = session;
-        _asyncDeviceTemplate.Session = session;
-        _deviceTemplate.Initialize();
-        _asyncDeviceTemplate.Initialize();
+        _deviceTemplate.Initialize(InterfaceImplementation.DeviceFileName, errors, session);
+        _asyncDeviceTemplate.Initialize(InterfaceImplementation.AsyncDeviceFileName, errors, session);
     }
+
+    /// <summary>
+    /// Gets the collection of errors emitted during the code generation process.
+    /// </summary>
+    public CompilerErrorCollection Errors => errors;
 
     /// <summary>
     /// Generates a device interface implementation complying with the specified metadata file.

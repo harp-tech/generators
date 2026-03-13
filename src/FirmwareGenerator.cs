@@ -1,6 +1,6 @@
-﻿using System.Collections;
+﻿using System.CodeDom.Compiler;
+using System.Collections;
 using System.Collections.Generic;
-using System.IO;
 
 namespace Harp.Generators;
 
@@ -16,6 +16,7 @@ public class FirmwareGenerator
     readonly AppRegs _appRegsTemplate = new();
     readonly AppRegsImpl _appRegsImplTemplate = new();
     readonly Interrupts _interruptsTemplate = new();
+    readonly CompilerErrorCollection errors = [];
 
     /// <summary>
     /// Initializes a new instance of the <see cref="FirmwareGenerator"/> class with the
@@ -30,21 +31,19 @@ public class FirmwareGenerator
             { "DeviceMetadata", deviceMetadata },
             { "PortPinMetadata", portPinMetadata }
         };
-        _appTemplate.Session = session;
-        _appImplTemplate.Session = session;
-        _appFuncsTemplate.Session = session;
-        _appFuncsImplTemplate.Session = session;
-        _appRegsTemplate.Session = session;
-        _appRegsImplTemplate.Session = session;
-        _interruptsTemplate.Session = session;
-        _appTemplate.Initialize();
-        _appImplTemplate.Initialize();
-        _appFuncsTemplate.Initialize();
-        _appFuncsImplTemplate.Initialize();
-        _appRegsTemplate.Initialize();
-        _appRegsImplTemplate.Initialize();
-        _interruptsTemplate.Initialize();
+        _appTemplate.Initialize(FirmwareHeaders.AppFileName, errors, session);
+        _appImplTemplate.Initialize(FirmwareImplementation.AppFileName, errors, session);
+        _appFuncsTemplate.Initialize(FirmwareHeaders.AppFuncsFileName, errors, session);
+        _appFuncsImplTemplate.Initialize(FirmwareImplementation.AppFuncsFileName, errors, session);
+        _appRegsTemplate.Initialize(FirmwareHeaders.AppRegsFileName, errors, session);
+        _appRegsImplTemplate.Initialize(FirmwareImplementation.AppRegsFileName, errors, session);
+        _interruptsTemplate.Initialize(FirmwareImplementation.InterruptsFileName, errors, session);
     }
+
+    /// <summary>
+    /// Gets the collection of errors emitted during the code generation process.
+    /// </summary>
+    public CompilerErrorCollection Errors => errors;
 
     /// <summary>
     /// Generates firmware header files complying with the specified metadata file.
