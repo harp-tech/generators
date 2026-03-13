@@ -72,8 +72,10 @@ if (inputPins.Count > 0)
             var pinInfo = pin.Value;
             var port = pinInfo.Port;
             var pinNumber = pinInfo.PinNumber.ToString();
-            var interruptNumber = pinInfo.InterruptNumber;
             var pinName = FirmwareNamingConvention.Instance.Apply(pin.Key);
+            if (!pinInfo.InterruptNumber.HasValue)
+                Error($"({pinName}) Interrupt number must be specified if interrupt priority is set.");
+            var interruptNumber = pinInfo.InterruptNumber.GetValueOrDefault();
             var interruptPriority = TemplateHelper.GetFirmwareInterruptPriority(pinInfo.InterruptPriority);
             var descriptionPadding = new string(' ', 36 - port.Length - interruptPriority.Length - pinNumber.Length);
 #>

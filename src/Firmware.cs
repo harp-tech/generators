@@ -218,8 +218,7 @@ public class InputPinInfo : PortPinInfo
     /// <summary>
     /// Specifies the interrupt number associated with this pin.
     /// </summary>
-    [YamlMember(DefaultValuesHandling = DefaultValuesHandling.Preserve)]
-    public int InterruptNumber;
+    public int? InterruptNumber;
 }
 
 /// <summary>
