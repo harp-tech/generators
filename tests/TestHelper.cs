@@ -55,16 +55,56 @@ static class TestHelper
         }
     }
 
+    static void AppendCompilerErrors(StringBuilder errorLog, CompilerErrorCollection errors)
+    {
+        foreach (CompilerError error in errors)
+        {
+            var warningString = error.IsWarning ? "warning" : "error";
+            errorLog.AppendLine($"{error.FileName}: {warningString}: {error.ErrorText}");
+        }     
+    }
+
     public static void AssertNoGeneratorErrors(CompilerErrorCollection errors)
     {
         if (errors.Count > 0)
         {
             var errorLog = new StringBuilder();
             errorLog.AppendLine("Code generation has completed with errors:");
+            AppendCompilerErrors(errorLog, errors);
+            Assert.Fail(errorLog.ToString());
+        }
+    }
+
+    public static void AssertExpectedGeneratorErrors(CompilerErrorCollection errors, params string[] expectedErrors)
+    {
+        if (expectedErrors.Length == 0)
+        {
+            AssertNoGeneratorErrors(errors);
+            return;
+        }
+
+        var errorList = expectedErrors.ToList();
+        errorList.RemoveAll(errorText =>
+        {
             foreach (CompilerError error in errors)
             {
-                var warningString = error.IsWarning ? "warning" : "error";
-                errorLog.AppendLine($"{error.FileName}: {warningString}: {error.ErrorText}");
+                if (error.ErrorText.Contains(errorText))
+                    return true;
+            }
+
+            return false;
+        });
+
+        if (errorList.Count > 0)
+        {
+            var errorLog = new StringBuilder();
+            errorLog.AppendLine("Expected code generation errors, but the following errors were not raised:");
+            foreach (var missingError in errorList)
+                errorLog.AppendLine(missingError);
+            if (errors.Count > 0)
+            {
+                errorLog.AppendLine("Code generation has completed with the following errors:");
+                AppendCompilerErrors(errorLog, errors);
             }
             Assert.Fail(errorLog.ToString());
         }

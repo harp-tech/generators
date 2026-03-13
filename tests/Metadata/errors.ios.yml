@@ -1,0 +1,8 @@
+# yaml-language-server: $schema=https://harp-tech.org/draft-02/schema/ios.json
+IO_PULLDOWN:
+  port: PORTJ
+  pinNumber: 0
+  direction: input
+  pinMode: pulldown
+  triggerMode: toggle
+  interruptPriority: low

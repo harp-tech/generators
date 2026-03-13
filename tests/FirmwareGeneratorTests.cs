@@ -17,7 +17,8 @@ public sealed class FirmwareGeneratorTests
 
     [DataTestMethod]
     [DataRow("device.yml")]
-    public void FirmwareTemplate_GenerateAndBuildWithoutErrors(string metadataFileName)
+    [DataRow("errors.yml", "Interrupt number must be specified if interrupt priority is set.")]
+    public void FirmwareTemplate_GenerateAndBuild(string metadataFileName, params string[] expectedErrors)
     {
         metadataFileName = TestHelper.GetMetadataPath(metadataFileName);
         var iosMetadataFileName = Path.ChangeExtension(metadataFileName, ".ios.yml");
@@ -37,7 +38,7 @@ public sealed class FirmwareGeneratorTests
         var interruptsOutputFileName = $"{outputFileName}.{FirmwareImplementation.InterruptsFileName}";
         try
         {
-            TestHelper.AssertNoGeneratorErrors(generator.Errors);
+            TestHelper.AssertExpectedGeneratorErrors(generator.Errors, expectedErrors);
             TestHelper.AssertExpectedOutput(headers.App, appOutputFileName);
             TestHelper.AssertExpectedOutput(implementation.App, appImplOutputFileName);
             TestHelper.AssertExpectedOutput(headers.AppFuncs, appFuncsOutputFileName);

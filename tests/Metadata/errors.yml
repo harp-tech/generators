@@ -1,0 +1,5 @@
+# yaml-language-server: $schema=https://harp-tech.org/draft-02/schema/registers.json
+device: ErrorTests
+firmwareVersion: "0.1"
+hardwareTargets: "1.0"
+registers: {}
