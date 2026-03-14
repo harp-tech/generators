@@ -18,7 +18,7 @@ public class DeviceInfo
     /// <summary>
     /// Specifies the name of the device.
     /// </summary>
-    public string Device;
+    public string Device = "";
 
     /// <summary>
     /// Specifies the unique identifier for this device type.
@@ -28,12 +28,12 @@ public class DeviceInfo
     /// <summary>
     /// Specifies the version of the device firmware.
     /// </summary>
-    public HarpVersion FirmwareVersion;
+    public HarpVersion? FirmwareVersion;
 
     /// <summary>
     /// Specifies the version of the device hardware.
     /// </summary>
-    public HarpVersion HardwareTargets;
+    public HarpVersion? HardwareTargets;
 
     /// <summary>
     /// Specifies the collection of registers implementing the device function.
@@ -151,7 +151,7 @@ public class RegisterInfo
     /// <summary>
     /// Specifies the name of the bit mask or group mask used to represent the payload value.
     /// </summary>
-    public string MaskType;
+    public string MaskType = "";
 
     /// <summary>
     /// Specifies the minimum allowable value for the payload.
@@ -171,7 +171,7 @@ public class RegisterInfo
     /// <summary>
     /// Specifies the name of the type used to represent the payload value in the high-level interface.
     /// </summary>
-    public string InterfaceType;
+    public string InterfaceType = "";
 
     /// <summary>
     /// Specifies a custom converter which will be used to parse or format the payload value.
@@ -187,7 +187,7 @@ public class RegisterInfo
     /// Specifies a collection of payload members describing the contents
     /// of the raw payload value.
     /// </summary>
-    public Dictionary<string, PayloadMemberInfo> PayloadSpec;
+    public Dictionary<string, PayloadMemberInfo>? PayloadSpec;
 
     /// <summary>
     /// Gets a value indicating whether a custom converter will be used to parse or
@@ -229,7 +229,7 @@ public class PayloadMemberInfo
     /// <summary>
     /// Specifies the name of the bit mask or group mask used to represent this payload member.
     /// </summary>
-    public string MaskType;
+    public string MaskType = "";
 
     /// <summary>
     /// Specifies the minimum allowable value for this payload member.
@@ -249,7 +249,7 @@ public class PayloadMemberInfo
     /// <summary>
     /// Specifies the name of the type used to represent this payload member in the high-level interface.
     /// </summary>
-    public string InterfaceType;
+    public string InterfaceType = "";
 
     /// <summary>
     /// Specifies a custom converter which will be used to parse or format this payload member.
@@ -350,7 +350,7 @@ public class MaskValue
     /// <summary>
     /// Specifies a summary description of the mask value function.
     /// </summary>
-    public string Description;
+    public string Description = "";
 }
 
 internal static partial class TemplateHelper
@@ -478,7 +478,9 @@ internal static partial class TemplateHelper
         else if (register.InterfaceType == "string")
             return $"PayloadMarshal.ReadUtf8String({expression})";
         else
-            return GetConversionToInterfaceType(register.InterfaceType ?? register.MaskType, expression);
+            return GetConversionToInterfaceType(
+                string.IsNullOrEmpty(register.InterfaceType) ? register.MaskType : register.InterfaceType,
+                expression);
     }
 
     public static string GetFormatConversion(RegisterInfo register, string expression)
@@ -486,7 +488,10 @@ internal static partial class TemplateHelper
         if (register.PayloadSpec != null || register.InterfaceType == "string" || register.HasConverter)
             return $"FormatPayload({expression})";
         else
-            return GetConversionFromInterfaceType(register.InterfaceType ?? register.MaskType, register.PayloadInterfaceType, expression);
+            return GetConversionFromInterfaceType(
+                string.IsNullOrEmpty(register.InterfaceType) ? register.MaskType : register.InterfaceType,
+                register.PayloadInterfaceType,
+                expression);
     }
 
     public static string GetConversionToInterfaceType(string interfaceType, string expression)
@@ -608,7 +613,9 @@ internal static partial class TemplateHelper
         {
             return $"ParsePayload{name}({expression})";
         }
-        return GetConversionToInterfaceType(member.InterfaceType ?? member.MaskType, expression);
+        return GetConversionToInterfaceType(
+            string.IsNullOrEmpty(member.InterfaceType) ? member.MaskType : member.InterfaceType,
+            expression);
     }
 
     public static string GetPayloadMemberAssignmentFormatter(
@@ -661,7 +668,8 @@ internal static partial class TemplateHelper
 
         var isBoolean = member.InterfaceType == "bool" && !member.HasConverter;
         var payloadInterfaceType = GetInterfaceType(payloadType);
-        if (!string.IsNullOrEmpty(member.InterfaceType ?? member.MaskType))
+        var memberInterfaceType = string.IsNullOrEmpty(member.InterfaceType) ? member.MaskType : member.InterfaceType;
+        if (!string.IsNullOrEmpty(memberInterfaceType))
         {
             if (isBoolean)
             {
@@ -697,10 +705,7 @@ class HarpVersionTypeConverter : IYamlTypeConverter
 {
     public static readonly HarpVersionTypeConverter Instance = new();
 
-    public bool Accepts(Type type)
-    {
-        return type == typeof(HarpVersion);
-    }
+    public bool Accepts(Type type) => type == typeof(HarpVersion);
 
     public object ReadYaml(IParser parser, Type type, ObjectDeserializer rootDeserializer)
     {
@@ -708,12 +713,15 @@ class HarpVersionTypeConverter : IYamlTypeConverter
         return HarpVersion.Parse(scalar.Value);
     }
 
-    public void WriteYaml(IEmitter emitter, object value, Type type, ObjectSerializer serializer)
+    public void WriteYaml(IEmitter emitter, object? value, Type type, ObjectSerializer serializer)
     {
+        if (value is not HarpVersion version)
+            return;
+
         var scalar = new Scalar(
             AnchorName.Empty,
             TagName.Empty,
-            ((HarpVersion)value).ToString(),
+            version.ToString(),
             ScalarStyle.DoubleQuoted,
             isPlainImplicit: false,
             isQuotedImplicit: true);
@@ -727,12 +735,12 @@ class HexValueTypeConverter : IYamlTypeConverter
 
     public bool Accepts(Type type) => false;
 
-    public object ReadYaml(IParser parser, Type type, ObjectDeserializer rootDeserializer)
+    public object? ReadYaml(IParser parser, Type type, ObjectDeserializer rootDeserializer)
     {
         return rootDeserializer(type);
     }
 
-    public void WriteYaml(IEmitter emitter, object value, Type type, ObjectSerializer serializer)
+    public void WriteYaml(IEmitter emitter, object? value, Type type, ObjectSerializer serializer)
     {
         emitter.Emit(new Scalar(string.Format($"0x{value:X}")));
     }
@@ -750,17 +758,14 @@ class MaskValueTypeConverter : IYamlTypeConverter
         .WithTypeConverter(HexValueTypeConverter.Instance)
         .BuildValueSerializer();
 
-    public bool Accepts(Type type)
-    {
-        return type == typeof(MaskValue);
-    }
+    public bool Accepts(Type type) => type == typeof(MaskValue);
 
-    public object ReadYaml(IParser parser, Type type, ObjectDeserializer rootDeserializer)
+    public object? ReadYaml(IParser parser, Type type, ObjectDeserializer rootDeserializer)
     {
-        if (parser.TryConsume(out MappingStart _))
+        if (parser.TryConsume<MappingStart>(out var _))
         {
             var maskValue = new MaskValue();
-            while (!parser.TryConsume(out MappingEnd _))
+            while (!parser.TryConsume<MappingEnd>(out var _))
             {
                 var key = parser.Consume<Scalar>();
                 var value = parser.Consume<Scalar>();
@@ -786,9 +791,11 @@ class MaskValueTypeConverter : IYamlTypeConverter
         }
     }
 
-    public void WriteYaml(IEmitter emitter, object value, Type type, ObjectSerializer serializer)
+    public void WriteYaml(IEmitter emitter, object? value, Type type, ObjectSerializer serializer)
     {
-        var maskValue = (MaskValue)value;
+        if (value is not MaskValue maskValue)
+            return;
+
         if (string.IsNullOrEmpty(maskValue.Description))
             HexValueTypeConverter.Instance.WriteYaml(emitter, maskValue.Value, typeof(int), serializer);
         else
@@ -800,17 +807,14 @@ class RegisterAccessTypeConverter : IYamlTypeConverter
 {
     public static readonly RegisterAccessTypeConverter Instance = new();
 
-    public bool Accepts(Type type)
-    {
-        return type == typeof(RegisterAccess);
-    }
+    public bool Accepts(Type type) => type == typeof(RegisterAccess);
 
-    public object ReadYaml(IParser parser, Type type, ObjectDeserializer rootDeserializer)
+    public object? ReadYaml(IParser parser, Type type, ObjectDeserializer rootDeserializer)
     {
-        if (parser.TryConsume(out SequenceStart _))
+        if (parser.TryConsume<SequenceStart>(out var _))
         {
             RegisterAccess value = 0;
-            while (parser.TryConsume(out Scalar scalar))
+            while (parser.TryConsume<Scalar>(out var scalar))
             {
                 value |= (RegisterAccess)Enum.Parse(typeof(RegisterAccess), scalar.Value);
             }
@@ -824,9 +828,11 @@ class RegisterAccessTypeConverter : IYamlTypeConverter
         }
     }
 
-    public void WriteYaml(IEmitter emitter, object value, Type type, ObjectSerializer serializer)
+    public void WriteYaml(IEmitter emitter, object? value, Type type, ObjectSerializer serializer)
     {
-        var access = (RegisterAccess)value;
+        if (value is not RegisterAccess access)
+            return;
+
         switch (access)
         {
             case RegisterAccess.Read:

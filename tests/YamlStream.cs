@@ -55,8 +55,8 @@ namespace Harp.Generators.Tests
         internal YamlSequenceNode(IParser parser)
         {
             Start = parser.Consume<SequenceStart>();
-            SequenceEnd end;
-            while (!parser.TryConsume(out end))
+            SequenceEnd? end;
+            while (!parser.TryConsume<SequenceEnd>(out end))
             {
                 Children.Add(Parse(parser));
             }
@@ -83,8 +83,8 @@ namespace Harp.Generators.Tests
         internal YamlMappingNode(IParser parser)
         {
             Start = parser.Consume<MappingStart>();
-            MappingEnd end;
-            while (!parser.TryConsume(out end))
+            MappingEnd? end;
+            while (!parser.TryConsume<MappingEnd>(out end))
             {
                 var key = new YamlScalarNode(parser);
                 var value = Parse(parser);
@@ -114,9 +114,9 @@ namespace Harp.Generators.Tests
         {
             public static readonly YamlScalarNodeEqualityComparer Default = new();
 
-            public bool Equals(YamlScalarNode x, YamlScalarNode y)
+            public bool Equals(YamlScalarNode? x, YamlScalarNode? y)
             {
-                return x.Event.Value == y.Event.Value;
+                return x?.Event.Value == y?.Event.Value;
             }
 
             public int GetHashCode([DisallowNull] YamlScalarNode obj)

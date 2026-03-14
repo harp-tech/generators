@@ -7,12 +7,12 @@ namespace Harp.Generators;
 
 internal abstract class TemplateBase
 {
-    private StringBuilder builder;
-    private CompilerErrorCollection errors;
+    private StringBuilder? builder;
+    private CompilerErrorCollection? errors;
     private string currentIndent = string.Empty;
-    private Stack<int> indents;
+    private Stack<int>? indents;
 
-    public virtual IDictionary<string, object> Session { get; set; }
+    public virtual IDictionary<string, object>? Session { get; set; }
 
     public string FileName { get; set; } = string.Empty;
 

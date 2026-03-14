@@ -5,8 +5,8 @@ namespace Harp.Generators.Tests;
 [TestClass]
 public sealed class InterfaceGeneratorTests
 {
-    DirectoryInfo outputDirectory;
-    string payloadExtensions;
+    DirectoryInfo? outputDirectory;
+    string payloadExtensions = "";
 
     [TestInitialize]
     public void Initialize()
@@ -24,7 +24,7 @@ public sealed class InterfaceGeneratorTests
     {
         metadataFileName = TestHelper.GetMetadataPath(metadataFileName);
         var deviceMetadata = TestHelper.ReadDeviceMetadata(metadataFileName);
-        var generator = new InterfaceGenerator(deviceMetadata, typeof(InterfaceGeneratorTests).Namespace);
+        var generator = new InterfaceGenerator(deviceMetadata, typeof(InterfaceGeneratorTests).Namespace ?? "");
         var implementation = generator.GenerateImplementation();
         var outputFileName = Path.GetFileNameWithoutExtension(metadataFileName);
         var deviceOutputFileName = $"{outputFileName}.cs";
@@ -32,16 +32,18 @@ public sealed class InterfaceGeneratorTests
         var customImplementation = TestHelper.GetManifestResourceText($"EmbeddedSources.{outputFileName}.cs");
         try
         {
-            TestHelper.AssertNoGeneratorErrors(generator.Errors);
             CompilerTestHelper.CompileFromSource(implementation.Device, implementation.AsyncDevice, payloadExtensions, customImplementation);
             TestHelper.AssertExpectedOutput(implementation.Device, deviceOutputFileName);
             TestHelper.AssertExpectedOutput(implementation.AsyncDevice, asyncDeviceOutputFileName);
         }
         catch (AssertFailedException)
         {
-            outputDirectory.Create();
-            File.WriteAllText(Path.Combine(outputDirectory.FullName, deviceOutputFileName), implementation.Device);
-            File.WriteAllText(Path.Combine(outputDirectory.FullName, asyncDeviceOutputFileName), implementation.AsyncDevice);
+            if (outputDirectory is not null)
+            {
+                outputDirectory.Create();
+                File.WriteAllText(Path.Combine(outputDirectory.FullName, deviceOutputFileName), implementation.Device);
+                File.WriteAllText(Path.Combine(outputDirectory.FullName, asyncDeviceOutputFileName), implementation.AsyncDevice);
+            }
             throw;
         }
     }

@@ -169,7 +169,7 @@ public class PortPinInfo
     /// Specifies the microcontroller port where the pin is located.
     /// </summary>
     [YamlMember(Order = -1)]
-    public string Port;
+    public string Port = "";
 
     /// <summary>
     /// Specifies the unique pin number in the defined port.
@@ -357,12 +357,9 @@ class PortPinInfoTypeConverter(IDeserializer deserializer) : IYamlTypeConverter
 
     public IDeserializer Deserializer { get; } = deserializer ?? throw new ArgumentNullException(nameof(deserializer));
 
-    public bool Accepts(Type type)
-    {
-        return type == typeof(PortPinInfo);
-    }
+    public bool Accepts(Type type) => type == typeof(PortPinInfo);
 
-    public object ReadYaml(IParser parser, Type type, ObjectDeserializer rootDeserializer)
+    public object? ReadYaml(IParser parser, Type type, ObjectDeserializer rootDeserializer)
     {
         var portPin = Deserializer.Deserialize<Dictionary<object, object>>(parser);
         if (portPin.TryGetValue(DirectionProperty, out object value))
@@ -381,7 +378,7 @@ class PortPinInfoTypeConverter(IDeserializer deserializer) : IYamlTypeConverter
         throw new YamlException($"Required property '{DirectionProperty}' not found when deserializing type '{typeof(PortPinInfo)}'.");
     }
 
-    public void WriteYaml(IEmitter emitter, object value, Type type, ObjectSerializer serializer)
+    public void WriteYaml(IEmitter emitter, object? value, Type type, ObjectSerializer serializer)
     {
         throw new NotImplementedException();
     }
@@ -397,6 +394,9 @@ class LowerCaseEnumTypeConverter : IYamlTypeConverter
 
     public void WriteYaml(IEmitter emitter, object? value, Type type, ObjectSerializer serializer)
     {
+        if (value is null)
+            return;
+
         var scalarStyle = ScalarStyle.Any;
         var scalarValue = LowerCaseNamingConvention.Instance.Apply(value.ToString());
         if (scalarValue == "off")
@@ -415,6 +415,9 @@ class CamelCaseEnumTypeConverter : IYamlTypeConverter
 
     public void WriteYaml(IEmitter emitter, object? value, Type type, ObjectSerializer serializer)
     {
+        if (value is null)
+            return;
+
         emitter.Emit(new Scalar(CamelCaseNamingConvention.Instance.Apply(value.ToString())));
     }
 }

@@ -6,7 +6,7 @@ namespace Harp.Generators.Tests;
 [TestClass]
 public sealed class MetadataSerializerTests
 {
-    DirectoryInfo outputDirectory;
+    DirectoryInfo? outputDirectory;
 
     [TestInitialize]
     public void Initialize()
@@ -51,9 +51,13 @@ public sealed class MetadataSerializerTests
         }
         catch (AssertFailedException)
         {
-            outputDirectory.Create();
-            File.WriteAllText(Path.Combine(outputDirectory.FullName, Path.GetFileName(metadataFileName)), roundTripContents);
-            File.WriteAllText(Path.Combine(outputDirectory.FullName, $"{Path.GetFileNameWithoutExtension(metadataFileName)}_orig.yml"), metadataContents);
+            if (outputDirectory is not null)
+            {
+                outputDirectory.Create();
+                var originalMetadataFileName = $"{Path.GetFileNameWithoutExtension(metadataFileName)}_orig.yml";
+                File.WriteAllText(Path.Combine(outputDirectory.FullName, Path.GetFileName(metadataFileName)), roundTripContents);
+                File.WriteAllText(Path.Combine(outputDirectory.FullName, originalMetadataFileName), metadataContents);
+            }
             throw;
         }
     }

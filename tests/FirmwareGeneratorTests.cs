@@ -5,7 +5,7 @@ namespace Harp.Generators.Tests;
 [TestClass]
 public sealed class FirmwareGeneratorTests
 {
-    DirectoryInfo outputDirectory;
+    DirectoryInfo? outputDirectory;
 
     [TestInitialize]
     public void Initialize()
@@ -49,14 +49,17 @@ public sealed class FirmwareGeneratorTests
         }
         catch (AssertFailedException)
         {
-            outputDirectory.Create();
-            File.WriteAllText(Path.Combine(outputDirectory.FullName, appOutputFileName), headers.App);
-            File.WriteAllText(Path.Combine(outputDirectory.FullName, appImplOutputFileName), implementation.App);
-            File.WriteAllText(Path.Combine(outputDirectory.FullName, appFuncsOutputFileName), headers.AppFuncs);
-            File.WriteAllText(Path.Combine(outputDirectory.FullName, appFuncsImplOutputFileName), implementation.AppFuncs);
-            File.WriteAllText(Path.Combine(outputDirectory.FullName, appRegsOutputFileName), headers.AppRegs);
-            File.WriteAllText(Path.Combine(outputDirectory.FullName, appRegsImplOutputFileName), implementation.AppRegs);
-            File.WriteAllText(Path.Combine(outputDirectory.FullName, interruptsOutputFileName), implementation.Interrupts);
+            if (outputDirectory is not null)
+            {
+                outputDirectory.Create();
+                File.WriteAllText(Path.Combine(outputDirectory.FullName, appOutputFileName), headers.App);
+                File.WriteAllText(Path.Combine(outputDirectory.FullName, appImplOutputFileName), implementation.App);
+                File.WriteAllText(Path.Combine(outputDirectory.FullName, appFuncsOutputFileName), headers.AppFuncs);
+                File.WriteAllText(Path.Combine(outputDirectory.FullName, appFuncsImplOutputFileName), implementation.AppFuncs);
+                File.WriteAllText(Path.Combine(outputDirectory.FullName, appRegsOutputFileName), headers.AppRegs);
+                File.WriteAllText(Path.Combine(outputDirectory.FullName, appRegsImplOutputFileName), implementation.AppRegs);
+                File.WriteAllText(Path.Combine(outputDirectory.FullName, interruptsOutputFileName), implementation.Interrupts);
+            }
             throw;
         }
     }
