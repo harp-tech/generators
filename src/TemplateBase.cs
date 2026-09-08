@@ -125,9 +125,9 @@ internal abstract class TemplateBase
 
             var method = value.GetType().GetMethod(nameof(ToString), [typeof(IFormatProvider)]);
             if (method is not null)
-                return (string)method.Invoke(value, [formatProvider]);
+                return (string?)method.Invoke(value, [formatProvider]) ?? string.Empty;
 
-            return value.ToString();
+            return value.ToString() ?? string.Empty;
         }
     }
 }

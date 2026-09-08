@@ -393,9 +393,9 @@ class PortPinInfoTypeConverter(IDeserializer deserializer) : IYamlTypeConverter
     public object? ReadYaml(IParser parser, Type type, ObjectDeserializer rootDeserializer)
     {
         var portPin = Deserializer.Deserialize<Dictionary<object, object>>(parser);
-        if (portPin.TryGetValue(DirectionProperty, out object value))
+        if (portPin.TryGetValue(DirectionProperty, out var value))
         {
-            var pinDirection = PascalCaseNamingConvention.Instance.Apply((string)value);
+            var pinDirection = PascalCaseNamingConvention.Instance.Apply(value as string ?? string.Empty);
             Type portPinType = pinDirection switch
             {
                 nameof(PinDirection.Input) => typeof(InputPinInfo),
@@ -429,7 +429,7 @@ class LowerCaseEnumTypeConverter : IYamlTypeConverter
             return;
 
         var scalarStyle = ScalarStyle.Any;
-        var scalarValue = LowerCaseNamingConvention.Instance.Apply(value.ToString());
+        var scalarValue = LowerCaseNamingConvention.Instance.Apply(value.ToString() ?? string.Empty);
         if (scalarValue == "off")
             scalarStyle = ScalarStyle.DoubleQuoted;
         emitter.Emit(new Scalar(AnchorName.Empty, TagName.Empty, scalarValue, scalarStyle, true, true));
@@ -449,7 +449,7 @@ class CamelCaseEnumTypeConverter : IYamlTypeConverter
         if (value is null)
             return;
 
-        emitter.Emit(new Scalar(CamelCaseNamingConvention.Instance.Apply(value.ToString())));
+        emitter.Emit(new Scalar(CamelCaseNamingConvention.Instance.Apply(value.ToString() ?? string.Empty)));
     }
 }
 

@@ -561,9 +561,9 @@ internal static partial class TemplateHelper
         out PayloadType payloadType)
     {
         interfaceType = GetInterfaceType(member, register.Type);
-        if (deviceMetadata.GroupMasks.TryGetValue(interfaceType, out GroupMaskInfo groupMask))
+        if (deviceMetadata.GroupMasks.TryGetValue(interfaceType, out var groupMask))
             interfaceType = groupMask.InterfaceType;
-        else if (deviceMetadata.BitMasks.TryGetValue(interfaceType, out BitMaskInfo bitMask))
+        else if (deviceMetadata.BitMasks.TryGetValue(interfaceType, out var bitMask))
             interfaceType = bitMask.InterfaceType;
 
         if (GetInterfaceTypeSize(interfaceType, out payloadType, out int size))

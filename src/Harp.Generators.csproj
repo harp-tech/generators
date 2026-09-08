@@ -3,7 +3,7 @@
   <PropertyGroup>
     <Description>Provides source generators for Harp device firmware and software interface.</Description>
     <PackageTags>$(PackageTags) Device Firmware Interface</PackageTags>
-    <TargetFramework>netstandard2.0</TargetFramework>
+    <TargetFramework>net8.0</TargetFramework>
   </PropertyGroup>
 
   <ItemGroup>
@@ -17,7 +17,7 @@
   <ItemGroup>
     <PackageReference Include="Bonsai.Harp" Version="3.5.0" />
     <PackageReference Include="YamlDotNet" Version="16.3.0" />
-    <PackageReference Include="T4.BuildTools" Version="3.0.0" />
+    <PackageReference Include="T4.BuildTools" Version="3.0.0" PrivateAssets="all" />
   </ItemGroup>
 
 </Project>
