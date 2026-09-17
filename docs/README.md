@@ -70,6 +70,8 @@ var implementation = generator.GenerateImplementation();
 
 The generated module declares a class for every register, together with the enum and payload types they are built from, and an address to class `REGISTER_MAP`. Converters outside the standard set are imported from a companion `converters` module, written by hand alongside the generated one.
 
+The module is generated as a package initializer, so the output directory alone determines the import path. Writing the implementation into `src/mypackage/mydevice` produces the `mypackage.mydevice` package, with the companion `converters` module beside it in the same directory.
+
 ## Contributing
 
 Bug reports and contributions are welcome at [the GitHub repository](https://github.com/harp-tech/generators).

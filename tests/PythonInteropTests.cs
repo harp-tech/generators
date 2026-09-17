@@ -47,8 +47,7 @@ public sealed class PythonInteropTests
         Directory.CreateDirectory(packageDirectory);
         Directory.CreateDirectory(dataDirectory);
 
-        File.WriteAllText(Path.Combine(packageDirectory, "device.py"), pythonImplementation.Device);
-        File.WriteAllText(Path.Combine(packageDirectory, "__init__.py"), string.Empty);
+        File.WriteAllText(Path.Combine(packageDirectory, PythonImplementation.DeviceFileName), pythonImplementation.Device);
         File.WriteAllText(Path.Combine(packageDirectory, "converters.py"), TestHelper.GetManifestResourceText("Python.converters.py"));
         File.WriteAllText(Path.Combine(outputDirectory, DeviceMetadataFileName), File.ReadAllText(metadataPath));
 

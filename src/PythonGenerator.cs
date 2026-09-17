@@ -49,7 +49,11 @@ public record struct PythonImplementation(string Device)
     /// <summary>
     /// Represents the default name for the file storing the device register interface source code.
     /// </summary>
-    public const string DeviceFileName = "device.py";
+    /// <remarks>
+    /// The interface is generated as a package initializer, so the output directory alone
+    /// determines the import path of the generated module.
+    /// </remarks>
+    public const string DeviceFileName = "__init__.py";
 
     /// <summary>
     /// Returns an enumerator that iterates through all the source code files in the
