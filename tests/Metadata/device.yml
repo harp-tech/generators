@@ -31,6 +31,10 @@ registers:
       PwmPort:
         offset: 0
         maskType: PwmPort
+      Invert:
+        offset: 1
+        defaultValue: 1
+        interfaceType: bool
       DutyCycle:
         offset: 4
         length: 4

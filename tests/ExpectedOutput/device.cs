@@ -687,6 +687,7 @@ namespace Harp.Generators.Tests
         {
             ComplexConfigurationPayload result;
             result.PwmPort = (PwmPort)payload[0];
+            result.Invert = payload[1] != 0;
             result.DutyCycle = PayloadMarshal.ReadSingle(new ArraySegment<byte>(payload, 4, 4));
             result.Frequency = PayloadMarshal.ReadSingle(new ArraySegment<byte>(payload, 8, 4));
             result.EventsEnabled = payload[12] != 0;
@@ -699,6 +700,7 @@ namespace Harp.Generators.Tests
             byte[] result;
             result = new byte[17];
             result[0] = (byte)value.PwmPort;
+            result[1] = (byte)(value.Invert ? 1 : 0);
             PayloadMarshal.Write(new ArraySegment<byte>(result, 4, 4), value.DutyCycle);
             PayloadMarshal.Write(new ArraySegment<byte>(result, 8, 4), value.Frequency);
             result[12] = (byte)(value.EventsEnabled ? 1 : 0);
@@ -2578,6 +2580,12 @@ namespace Harp.Generators.Tests
         public PwmPort PwmPort { get; set; }
 
         /// <summary>
+        /// Gets or sets a value to write on payload member Invert.
+        /// </summary>
+        [Description("")]
+        public bool Invert { get; set; } = true;
+
+        /// <summary>
         /// Gets or sets a value to write on payload member DutyCycle.
         /// </summary>
         [Description("")]
@@ -2609,6 +2617,7 @@ namespace Harp.Generators.Tests
         {
             ComplexConfigurationPayload value;
             value.PwmPort = PwmPort;
+            value.Invert = Invert;
             value.DutyCycle = DutyCycle;
             value.Frequency = Frequency;
             value.EventsEnabled = EventsEnabled;
@@ -3631,18 +3640,21 @@ namespace Harp.Generators.Tests
         /// Initializes a new instance of the <see cref="ComplexConfigurationPayload"/> structure.
         /// </summary>
         /// <param name="pwmPort"></param>
+        /// <param name="invert"></param>
         /// <param name="dutyCycle"></param>
         /// <param name="frequency"></param>
         /// <param name="eventsEnabled"></param>
         /// <param name="delta"></param>
         public ComplexConfigurationPayload(
             PwmPort pwmPort,
+            bool invert,
             float dutyCycle,
             float frequency,
             bool eventsEnabled,
             uint delta)
         {
             PwmPort = pwmPort;
+            Invert = invert;
             DutyCycle = dutyCycle;
             Frequency = frequency;
             EventsEnabled = eventsEnabled;
@@ -3653,6 +3665,11 @@ namespace Harp.Generators.Tests
         /// 
         /// </summary>
         public PwmPort PwmPort;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public bool Invert;
 
         /// <summary>
         /// 
@@ -3686,6 +3703,7 @@ namespace Harp.Generators.Tests
         {
             return "ComplexConfigurationPayload { " +
                 "PwmPort = " + PwmPort + ", " +
+                "Invert = " + Invert + ", " +
                 "DutyCycle = " + DutyCycle + ", " +
                 "Frequency = " + Frequency + ", " +
                 "EventsEnabled = " + EventsEnabled + ", " +

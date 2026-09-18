@@ -113,6 +113,7 @@ class ComplexConfigurationPayload(StructPayload[np.uint8], length=17):
     """Represents the payload of the ComplexConfiguration register."""
 
     pwm_port: PwmPort = GroupMask(enum=PwmPort, mask=0xFF)
+    invert: bool = Field(BoolConverter(), offset=1, default=True)
     duty_cycle: np.float32 = Field(IdentityConverter(np.float32), offset=4)
     frequency: np.float32 = Field(IdentityConverter(np.float32), offset=8)
     events_enabled: bool = Field(BoolConverter(), offset=12)
