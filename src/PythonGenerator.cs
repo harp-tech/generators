@@ -46,17 +46,17 @@ public sealed class PythonGenerator
     /// </summary>
     /// <returns>The generated device interface implementation.</returns>
     public PythonImplementation GenerateImplementation() =>
-        new(Device: _deviceTemplate.TransformText(), Package: isPackage);
+        new(Device: _deviceTemplate.TransformText(), IsPackage: isPackage);
 }
 
 /// <summary>
 /// Represents the generated Python device interface implementation.
 /// </summary>
 /// <param name="Device">The generated source code implementing the device register interface.</param>
-/// <param name="Package">
+/// <param name="IsPackage">
 /// Indicates whether the device register interface is generated as a package initializer.
 /// </param>
-public record struct PythonImplementation(string Device, bool Package = false)
+public record struct PythonImplementation(string Device, bool IsPackage = false)
     : IEnumerable<KeyValuePair<string, string>>
 {
     /// <summary>
@@ -88,8 +88,8 @@ public record struct PythonImplementation(string Device, bool Package = false)
     /// </returns>
     public readonly IEnumerator<KeyValuePair<string, string>> GetEnumerator()
     {
-        yield return new(Package ? PackageFileName : DeviceFileName, Device);
-        if (Package)
+        yield return new(IsPackage ? PackageFileName : DeviceFileName, Device);
+        if (IsPackage)
             yield return new(TypedMarkerFileName, string.Empty);
     }
 
