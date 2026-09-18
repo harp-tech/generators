@@ -745,7 +745,7 @@ foreach (var registerMetadata in publicRegisters)
 {
     var register = registerMetadata.Value;
     var interfaceType = TemplateHelper.GetInterfaceType(registerMetadata.Key, register);
-    var defaultValue = TemplateHelper.GetDefaultValueAssignment(register.DefaultValue, register.MinValue, register.Type);
+    var defaultValue = TemplateHelper.GetDefaultValueAssignment(register.DefaultValue, register.MinValue, register.Type, interfaceType);
     var summaryDescription = string.IsNullOrEmpty(register.Description)
         ? $"for register {registerMetadata.Key}"
         : $"that {char.ToLower(register.Description[0])}{register.Description.Substring(1).TrimEnd('.')}";
@@ -764,7 +764,7 @@ foreach (var registerMetadata in publicRegisters)
         foreach (var member in register.PayloadSpec)
         {
             var memberType = TemplateHelper.GetInterfaceType(member.Value, register.Type);
-            defaultValue = TemplateHelper.GetDefaultValueAssignment(member.Value.DefaultValue, member.Value.MinValue, register.Type);
+            defaultValue = TemplateHelper.GetDefaultValueAssignment(member.Value.DefaultValue, member.Value.MinValue, register.Type, memberType);
             var memberDescription = string.IsNullOrEmpty(member.Value.Description)
                 ? $"to write on payload member {member.Key}"
                 : $"that {char.ToLower(member.Value.Description[0])}{member.Value.Description.Substring(1).TrimEnd('.')}";

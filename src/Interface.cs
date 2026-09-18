@@ -484,11 +484,21 @@ internal static partial class TemplateHelper
         return $"[Range(min: {minValueDeclaration}, max: {maxValueDeclaration})]";
     }
 
-    public static string GetDefaultValueAssignment(float? defaultValue, float? minValue, PayloadType payloadType)
+    public static string GetDefaultValueAssignment(
+        float? defaultValue,
+        float? minValue,
+        PayloadType payloadType,
+        string interfaceType)
     {
         defaultValue ??= minValue;
+        if (!defaultValue.HasValue)
+            return string.Empty;
+
+        if (interfaceType == "bool")
+            return $" = {(defaultValue.GetValueOrDefault() != 0 ? "true" : "false")};";
+
         var suffix = payloadType == PayloadType.Float ? "F" : string.Empty;
-        return defaultValue.HasValue ? $" = {defaultValue}{suffix};" : string.Empty;
+        return $" = {defaultValue}{suffix};";
     }
 
     public static string GetParseConversion(RegisterInfo register, string expression)
