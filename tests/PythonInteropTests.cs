@@ -32,7 +32,7 @@ public sealed class PythonInteropTests
         var deviceMetadata = TestHelper.ReadDeviceMetadata(metadataPath);
 
         var interfaceImplementation = new InterfaceGenerator(deviceMetadata, typeof(PythonInteropTests).Namespace ?? "").GenerateImplementation();
-        var pythonImplementation = new PythonGenerator(deviceMetadata).GenerateImplementation();
+        var pythonImplementation = new PythonGenerator(deviceMetadata, package: true).GenerateImplementation();
         var payloadExtensions = TestHelper.GetManifestResourceText("PayloadMarshal.cs");
         var customImplementation = TestHelper.GetManifestResourceText("EmbeddedSources.device.cs");
         var assembly = CompilerTestHelper.CompileAndLoadFromSource(
@@ -47,8 +47,11 @@ public sealed class PythonInteropTests
         Directory.CreateDirectory(packageDirectory);
         Directory.CreateDirectory(dataDirectory);
 
-        File.WriteAllText(Path.Combine(packageDirectory, "device.py"), pythonImplementation.Device);
-        File.WriteAllText(Path.Combine(packageDirectory, "__init__.py"), string.Empty);
+        foreach (var sourceFile in pythonImplementation)
+        {
+            File.WriteAllText(Path.Combine(packageDirectory, sourceFile.Key), sourceFile.Value);
+        }
+
         File.WriteAllText(Path.Combine(packageDirectory, "converters.py"), TestHelper.GetManifestResourceText("Python.converters.py"));
         File.WriteAllText(Path.Combine(outputDirectory, DeviceMetadataFileName), File.ReadAllText(metadataPath));
 

@@ -77,7 +77,7 @@ def _canonical(value) -> object:
 
 @pytest.fixture(scope="module")
 def device_module():
-    import harp_device.device as device
+    import harp_device as device
     return device
 
 
