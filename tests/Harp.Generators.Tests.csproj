@@ -21,6 +21,7 @@
   <ItemGroup>
     <Compile Remove="EmbeddedSources\*.cs" />
     <EmbeddedResource Include="EmbeddedSources\*.cs" />
+    <EmbeddedResource Include="HarpVersion.cs" />
     <EmbeddedResource Include="PayloadMarshal.cs" />
     <EmbeddedResource Include="Python\converters.py" />
   </ItemGroup>

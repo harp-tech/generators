@@ -7,19 +7,14 @@ namespace Harp.Generators.Tests;
 
 internal static partial class PayloadMarshal
 {
-    internal static HarpVersion ReadHarpVersion(ArraySegment<byte> segment)
+    internal static HarpVersion ReadHarpVersion(byte[] array, int offset)
     {
-        var major = segment.Array?[segment.Offset];
-        var minor = segment.Array?[segment.Offset + 1];
-        return new HarpVersion(major, minor);
+        return new HarpVersion(array[offset], array[offset + 1]);
     }
 
-    internal static void Write(ArraySegment<byte> segment, HarpVersion value)
+    internal static void Write(byte[] array, int offset, int count, HarpVersion value)
     {
-        if (segment.Array is null)
-            return;
-
-        segment.Array[segment.Offset] = (byte)value.Major.GetValueOrDefault();
-        segment.Array[segment.Offset + 1] = (byte)value.Minor.GetValueOrDefault();
+        array[offset] = (byte)value.Major;
+        array[offset + 1] = (byte)value.Minor;
     }
 }
