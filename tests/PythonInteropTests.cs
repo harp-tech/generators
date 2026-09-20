@@ -34,11 +34,13 @@ public sealed class PythonInteropTests
         var interfaceImplementation = new InterfaceGenerator(deviceMetadata, typeof(PythonInteropTests).Namespace ?? "").GenerateImplementation();
         var pythonImplementation = new PythonGenerator(deviceMetadata, package: true).GenerateImplementation();
         var payloadExtensions = TestHelper.GetManifestResourceText("PayloadMarshal.cs");
+        var interfaceTypes = TestHelper.GetManifestResourceText("HarpVersion.cs");
         var customImplementation = TestHelper.GetManifestResourceText("EmbeddedSources.device.cs");
         var assembly = CompilerTestHelper.CompileAndLoadFromSource(
             interfaceImplementation.Device,
             interfaceImplementation.AsyncDevice,
             payloadExtensions,
+            interfaceTypes,
             customImplementation);
 
         var outputDirectory = ResolveOutputDirectory();
@@ -165,7 +167,7 @@ static class InteropValue
             return seed % 2 == 1;
         if (type.IsEnum)
             return SmallestFittingEnumValue(type, range);
-        if (type.FullName == "Bonsai.Harp.HarpVersion")
+        if (type.FullName == typeof(HarpVersion).FullName)
             return BuildHarpVersion(type, seed);
         if (type == typeof(float))
             return seed + 0.5f;
@@ -240,7 +242,7 @@ static class InteropValue
         if (type == typeof(bool)) return (bool)value ? "1" : "0";
         if (type == typeof(string)) return $"\"{value}\"";
         if (type.IsEnum) return Convert.ToInt64(value, CultureInfo.InvariantCulture).ToString(CultureInfo.InvariantCulture);
-        if (type.FullName == "Bonsai.Harp.HarpVersion") return HarpVersionToJson(value);
+        if (type.FullName == typeof(HarpVersion).FullName) return HarpVersionToJson(value);
         if (type == typeof(float) || type == typeof(double))
             return Convert.ToDouble(value, CultureInfo.InvariantCulture).ToString("0.000", CultureInfo.InvariantCulture);
         if (type.IsArray)

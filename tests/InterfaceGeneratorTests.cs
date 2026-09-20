@@ -7,11 +7,13 @@ public sealed class InterfaceGeneratorTests
 {
     DirectoryInfo? outputDirectory;
     string payloadExtensions = "";
+    string interfaceTypes = "";
 
     [TestInitialize]
     public void Initialize()
     {
         payloadExtensions = TestHelper.GetManifestResourceText("PayloadMarshal.cs");
+        interfaceTypes = TestHelper.GetManifestResourceText("HarpVersion.cs");
         outputDirectory = Directory.CreateDirectory("InterfaceOutput");
         try { Directory.Delete(outputDirectory.FullName, recursive: true); }
         catch { } // best effort
@@ -32,7 +34,7 @@ public sealed class InterfaceGeneratorTests
         var customImplementation = TestHelper.GetManifestResourceText($"EmbeddedSources.{outputFileName}.cs");
         try
         {
-            CompilerTestHelper.CompileFromSource(implementation.Device, implementation.AsyncDevice, payloadExtensions, customImplementation);
+            CompilerTestHelper.CompileFromSource(implementation.Device, implementation.AsyncDevice, payloadExtensions, interfaceTypes, customImplementation);
             TestHelper.AssertExpectedOutput(implementation.Device, deviceOutputFileName);
             if (deviceMetadata.IsApplicationDevice)
                 TestHelper.AssertExpectedOutput(implementation.AsyncDevice, asyncDeviceOutputFileName);

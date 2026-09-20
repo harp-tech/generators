@@ -14,37 +14,37 @@ namespace Harp.Generators.Tests
 
         private static partial uint[] FormatPayload(HarpVersion value)
         {
-            return new[] { (uint)value.Major.GetValueOrDefault(), (uint)value.Minor.GetValueOrDefault() };
+            return new[] { (uint)value.Major, (uint)value.Minor };
         }
     }
 
     public partial class CustomRawPayload
     {
-        private static partial HarpVersion ParsePayload(ArraySegment<byte> payload)
+        private static partial HarpVersion ParsePayload(byte[] payload, int offset, int count)
         {
-            return PayloadMarshal.ReadHarpVersion(payload);
+            return PayloadMarshal.ReadHarpVersion(payload, offset);
         }
 
-        private static partial ArraySegment<byte> FormatPayload(HarpVersion value)
+        private static partial byte[] FormatPayload(HarpVersion value)
         {
-            var result = new ArraySegment<byte>(new byte[sizeof(uint) * RegisterLength]);
-            PayloadMarshal.Write(result, value);
+            var result = new byte[sizeof(uint) * RegisterLength];
+            PayloadMarshal.Write(result, 0, result.Length, value);
             return result;
         }
     }
 
     public partial class CustomMemberConverter
     {
-        private static partial int ParsePayloadData(ArraySegment<byte> payloadData)
+        private static partial int ParsePayloadData(byte[] payloadData, int offset, int count)
         {
-            return PayloadMarshal.ReadInt16(payloadData);
+            return PayloadMarshal.ReadInt16(payloadData, offset);
         }
 
         private static partial byte[] FormatPayloadData(int data)
         {
-            var result = new ArraySegment<byte>(new byte[2]);
-            PayloadMarshal.Write(result, (short)data);
-            return result.Array;
+            var result = new byte[2];
+            PayloadMarshal.Write(result, 0, (short)data);
+            return result;
         }
     }
     
