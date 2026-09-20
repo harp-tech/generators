@@ -1059,8 +1059,8 @@ namespace Harp.Generators.Tests
         /// <returns>A value representing the timestamped message payload.</returns>
         public static Timestamped<OperationControlPayload> GetTimestampedPayload(HarpMessage message)
         {
-            var payload = message.GetTimestampedPayloadByte();
-            return Timestamped.Create(ParsePayload(payload.Value), payload.Seconds);
+            var (payload, timestamp) = message.GetTimestampedPayloadByte();
+            return Timestamped.Create(ParsePayload(payload), timestamp);
         }
 
         /// <summary>
@@ -1156,8 +1156,8 @@ namespace Harp.Generators.Tests
         /// <returns>A value representing the timestamped message payload.</returns>
         public static Timestamped<ResetFlags> GetTimestampedPayload(HarpMessage message)
         {
-            var payload = message.GetTimestampedPayloadByte();
-            return Timestamped.Create((ResetFlags)payload.Value, payload.Seconds);
+            var (payload, timestamp) = message.GetTimestampedPayloadByte();
+            return Timestamped.Create((ResetFlags)payload, timestamp);
         }
 
         /// <summary>
@@ -1261,9 +1261,8 @@ namespace Harp.Generators.Tests
         /// <returns>A value representing the timestamped message payload.</returns>
         public static Timestamped<string> GetTimestampedPayload(HarpMessage message)
         {
-            var payload = message.GetTimestampedPayload();
-            var value = payload.Value;
-            return Timestamped.Create(PayloadMarshal.ReadUtf8String(value.Array!, value.Offset, value.Count), payload.Seconds);
+            var (payload, timestamp) = message.GetTimestampedPayload();
+            return Timestamped.Create(PayloadMarshal.ReadUtf8String(payload.Array!, payload.Offset, payload.Count), timestamp);
         }
 
         /// <summary>
@@ -1455,8 +1454,8 @@ namespace Harp.Generators.Tests
         /// <returns>A value representing the timestamped message payload.</returns>
         public static Timestamped<ClockConfigurationFlags> GetTimestampedPayload(HarpMessage message)
         {
-            var payload = message.GetTimestampedPayloadByte();
-            return Timestamped.Create((ClockConfigurationFlags)payload.Value, payload.Seconds);
+            var (payload, timestamp) = message.GetTimestampedPayloadByte();
+            return Timestamped.Create((ClockConfigurationFlags)payload, timestamp);
         }
 
         /// <summary>

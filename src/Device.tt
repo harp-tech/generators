@@ -461,10 +461,10 @@ foreach (var registerMetadata in deviceRegisters)
     var rawPayloadConverter = register.Converter == MemberConverter.RawPayload;
     var parsePayloadSelector = $"message.GetPayload{parsePayloadSuffix}()";
     var parseConversion = TemplateHelper.GetParseConversion(register, rawPayload ? "payload" : parsePayloadSelector);
+    var hasParseConversion = parseConversion != parsePayloadSelector;
 
-    var payloadValueSelector = "payload.Value";
     var timestampedPayloadSelector = $"message.GetTimestampedPayload{parsePayloadSuffix}()";
-    var timestampedParseConversion = TemplateHelper.GetParseConversion(register, rawPayload ? "value" : payloadValueSelector);
+    var timestampedParseConversion = TemplateHelper.GetParseConversion(register, "payload");
 
     var formatPayloadSuffix = rawPayload ? "Payload" : TemplateHelper.GetPayloadTypeSuffix(register.Type);
     var formatConversion = TemplateHelper.GetFormatConversion(register, "value");
@@ -641,19 +641,11 @@ if (isPrivate)
         public static Timestamped<<#= interfaceType #>> GetTimestampedPayload(HarpMessage message)
         {
 <#
-    if (timestampedParseConversion != payloadValueSelector)
+    if (hasParseConversion)
     {
 #>
-            var payload = <#= timestampedPayloadSelector #>;
-<#
-        if (rawPayload)
-        {
-#>
-            var value = payload.Value;
-<#
-        }
-#>
-            return Timestamped.Create(<#= timestampedParseConversion #>, payload.Seconds);
+            var (payload, timestamp) = <#= timestampedPayloadSelector #>;
+            return Timestamped.Create(<#= timestampedParseConversion #>, timestamp);
 <#
     }
     else

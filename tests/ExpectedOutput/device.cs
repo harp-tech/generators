@@ -612,8 +612,8 @@ namespace Harp.Generators.Tests
         /// <returns>A value representing the timestamped message payload.</returns>
         public static Timestamped<AnalogDataPayload> GetTimestampedPayload(HarpMessage message)
         {
-            var payload = message.GetTimestampedPayloadArray<float>();
-            return Timestamped.Create(ParsePayload(payload.Value), payload.Seconds);
+            var (payload, timestamp) = message.GetTimestampedPayloadArray<float>();
+            return Timestamped.Create(ParsePayload(payload), timestamp);
         }
 
         /// <summary>
@@ -734,8 +734,8 @@ namespace Harp.Generators.Tests
         /// <returns>A value representing the timestamped message payload.</returns>
         public static Timestamped<ComplexConfigurationPayload> GetTimestampedPayload(HarpMessage message)
         {
-            var payload = message.GetTimestampedPayloadArray<byte>();
-            return Timestamped.Create(ParsePayload(payload.Value), payload.Seconds);
+            var (payload, timestamp) = message.GetTimestampedPayloadArray<byte>();
+            return Timestamped.Create(ParsePayload(payload), timestamp);
         }
 
         /// <summary>
@@ -854,8 +854,8 @@ namespace Harp.Generators.Tests
         /// <returns>A value representing the timestamped message payload.</returns>
         public static Timestamped<VersionPayload> GetTimestampedPayload(HarpMessage message)
         {
-            var payload = message.GetTimestampedPayloadArray<byte>();
-            return Timestamped.Create(ParsePayload(payload.Value), payload.Seconds);
+            var (payload, timestamp) = message.GetTimestampedPayloadArray<byte>();
+            return Timestamped.Create(ParsePayload(payload), timestamp);
         }
 
         /// <summary>
@@ -955,8 +955,8 @@ namespace Harp.Generators.Tests
         /// <returns>A value representing the timestamped message payload.</returns>
         public static Timestamped<HarpVersion> GetTimestampedPayload(HarpMessage message)
         {
-            var payload = message.GetTimestampedPayloadArray<uint>();
-            return Timestamped.Create(ParsePayload(payload.Value), payload.Seconds);
+            var (payload, timestamp) = message.GetTimestampedPayloadArray<uint>();
+            return Timestamped.Create(ParsePayload(payload), timestamp);
         }
 
         /// <summary>
@@ -1057,9 +1057,8 @@ namespace Harp.Generators.Tests
         /// <returns>A value representing the timestamped message payload.</returns>
         public static Timestamped<HarpVersion> GetTimestampedPayload(HarpMessage message)
         {
-            var payload = message.GetTimestampedPayload();
-            var value = payload.Value;
-            return Timestamped.Create(ParsePayload(value.Array!, value.Offset, value.Count), payload.Seconds);
+            var (payload, timestamp) = message.GetTimestampedPayload();
+            return Timestamped.Create(ParsePayload(payload.Array!, payload.Offset, payload.Count), timestamp);
         }
 
         /// <summary>
@@ -1176,8 +1175,8 @@ namespace Harp.Generators.Tests
         /// <returns>A value representing the timestamped message payload.</returns>
         public static Timestamped<CustomMemberConverterPayload> GetTimestampedPayload(HarpMessage message)
         {
-            var payload = message.GetTimestampedPayloadArray<byte>();
-            return Timestamped.Create(ParsePayload(payload.Value), payload.Seconds);
+            var (payload, timestamp) = message.GetTimestampedPayloadArray<byte>();
+            return Timestamped.Create(ParsePayload(payload), timestamp);
         }
 
         /// <summary>
@@ -1293,8 +1292,8 @@ namespace Harp.Generators.Tests
         /// <returns>A value representing the timestamped message payload.</returns>
         public static Timestamped<BitmaskSplitterPayload> GetTimestampedPayload(HarpMessage message)
         {
-            var payload = message.GetTimestampedPayloadByte();
-            return Timestamped.Create(ParsePayload(payload.Value), payload.Seconds);
+            var (payload, timestamp) = message.GetTimestampedPayloadByte();
+            return Timestamped.Create(ParsePayload(payload), timestamp);
         }
 
         /// <summary>
@@ -1486,8 +1485,8 @@ namespace Harp.Generators.Tests
         /// <returns>A value representing the timestamped message payload.</returns>
         public static Timestamped<PortDigitalIOS> GetTimestampedPayload(HarpMessage message)
         {
-            var payload = message.GetTimestampedPayloadByte();
-            return Timestamped.Create((PortDigitalIOS)payload.Value, payload.Seconds);
+            var (payload, timestamp) = message.GetTimestampedPayloadByte();
+            return Timestamped.Create((PortDigitalIOS)payload, timestamp);
         }
 
         /// <summary>
@@ -1986,8 +1985,8 @@ namespace Harp.Generators.Tests
         /// <returns>A value representing the timestamped message payload.</returns>
         public static Timestamped<MixedMemberLengthPayload> GetTimestampedPayload(HarpMessage message)
         {
-            var payload = message.GetTimestampedPayloadArray<byte>();
-            return Timestamped.Create(ParsePayload(payload.Value), payload.Seconds);
+            var (payload, timestamp) = message.GetTimestampedPayloadArray<byte>();
+            return Timestamped.Create(ParsePayload(payload), timestamp);
         }
 
         /// <summary>
@@ -2099,8 +2098,8 @@ namespace Harp.Generators.Tests
         /// <returns>A value representing the timestamped message payload.</returns>
         public static Timestamped<StartPulsePayload> GetTimestampedPayload(HarpMessage message)
         {
-            var payload = message.GetTimestampedPayloadUInt16();
-            return Timestamped.Create(ParsePayload(payload.Value), payload.Seconds);
+            var (payload, timestamp) = message.GetTimestampedPayloadUInt16();
+            return Timestamped.Create(ParsePayload(payload), timestamp);
         }
 
         /// <summary>
@@ -2217,8 +2216,8 @@ namespace Harp.Generators.Tests
         /// <returns>A value representing the timestamped message payload.</returns>
         public static Timestamped<StartPulseTrainPayload> GetTimestampedPayload(HarpMessage message)
         {
-            var payload = message.GetTimestampedPayloadArray<ushort>();
-            return Timestamped.Create(ParsePayload(payload.Value), payload.Seconds);
+            var (payload, timestamp) = message.GetTimestampedPayloadArray<ushort>();
+            return Timestamped.Create(ParsePayload(payload), timestamp);
         }
 
         /// <summary>
@@ -2314,8 +2313,8 @@ namespace Harp.Generators.Tests
         /// <returns>A value representing the timestamped message payload.</returns>
         public static Timestamped<EncoderModeMask> GetTimestampedPayload(HarpMessage message)
         {
-            var payload = message.GetTimestampedPayloadByte();
-            return Timestamped.Create((EncoderModeMask)payload.Value, payload.Seconds);
+            var (payload, timestamp) = message.GetTimestampedPayloadByte();
+            return Timestamped.Create((EncoderModeMask)payload, timestamp);
         }
 
         /// <summary>
