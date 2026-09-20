@@ -29,7 +29,7 @@ public sealed class PythonInteropTests
     public void GenerateInteropFixtures()
     {
         var metadataPath = TestHelper.GetMetadataPath(DeviceMetadataFileName);
-        var deviceMetadata = TestHelper.ReadDeviceMetadata(metadataPath);
+        var deviceMetadata = DeviceMetadata.Load(metadataPath);
 
         var interfaceImplementation = new InterfaceGenerator(deviceMetadata, typeof(PythonInteropTests).Namespace ?? "").GenerateImplementation();
         var pythonImplementation = new PythonGenerator(deviceMetadata, package: true).GenerateImplementation();

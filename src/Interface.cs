@@ -64,6 +64,55 @@ public class DeviceMetadata
     /// </remarks>
     [YamlIgnore]
     public bool IsApplicationDevice => !string.IsNullOrEmpty(Device);
+
+    /// <summary>
+    /// Reads device interface metadata from the specified file.
+    /// </summary>
+    /// <param name="path">The path of the device metadata file.</param>
+    /// <returns>
+    /// A <see cref="DeviceMetadata"/> object describing the device interface.
+    /// </returns>
+    public static DeviceMetadata Load(string path)
+    {
+        using var reader = new StreamReader(path);
+        return Load(reader);
+    }
+
+    /// <summary>
+    /// Reads device interface metadata from the specified text reader.
+    /// </summary>
+    /// <param name="reader">
+    /// A <see cref="TextReader"/> positioned at the start of the device metadata.
+    /// </param>
+    /// <returns>
+    /// A <see cref="DeviceMetadata"/> object describing the device interface.
+    /// </returns>
+    /// <remarks>
+    /// Device metadata should always be read with this method or with <see cref="Parse(string)"/>,
+    /// since both resolve the YAML merge keys that make schema reuse possible.
+    /// </remarks>
+    public static DeviceMetadata Load(TextReader reader)
+    {
+        var parser = new MergingParser(new Parser(reader));
+        return MetadataDeserializer.Instance.Deserialize<DeviceMetadata>(parser);
+    }
+
+    /// <summary>
+    /// Reads device interface metadata from the specified string.
+    /// </summary>
+    /// <param name="text">A string containing the device metadata document.</param>
+    /// <returns>
+    /// A <see cref="DeviceMetadata"/> object describing the device interface.
+    /// </returns>
+    /// <remarks>
+    /// Equivalent to calling <see cref="Load(TextReader)"/> over the contents of
+    /// <paramref name="text"/>. Use <see cref="Load(string)"/> to read from a file.
+    /// </remarks>
+    public static DeviceMetadata Parse(string text)
+    {
+        using var reader = new StringReader(text);
+        return Load(reader);
+    }
 }
 
 /// <summary>
@@ -370,18 +419,6 @@ public class MaskValue
 
 internal static partial class TemplateHelper
 {
-    public static DeviceMetadata ReadDeviceMetadata(string path)
-    {
-        using var reader = new StreamReader(path);
-        return ReadDeviceMetadata(reader);
-    }
-
-    public static DeviceMetadata ReadDeviceMetadata(TextReader reader)
-    {
-        var parser = new MergingParser(new Parser(reader));
-        return MetadataDeserializer.Instance.Deserialize<DeviceMetadata>(parser);
-    }
-
     public static string GetInterfaceType(string name, RegisterInfo register)
     {
         if (!string.IsNullOrEmpty(register.InterfaceType)) return register.InterfaceType;

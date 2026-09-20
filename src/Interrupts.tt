@@ -1,5 +1,5 @@
 <#@ template debug="true" hostspecific="false" visibility="internal" language="C#" inherits="TemplateBase" #>
-<#@ parameter name="PortPinMetadata" type="Dictionary<string, PortPinInfo>" #>
+<#@ parameter name="PortPinMetadata" type="PortPinMetadata" #>
 <#@ import namespace="Harp.Generators" #>
 <#@ import namespace="System.IO" #>
 <#@ import namespace="System.Linq" #>

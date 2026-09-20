@@ -1,7 +1,6 @@
 ﻿using System.CodeDom.Compiler;
 using System.Text;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using YamlDotNet.Core;
 
 namespace Harp.Generators.Tests;
 
@@ -29,29 +28,18 @@ static class TestHelper
         return Path.Combine("Metadata", fileName);
     }
 
-    public static DeviceMetadata ReadDeviceMetadata(string path)
-    {
-        using var reader = new StreamReader(path);
-        var parser = new MergingParser(new Parser(reader));
-        return MetadataDeserializer.Instance.Deserialize<DeviceMetadata>(parser);
-    }
-
-    public static Dictionary<string, PortPinInfo> ReadPortPinMetadata(string path)
-    {
-        using var reader = new StreamReader(path);
-        return MetadataDeserializer.Instance.Deserialize<Dictionary<string, PortPinInfo>>(reader);
-    }
-
     public static void AssertExpectedOutput(string actual, string outputFileName)
     {
         var expectedFileName = Path.Combine("ExpectedOutput", outputFileName);
-        if (File.Exists(expectedFileName))
+        if (!File.Exists(expectedFileName))
         {
-            var expected = File.ReadAllText(expectedFileName);
-            if (!string.Equals(actual, expected, StringComparison.InvariantCulture))
-            {
-                Assert.Fail($"The generated output has diverged from the reference: {outputFileName}");
-            }
+            Assert.Fail($"The reference output is missing: {outputFileName}");
+        }
+
+        var expected = File.ReadAllText(expectedFileName);
+        if (!string.Equals(actual, expected, StringComparison.InvariantCulture))
+        {
+            Assert.Fail($"The generated output has diverged from the reference: {outputFileName}");
         }
     }
 

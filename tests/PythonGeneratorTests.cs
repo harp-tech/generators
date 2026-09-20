@@ -22,7 +22,7 @@ public sealed class PythonGeneratorTests
     public void DeviceTemplate_GenerateMatchesExpectedOutput(string metadataFileName)
     {
         metadataFileName = TestHelper.GetMetadataPath(metadataFileName);
-        var deviceMetadata = TestHelper.ReadDeviceMetadata(metadataFileName);
+        var deviceMetadata = DeviceMetadata.Load(metadataFileName);
         var generator = new PythonGenerator(deviceMetadata);
         var implementation = generator.GenerateImplementation();
         TestHelper.AssertNoGeneratorErrors(generator.Errors);

@@ -36,7 +36,7 @@ public sealed class MetadataSerializerTests
     [DataTestMethod]
     [DataRow("core.yml", typeof(DeviceMetadata))]
     [DataRow("device.yml", typeof(DeviceMetadata))]
-    [DataRow("device.ios.yml", typeof(Dictionary<string, PortPinInfo>))]
+    [DataRow("device.ios.yml", typeof(PortPinMetadata))]
     public void Metadata_RoundTripSerializes(string metadataFileName, Type type)
     {
         metadataFileName = TestHelper.GetMetadataPath(metadataFileName);

@@ -107,7 +107,7 @@ internal static partial class TemplateHelper
         using var stream = typeof(TemplateHelper).Assembly.GetManifestResourceStream(CoreMetadataResourceName)
             ?? throw new InvalidOperationException($"Embedded metadata '{CoreMetadataResourceName}' was not found.");
         using var reader = new StreamReader(stream);
-        return ReadDeviceMetadata(reader);
+        return DeviceMetadata.Load(reader);
     });
 
     static GroupMaskInfo? FindGroupMask(DeviceMetadata deviceMetadata, string typeName)
