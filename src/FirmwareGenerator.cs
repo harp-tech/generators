@@ -24,7 +24,7 @@ public class FirmwareGenerator
     /// </summary>
     /// <param name="deviceMetadata">The device metadata object.</param>
     /// <param name="portPinMetadata">The IO pin configuration map.</param>
-    public FirmwareGenerator(DeviceMetadata deviceMetadata, Dictionary<string, PortPinInfo> portPinMetadata)
+    public FirmwareGenerator(DeviceMetadata deviceMetadata, PortPinMetadata portPinMetadata)
     {
         var session = new Dictionary<string, object>
         {

@@ -251,14 +251,46 @@ public class OutputPinInfo : PortPinInfo
     public bool Invert;
 }
 
-internal static partial class TemplateHelper
+/// <summary>
+/// Represents the IO pin configuration of a device, keyed by pin name.
+/// </summary>
+public class PortPinMetadata : Dictionary<string, PortPinInfo>
 {
-    public static Dictionary<string, PortPinInfo> ReadPortPinMetadata(string path)
+    /// <summary>
+    /// Reads IO pin configuration metadata from the specified file.
+    /// </summary>
+    /// <param name="path">The path of the IO pin configuration metadata file.</param>
+    /// <returns>
+    /// A <see cref="PortPinMetadata"/> object describing the IO pin configuration.
+    /// </returns>
+    public static PortPinMetadata Load(string path)
     {
         using var reader = new StreamReader(path);
-        return MetadataDeserializer.Instance.Deserialize<Dictionary<string, PortPinInfo>>(reader);
+        return Load(reader);
     }
 
+    /// <summary>
+    /// Reads IO pin configuration metadata from the specified text reader.
+    /// </summary>
+    /// <param name="reader">
+    /// A <see cref="TextReader"/> positioned at the start of the IO pin configuration metadata.
+    /// </param>
+    /// <returns>
+    /// A <see cref="PortPinMetadata"/> object describing the IO pin configuration.
+    /// </returns>
+    /// <remarks>
+    /// IO pin configuration metadata should always be read with this method, since it resolves
+    /// the YAML merge keys that make schema reuse possible.
+    /// </remarks>
+    public static PortPinMetadata Load(TextReader reader)
+    {
+        var parser = new MergingParser(new Parser(reader));
+        return MetadataDeserializer.Instance.Deserialize<PortPinMetadata>(parser);
+    }
+}
+
+internal static partial class TemplateHelper
+{
     public static IEnumerable<KeyValuePair<string, T>> GetPortPinsOfType<T>(IDictionary<string, PortPinInfo> portPins) where T : PortPinInfo
     {
         return from item in portPins

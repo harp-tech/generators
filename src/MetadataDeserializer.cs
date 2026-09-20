@@ -12,6 +12,11 @@ public static class MetadataDeserializer
     /// Gets an <see cref="IDeserializer"/> instance that can be used to deserialize
     /// device metadata objects.
     /// </summary>
+    /// <remarks>
+    /// This instance does not resolve YAML merge keys. Device metadata relies on them for
+    /// reuse, so it should be read with <see cref="DeviceMetadata.Load(string)"/> or
+    /// <see cref="DeviceMetadata.Parse(string)"/> instead.
+    /// </remarks>
     public static readonly IDeserializer Instance = new DeserializerBuilder()
         .WithNamingConvention(CamelCaseNamingConvention.Instance)
         .WithTypeConverter(RegisterAccessTypeConverter.Instance)

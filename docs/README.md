@@ -36,13 +36,13 @@ registers:
 A complete reactive interface to communicate with the device can be generated from the device metadata file.
 
 ```csharp
-using var reader = new StreamReader("device.yml");
-var parser = new MergingParser(new Parser(reader));
-var deviceMetadata = MetadataDeserializer.Instance.Deserialize<DeviceMetadata>(parser);
+var deviceMetadata = DeviceMetadata.Load("device.yml");
 
 var generator = new InterfaceGenerator(deviceMetadata, "MyNamespace");
 var implementation = generator.GenerateImplementation();
 ```
+
+`Load` also accepts a `TextReader`, and `Parse` reads device metadata from a string, such as the embedded metadata exposed by a generated interface through `Device.Metadata`. Both methods resolve the YAML merge keys that make schema reuse possible, so device metadata should always be read with one of them.
 
 ## Generating device firmware code
 
@@ -50,8 +50,7 @@ Assuming the `deviceMetadata` object loaded above is available, device firmware 
 
 ```csharp
 ...
-using var reader = new StreamReader("ios.yml");
-var portPinMetadata = MetadataDeserializer.Instance.Deserialize<Dictionary<string, PortPinInfo>>(reader);
+var portPinMetadata = PortPinMetadata.Load("ios.yml");
 var generator = new FirmwareGenerator(deviceMetadata, portPinMetadata);
 
 var headers = generator.GenerateHeaders();

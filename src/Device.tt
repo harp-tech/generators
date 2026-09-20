@@ -110,7 +110,9 @@ if (isApplicationDevice)
         static string GetDeviceMetadata()
         {
             var deviceType = typeof(Device);
-            using var metadataStream = deviceType.Assembly.GetManifestResourceStream($"{deviceType.Namespace}.device.yml");
+            var resourceName = $"{deviceType.Namespace}.device.yml";
+            using var metadataStream = deviceType.Assembly.GetManifestResourceStream(resourceName)
+                ?? throw new InvalidOperationException($"The device metadata resource {resourceName} was not found.");
             using var streamReader = new System.IO.StreamReader(metadataStream);
             return streamReader.ReadToEnd();
         }

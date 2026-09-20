@@ -22,8 +22,8 @@ public sealed class FirmwareGeneratorTests
     {
         metadataFileName = TestHelper.GetMetadataPath(metadataFileName);
         var iosMetadataFileName = Path.ChangeExtension(metadataFileName, ".ios.yml");
-        var deviceMetadata = TestHelper.ReadDeviceMetadata(metadataFileName);
-        var portPinMetadata = TestHelper.ReadPortPinMetadata(iosMetadataFileName);
+        var deviceMetadata = DeviceMetadata.Load(metadataFileName);
+        var portPinMetadata = PortPinMetadata.Load(iosMetadataFileName);
         var generator = new FirmwareGenerator(deviceMetadata, portPinMetadata);
         var headers = generator.GenerateHeaders();
         var implementation = generator.GenerateImplementation();
@@ -39,6 +39,9 @@ public sealed class FirmwareGeneratorTests
         try
         {
             TestHelper.AssertExpectedGeneratorErrors(generator.Errors, expectedErrors);
+            if (expectedErrors.Length > 0)
+                return;
+
             TestHelper.AssertExpectedOutput(headers.App, appOutputFileName);
             TestHelper.AssertExpectedOutput(implementation.App, appImplOutputFileName);
             TestHelper.AssertExpectedOutput(headers.AppFuncs, appFuncsOutputFileName);
