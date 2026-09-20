@@ -4,13 +4,17 @@ root = true
 indent_style = space
 
 #--------------------------------------------------------------------------------------------------
-# XML, JSON, and web files
+# XML, JSON, YAML, and web files
 #--------------------------------------------------------------------------------------------------
 [*.{xml,csproj,vcxproj,vcxproj.filters,shproj,props,targets,config,resx,vstemplate,slnx}]
 indent_size = 2
 
-[*.{json,yml}]
+[*.json]
 indent_size = 2
+
+[*.{yml,yaml}]
+indent_size = 2
+charset = utf-8
 
 [*.{html,css}]
 indent_size = 2
@@ -39,3 +43,7 @@ dotnet_style_predefined_type_for_member_access = true:suggestion
 
 # Instantiate argument exceptions correctly
 dotnet_diagnostic.CA2208.severity = warning
+
+# Don't complain about not using modern collection syntax
+dotnet_style_prefer_collection_expression = never
+csharp_style_prefer_range_operator = false
