@@ -146,6 +146,8 @@ typedef struct
     uint16_t REG_MULTI_ELEMENT_PAYLOAD[3];
     uint16_t REG_SINGLE_ELEMENT_PAYLOAD[1];
     uint8_t REG_MIXED_MEMBER_LENGTH[4];
+    uint8_t REG_RGB0[3];
+    uint8_t REG_RGB1[3];
     uint16_t REG_START_PULSE;
     uint16_t REG_START_PULSE_TRAIN[2];
     uint8_t REG_ENCODER_MODE;
@@ -170,6 +172,8 @@ typedef struct
 #define ADD_REG_MULTI_ELEMENT_PAYLOAD      44 // U16    
 #define ADD_REG_SINGLE_ELEMENT_PAYLOAD     45 // U16    
 #define ADD_REG_MIXED_MEMBER_LENGTH        46 // U8     
+#define ADD_REG_RGB0                       47 // U8     
+#define ADD_REG_RGB1                       48 // U8     
 #define ADD_REG_START_PULSE               100 // U16    Starts a PWM pulse.
 #define ADD_REG_START_PULSE_TRAIN         101 // U16    Starts a PWM pulse train.
 #define ADD_REG_ENCODER_MODE              103 // U8     Configures the operation mode of the encoder.
@@ -183,7 +187,7 @@ typedef struct
 /* Memory limits */
 #define APP_REGS_ADD_MIN                    0x20
 #define APP_REGS_ADD_MAX                    0x67
-#define APP_NBYTES_OF_REG_BANK              130
+#define APP_NBYTES_OF_REG_BANK              136
 
 /************************************************************************/
 /* Registers' bits                                                      */

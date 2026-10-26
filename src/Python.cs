@@ -262,8 +262,8 @@ internal static partial class TemplateHelper
         module.ProtocolImports.Add("RegisterBase");
         module.ProtocolImports.Add("PayloadType");
 
-        var payloadName = register.PayloadSpec != null && !string.IsNullOrEmpty(register.InterfaceType)
-            ? register.InterfaceType
+        var payloadName = register.PayloadSpec != null
+            ? GetInterfaceType(name, register)
             : $"{name}Payload";
         var payload = module.Payloads.Find(existing => existing.Name == payloadName);
         if (payload == null)

@@ -24,6 +24,8 @@ void (*app_func_rd_pointer[])(void) = {
 	&app_read_REG_MULTI_ELEMENT_PAYLOAD,
 	&app_read_REG_SINGLE_ELEMENT_PAYLOAD,
 	&app_read_REG_MIXED_MEMBER_LENGTH,
+	&app_read_REG_RGB0,
+	&app_read_REG_RGB1,
 	&app_read_REG_START_PULSE,
 	&app_read_REG_START_PULSE_TRAIN,
 	&app_read_REG_ENCODER_MODE
@@ -45,6 +47,8 @@ bool (*app_func_wr_pointer[])(void*) = {
 	&app_write_REG_MULTI_ELEMENT_PAYLOAD,
 	&app_write_REG_SINGLE_ELEMENT_PAYLOAD,
 	&app_write_REG_MIXED_MEMBER_LENGTH,
+	&app_write_REG_RGB0,
+	&app_write_REG_RGB1,
 	&app_write_REG_START_PULSE,
 	&app_write_REG_START_PULSE_TRAIN,
 	&app_write_REG_ENCODER_MODE
@@ -269,6 +273,42 @@ bool app_write_REG_MIXED_MEMBER_LENGTH(void *a)
 	uint8_t *reg = ((uint8_t*)a);
 
 	app_regs.REG_MIXED_MEMBER_LENGTH[0] = reg[0];
+    return true;
+}
+
+/************************************************************************/
+/* REG_RGB0                                                             */
+/************************************************************************/
+// This register is an array with 3 positions
+void app_read_REG_RGB0(void)
+{
+	//app_regs.REG_RGB0[0] = 0;
+
+}
+
+bool app_write_REG_RGB0(void *a)
+{
+	uint8_t *reg = ((uint8_t*)a);
+
+	app_regs.REG_RGB0[0] = reg[0];
+    return true;
+}
+
+/************************************************************************/
+/* REG_RGB1                                                             */
+/************************************************************************/
+// This register is an array with 3 positions
+void app_read_REG_RGB1(void)
+{
+	//app_regs.REG_RGB1[0] = 0;
+
+}
+
+bool app_write_REG_RGB1(void *a)
+{
+	uint8_t *reg = ((uint8_t*)a);
+
+	app_regs.REG_RGB1[0] = reg[0];
     return true;
 }
 

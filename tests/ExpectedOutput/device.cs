@@ -59,6 +59,8 @@ namespace Harp.Generators.Tests
             { 44, typeof(MultiElementPayload) },
             { 45, typeof(SingleElementPayload) },
             { 46, typeof(MixedMemberLength) },
+            { 47, typeof(Rgb0) },
+            { 48, typeof(Rgb1) },
             { 100, typeof(StartPulse) },
             { 101, typeof(StartPulseTrain) },
             { 103, typeof(EncoderMode) }
@@ -293,6 +295,8 @@ namespace Harp.Generators.Tests
     /// <seealso cref="MultiElementPayload"/>
     /// <seealso cref="SingleElementPayload"/>
     /// <seealso cref="MixedMemberLength"/>
+    /// <seealso cref="Rgb0"/>
+    /// <seealso cref="Rgb1"/>
     /// <seealso cref="StartPulse"/>
     /// <seealso cref="StartPulseTrain"/>
     /// <seealso cref="EncoderMode"/>
@@ -311,6 +315,8 @@ namespace Harp.Generators.Tests
     [XmlInclude(typeof(MultiElementPayload))]
     [XmlInclude(typeof(SingleElementPayload))]
     [XmlInclude(typeof(MixedMemberLength))]
+    [XmlInclude(typeof(Rgb0))]
+    [XmlInclude(typeof(Rgb1))]
     [XmlInclude(typeof(StartPulse))]
     [XmlInclude(typeof(StartPulseTrain))]
     [XmlInclude(typeof(EncoderMode))]
@@ -350,6 +356,8 @@ namespace Harp.Generators.Tests
     /// <seealso cref="MultiElementPayload"/>
     /// <seealso cref="SingleElementPayload"/>
     /// <seealso cref="MixedMemberLength"/>
+    /// <seealso cref="Rgb0"/>
+    /// <seealso cref="Rgb1"/>
     /// <seealso cref="StartPulse"/>
     /// <seealso cref="StartPulseTrain"/>
     /// <seealso cref="EncoderMode"/>
@@ -368,6 +376,8 @@ namespace Harp.Generators.Tests
     [XmlInclude(typeof(MultiElementPayload))]
     [XmlInclude(typeof(SingleElementPayload))]
     [XmlInclude(typeof(MixedMemberLength))]
+    [XmlInclude(typeof(Rgb0))]
+    [XmlInclude(typeof(Rgb1))]
     [XmlInclude(typeof(StartPulse))]
     [XmlInclude(typeof(StartPulseTrain))]
     [XmlInclude(typeof(EncoderMode))]
@@ -386,6 +396,8 @@ namespace Harp.Generators.Tests
     [XmlInclude(typeof(TimestampedMultiElementPayload))]
     [XmlInclude(typeof(TimestampedSingleElementPayload))]
     [XmlInclude(typeof(TimestampedMixedMemberLength))]
+    [XmlInclude(typeof(TimestampedRgb0))]
+    [XmlInclude(typeof(TimestampedRgb1))]
     [XmlInclude(typeof(TimestampedStartPulse))]
     [XmlInclude(typeof(TimestampedStartPulseTrain))]
     [XmlInclude(typeof(TimestampedEncoderMode))]
@@ -422,6 +434,8 @@ namespace Harp.Generators.Tests
     /// <seealso cref="MultiElementPayload"/>
     /// <seealso cref="SingleElementPayload"/>
     /// <seealso cref="MixedMemberLength"/>
+    /// <seealso cref="Rgb0"/>
+    /// <seealso cref="Rgb1"/>
     /// <seealso cref="StartPulse"/>
     /// <seealso cref="StartPulseTrain"/>
     /// <seealso cref="EncoderMode"/>
@@ -440,6 +454,8 @@ namespace Harp.Generators.Tests
     [XmlInclude(typeof(MultiElementPayload))]
     [XmlInclude(typeof(SingleElementPayload))]
     [XmlInclude(typeof(MixedMemberLength))]
+    [XmlInclude(typeof(Rgb0))]
+    [XmlInclude(typeof(Rgb1))]
     [XmlInclude(typeof(StartPulse))]
     [XmlInclude(typeof(StartPulseTrain))]
     [XmlInclude(typeof(EncoderMode))]
@@ -2045,6 +2061,238 @@ namespace Harp.Generators.Tests
     }
 
     /// <summary>
+    /// Represents a register that manipulates messages from register Rgb0.
+    /// </summary>
+    [Description("")]
+    public partial class Rgb0
+    {
+        /// <summary>
+        /// Represents the address of the <see cref="Rgb0"/> register. This field is constant.
+        /// </summary>
+        public const int Address = 47;
+
+        /// <summary>
+        /// Represents the payload type of the <see cref="Rgb0"/> register. This field is constant.
+        /// </summary>
+        public const PayloadType RegisterType = PayloadType.U8;
+
+        /// <summary>
+        /// Represents the length of the <see cref="Rgb0"/> register. This field is constant.
+        /// </summary>
+        public const int RegisterLength = 3;
+
+        static RgbPayload ParsePayload(byte[] payload)
+        {
+            RgbPayload result;
+            result.Red = payload[0];
+            result.Green = payload[1];
+            result.Blue = payload[2];
+            return result;
+        }
+
+        static byte[] FormatPayload(RgbPayload value)
+        {
+            byte[] result;
+            result = new byte[3];
+            result[0] = value.Red;
+            result[1] = value.Green;
+            result[2] = value.Blue;
+            return result;
+        }
+
+        /// <summary>
+        /// Returns the payload data for <see cref="Rgb0"/> register messages.
+        /// </summary>
+        /// <param name="message">A <see cref="HarpMessage"/> object representing the register message.</param>
+        /// <returns>A value representing the message payload.</returns>
+        public static RgbPayload GetPayload(HarpMessage message)
+        {
+            return ParsePayload(message.GetPayloadArray<byte>());
+        }
+
+        /// <summary>
+        /// Returns the timestamped payload data for <see cref="Rgb0"/> register messages.
+        /// </summary>
+        /// <param name="message">A <see cref="HarpMessage"/> object representing the register message.</param>
+        /// <returns>A value representing the timestamped message payload.</returns>
+        public static Timestamped<RgbPayload> GetTimestampedPayload(HarpMessage message)
+        {
+            var (payload, timestamp) = message.GetTimestampedPayloadArray<byte>();
+            return Timestamped.Create(ParsePayload(payload), timestamp);
+        }
+
+        /// <summary>
+        /// Returns a Harp message for the <see cref="Rgb0"/> register.
+        /// </summary>
+        /// <param name="messageType">The type of the Harp message.</param>
+        /// <param name="value">The value to be stored in the message payload.</param>
+        /// <returns>
+        /// A <see cref="HarpMessage"/> object for the <see cref="Rgb0"/> register
+        /// with the specified message type and payload.
+        /// </returns>
+        public static HarpMessage FromPayload(MessageType messageType, RgbPayload value)
+        {
+            return HarpMessage.FromByte(Address, messageType, FormatPayload(value));
+        }
+
+        /// <summary>
+        /// Returns a timestamped Harp message for the <see cref="Rgb0"/>
+        /// register.
+        /// </summary>
+        /// <param name="timestamp">The timestamp of the message payload, in seconds.</param>
+        /// <param name="messageType">The type of the Harp message.</param>
+        /// <param name="value">The value to be stored in the message payload.</param>
+        /// <returns>
+        /// A <see cref="HarpMessage"/> object for the <see cref="Rgb0"/> register
+        /// with the specified message type, timestamp, and payload.
+        /// </returns>
+        public static HarpMessage FromPayload(double timestamp, MessageType messageType, RgbPayload value)
+        {
+            return HarpMessage.FromByte(Address, timestamp, messageType, FormatPayload(value));
+        }
+    }
+
+    /// <summary>
+    /// Provides methods for manipulating timestamped messages from the
+    /// Rgb0 register.
+    /// </summary>
+    /// <seealso cref="Rgb0"/>
+    [Description("Filters and selects timestamped messages from the Rgb0 register.")]
+    public partial class TimestampedRgb0
+    {
+        /// <summary>
+        /// Represents the address of the <see cref="Rgb0"/> register. This field is constant.
+        /// </summary>
+        public const int Address = Rgb0.Address;
+
+        /// <summary>
+        /// Returns timestamped payload data for <see cref="Rgb0"/> register messages.
+        /// </summary>
+        /// <param name="message">A <see cref="HarpMessage"/> object representing the register message.</param>
+        /// <returns>A value representing the timestamped message payload.</returns>
+        public static Timestamped<RgbPayload> GetPayload(HarpMessage message)
+        {
+            return Rgb0.GetTimestampedPayload(message);
+        }
+    }
+
+    /// <summary>
+    /// Represents a register that manipulates messages from register Rgb1.
+    /// </summary>
+    [Description("")]
+    public partial class Rgb1
+    {
+        /// <summary>
+        /// Represents the address of the <see cref="Rgb1"/> register. This field is constant.
+        /// </summary>
+        public const int Address = 48;
+
+        /// <summary>
+        /// Represents the payload type of the <see cref="Rgb1"/> register. This field is constant.
+        /// </summary>
+        public const PayloadType RegisterType = PayloadType.U8;
+
+        /// <summary>
+        /// Represents the length of the <see cref="Rgb1"/> register. This field is constant.
+        /// </summary>
+        public const int RegisterLength = 3;
+
+        static RgbPayload ParsePayload(byte[] payload)
+        {
+            RgbPayload result;
+            result.Red = payload[0];
+            result.Green = payload[1];
+            result.Blue = payload[2];
+            return result;
+        }
+
+        static byte[] FormatPayload(RgbPayload value)
+        {
+            byte[] result;
+            result = new byte[3];
+            result[0] = value.Red;
+            result[1] = value.Green;
+            result[2] = value.Blue;
+            return result;
+        }
+
+        /// <summary>
+        /// Returns the payload data for <see cref="Rgb1"/> register messages.
+        /// </summary>
+        /// <param name="message">A <see cref="HarpMessage"/> object representing the register message.</param>
+        /// <returns>A value representing the message payload.</returns>
+        public static RgbPayload GetPayload(HarpMessage message)
+        {
+            return ParsePayload(message.GetPayloadArray<byte>());
+        }
+
+        /// <summary>
+        /// Returns the timestamped payload data for <see cref="Rgb1"/> register messages.
+        /// </summary>
+        /// <param name="message">A <see cref="HarpMessage"/> object representing the register message.</param>
+        /// <returns>A value representing the timestamped message payload.</returns>
+        public static Timestamped<RgbPayload> GetTimestampedPayload(HarpMessage message)
+        {
+            var (payload, timestamp) = message.GetTimestampedPayloadArray<byte>();
+            return Timestamped.Create(ParsePayload(payload), timestamp);
+        }
+
+        /// <summary>
+        /// Returns a Harp message for the <see cref="Rgb1"/> register.
+        /// </summary>
+        /// <param name="messageType">The type of the Harp message.</param>
+        /// <param name="value">The value to be stored in the message payload.</param>
+        /// <returns>
+        /// A <see cref="HarpMessage"/> object for the <see cref="Rgb1"/> register
+        /// with the specified message type and payload.
+        /// </returns>
+        public static HarpMessage FromPayload(MessageType messageType, RgbPayload value)
+        {
+            return HarpMessage.FromByte(Address, messageType, FormatPayload(value));
+        }
+
+        /// <summary>
+        /// Returns a timestamped Harp message for the <see cref="Rgb1"/>
+        /// register.
+        /// </summary>
+        /// <param name="timestamp">The timestamp of the message payload, in seconds.</param>
+        /// <param name="messageType">The type of the Harp message.</param>
+        /// <param name="value">The value to be stored in the message payload.</param>
+        /// <returns>
+        /// A <see cref="HarpMessage"/> object for the <see cref="Rgb1"/> register
+        /// with the specified message type, timestamp, and payload.
+        /// </returns>
+        public static HarpMessage FromPayload(double timestamp, MessageType messageType, RgbPayload value)
+        {
+            return HarpMessage.FromByte(Address, timestamp, messageType, FormatPayload(value));
+        }
+    }
+
+    /// <summary>
+    /// Provides methods for manipulating timestamped messages from the
+    /// Rgb1 register.
+    /// </summary>
+    /// <seealso cref="Rgb1"/>
+    [Description("Filters and selects timestamped messages from the Rgb1 register.")]
+    public partial class TimestampedRgb1
+    {
+        /// <summary>
+        /// Represents the address of the <see cref="Rgb1"/> register. This field is constant.
+        /// </summary>
+        public const int Address = Rgb1.Address;
+
+        /// <summary>
+        /// Returns timestamped payload data for <see cref="Rgb1"/> register messages.
+        /// </summary>
+        /// <param name="message">A <see cref="HarpMessage"/> object representing the register message.</param>
+        /// <returns>A value representing the timestamped message payload.</returns>
+        public static Timestamped<RgbPayload> GetPayload(HarpMessage message)
+        {
+            return Rgb1.GetTimestampedPayload(message);
+        }
+    }
+
+    /// <summary>
     /// Represents a register that starts a PWM pulse.
     /// </summary>
     [Description("Starts a PWM pulse.")]
@@ -2391,6 +2639,8 @@ namespace Harp.Generators.Tests
     /// <seealso cref="CreateMultiElementPayloadPayload"/>
     /// <seealso cref="CreateSingleElementPayloadPayload"/>
     /// <seealso cref="CreateMixedMemberLengthPayload"/>
+    /// <seealso cref="CreateRgb0Payload"/>
+    /// <seealso cref="CreateRgb1Payload"/>
     /// <seealso cref="CreateStartPulsePayload"/>
     /// <seealso cref="CreateStartPulseTrainPayload"/>
     /// <seealso cref="CreateEncoderModePayload"/>
@@ -2409,6 +2659,8 @@ namespace Harp.Generators.Tests
     [XmlInclude(typeof(CreateMultiElementPayloadPayload))]
     [XmlInclude(typeof(CreateSingleElementPayloadPayload))]
     [XmlInclude(typeof(CreateMixedMemberLengthPayload))]
+    [XmlInclude(typeof(CreateRgb0Payload))]
+    [XmlInclude(typeof(CreateRgb1Payload))]
     [XmlInclude(typeof(CreateStartPulsePayload))]
     [XmlInclude(typeof(CreateStartPulseTrainPayload))]
     [XmlInclude(typeof(CreateEncoderModePayload))]
@@ -2427,6 +2679,8 @@ namespace Harp.Generators.Tests
     [XmlInclude(typeof(CreateTimestampedMultiElementPayloadPayload))]
     [XmlInclude(typeof(CreateTimestampedSingleElementPayloadPayload))]
     [XmlInclude(typeof(CreateTimestampedMixedMemberLengthPayload))]
+    [XmlInclude(typeof(CreateTimestampedRgb0Payload))]
+    [XmlInclude(typeof(CreateTimestampedRgb1Payload))]
     [XmlInclude(typeof(CreateTimestampedStartPulsePayload))]
     [XmlInclude(typeof(CreateTimestampedStartPulseTrainPayload))]
     [XmlInclude(typeof(CreateTimestampedEncoderModePayload))]
@@ -3384,6 +3638,146 @@ namespace Harp.Generators.Tests
 
     /// <summary>
     /// Represents an operator that creates a message payload
+    /// for register Rgb0.
+    /// </summary>
+    [DisplayName("Rgb0Payload")]
+    [Description("Creates a message payload for register Rgb0.")]
+    public partial class CreateRgb0Payload
+    {
+        /// <summary>
+        /// Gets or sets a value to write on payload member Red.
+        /// </summary>
+        [Description("")]
+        public byte Red { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value to write on payload member Green.
+        /// </summary>
+        [Description("")]
+        public byte Green { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value to write on payload member Blue.
+        /// </summary>
+        [Description("")]
+        public byte Blue { get; set; }
+
+        /// <summary>
+        /// Creates a message payload for the Rgb0 register.
+        /// </summary>
+        /// <returns>The created message payload value.</returns>
+        public RgbPayload GetPayload()
+        {
+            RgbPayload value;
+            value.Red = Red;
+            value.Green = Green;
+            value.Blue = Blue;
+            return value;
+        }
+
+        /// <summary>
+        /// Creates a message for register Rgb0.
+        /// </summary>
+        /// <param name="messageType">Specifies the type of the created message.</param>
+        /// <returns>A new message for the Rgb0 register.</returns>
+        public HarpMessage GetMessage(MessageType messageType)
+        {
+            return Harp.Generators.Tests.Rgb0.FromPayload(messageType, GetPayload());
+        }
+    }
+
+    /// <summary>
+    /// Represents an operator that creates a timestamped message payload
+    /// for register Rgb0.
+    /// </summary>
+    [DisplayName("TimestampedRgb0Payload")]
+    [Description("Creates a timestamped message payload for register Rgb0.")]
+    public partial class CreateTimestampedRgb0Payload : CreateRgb0Payload
+    {
+        /// <summary>
+        /// Creates a timestamped message for register Rgb0.
+        /// </summary>
+        /// <param name="timestamp">The timestamp of the message payload, in seconds.</param>
+        /// <param name="messageType">Specifies the type of the created message.</param>
+        /// <returns>A new timestamped message for the Rgb0 register.</returns>
+        public HarpMessage GetMessage(double timestamp, MessageType messageType)
+        {
+            return Harp.Generators.Tests.Rgb0.FromPayload(timestamp, messageType, GetPayload());
+        }
+    }
+
+    /// <summary>
+    /// Represents an operator that creates a message payload
+    /// for register Rgb1.
+    /// </summary>
+    [DisplayName("Rgb1Payload")]
+    [Description("Creates a message payload for register Rgb1.")]
+    public partial class CreateRgb1Payload
+    {
+        /// <summary>
+        /// Gets or sets a value to write on payload member Red.
+        /// </summary>
+        [Description("")]
+        public byte Red { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value to write on payload member Green.
+        /// </summary>
+        [Description("")]
+        public byte Green { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value to write on payload member Blue.
+        /// </summary>
+        [Description("")]
+        public byte Blue { get; set; }
+
+        /// <summary>
+        /// Creates a message payload for the Rgb1 register.
+        /// </summary>
+        /// <returns>The created message payload value.</returns>
+        public RgbPayload GetPayload()
+        {
+            RgbPayload value;
+            value.Red = Red;
+            value.Green = Green;
+            value.Blue = Blue;
+            return value;
+        }
+
+        /// <summary>
+        /// Creates a message for register Rgb1.
+        /// </summary>
+        /// <param name="messageType">Specifies the type of the created message.</param>
+        /// <returns>A new message for the Rgb1 register.</returns>
+        public HarpMessage GetMessage(MessageType messageType)
+        {
+            return Harp.Generators.Tests.Rgb1.FromPayload(messageType, GetPayload());
+        }
+    }
+
+    /// <summary>
+    /// Represents an operator that creates a timestamped message payload
+    /// for register Rgb1.
+    /// </summary>
+    [DisplayName("TimestampedRgb1Payload")]
+    [Description("Creates a timestamped message payload for register Rgb1.")]
+    public partial class CreateTimestampedRgb1Payload : CreateRgb1Payload
+    {
+        /// <summary>
+        /// Creates a timestamped message for register Rgb1.
+        /// </summary>
+        /// <param name="timestamp">The timestamp of the message payload, in seconds.</param>
+        /// <param name="messageType">Specifies the type of the created message.</param>
+        /// <returns>A new timestamped message for the Rgb1 register.</returns>
+        public HarpMessage GetMessage(double timestamp, MessageType messageType)
+        {
+            return Harp.Generators.Tests.Rgb1.FromPayload(timestamp, messageType, GetPayload());
+        }
+    }
+
+    /// <summary>
+    /// Represents an operator that creates a message payload
     /// that starts a PWM pulse.
     /// </summary>
     [DisplayName("StartPulsePayload")]
@@ -3934,6 +4328,60 @@ namespace Harp.Generators.Tests
                 "Absent = " + Absent + ", " +
                 "Single = " + Single + ", " +
                 "Multiple = " + Multiple + " " +
+            "}";
+        }
+    }
+
+    /// <summary>
+    /// Represents the payload of the Rgb register.
+    /// </summary>
+    public struct RgbPayload
+    {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="RgbPayload"/> structure.
+        /// </summary>
+        /// <param name="red"></param>
+        /// <param name="green"></param>
+        /// <param name="blue"></param>
+        public RgbPayload(
+            byte red,
+            byte green,
+            byte blue)
+        {
+            Red = red;
+            Green = green;
+            Blue = blue;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public byte Red;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public byte Green;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public byte Blue;
+
+        /// <summary>
+        /// Returns a <see cref="string"/> that represents the payload of
+        /// the Rgb register.
+        /// </summary>
+        /// <returns>
+        /// A <see cref="string"/> that represents the payload of the
+        /// Rgb register.
+        /// </returns>
+        public override string ToString()
+        {
+            return "RgbPayload { " +
+                "Red = " + Red + ", " +
+                "Green = " + Green + ", " +
+                "Blue = " + Blue + " " +
             "}";
         }
     }

@@ -155,6 +155,22 @@ registers:
       Multiple:
         offset: 2
         length: 2
+  Rgb0: &rgbRegister
+    address: 47
+    type: U8
+    length: 3
+    access: Write
+    interfaceType: RgbPayload
+    payloadSpec:
+      Red:
+        offset: 0
+      Green:
+        offset: 1
+      Blue:
+        offset: 2
+  Rgb1:
+    <<: *rgbRegister
+    address: 48
   StartPulse:
     address: 100
     type: U16

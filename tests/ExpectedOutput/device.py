@@ -47,6 +47,7 @@ __all__ = [
     "BitmaskSplitterPayload",
     "PortDIOSetPayload",
     "MixedMemberLengthPayload",
+    "RgbPayload",
     "StartPulsePayload",
     "StartPulseTrainPayload",
     "EncoderModePayload",
@@ -65,6 +66,8 @@ __all__ = [
     "MultiElementPayload",
     "SingleElementPayload",
     "MixedMemberLength",
+    "Rgb0",
+    "Rgb1",
     "StartPulse",
     "StartPulseTrain",
     "EncoderMode",
@@ -170,6 +173,14 @@ class MixedMemberLengthPayload(StructPayload[np.uint8], length=4):
     multiple: NDArray[np.uint8] = Field(ArrayConverter(np.uint8, 2), offset=2)
 
 
+class RgbPayload(StructPayload[np.uint8], length=3):
+    """Represents the payload of the Rgb register."""
+
+    red: np.uint8 = Field(IdentityConverter(np.uint8))
+    green: np.uint8 = Field(IdentityConverter(np.uint8), offset=1)
+    blue: np.uint8 = Field(IdentityConverter(np.uint8), offset=2)
+
+
 class StartPulsePayload(StructPayload[np.uint16]):
     """Represents the payload of the StartPulse register."""
 
@@ -272,6 +283,18 @@ class MixedMemberLength(RegisterBase[MixedMemberLengthPayload]):
     payload_class = MixedMemberLengthPayload
 
 
+class Rgb0(RegisterBase[RgbPayload]):
+    address: ClassVar[int] = 47
+    payload_type: ClassVar[PayloadType] = PayloadType.U8
+    payload_class = RgbPayload
+
+
+class Rgb1(RegisterBase[RgbPayload]):
+    address: ClassVar[int] = 48
+    payload_type: ClassVar[PayloadType] = PayloadType.U8
+    payload_class = RgbPayload
+
+
 class StartPulse(RegisterBase[StartPulsePayload]):
     """Starts a PWM pulse."""
 
@@ -313,6 +336,8 @@ REGISTER_MAP: dict[int, type[RegisterBase[Any]]] = {
     44: MultiElementPayload,
     45: SingleElementPayload,
     46: MixedMemberLength,
+    47: Rgb0,
+    48: Rgb1,
     100: StartPulse,
     101: StartPulseTrain,
     103: EncoderMode,
