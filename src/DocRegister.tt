@@ -1,0 +1,68 @@
+﻿<#@ template debug="true" hostspecific="false" visibility="internal" language="C#" inherits="TemplateBase" #>
+<#@ parameter name="Namespace" type="string" #>
+<#@ parameter name="DeviceMetadata" type="DeviceMetadata" #>
+<#@ parameter name="RegisterName" type="string" #>
+<#@ import namespace="Harp.Generators" #>
+<#@ import namespace="System.Collections.Generic" #>
+<#@ output extension=".md" #>
+<#
+var register = DeviceMetadata.Registers[RegisterName];
+var range = TemplateHelper.GetDocumentationRange(register.MinValue, register.MaxValue, register.DefaultValue);
+var interfaceType = TemplateHelper.GetDocumentationInterfaceType(DeviceMetadata, Namespace, RegisterName, register);
+#>
+---
+uid: <#= Namespace #>.<#= RegisterName #>
+generatedContent: *content
+---
+
+- Address: <#= register.Address #>
+- Payload type: <#= register.Type #>
+<#
+if (register.Length > 0)
+{
+#>
+- Length: <#= register.Length #>
+<#
+}
+#>
+- Access: <#= register.Access #>
+<#
+if (range.Length > 0)
+{
+#>
+- Range: <#= range #>
+<#
+}
+#>
+<#
+if (interfaceType.Length > 0)
+{
+#>
+- Interface type: <#= interfaceType #>
+<#
+}
+#>
+<#
+if (register.PayloadSpec != null)
+{
+#>
+
+### Payload members
+
+| name | offset | length | mask | range | interfaceType | description |
+|-|-|-|-|-|-|-|
+<#
+    foreach (var entry in register.PayloadSpec)
+    {
+        var member = entry.Value;
+        var memberOffset = member.Offset.HasValue ? member.Offset.GetValueOrDefault().ToString() : "";
+        var memberLength = member.Length > 0 ? member.Length.ToString() : "";
+        var memberMask = member.Mask.HasValue ? $"0x{member.Mask.GetValueOrDefault():X}" : "";
+        var memberRange = TemplateHelper.GetDocumentationRange(member.MinValue, member.MaxValue, member.DefaultValue);
+        var memberType = TemplateHelper.GetDocumentationInterfaceType(DeviceMetadata, Namespace, member);
+#>
+| <#= entry.Key #> | <#= memberOffset #> | <#= memberLength #> | <#= memberMask #> | <#= memberRange #> | <#= memberType #> | <#= member.Description #> |
+<#
+    }
+}
+#>
