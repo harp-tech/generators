@@ -6,20 +6,29 @@
 <#@ import namespace="System.Collections.Generic" #>
 <#@ output extension=".md" #>
 <#
-var publicRegisters = DeviceMetadata.Registers.Where(register => register.Value.Visibility == RegisterVisibility.Public).ToList();
-#>
-| name | address | type | length | access | description | range | interfaceType |
-|-|-|-|-|-|-|-|-|
-<#
-foreach (var entry in publicRegisters)
+var columns = new[] { "name", "address", "type", "access", "description", "default", "range", "interfaceType" };
+var rows = new List<string[]>();
+foreach (var entry in DeviceMetadata.Registers.Where(register => register.Value.Visibility == RegisterVisibility.Public))
 {
     var name = entry.Key;
     var register = entry.Value;
-    var length = register.Length > 0 ? register.Length.ToString() : "";
-    var range = TemplateHelper.GetDocumentationRange(register.MinValue, register.MaxValue, register.DefaultValue);
-    var interfaceType = TemplateHelper.GetDocumentationInterfaceType(DeviceMetadata, Namespace, name, register);
+    rows.Add(new[]
+    {
+        $"[{name}](xref:{Namespace}.{name})",
+        register.Address.ToString(),
+        register.Length > 0 ? $"{register.Type}[{register.Length}]" : register.Type.ToString(),
+        register.Access.ToString(),
+        register.Description,
+        TemplateHelper.GetDocumentationValue(register.DefaultValue),
+        TemplateHelper.GetDocumentationRange(register.MinValue, register.MaxValue),
+        TemplateHelper.GetDocumentationInterfaceType(DeviceMetadata, Namespace, name, register)
+    });
+}
+
+foreach (var line in TemplateHelper.GetDocumentationTable(columns, rows))
+{
 #>
-| [<#= name #>](xref:<#= Namespace #>.<#= name #>) | <#= register.Address #> | <#= register.Type #> | <#= length #> | <#= register.Access #> | <#= register.Description #> | <#= range #> | <#= interfaceType #> |
+<#= line #>
 <#
 }
 #>

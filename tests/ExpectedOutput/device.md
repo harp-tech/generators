@@ -6,28 +6,28 @@
 
 # registers.md
 
-| name | address | type | length | access | description | range | interfaceType |
-|-|-|-|-|-|-|-|-|
-| [DigitalInputs](xref:Harp.Generators.Tests.DigitalInputs) | 32 | U8 |  | Event |  |  |  |
-| [AnalogData](xref:Harp.Generators.Tests.AnalogData) | 33 | Float | 6 | Event |  |  | [AnalogDataPayload](xref:Harp.Generators.Tests.AnalogDataPayload) |
-| [ComplexConfiguration](xref:Harp.Generators.Tests.ComplexConfiguration) | 34 | U8 | 17 | Write |  |  | [ComplexConfigurationPayload](xref:Harp.Generators.Tests.ComplexConfigurationPayload) |
-| [Version](xref:Harp.Generators.Tests.Version) | 35 | U8 | 32 | Event |  |  | [VersionPayload](xref:Harp.Generators.Tests.VersionPayload) |
-| [CustomPayload](xref:Harp.Generators.Tests.CustomPayload) | 36 | U32 | 3 | Read |  |  | [HarpVersion](xref:Bonsai.Harp.HarpVersion) |
-| [CustomRawPayload](xref:Harp.Generators.Tests.CustomRawPayload) | 37 | U32 | 3 | Read |  |  | [HarpVersion](xref:Bonsai.Harp.HarpVersion) |
-| [CustomMemberConverter](xref:Harp.Generators.Tests.CustomMemberConverter) | 38 | U8 | 3 | Read |  |  | [CustomMemberConverterPayload](xref:Harp.Generators.Tests.CustomMemberConverterPayload) |
-| [BitmaskSplitter](xref:Harp.Generators.Tests.BitmaskSplitter) | 39 | U8 |  | Write |  |  | [BitmaskSplitterPayload](xref:Harp.Generators.Tests.BitmaskSplitterPayload) |
-| [Counter0](xref:Harp.Generators.Tests.Counter0) | 40 | S32 |  | Event |  |  |  |
-| [PortDIOSet](xref:Harp.Generators.Tests.PortDIOSet) | 41 | U8 |  | Write |  |  | [PortDigitalIOS](xref:Harp.Generators.Tests.PortDigitalIOS) |
-| [PulseDOPort0](xref:Harp.Generators.Tests.PulseDOPort0) | 42 | U16 |  | Write |  | [1:] |  |
-| [PulseDO0](xref:Harp.Generators.Tests.PulseDO0) | 43 | U16 |  | Write |  | [1:] |  |
-| [MultiElementPayload](xref:Harp.Generators.Tests.MultiElementPayload) | 44 | U16 | 3 | Write |  |  |  |
-| [SingleElementPayload](xref:Harp.Generators.Tests.SingleElementPayload) | 45 | U16 | 1 | Write |  |  |  |
-| [MixedMemberLength](xref:Harp.Generators.Tests.MixedMemberLength) | 46 | U8 | 4 | Write |  |  | [MixedMemberLengthPayload](xref:Harp.Generators.Tests.MixedMemberLengthPayload) |
-| [Rgb0](xref:Harp.Generators.Tests.Rgb0) | 47 | U8 | 3 | Write |  |  | [RgbPayload](xref:Harp.Generators.Tests.RgbPayload) |
-| [Rgb1](xref:Harp.Generators.Tests.Rgb1) | 48 | U8 | 3 | Write |  |  | [RgbPayload](xref:Harp.Generators.Tests.RgbPayload) |
-| [StartPulse](xref:Harp.Generators.Tests.StartPulse) | 100 | U16 |  | Write | Starts a PWM pulse. |  | [StartPulsePayload](xref:Harp.Generators.Tests.StartPulsePayload) |
-| [StartPulseTrain](xref:Harp.Generators.Tests.StartPulseTrain) | 101 | U16 | 2 | Write | Starts a PWM pulse train. |  | [StartPulseTrainPayload](xref:Harp.Generators.Tests.StartPulseTrainPayload) |
-| [EncoderMode](xref:Harp.Generators.Tests.EncoderMode) | 103 | U8 |  | Write | Configures the operation mode of the encoder. |  | [EncoderModeMask](xref:Harp.Generators.Tests.EncoderModeMask) |
+| name | address | type | access | description | range | interfaceType |
+|-|-|-|-|-|-|-|
+| [DigitalInputs](xref:Harp.Generators.Tests.DigitalInputs) | 32 | U8 | Event |  |  |  |
+| [AnalogData](xref:Harp.Generators.Tests.AnalogData) | 33 | Float[6] | Event |  |  | [AnalogDataPayload](xref:Harp.Generators.Tests.AnalogDataPayload) |
+| [ComplexConfiguration](xref:Harp.Generators.Tests.ComplexConfiguration) | 34 | U8[17] | Write |  |  | [ComplexConfigurationPayload](xref:Harp.Generators.Tests.ComplexConfigurationPayload) |
+| [Version](xref:Harp.Generators.Tests.Version) | 35 | U8[32] | Event |  |  | [VersionPayload](xref:Harp.Generators.Tests.VersionPayload) |
+| [CustomPayload](xref:Harp.Generators.Tests.CustomPayload) | 36 | U32[3] | Read |  |  | [HarpVersion](xref:Bonsai.Harp.HarpVersion) |
+| [CustomRawPayload](xref:Harp.Generators.Tests.CustomRawPayload) | 37 | U32[3] | Read |  |  | [HarpVersion](xref:Bonsai.Harp.HarpVersion) |
+| [CustomMemberConverter](xref:Harp.Generators.Tests.CustomMemberConverter) | 38 | U8[3] | Read |  |  | [CustomMemberConverterPayload](xref:Harp.Generators.Tests.CustomMemberConverterPayload) |
+| [BitmaskSplitter](xref:Harp.Generators.Tests.BitmaskSplitter) | 39 | U8 | Write |  |  | [BitmaskSplitterPayload](xref:Harp.Generators.Tests.BitmaskSplitterPayload) |
+| [Counter0](xref:Harp.Generators.Tests.Counter0) | 40 | S32 | Event |  |  |  |
+| [PortDIOSet](xref:Harp.Generators.Tests.PortDIOSet) | 41 | U8 | Write |  |  | [PortDigitalIOS](xref:Harp.Generators.Tests.PortDigitalIOS) |
+| [PulseDOPort0](xref:Harp.Generators.Tests.PulseDOPort0) | 42 | U16 | Write |  | at least 1 |  |
+| [PulseDO0](xref:Harp.Generators.Tests.PulseDO0) | 43 | U16 | Write |  | at least 1 |  |
+| [MultiElementPayload](xref:Harp.Generators.Tests.MultiElementPayload) | 44 | U16[3] | Write |  |  |  |
+| [SingleElementPayload](xref:Harp.Generators.Tests.SingleElementPayload) | 45 | U16[1] | Write |  |  |  |
+| [MixedMemberLength](xref:Harp.Generators.Tests.MixedMemberLength) | 46 | U8[4] | Write |  |  | [MixedMemberLengthPayload](xref:Harp.Generators.Tests.MixedMemberLengthPayload) |
+| [Rgb0](xref:Harp.Generators.Tests.Rgb0) | 47 | U8[3] | Write |  |  | [RgbPayload](xref:Harp.Generators.Tests.RgbPayload) |
+| [Rgb1](xref:Harp.Generators.Tests.Rgb1) | 48 | U8[3] | Write |  |  | [RgbPayload](xref:Harp.Generators.Tests.RgbPayload) |
+| [StartPulse](xref:Harp.Generators.Tests.StartPulse) | 100 | U16 | Write | Starts a PWM pulse. |  | [StartPulsePayload](xref:Harp.Generators.Tests.StartPulsePayload) |
+| [StartPulseTrain](xref:Harp.Generators.Tests.StartPulseTrain) | 101 | U16[2] | Write | Starts a PWM pulse train. |  | [StartPulseTrainPayload](xref:Harp.Generators.Tests.StartPulseTrainPayload) |
+| [EncoderMode](xref:Harp.Generators.Tests.EncoderMode) | 103 | U8 | Write | Configures the operation mode of the encoder. |  | [EncoderModeMask](xref:Harp.Generators.Tests.EncoderModeMask) |
 
 # Harp_Generators_Tests_DigitalInputs.md
 
@@ -55,12 +55,12 @@ generatedContent: *content
 
 ### Payload members
 
-| name | offset | length | mask | range | interfaceType | description |
-|-|-|-|-|-|-|-|
-| Analog0 | 0 |  |  |  |  |  |
-| Analog1 | 1 |  |  |  |  |  |
-| Analog2 | 2 |  |  |  |  |  |
-| Accelerometer | 3 | 3 |  |  |  |  |
+| name | offset | length |
+|-|-|-|
+| Analog0 | 0 |  |
+| Analog1 | 1 |  |
+| Analog2 | 2 |  |
+| Accelerometer | 3 | 3 |
 
 # Harp_Generators_Tests_ComplexConfiguration.md
 
@@ -77,14 +77,14 @@ generatedContent: *content
 
 ### Payload members
 
-| name | offset | length | mask | range | interfaceType | description |
-|-|-|-|-|-|-|-|
-| PwmPort | 0 |  |  |  | [PwmPort](xref:Harp.Generators.Tests.PwmPort) |  |
-| Invert | 1 |  |  | 1 | bool |  |
-| DutyCycle | 4 | 4 |  |  | float |  |
-| Frequency | 8 | 4 |  |  | float |  |
-| EventsEnabled | 12 |  |  |  | bool |  |
-| Delta | 13 | 4 |  |  | uint |  |
+| name | offset | length | default | interfaceType |
+|-|-|-|-|-|
+| PwmPort | 0 |  |  | [PwmPort](xref:Harp.Generators.Tests.PwmPort) |
+| Invert | 1 |  | 1 | bool |
+| DutyCycle | 4 | 4 |  | float |
+| Frequency | 8 | 4 |  | float |
+| EventsEnabled | 12 |  |  | bool |
+| Delta | 13 | 4 |  | uint |
 
 # Harp_Generators_Tests_Version.md
 
@@ -101,13 +101,13 @@ generatedContent: *content
 
 ### Payload members
 
-| name | offset | length | mask | range | interfaceType | description |
-|-|-|-|-|-|-|-|
-| ProtocolVersion | 0 | 3 |  |  | [HarpVersion](xref:Bonsai.Harp.HarpVersion) |  |
-| FirmwareVersion | 3 | 3 |  |  | [HarpVersion](xref:Bonsai.Harp.HarpVersion) |  |
-| HardwareVersion | 6 | 3 |  |  | [HarpVersion](xref:Bonsai.Harp.HarpVersion) |  |
-| CoreId | 9 | 3 |  |  | string |  |
-| InterfaceHash | 12 | 20 |  |  |  |  |
+| name | offset | length | interfaceType |
+|-|-|-|-|
+| ProtocolVersion | 0 | 3 | [HarpVersion](xref:Bonsai.Harp.HarpVersion) |
+| FirmwareVersion | 3 | 3 | [HarpVersion](xref:Bonsai.Harp.HarpVersion) |
+| HardwareVersion | 6 | 3 | [HarpVersion](xref:Bonsai.Harp.HarpVersion) |
+| CoreId | 9 | 3 | string |
+| InterfaceHash | 12 | 20 |  |
 
 # Harp_Generators_Tests_CustomPayload.md
 
@@ -150,10 +150,10 @@ generatedContent: *content
 
 ### Payload members
 
-| name | offset | length | mask | range | interfaceType | description |
-|-|-|-|-|-|-|-|
-| Header | 0 |  |  |  |  |  |
-| Data | 1 | 2 |  |  | int |  |
+| name | offset | length | interfaceType |
+|-|-|-|-|
+| Header | 0 |  |  |
+| Data | 1 | 2 | int |
 
 # Harp_Generators_Tests_BitmaskSplitter.md
 
@@ -169,10 +169,10 @@ generatedContent: *content
 
 ### Payload members
 
-| name | offset | length | mask | range | interfaceType | description |
-|-|-|-|-|-|-|-|
-| Low |  |  | 0xF |  | int |  |
-| High |  |  | 0xF0 |  | int |  |
+| name | mask | interfaceType |
+|-|-|-|
+| Low | 0xF | int |
+| High | 0xF0 | int |
 
 # Harp_Generators_Tests_Counter0.md
 
@@ -207,7 +207,7 @@ generatedContent: *content
 - Address: 42
 - Payload type: U16
 - Access: Write
-- Range: [1:]
+- Range: at least 1
 
 # Harp_Generators_Tests_PulseDO0.md
 
@@ -219,7 +219,7 @@ generatedContent: *content
 - Address: 43
 - Payload type: U16
 - Access: Write
-- Range: [1:]
+- Range: at least 1
 
 # Harp_Generators_Tests_MultiElementPayload.md
 
@@ -260,11 +260,11 @@ generatedContent: *content
 
 ### Payload members
 
-| name | offset | length | mask | range | interfaceType | description |
-|-|-|-|-|-|-|-|
-| Absent | 0 |  |  |  |  |  |
-| Single | 1 | 1 |  |  |  |  |
-| Multiple | 2 | 2 |  |  |  |  |
+| name | offset | length |
+|-|-|-|
+| Absent | 0 |  |
+| Single | 1 | 1 |
+| Multiple | 2 | 2 |
 
 # Harp_Generators_Tests_Rgb0.md
 
@@ -281,11 +281,11 @@ generatedContent: *content
 
 ### Payload members
 
-| name | offset | length | mask | range | interfaceType | description |
-|-|-|-|-|-|-|-|
-| Red | 0 |  |  |  |  |  |
-| Green | 1 |  |  |  |  |  |
-| Blue | 2 |  |  |  |  |  |
+| name | offset |
+|-|-|
+| Red | 0 |
+| Green | 1 |
+| Blue | 2 |
 
 # Harp_Generators_Tests_Rgb1.md
 
@@ -302,11 +302,11 @@ generatedContent: *content
 
 ### Payload members
 
-| name | offset | length | mask | range | interfaceType | description |
-|-|-|-|-|-|-|-|
-| Red | 0 |  |  |  |  |  |
-| Green | 1 |  |  |  |  |  |
-| Blue | 2 |  |  |  |  |  |
+| name | offset |
+|-|-|
+| Red | 0 |
+| Green | 1 |
+| Blue | 2 |
 
 # Harp_Generators_Tests_StartPulse.md
 
@@ -322,10 +322,10 @@ generatedContent: *content
 
 ### Payload members
 
-| name | offset | length | mask | range | interfaceType | description |
-|-|-|-|-|-|-|-|
-| DigitalOutput | 0 |  | 0xC00 |  | [PwmPort](xref:Harp.Generators.Tests.PwmPort) |  |
-| PulseWidth | 0 |  | 0x3FF |  | ushort |  |
+| name | offset | mask | interfaceType |
+|-|-|-|-|
+| DigitalOutput | 0 | 0xC00 | [PwmPort](xref:Harp.Generators.Tests.PwmPort) |
+| PulseWidth | 0 | 0x3FF | ushort |
 
 # Harp_Generators_Tests_StartPulseTrain.md
 
@@ -342,12 +342,12 @@ generatedContent: *content
 
 ### Payload members
 
-| name | offset | length | mask | range | interfaceType | description |
-|-|-|-|-|-|-|-|
-| DigitalOutput | 0 |  | 0xC00 |  | [PwmPort](xref:Harp.Generators.Tests.PwmPort) |  |
-| PulseWidth | 0 |  | 0x3FF |  | ushort |  |
-| Frequency | 1 |  | 0xFF00 | 1 [1:255] | byte |  |
-| PulseCount | 1 |  | 0xFF |  | byte |  |
+| name | offset | mask | default | range | interfaceType |
+|-|-|-|-|-|-|
+| DigitalOutput | 0 | 0xC00 |  |  | [PwmPort](xref:Harp.Generators.Tests.PwmPort) |
+| PulseWidth | 0 | 0x3FF |  |  | ushort |
+| Frequency | 1 | 0xFF00 | 1 | 1 to 255 | byte |
+| PulseCount | 1 | 0xFF |  |  | byte |
 
 # Harp_Generators_Tests_EncoderMode.md
 

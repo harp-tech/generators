@@ -7,7 +7,8 @@
 <#@ output extension=".md" #>
 <#
 var register = DeviceMetadata.Registers[RegisterName];
-var range = TemplateHelper.GetDocumentationRange(register.MinValue, register.MaxValue, register.DefaultValue);
+var defaultValue = TemplateHelper.GetDocumentationValue(register.DefaultValue);
+var range = TemplateHelper.GetDocumentationRange(register.MinValue, register.MaxValue);
 var interfaceType = TemplateHelper.GetDocumentationInterfaceType(DeviceMetadata, Namespace, RegisterName, register);
 #>
 ---
@@ -27,6 +28,14 @@ if (register.Length > 0)
 #>
 - Access: <#= register.Access #>
 <#
+if (defaultValue.Length > 0)
+{
+#>
+- Default value: <#= defaultValue #>
+<#
+}
+#>
+<#
 if (range.Length > 0)
 {
 #>
@@ -43,25 +52,34 @@ if (interfaceType.Length > 0)
 }
 #>
 <#
-if (register.PayloadSpec != null)
+if (register.PayloadSpec != null && register.PayloadSpec.Count > 0)
 {
+    var columns = new[] { "name", "offset", "length", "mask", "default", "range", "interfaceType", "description" };
+    var rows = new List<string[]>();
+    foreach (var entry in register.PayloadSpec)
+    {
+        var member = entry.Value;
+        rows.Add(new[]
+        {
+            entry.Key,
+            member.Offset.HasValue ? member.Offset.GetValueOrDefault().ToString() : "",
+            member.Length > 0 ? member.Length.ToString() : "",
+            member.Mask.HasValue ? $"0x{member.Mask.GetValueOrDefault():X}" : "",
+            TemplateHelper.GetDocumentationValue(member.DefaultValue),
+            TemplateHelper.GetDocumentationRange(member.MinValue, member.MaxValue),
+            TemplateHelper.GetDocumentationInterfaceType(DeviceMetadata, Namespace, member),
+            member.Description
+        });
+    }
 #>
 
 ### Payload members
 
-| name | offset | length | mask | range | interfaceType | description |
-|-|-|-|-|-|-|-|
 <#
-    foreach (var entry in register.PayloadSpec)
+    foreach (var line in TemplateHelper.GetDocumentationTable(columns, rows))
     {
-        var member = entry.Value;
-        var memberOffset = member.Offset.HasValue ? member.Offset.GetValueOrDefault().ToString() : "";
-        var memberLength = member.Length > 0 ? member.Length.ToString() : "";
-        var memberMask = member.Mask.HasValue ? $"0x{member.Mask.GetValueOrDefault():X}" : "";
-        var memberRange = TemplateHelper.GetDocumentationRange(member.MinValue, member.MaxValue, member.DefaultValue);
-        var memberType = TemplateHelper.GetDocumentationInterfaceType(DeviceMetadata, Namespace, member);
 #>
-| <#= entry.Key #> | <#= memberOffset #> | <#= memberLength #> | <#= memberMask #> | <#= memberRange #> | <#= memberType #> | <#= member.Description #> |
+<#= line #>
 <#
     }
 }

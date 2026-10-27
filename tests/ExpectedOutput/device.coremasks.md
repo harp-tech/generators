@@ -6,10 +6,10 @@
 
 # registers.md
 
-| name | address | type | length | access | description | range | interfaceType |
-|-|-|-|-|-|-|-|-|
-| [EnableFlow](xref:Harp.Generators.Tests.EnableFlow) | 32 | U8 |  | Write | Specifies whether the flow is enabled. |  | [EnableFlag](xref:Bonsai.Harp.EnableFlag) |
-| [ResetFlow](xref:Harp.Generators.Tests.ResetFlow) | 33 | U8 |  | Write | Specifies the reset behavior of the flow controller. |  | [ResetFlags](xref:Bonsai.Harp.ResetFlags) |
+| name | address | type | access | description | interfaceType |
+|-|-|-|-|-|-|
+| [EnableFlow](xref:Harp.Generators.Tests.EnableFlow) | 32 | U8 | Write | Specifies whether the flow is enabled. | [EnableFlag](xref:Bonsai.Harp.EnableFlag) |
+| [ResetFlow](xref:Harp.Generators.Tests.ResetFlow) | 33 | U8 | Write | Specifies the reset behavior of the flow controller. | [ResetFlags](xref:Bonsai.Harp.ResetFlags) |
 
 # Harp_Generators_Tests_EnableFlow.md
 

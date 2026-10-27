@@ -1,4 +1,6 @@
-﻿using System.Globalization;
+﻿using System.Collections.Generic;
+using System.Globalization;
+using System.Linq;
 
 namespace Harp.Generators;
 
@@ -12,23 +14,38 @@ internal static partial class TemplateHelper
         return uid.Replace('.', '_') + DocumentationFileExtension;
     }
 
-    public static string GetDocumentationRange(float? minValue, float? maxValue, float? defaultValue)
+    public static string GetDocumentationValue(float? value)
     {
-        var range = "";
-        if (minValue.HasValue || maxValue.HasValue)
-        {
-            var min = minValue?.ToString(CultureInfo.InvariantCulture) ?? "";
-            var max = maxValue?.ToString(CultureInfo.InvariantCulture) ?? "";
-            range = $"[{min}:{max}]";
-        }
+        return value?.ToString(CultureInfo.InvariantCulture) ?? "";
+    }
 
-        if (defaultValue.HasValue)
-        {
-            var value = defaultValue.GetValueOrDefault().ToString(CultureInfo.InvariantCulture);
-            range = range.Length > 0 ? $"{value} {range}" : value;
-        }
+    public static string GetDocumentationRange(float? minValue, float? maxValue)
+    {
+        var min = GetDocumentationValue(minValue);
+        var max = GetDocumentationValue(maxValue);
+        if (min.Length > 0 && max.Length > 0) return $"{min} to {max}";
+        if (min.Length > 0) return $"at least {min}";
+        if (max.Length > 0) return $"at most {max}";
+        return "";
+    }
 
-        return range;
+    public static IEnumerable<string> GetDocumentationTable(string[] columns, IReadOnlyList<string[]> rows)
+    {
+        var usedColumns = Enumerable.Range(0, columns.Length)
+            .Where(column => rows.Any(row => row[column].Length > 0))
+            .ToArray();
+        if (usedColumns.Length == 0)
+            yield break;
+
+        yield return GetDocumentationTableRow(usedColumns.Select(column => columns[column]));
+        yield return "|" + string.Join("|", usedColumns.Select(_ => "-")) + "|";
+        foreach (var row in rows)
+            yield return GetDocumentationTableRow(usedColumns.Select(column => row[column]));
+    }
+
+    static string GetDocumentationTableRow(IEnumerable<string> cells)
+    {
+        return $"| {string.Join(" | ", cells)} |";
     }
 
     public static string GetDocumentationLink(DeviceMetadata deviceMetadata, string ns, string interfaceType)
