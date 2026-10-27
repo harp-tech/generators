@@ -117,6 +117,7 @@ class ComplexConfigurationPayload(StructPayload[np.uint8], length=17):
 
     pwm_port: PwmPort = GroupMask(enum=PwmPort, mask=0xFF, default=PwmPort.PWM1)
     invert: bool = Field(BoolConverter(), offset=1, default=True)
+    input_flags: PortDigitalIOS = BitMask(enum=PortDigitalIOS, mask=0xF, offset=2, default=PortDigitalIOS.DIO0 | PortDigitalIOS.DIO1)
     duty_cycle: np.float32 = Field(IdentityConverter(np.float32), offset=4)
     frequency: np.float32 = Field(IdentityConverter(np.float32), offset=8)
     events_enabled: bool = Field(BoolConverter(), offset=12)

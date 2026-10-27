@@ -36,6 +36,11 @@ registers:
         offset: 1
         defaultValue: 1
         interfaceType: bool
+      InputFlags:
+        offset: 2
+        mask: 0xF
+        maskType: PortDigitalIOS
+        defaultValue: 3
       DutyCycle:
         offset: 4
         length: 4

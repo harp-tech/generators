@@ -390,6 +390,65 @@ public class MaskValue
 
 internal static partial class TemplateHelper
 {
+    const string CoreMetadataResourceName = "Harp.Generators.core.yml";
+
+    static readonly Lazy<DeviceMetadata> CoreMetadata = new(() =>
+    {
+        using var stream = typeof(TemplateHelper).Assembly.GetManifestResourceStream(CoreMetadataResourceName)
+            ?? throw new InvalidOperationException($"Embedded metadata '{CoreMetadataResourceName}' was not found.");
+        using var reader = new StreamReader(stream);
+        return DeviceMetadata.Load(reader);
+    });
+
+    static GroupMaskInfo? FindGroupMask(DeviceMetadata deviceMetadata, string typeName)
+    {
+        if (deviceMetadata.GroupMasks.TryGetValue(typeName, out var groupMask)) return groupMask;
+        if (deviceMetadata.BitMasks.ContainsKey(typeName)) return null;
+        return CoreMetadata.Value.GroupMasks.TryGetValue(typeName, out groupMask) ? groupMask : null;
+    }
+
+    static BitMaskInfo? FindBitMask(DeviceMetadata deviceMetadata, string typeName)
+    {
+        if (deviceMetadata.BitMasks.TryGetValue(typeName, out var bitMask)) return bitMask;
+        if (deviceMetadata.GroupMasks.ContainsKey(typeName)) return null;
+        return CoreMetadata.Value.BitMasks.TryGetValue(typeName, out bitMask) ? bitMask : null;
+    }
+
+    static bool IsBitMask(DeviceMetadata deviceMetadata, string typeName)
+    {
+        return FindBitMask(deviceMetadata, typeName) != null;
+    }
+
+    static List<string>? GetMaskValueNames(DeviceMetadata deviceMetadata, string maskType, long value)
+    {
+        var groupMask = FindGroupMask(deviceMetadata, maskType);
+        var entries = groupMask?.Values ?? FindBitMask(deviceMetadata, maskType)?.Bits;
+        if (entries is null)
+            return null;
+
+        foreach (var entry in entries)
+        {
+            if (entry.Value.Value == value)
+                return [entry.Key];
+        }
+
+        if (groupMask != null || value == 0)
+            return null;
+
+        var remaining = value;
+        var names = new List<string>();
+        foreach (var entry in entries)
+        {
+            var bits = entry.Value.Value;
+            if (bits != 0 && (remaining & bits) == bits)
+            {
+                names.Add(entry.Key);
+                remaining &= ~bits;
+            }
+        }
+        return remaining == 0 ? names : null;
+    }
+
     public static string GetInterfaceType(string name, RegisterInfo register)
     {
         if (!string.IsNullOrEmpty(register.InterfaceType)) return register.InterfaceType;
@@ -493,6 +552,7 @@ internal static partial class TemplateHelper
     }
 
     public static string GetDefaultValueAssignment(
+        DeviceMetadata deviceMetadata,
         float? defaultValue,
         float? minValue,
         PayloadType payloadType,
@@ -506,7 +566,13 @@ internal static partial class TemplateHelper
             if (interfaceType == "bool")
                 return $" = {(defaultValue.GetValueOrDefault() != 0 ? "true" : "false")};";
             if (interfaceType == maskType)
-                return $" = ({maskType}){defaultValue};";
+            {
+                var value = (long)defaultValue.GetValueOrDefault();
+                var names = GetMaskValueNames(deviceMetadata, maskType, value);
+                return names is null
+                    ? $" = ({maskType}){value};"
+                    : $" = {string.Join(" | ", names.Select(name => $"{maskType}.{name}"))};";
+            }
 
             var suffix = payloadType == PayloadType.Float ? "F" : string.Empty;
             return $" = {defaultValue}{suffix};";
