@@ -505,6 +505,8 @@ internal static partial class TemplateHelper
         {
             if (interfaceType == "bool")
                 return $" = {(defaultValue.GetValueOrDefault() != 0 ? "true" : "false")};";
+            if (interfaceType == maskType)
+                return $" = ({maskType}){defaultValue};";
 
             var suffix = payloadType == PayloadType.Float ? "F" : string.Empty;
             return $" = {defaultValue}{suffix};";

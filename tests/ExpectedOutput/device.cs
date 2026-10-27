@@ -2841,7 +2841,7 @@ namespace Harp.Generators.Tests
         /// Gets or sets a value to write on payload member PwmPort.
         /// </summary>
         [Description("")]
-        public PwmPort PwmPort { get; set; }
+        public PwmPort PwmPort { get; set; } = (PwmPort)2;
 
         /// <summary>
         /// Gets or sets a value to write on payload member Invert.
@@ -3304,7 +3304,7 @@ namespace Harp.Generators.Tests
         /// Gets or sets the value for register PortDIOSet.
         /// </summary>
         [Description("The value for register PortDIOSet.")]
-        public PortDigitalIOS PortDIOSet { get; set; }
+        public PortDigitalIOS PortDIOSet { get; set; } = (PortDigitalIOS)3;
 
         /// <summary>
         /// Creates a message payload for the PortDIOSet register.
