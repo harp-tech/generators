@@ -6,7 +6,7 @@
 <#@ import namespace="System.Collections.Generic" #>
 <#@ output extension=".md" #>
 <#
-var columns = new[] { "name", "address", "type", "access", "description", "default", "range", "interfaceType" };
+var columns = new[] { "name", "address", "type", "access", "description", "default&nbsp;[range]", "interfaceType" };
 var rows = new List<string[]>();
 foreach (var entry in DeviceMetadata.Registers.Where(register => register.Value.Visibility == RegisterVisibility.Public))
 {
@@ -19,8 +19,7 @@ foreach (var entry in DeviceMetadata.Registers.Where(register => register.Value.
         register.Length > 0 ? $"{register.Type}[{register.Length}]" : register.Type.ToString(),
         register.Access.ToString(),
         register.Description,
-        TemplateHelper.GetDocumentationValue(register.DefaultValue),
-        TemplateHelper.GetDocumentationRange(register.MinValue, register.MaxValue),
+        TemplateHelper.GetDocumentationTableRange(register.MinValue, register.MaxValue, register.DefaultValue),
         TemplateHelper.GetDocumentationInterfaceType(DeviceMetadata, Namespace, name, register)
     });
 }

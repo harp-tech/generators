@@ -29,6 +29,18 @@ internal static partial class TemplateHelper
         return "";
     }
 
+    public static string GetDocumentationTableRange(float? minValue, float? maxValue, float? defaultValue)
+    {
+        var range = minValue.HasValue || maxValue.HasValue
+            ? $"[{GetDocumentationValue(minValue)}:{GetDocumentationValue(maxValue)}]"
+            : "";
+        var value = GetDocumentationValue(defaultValue);
+        if (value.Length == 0)
+            return range;
+
+        return range.Length > 0 ? $"{value} {range}" : value;
+    }
+
     public static IEnumerable<string> GetDocumentationTable(string[] columns, IReadOnlyList<string[]> rows)
     {
         var usedColumns = Enumerable.Range(0, columns.Length)

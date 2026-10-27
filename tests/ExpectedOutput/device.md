@@ -6,7 +6,7 @@
 
 # registers.md
 
-| name | address | type | access | description | range | interfaceType |
+| name | address | type | access | description | default&nbsp;[range] | interfaceType |
 |-|-|-|-|-|-|-|
 | [DigitalInputs](xref:Harp.Generators.Tests.DigitalInputs) | 32 | U8 | Event |  |  |  |
 | [AnalogData](xref:Harp.Generators.Tests.AnalogData) | 33 | Float[6] | Event |  |  | [AnalogDataPayload](xref:Harp.Generators.Tests.AnalogDataPayload) |
@@ -18,8 +18,8 @@
 | [BitmaskSplitter](xref:Harp.Generators.Tests.BitmaskSplitter) | 39 | U8 | Write |  |  | [BitmaskSplitterPayload](xref:Harp.Generators.Tests.BitmaskSplitterPayload) |
 | [Counter0](xref:Harp.Generators.Tests.Counter0) | 40 | S32 | Event |  |  |  |
 | [PortDIOSet](xref:Harp.Generators.Tests.PortDIOSet) | 41 | U8 | Write |  |  | [PortDigitalIOS](xref:Harp.Generators.Tests.PortDigitalIOS) |
-| [PulseDOPort0](xref:Harp.Generators.Tests.PulseDOPort0) | 42 | U16 | Write |  | at least 1 |  |
-| [PulseDO0](xref:Harp.Generators.Tests.PulseDO0) | 43 | U16 | Write |  | at least 1 |  |
+| [PulseDOPort0](xref:Harp.Generators.Tests.PulseDOPort0) | 42 | U16 | Write |  | [1:] |  |
+| [PulseDO0](xref:Harp.Generators.Tests.PulseDO0) | 43 | U16 | Write |  | [1:] |  |
 | [MultiElementPayload](xref:Harp.Generators.Tests.MultiElementPayload) | 44 | U16[3] | Write |  |  |  |
 | [SingleElementPayload](xref:Harp.Generators.Tests.SingleElementPayload) | 45 | U16[1] | Write |  |  |  |
 | [MixedMemberLength](xref:Harp.Generators.Tests.MixedMemberLength) | 46 | U8[4] | Write |  |  | [MixedMemberLengthPayload](xref:Harp.Generators.Tests.MixedMemberLengthPayload) |
@@ -77,7 +77,7 @@ generatedContent: *content
 
 ### Payload members
 
-| name | offset | length | default | interfaceType |
+| name | offset | length | default&nbsp;[range] | interfaceType |
 |-|-|-|-|-|
 | PwmPort | 0 |  |  | [PwmPort](xref:Harp.Generators.Tests.PwmPort) |
 | Invert | 1 |  | 1 | bool |
@@ -342,12 +342,12 @@ generatedContent: *content
 
 ### Payload members
 
-| name | offset | mask | default | range | interfaceType |
-|-|-|-|-|-|-|
-| DigitalOutput | 0 | 0xC00 |  |  | [PwmPort](xref:Harp.Generators.Tests.PwmPort) |
-| PulseWidth | 0 | 0x3FF |  |  | ushort |
-| Frequency | 1 | 0xFF00 | 1 | 1 to 255 | byte |
-| PulseCount | 1 | 0xFF |  |  | byte |
+| name | offset | mask | default&nbsp;[range] | interfaceType |
+|-|-|-|-|-|
+| DigitalOutput | 0 | 0xC00 |  | [PwmPort](xref:Harp.Generators.Tests.PwmPort) |
+| PulseWidth | 0 | 0x3FF |  | ushort |
+| Frequency | 1 | 0xFF00 | 1 [1:255] | byte |
+| PulseCount | 1 | 0xFF |  | byte |
 
 # Harp_Generators_Tests_EncoderMode.md
 

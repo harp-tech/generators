@@ -54,7 +54,7 @@ if (interfaceType.Length > 0)
 <#
 if (register.PayloadSpec != null && register.PayloadSpec.Count > 0)
 {
-    var columns = new[] { "name", "offset", "length", "mask", "default", "range", "interfaceType", "description" };
+    var columns = new[] { "name", "offset", "length", "mask", "default&nbsp;[range]", "interfaceType", "description" };
     var rows = new List<string[]>();
     foreach (var entry in register.PayloadSpec)
     {
@@ -65,8 +65,7 @@ if (register.PayloadSpec != null && register.PayloadSpec.Count > 0)
             member.Offset.HasValue ? member.Offset.GetValueOrDefault().ToString() : "",
             member.Length > 0 ? member.Length.ToString() : "",
             member.Mask.HasValue ? $"0x{member.Mask.GetValueOrDefault():X}" : "",
-            TemplateHelper.GetDocumentationValue(member.DefaultValue),
-            TemplateHelper.GetDocumentationRange(member.MinValue, member.MaxValue),
+            TemplateHelper.GetDocumentationTableRange(member.MinValue, member.MaxValue, member.DefaultValue),
             TemplateHelper.GetDocumentationInterfaceType(DeviceMetadata, Namespace, member),
             member.Description
         });
