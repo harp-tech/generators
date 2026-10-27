@@ -27,7 +27,7 @@ foreach (var registerMetadata in deviceRegisters)
 {
     var registerName = TemplateHelper.GetFirmwareName(registerMetadata.Key);
 #>
-	&app_read_REG_<#= registerName #><#= ++registerIndex < deviceRegisters.Count ? "," : string.Empty #>
+    &app_read_REG_<#= registerName #><#= ++registerIndex < deviceRegisters.Count ? "," : string.Empty #>
 <#
 }
 #>
@@ -40,7 +40,7 @@ foreach (var registerMetadata in deviceRegisters)
 {
     var registerName = TemplateHelper.GetFirmwareName(registerMetadata.Key);
 #>
-	&app_write_REG_<#= registerName #><#= ++registerIndex < deviceRegisters.Count ? "," : string.Empty #>
+    &app_write_REG_<#= registerName #><#= ++registerIndex < deviceRegisters.Count ? "," : string.Empty #>
 <#
 }
 #>
@@ -51,7 +51,7 @@ foreach (var registerMetadata in deviceRegisters)
     var register = registerMetadata.Value;
     var registerName = TemplateHelper.GetFirmwareName(registerMetadata.Key);
     var firmwareType = TemplateHelper.GetFirmwareType(register.Type);
-	var allowWrite = (register.Access & RegisterAccess.Write) != 0;
+    var allowWrite = (register.Access & RegisterAccess.Write) != 0;
     var isArrayRegister = register.Length > 0;
     var arrayAccess = isArrayRegister ? "[0]" : string.Empty;
     var arrayPointer = isArrayRegister ? "*" : string.Empty;
@@ -67,7 +67,7 @@ foreach (var registerMetadata in deviceRegisters)
 #>
 void app_read_REG_<#= registerName #>(void)
 {
-	//app_regs.REG_<#= registerName #><#= arrayAccess #> = 0;
+    //app_regs.REG_<#= registerName #><#= arrayAccess #> = 0;
 
 }
 
@@ -78,9 +78,9 @@ bool app_write_REG_<#= registerName #>(void *a)<#
     {
         WriteLine(string.Empty); #>
 {
-	<#= firmwareType #> <#= arrayPointer #>reg = <#= dereferenceValue #>((<#= firmwareType #>*)a);
+    <#= firmwareType #> <#= arrayPointer #>reg = <#= dereferenceValue #>((<#= firmwareType #>*)a);
 
-	app_regs.REG_<#= registerName #><#= arrayAccess #> = reg<#= arrayAccess #>;
+    app_regs.REG_<#= registerName #><#= arrayAccess #> = reg<#= arrayAccess #>;
     return true;
 }
 <#

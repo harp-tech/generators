@@ -320,6 +320,11 @@ internal static partial class TemplateHelper
         return FirmwareNamingConvention.Instance.Apply(value);
     }
 
+    public static string GetOptionalText(string separator, string? text)
+    {
+        return string.IsNullOrEmpty(text) ? string.Empty : separator + text;
+    }
+
     public static string GetFirmwareGroupMaskName(string value)
     {
         var suffixIndex = value.LastIndexOf("Mask");

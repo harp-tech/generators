@@ -16,14 +16,14 @@ extern AppRegs app_regs;
 // ISR(TCD0_OVF_vect, ISR_NAKED)
 // ISR(TCE0_OVF_vect, ISR_NAKED)
 // ISR(TCF0_OVF_vect, ISR_NAKED)
-// 
+//
 // ISR(TCC0_CCA_vect, ISR_NAKED)
 // ISR(TCD0_CCA_vect, ISR_NAKED)
 // ISR(TCE0_CCA_vect, ISR_NAKED)
 // ISR(TCF0_CCA_vect, ISR_NAKED)
-// 
+//
 // ISR(TCD1_OVF_vect, ISR_NAKED)
-// 
+//
 // ISR(TCD1_CCA_vect, ISR_NAKED)
 
 /************************************************************************/
@@ -31,7 +31,7 @@ extern AppRegs app_regs;
 /************************************************************************/
 ISR(PORTD_INT0_vect, ISR_NAKED)
 {
-	reti();
+    reti();
 }
 
 /************************************************************************/
@@ -39,7 +39,7 @@ ISR(PORTD_INT0_vect, ISR_NAKED)
 /************************************************************************/
 ISR(PORTE_INT0_vect, ISR_NAKED)
 {
-	reti();
+    reti();
 }
 
 /************************************************************************/
@@ -47,7 +47,7 @@ ISR(PORTE_INT0_vect, ISR_NAKED)
 /************************************************************************/
 ISR(PORTF_INT0_vect, ISR_NAKED)
 {
-	reti();
+    reti();
 }
 
 /************************************************************************/
@@ -55,5 +55,5 @@ ISR(PORTF_INT0_vect, ISR_NAKED)
 /************************************************************************/
 ISR(PORTH_INT0_vect, ISR_NAKED)
 {
-	reti();
+    reti();
 }

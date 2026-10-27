@@ -47,7 +47,7 @@ if (inputPins.Count > 0)
         var pinName = TemplateHelper.GetFirmwareName(pin.Key);
         var descriptionOffset = maxPinNameLength - pinName.Length + 10;
 #>
-// <#= pinName #><#= new string(' ', descriptionOffset) #>Description: <#= pin.Value.Description #>
+// <#= pinName #><#= new string(' ', descriptionOffset) #>Description:<#= TemplateHelper.GetOptionalText(" ", pin.Value.Description) #>
 <#
     }
 #>
@@ -80,7 +80,7 @@ if (outputPins.Count > 0)
         var pinName = TemplateHelper.GetFirmwareName(pin.Key);
         var descriptionOffset = maxPinNameLength - pinName.Length + 10;
 #>
-// <#= pinName #><#= new string(' ', descriptionOffset) #>Description: <#= pin.Value.Description #>
+// <#= pinName #><#= new string(' ', descriptionOffset) #>Description:<#= TemplateHelper.GetOptionalText(" ", pin.Value.Description) #>
 <#
     }
 #>
@@ -138,7 +138,7 @@ foreach (var registerMetadata in DeviceMetadata.Registers)
     var addressOffset = new string(' ', maxRegisterNameLength - registerName.Length - registerAddress.Length + 6);
     var descriptionOffset = new string(' ', 7 - registerType.Length);
 #>
-#define ADD_REG_<#= registerName #><#= addressOffset #><#= registerAddress #> // <#= registerType #><#= descriptionOffset #><#= register.Description #>
+#define ADD_REG_<#= registerName #><#= addressOffset #><#= registerAddress #> // <#= registerType #><#= TemplateHelper.GetOptionalText(descriptionOffset, register.Description) #>
 <#
 }
 #>
@@ -172,7 +172,7 @@ foreach (var bitMask in DeviceMetadata.BitMasks)
         var bitShift = (int)Math.Log(fieldInfo.Value, 2);
         var bitShiftPadding = new string(' ', 8 - bitShift.ToString().Length);
 #>
-#define B_<#= fieldName #><#= fieldNamePadding #>(1<<<#= bitShift #>)<#= bitShiftPadding #>// <#= fieldInfo.Description ?? string.Empty #>
+#define B_<#= fieldName #><#= fieldNamePadding #>(1<<<#= bitShift #>)<#= bitShiftPadding #>//<#= TemplateHelper.GetOptionalText(" ", fieldInfo.Description) #>
 <#
     }
 }
@@ -186,7 +186,7 @@ foreach (var groupMask in DeviceMetadata.GroupMasks)
     var maskNamePadding = new string(' ', maxMaskNameLength - maskName.Length + 4);
     var maskSelectPadding = new string(' ', 11 - maskSelect.Length);
 #>
-#define MSK_<#= maskName #><#= maskNamePadding #>0x<#= maskSelect #><#= maskSelectPadding #>// 
+#define MSK_<#= maskName #><#= maskNamePadding #>0x<#= maskSelect #><#= maskSelectPadding #>//
 <#
 
     foreach (var member in mask.Values)
@@ -197,7 +197,7 @@ foreach (var groupMask in DeviceMetadata.GroupMasks)
         var memberHexValue = memberInfo.Value.ToString("X2");
         var memberHexPadding = new string(' ', 11 - memberHexValue.Length);
 #>
-#define GM_<#= maskName #>_<#= memberName #><#= memberNamePadding #>0x<#= memberHexValue #><#= memberHexPadding #>// <#= memberInfo.Description ?? string.Empty #>
+#define GM_<#= maskName #>_<#= memberName #><#= memberNamePadding #>0x<#= memberHexValue #><#= memberHexPadding #>//<#= TemplateHelper.GetOptionalText(" ", memberInfo.Description) #>
 <#
     }
 }

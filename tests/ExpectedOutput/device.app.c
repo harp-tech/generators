@@ -22,20 +22,20 @@ extern bool (*app_func_wr_pointer[])(void*);
 static const uint8_t default_device_name[] = DEVICE_NAME;
 
 void hwbp_app_initialize(void)
-{   
-   	/* Start core */
-   	core_func_start_core_V2(
-   	    WHO_AM_I,
-   	    MAJOR_HW_VERSION, MINOR_HW_VERSION, PATCH_HW_VERSION,
-   	    MAJOR_FW_VERSION, MINOR_FW_VERSION, PATCH_FW_VERSION,
-   	    (uint8_t*)(&app_regs),
-   	    APP_NBYTES_OF_REG_BANK,
-   	    APP_REGS_ADD_MAX - APP_REGS_ADD_MIN + 1,
-   	    default_device_name,
-   	    false,	// The device is _not_ able to repeat the harp timestamp clock
-   	    false,	// The device is _not_ able to generate the harp timestamp clock
-   	    0		// Default timestamp offset
-   	);
+{
+    /* Start core */
+    core_func_start_core_V2(
+        WHO_AM_I,
+        MAJOR_HW_VERSION, MINOR_HW_VERSION, PATCH_HW_VERSION,
+        MAJOR_FW_VERSION, MINOR_FW_VERSION, PATCH_FW_VERSION,
+        (uint8_t*)(&app_regs),
+        APP_NBYTES_OF_REG_BANK,
+        APP_REGS_ADD_MAX - APP_REGS_ADD_MIN + 1,
+        default_device_name,
+        false,  // The device is _not_ able to repeat the harp timestamp clock
+        false,  // The device is _not_ able to generate the harp timestamp clock
+        0       // Default timestamp offset
+    );
 }
 
 /************************************************************************/
@@ -43,7 +43,7 @@ void hwbp_app_initialize(void)
 /************************************************************************/
 void core_callback_catastrophic_error_detected(void)
 {
-	
+
 }
 
 /************************************************************************/
@@ -57,24 +57,24 @@ void core_callback_catastrophic_error_detected(void)
 void core_callback_define_clock_default(void) {}
 void core_callback_initialize_hardware(void)
 {
-	/* Initialize IOs */
-	/* Don't delete this function!!! */
-	init_ios();
-	
-	/* Initialize hardware */
-	
+    /* Initialize IOs */
+    /* Don't delete this function!!! */
+    init_ios();
+
+    /* Initialize hardware */
+
 }
 
 void core_callback_reset_registers(void)
 {
-	/* Initialize registers */
-	
+    /* Initialize registers */
+
 }
 
 void core_callback_registers_were_reinitialized(void)
 {
-	/* Update registers if needed */
-	
+    /* Update registers if needed */
+
 }
 
 /************************************************************************/
@@ -123,19 +123,19 @@ void core_callback_uart_cts_after_exec(void) {}
 /************************************************************************/
 bool core_read_app_register(uint8_t add, uint8_t type)
 {
-	/* Check if it will not access forbidden memory */
-	if (add < APP_REGS_ADD_MIN || add > APP_REGS_ADD_MAX)
-		return false;
-	
-	/* Check if type matches */
-	if (app_regs_type[add-APP_REGS_ADD_MIN] != type)
-		return false;
-	
-	/* Receive data */
-	(*app_func_rd_pointer[add-APP_REGS_ADD_MIN])();	
+    /* Check if it will not access forbidden memory */
+    if (add < APP_REGS_ADD_MIN || add > APP_REGS_ADD_MAX)
+        return false;
 
-	/* Return success */
-	return true;
+    /* Check if type matches */
+    if (app_regs_type[add-APP_REGS_ADD_MIN] != type)
+        return false;
+
+    /* Receive data */
+    (*app_func_rd_pointer[add-APP_REGS_ADD_MIN])();
+
+    /* Return success */
+    return true;
 }
 
 /************************************************************************/
@@ -143,18 +143,18 @@ bool core_read_app_register(uint8_t add, uint8_t type)
 /************************************************************************/
 bool core_write_app_register(uint8_t add, uint8_t type, uint8_t * content, uint16_t n_elements)
 {
-	/* Check if it will not access forbidden memory */
-	if (add < APP_REGS_ADD_MIN || add > APP_REGS_ADD_MAX)
-		return false;
-	
-	/* Check if type matches */
-	if (app_regs_type[add-APP_REGS_ADD_MIN] != type)
-		return false;
+    /* Check if it will not access forbidden memory */
+    if (add < APP_REGS_ADD_MIN || add > APP_REGS_ADD_MAX)
+        return false;
 
-	/* Check if the number of elements matches */
-	if (app_regs_n_elements[add-APP_REGS_ADD_MIN] != n_elements)
-		return false;
+    /* Check if type matches */
+    if (app_regs_type[add-APP_REGS_ADD_MIN] != type)
+        return false;
 
-	/* Process data and return false if write is not allowed or contains errors */
-	return (*app_func_wr_pointer[add-APP_REGS_ADD_MIN])(content);
+    /* Check if the number of elements matches */
+    if (app_regs_n_elements[add-APP_REGS_ADD_MIN] != n_elements)
+        return false;
+
+    /* Process data and return false if write is not allowed or contains errors */
+    return (*app_func_wr_pointer[add-APP_REGS_ADD_MIN])(content);
 }

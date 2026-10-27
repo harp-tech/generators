@@ -157,23 +157,23 @@ typedef struct
 /* Registers' address                                                   */
 /************************************************************************/
 /* Registers */
-#define ADD_REG_DIGITAL_INPUTS             32 // U8     
-#define ADD_REG_ANALOG_DATA                33 // FLOAT  
-#define ADD_REG_COMPLEX_CONFIGURATION      34 // U8     
-#define ADD_REG_VERSION                    35 // U8     
-#define ADD_REG_CUSTOM_PAYLOAD             36 // U32    
-#define ADD_REG_CUSTOM_RAW_PAYLOAD         37 // U32    
-#define ADD_REG_CUSTOM_MEMBER_CONVERTER    38 // U8     
-#define ADD_REG_BITMASK_SPLITTER           39 // U8     
-#define ADD_REG_COUNTER0                   40 // I32    
-#define ADD_REG_PORT_DIO_SET               41 // U8     
-#define ADD_REG_PULSE_DO_PORT0             42 // U16    
-#define ADD_REG_PULSE_DO0                  43 // U16    
-#define ADD_REG_MULTI_ELEMENT_PAYLOAD      44 // U16    
-#define ADD_REG_SINGLE_ELEMENT_PAYLOAD     45 // U16    
-#define ADD_REG_MIXED_MEMBER_LENGTH        46 // U8     
-#define ADD_REG_RGB0                       47 // U8     
-#define ADD_REG_RGB1                       48 // U8     
+#define ADD_REG_DIGITAL_INPUTS             32 // U8
+#define ADD_REG_ANALOG_DATA                33 // FLOAT
+#define ADD_REG_COMPLEX_CONFIGURATION      34 // U8
+#define ADD_REG_VERSION                    35 // U8
+#define ADD_REG_CUSTOM_PAYLOAD             36 // U32
+#define ADD_REG_CUSTOM_RAW_PAYLOAD         37 // U32
+#define ADD_REG_CUSTOM_MEMBER_CONVERTER    38 // U8
+#define ADD_REG_BITMASK_SPLITTER           39 // U8
+#define ADD_REG_COUNTER0                   40 // I32
+#define ADD_REG_PORT_DIO_SET               41 // U8
+#define ADD_REG_PULSE_DO_PORT0             42 // U16
+#define ADD_REG_PULSE_DO0                  43 // U16
+#define ADD_REG_MULTI_ELEMENT_PAYLOAD      44 // U16
+#define ADD_REG_SINGLE_ELEMENT_PAYLOAD     45 // U16
+#define ADD_REG_MIXED_MEMBER_LENGTH        46 // U8
+#define ADD_REG_RGB0                       47 // U8
+#define ADD_REG_RGB1                       48 // U8
 #define ADD_REG_START_PULSE               100 // U16    Starts a PWM pulse.
 #define ADD_REG_START_PULSE_TRAIN         101 // U16    Starts a PWM pulse train.
 #define ADD_REG_ENCODER_MODE              103 // U8     Configures the operation mode of the encoder.
@@ -192,21 +192,21 @@ typedef struct
 /************************************************************************/
 /* Registers' bits                                                      */
 /************************************************************************/
-#define B_DIO0                          (1<<0)       // 
-#define B_DIO1                          (1<<1)       // 
-#define B_DIO2                          (1<<2)       // 
-#define B_DIO3                          (1<<3)       // 
-#define B_DI_PORT0                      (1<<8)       // 
-#define B_TEST_DI_PORT1                 (1<<9)       // 
-#define B_SUPPLY_PORT0                  (1<<10)      // 
-#define B_PORT_DIO1                     (1<<11)      // 
-#define MSK_PWM_PORT                    0x0F         // 
-#define GM_PWM_PORT_PWM0                0x01         // 
-#define GM_PWM_PORT_PWM1                0x02         // 
-#define GM_PWM_PORT_PWM2                0x04         // 
-#define GM_PWM_PORT_PWM3                0x0A         // 
-#define MSK_ENCODER_MODE                0x01         // 
-#define GM_ENCODER_MODE_POSITION        0x00         // 
-#define GM_ENCODER_MODE_DISPLACEMENT    0x01         // 
+#define B_DIO0                          (1<<0)       //
+#define B_DIO1                          (1<<1)       //
+#define B_DIO2                          (1<<2)       //
+#define B_DIO3                          (1<<3)       //
+#define B_DI_PORT0                      (1<<8)       //
+#define B_TEST_DI_PORT1                 (1<<9)       //
+#define B_SUPPLY_PORT0                  (1<<10)      //
+#define B_PORT_DIO1                     (1<<11)      //
+#define MSK_PWM_PORT                    0x0F         //
+#define GM_PWM_PORT_PWM0                0x01         //
+#define GM_PWM_PORT_PWM1                0x02         //
+#define GM_PWM_PORT_PWM2                0x04         //
+#define GM_PWM_PORT_PWM3                0x0A         //
+#define MSK_ENCODER_MODE                0x01         //
+#define GM_ENCODER_MODE_POSITION        0x00         //
+#define GM_ENCODER_MODE_DISPLACEMENT    0x01         //
 
 #endif /* _APP_REGS_H_ */
