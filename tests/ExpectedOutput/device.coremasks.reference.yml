@@ -1,0 +1,54 @@
+--- # toc.yml
+### YamlMime:TableOfContent
+- name: Registers
+  items:
+  - uid: Harp.Generators.Tests.EnableFlow
+    name: EnableFlow
+  - uid: Harp.Generators.Tests.ResetFlow
+    name: ResetFlow
+--- # Harp.Generators.Tests.EnableFlow.yml
+### YamlMime:UniversalReference
+items:
+- uid: Harp.Generators.Tests.EnableFlow
+  id: EnableFlow
+  name: EnableFlow
+  name.python: EnableFlow
+  fullName: Harp.Generators.Tests.EnableFlow
+  type: class
+  langs:
+  - csharp
+  - python
+  summary: Specifies whether the flow is enabled.
+  harp:
+    register:
+      address: 32
+      payloadType: U8
+      access:
+      - Write
+      interfaceType:
+        name: EnableFlag
+        uid: Bonsai.Harp.EnableFlag
+      logFile: CoreMasks_32.bin
+--- # Harp.Generators.Tests.ResetFlow.yml
+### YamlMime:UniversalReference
+items:
+- uid: Harp.Generators.Tests.ResetFlow
+  id: ResetFlow
+  name: ResetFlow
+  name.python: ResetFlow
+  fullName: Harp.Generators.Tests.ResetFlow
+  type: class
+  langs:
+  - csharp
+  - python
+  summary: Specifies the reset behavior of the flow controller.
+  harp:
+    register:
+      address: 33
+      payloadType: U8
+      access:
+      - Write
+      interfaceType:
+        name: ResetFlags
+        uid: Bonsai.Harp.ResetFlags
+      logFile: CoreMasks_33.bin

@@ -1,0 +1,1429 @@
+--- # toc.yml
+### YamlMime:TableOfContent
+- name: Registers
+  items:
+  - uid: Harp.Generators.Tests.DigitalInputs
+    name: DigitalInputs
+  - uid: Harp.Generators.Tests.AnalogData
+    name: AnalogData
+  - uid: Harp.Generators.Tests.ComplexConfiguration
+    name: ComplexConfiguration
+  - uid: Harp.Generators.Tests.Version
+    name: Version
+  - uid: Harp.Generators.Tests.CustomPayload
+    name: CustomPayload
+  - uid: Harp.Generators.Tests.CustomRawPayload
+    name: CustomRawPayload
+  - uid: Harp.Generators.Tests.CustomMemberConverter
+    name: CustomMemberConverter
+  - uid: Harp.Generators.Tests.BitmaskSplitter
+    name: BitmaskSplitter
+  - uid: Harp.Generators.Tests.Counter0
+    name: Counter0
+  - uid: Harp.Generators.Tests.PortDIOSet
+    name: PortDIOSet
+  - uid: Harp.Generators.Tests.PulseDOPort0
+    name: PulseDOPort0
+  - uid: Harp.Generators.Tests.PulseDO0
+    name: PulseDO0
+  - uid: Harp.Generators.Tests.MultiElementPayload
+    name: MultiElementPayload
+  - uid: Harp.Generators.Tests.SingleElementPayload
+    name: SingleElementPayload
+  - uid: Harp.Generators.Tests.MixedMemberLength
+    name: MixedMemberLength
+  - uid: Harp.Generators.Tests.Rgb0
+    name: Rgb0
+  - uid: Harp.Generators.Tests.Rgb1
+    name: Rgb1
+  - uid: Harp.Generators.Tests.StartPulse
+    name: StartPulse
+  - uid: Harp.Generators.Tests.StartPulseTrain
+    name: StartPulseTrain
+  - uid: Harp.Generators.Tests.EncoderMode
+    name: EncoderMode
+- name: Payloads
+  items:
+  - uid: Harp.Generators.Tests.AnalogDataPayload
+    name: AnalogDataPayload
+  - uid: Harp.Generators.Tests.ComplexConfigurationPayload
+    name: ComplexConfigurationPayload
+  - uid: Harp.Generators.Tests.VersionPayload
+    name: VersionPayload
+  - uid: Harp.Generators.Tests.CustomMemberConverterPayload
+    name: CustomMemberConverterPayload
+  - uid: Harp.Generators.Tests.BitmaskSplitterPayload
+    name: BitmaskSplitterPayload
+  - uid: Harp.Generators.Tests.MixedMemberLengthPayload
+    name: MixedMemberLengthPayload
+  - uid: Harp.Generators.Tests.RgbPayload
+    name: RgbPayload
+  - uid: Harp.Generators.Tests.StartPulsePayload
+    name: StartPulsePayload
+  - uid: Harp.Generators.Tests.StartPulseTrainPayload
+    name: StartPulseTrainPayload
+- name: Masks
+  items:
+  - uid: Harp.Generators.Tests.PortDigitalIOS
+    name: PortDigitalIOS
+  - uid: Harp.Generators.Tests.PwmPort
+    name: PwmPort
+  - uid: Harp.Generators.Tests.EncoderModeMask
+    name: EncoderModeMask
+--- # Harp.Generators.Tests.DigitalInputs.yml
+### YamlMime:UniversalReference
+items:
+- uid: Harp.Generators.Tests.DigitalInputs
+  id: DigitalInputs
+  name: DigitalInputs
+  name.python: DigitalInputs
+  fullName: Harp.Generators.Tests.DigitalInputs
+  type: class
+  langs:
+  - csharp
+  - python
+  harp:
+    register:
+      address: 32
+      payloadType: U8
+      access:
+      - Event
+      logFile: Tests_32.bin
+--- # Harp.Generators.Tests.AnalogData.yml
+### YamlMime:UniversalReference
+items:
+- uid: Harp.Generators.Tests.AnalogData
+  id: AnalogData
+  name: AnalogData
+  name.python: AnalogData
+  fullName: Harp.Generators.Tests.AnalogData
+  type: class
+  langs:
+  - csharp
+  - python
+  harp:
+    register:
+      address: 33
+      payloadType: Float
+      length: 6
+      access:
+      - Event
+      interfaceType:
+        name: AnalogDataPayload
+        uid: Harp.Generators.Tests.AnalogDataPayload
+      logFile: Tests_33.bin
+--- # Harp.Generators.Tests.ComplexConfiguration.yml
+### YamlMime:UniversalReference
+items:
+- uid: Harp.Generators.Tests.ComplexConfiguration
+  id: ComplexConfiguration
+  name: ComplexConfiguration
+  name.python: ComplexConfiguration
+  fullName: Harp.Generators.Tests.ComplexConfiguration
+  type: class
+  langs:
+  - csharp
+  - python
+  harp:
+    register:
+      address: 34
+      payloadType: U8
+      length: 17
+      access:
+      - Write
+      interfaceType:
+        name: ComplexConfigurationPayload
+        uid: Harp.Generators.Tests.ComplexConfigurationPayload
+      logFile: Tests_34.bin
+--- # Harp.Generators.Tests.Version.yml
+### YamlMime:UniversalReference
+items:
+- uid: Harp.Generators.Tests.Version
+  id: Version
+  name: Version
+  name.python: Version
+  fullName: Harp.Generators.Tests.Version
+  type: class
+  langs:
+  - csharp
+  - python
+  harp:
+    register:
+      address: 35
+      payloadType: U8
+      length: 32
+      access:
+      - Event
+      interfaceType:
+        name: VersionPayload
+        uid: Harp.Generators.Tests.VersionPayload
+      logFile: Tests_35.bin
+--- # Harp.Generators.Tests.CustomPayload.yml
+### YamlMime:UniversalReference
+items:
+- uid: Harp.Generators.Tests.CustomPayload
+  id: CustomPayload
+  name: CustomPayload
+  name.python: CustomPayload
+  fullName: Harp.Generators.Tests.CustomPayload
+  type: class
+  langs:
+  - csharp
+  - python
+  harp:
+    register:
+      address: 36
+      payloadType: U32
+      length: 3
+      access:
+      - Read
+      interfaceType:
+        name: HarpVersion
+        uid: Bonsai.Harp.HarpVersion
+      logFile: Tests_36.bin
+--- # Harp.Generators.Tests.CustomRawPayload.yml
+### YamlMime:UniversalReference
+items:
+- uid: Harp.Generators.Tests.CustomRawPayload
+  id: CustomRawPayload
+  name: CustomRawPayload
+  name.python: CustomRawPayload
+  fullName: Harp.Generators.Tests.CustomRawPayload
+  type: class
+  langs:
+  - csharp
+  - python
+  harp:
+    register:
+      address: 37
+      payloadType: U32
+      length: 3
+      access:
+      - Read
+      interfaceType:
+        name: HarpVersion
+        uid: Bonsai.Harp.HarpVersion
+      logFile: Tests_37.bin
+--- # Harp.Generators.Tests.CustomMemberConverter.yml
+### YamlMime:UniversalReference
+items:
+- uid: Harp.Generators.Tests.CustomMemberConverter
+  id: CustomMemberConverter
+  name: CustomMemberConverter
+  name.python: CustomMemberConverter
+  fullName: Harp.Generators.Tests.CustomMemberConverter
+  type: class
+  langs:
+  - csharp
+  - python
+  harp:
+    register:
+      address: 38
+      payloadType: U8
+      length: 3
+      access:
+      - Read
+      interfaceType:
+        name: CustomMemberConverterPayload
+        uid: Harp.Generators.Tests.CustomMemberConverterPayload
+      logFile: Tests_38.bin
+--- # Harp.Generators.Tests.BitmaskSplitter.yml
+### YamlMime:UniversalReference
+items:
+- uid: Harp.Generators.Tests.BitmaskSplitter
+  id: BitmaskSplitter
+  name: BitmaskSplitter
+  name.python: BitmaskSplitter
+  fullName: Harp.Generators.Tests.BitmaskSplitter
+  type: class
+  langs:
+  - csharp
+  - python
+  harp:
+    register:
+      address: 39
+      payloadType: U8
+      access:
+      - Write
+      interfaceType:
+        name: BitmaskSplitterPayload
+        uid: Harp.Generators.Tests.BitmaskSplitterPayload
+      logFile: Tests_39.bin
+--- # Harp.Generators.Tests.Counter0.yml
+### YamlMime:UniversalReference
+items:
+- uid: Harp.Generators.Tests.Counter0
+  id: Counter0
+  name: Counter0
+  name.python: Counter0
+  fullName: Harp.Generators.Tests.Counter0
+  type: class
+  langs:
+  - csharp
+  - python
+  harp:
+    register:
+      address: 40
+      payloadType: S32
+      access:
+      - Event
+      logFile: Tests_40.bin
+--- # Harp.Generators.Tests.PortDIOSet.yml
+### YamlMime:UniversalReference
+items:
+- uid: Harp.Generators.Tests.PortDIOSet
+  id: PortDIOSet
+  name: PortDIOSet
+  name.python: PortDIOSet
+  fullName: Harp.Generators.Tests.PortDIOSet
+  type: class
+  langs:
+  - csharp
+  - python
+  harp:
+    register:
+      address: 41
+      payloadType: U8
+      access:
+      - Write
+      interfaceType:
+        name: PortDigitalIOS
+        uid: Harp.Generators.Tests.PortDigitalIOS
+      logFile: Tests_41.bin
+--- # Harp.Generators.Tests.PulseDOPort0.yml
+### YamlMime:UniversalReference
+items:
+- uid: Harp.Generators.Tests.PulseDOPort0
+  id: PulseDOPort0
+  name: PulseDOPort0
+  name.python: PulseDOPort0
+  fullName: Harp.Generators.Tests.PulseDOPort0
+  type: class
+  langs:
+  - csharp
+  - python
+  harp:
+    register:
+      address: 42
+      payloadType: U16
+      access:
+      - Write
+      minValue: 1
+      logFile: Tests_42.bin
+--- # Harp.Generators.Tests.PulseDO0.yml
+### YamlMime:UniversalReference
+items:
+- uid: Harp.Generators.Tests.PulseDO0
+  id: PulseDO0
+  name: PulseDO0
+  name.python: PulseDO0
+  fullName: Harp.Generators.Tests.PulseDO0
+  type: class
+  langs:
+  - csharp
+  - python
+  harp:
+    register:
+      address: 43
+      payloadType: U16
+      access:
+      - Write
+      minValue: 1
+      logFile: Tests_43.bin
+--- # Harp.Generators.Tests.MultiElementPayload.yml
+### YamlMime:UniversalReference
+items:
+- uid: Harp.Generators.Tests.MultiElementPayload
+  id: MultiElementPayload
+  name: MultiElementPayload
+  name.python: MultiElementPayload
+  fullName: Harp.Generators.Tests.MultiElementPayload
+  type: class
+  langs:
+  - csharp
+  - python
+  harp:
+    register:
+      address: 44
+      payloadType: U16
+      length: 3
+      access:
+      - Write
+      logFile: Tests_44.bin
+--- # Harp.Generators.Tests.SingleElementPayload.yml
+### YamlMime:UniversalReference
+items:
+- uid: Harp.Generators.Tests.SingleElementPayload
+  id: SingleElementPayload
+  name: SingleElementPayload
+  name.python: SingleElementPayload
+  fullName: Harp.Generators.Tests.SingleElementPayload
+  type: class
+  langs:
+  - csharp
+  - python
+  harp:
+    register:
+      address: 45
+      payloadType: U16
+      length: 1
+      access:
+      - Write
+      logFile: Tests_45.bin
+--- # Harp.Generators.Tests.MixedMemberLength.yml
+### YamlMime:UniversalReference
+items:
+- uid: Harp.Generators.Tests.MixedMemberLength
+  id: MixedMemberLength
+  name: MixedMemberLength
+  name.python: MixedMemberLength
+  fullName: Harp.Generators.Tests.MixedMemberLength
+  type: class
+  langs:
+  - csharp
+  - python
+  harp:
+    register:
+      address: 46
+      payloadType: U8
+      length: 4
+      access:
+      - Write
+      interfaceType:
+        name: MixedMemberLengthPayload
+        uid: Harp.Generators.Tests.MixedMemberLengthPayload
+      logFile: Tests_46.bin
+--- # Harp.Generators.Tests.Rgb0.yml
+### YamlMime:UniversalReference
+items:
+- uid: Harp.Generators.Tests.Rgb0
+  id: Rgb0
+  name: Rgb0
+  name.python: Rgb0
+  fullName: Harp.Generators.Tests.Rgb0
+  type: class
+  langs:
+  - csharp
+  - python
+  harp:
+    register:
+      address: 47
+      payloadType: U8
+      length: 3
+      access:
+      - Write
+      interfaceType:
+        name: RgbPayload
+        uid: Harp.Generators.Tests.RgbPayload
+      logFile: Tests_47.bin
+--- # Harp.Generators.Tests.Rgb1.yml
+### YamlMime:UniversalReference
+items:
+- uid: Harp.Generators.Tests.Rgb1
+  id: Rgb1
+  name: Rgb1
+  name.python: Rgb1
+  fullName: Harp.Generators.Tests.Rgb1
+  type: class
+  langs:
+  - csharp
+  - python
+  harp:
+    register:
+      address: 48
+      payloadType: U8
+      length: 3
+      access:
+      - Write
+      interfaceType:
+        name: RgbPayload
+        uid: Harp.Generators.Tests.RgbPayload
+      logFile: Tests_48.bin
+--- # Harp.Generators.Tests.StartPulse.yml
+### YamlMime:UniversalReference
+items:
+- uid: Harp.Generators.Tests.StartPulse
+  id: StartPulse
+  name: StartPulse
+  name.python: StartPulse
+  fullName: Harp.Generators.Tests.StartPulse
+  type: class
+  langs:
+  - csharp
+  - python
+  summary: Starts a PWM pulse.
+  harp:
+    register:
+      address: 100
+      payloadType: U16
+      access:
+      - Write
+      interfaceType:
+        name: StartPulsePayload
+        uid: Harp.Generators.Tests.StartPulsePayload
+      logFile: Tests_100.bin
+--- # Harp.Generators.Tests.StartPulseTrain.yml
+### YamlMime:UniversalReference
+items:
+- uid: Harp.Generators.Tests.StartPulseTrain
+  id: StartPulseTrain
+  name: StartPulseTrain
+  name.python: StartPulseTrain
+  fullName: Harp.Generators.Tests.StartPulseTrain
+  type: class
+  langs:
+  - csharp
+  - python
+  summary: Starts a PWM pulse train.
+  harp:
+    register:
+      address: 101
+      payloadType: U16
+      length: 2
+      access:
+      - Write
+      interfaceType:
+        name: StartPulseTrainPayload
+        uid: Harp.Generators.Tests.StartPulseTrainPayload
+      logFile: Tests_101.bin
+--- # Harp.Generators.Tests.EncoderMode.yml
+### YamlMime:UniversalReference
+items:
+- uid: Harp.Generators.Tests.EncoderMode
+  id: EncoderMode
+  name: EncoderMode
+  name.python: EncoderMode
+  fullName: Harp.Generators.Tests.EncoderMode
+  type: class
+  langs:
+  - csharp
+  - python
+  summary: Configures the operation mode of the encoder.
+  harp:
+    register:
+      address: 103
+      payloadType: U8
+      access:
+      - Write
+      interfaceType:
+        name: EncoderModeMask
+        uid: Harp.Generators.Tests.EncoderModeMask
+      logFile: Tests_103.bin
+--- # Harp.Generators.Tests.AnalogDataPayload.yml
+### YamlMime:UniversalReference
+items:
+- uid: Harp.Generators.Tests.AnalogDataPayload
+  id: AnalogDataPayload
+  name: AnalogDataPayload
+  name.python: AnalogDataPayload
+  fullName: Harp.Generators.Tests.AnalogDataPayload
+  type: struct
+  langs:
+  - csharp
+  - python
+  summary: Represents the payload of the AnalogData register.
+  harp:
+    payload:
+      registers:
+      - name: AnalogData
+        uid: Harp.Generators.Tests.AnalogData
+  children:
+  - Harp.Generators.Tests.AnalogDataPayload.Analog0
+  - Harp.Generators.Tests.AnalogDataPayload.Analog1
+  - Harp.Generators.Tests.AnalogDataPayload.Analog2
+  - Harp.Generators.Tests.AnalogDataPayload.Accelerometer
+- uid: Harp.Generators.Tests.AnalogDataPayload.Analog0
+  id: Analog0
+  name: Analog0
+  name.python: analog0
+  fullName: Harp.Generators.Tests.AnalogDataPayload.Analog0
+  parent: Harp.Generators.Tests.AnalogDataPayload
+  type: field
+  langs:
+  - csharp
+  - python
+  harp:
+    member:
+      offset: 0
+- uid: Harp.Generators.Tests.AnalogDataPayload.Analog1
+  id: Analog1
+  name: Analog1
+  name.python: analog1
+  fullName: Harp.Generators.Tests.AnalogDataPayload.Analog1
+  parent: Harp.Generators.Tests.AnalogDataPayload
+  type: field
+  langs:
+  - csharp
+  - python
+  harp:
+    member:
+      offset: 1
+- uid: Harp.Generators.Tests.AnalogDataPayload.Analog2
+  id: Analog2
+  name: Analog2
+  name.python: analog2
+  fullName: Harp.Generators.Tests.AnalogDataPayload.Analog2
+  parent: Harp.Generators.Tests.AnalogDataPayload
+  type: field
+  langs:
+  - csharp
+  - python
+  harp:
+    member:
+      offset: 2
+- uid: Harp.Generators.Tests.AnalogDataPayload.Accelerometer
+  id: Accelerometer
+  name: Accelerometer
+  name.python: accelerometer
+  fullName: Harp.Generators.Tests.AnalogDataPayload.Accelerometer
+  parent: Harp.Generators.Tests.AnalogDataPayload
+  type: field
+  langs:
+  - csharp
+  - python
+  harp:
+    member:
+      offset: 3
+      length: 3
+--- # Harp.Generators.Tests.ComplexConfigurationPayload.yml
+### YamlMime:UniversalReference
+items:
+- uid: Harp.Generators.Tests.ComplexConfigurationPayload
+  id: ComplexConfigurationPayload
+  name: ComplexConfigurationPayload
+  name.python: ComplexConfigurationPayload
+  fullName: Harp.Generators.Tests.ComplexConfigurationPayload
+  type: struct
+  langs:
+  - csharp
+  - python
+  summary: Represents the payload of the ComplexConfiguration register.
+  harp:
+    payload:
+      registers:
+      - name: ComplexConfiguration
+        uid: Harp.Generators.Tests.ComplexConfiguration
+  children:
+  - Harp.Generators.Tests.ComplexConfigurationPayload.PwmPort
+  - Harp.Generators.Tests.ComplexConfigurationPayload.Invert
+  - Harp.Generators.Tests.ComplexConfigurationPayload.DutyCycle
+  - Harp.Generators.Tests.ComplexConfigurationPayload.Frequency
+  - Harp.Generators.Tests.ComplexConfigurationPayload.EventsEnabled
+  - Harp.Generators.Tests.ComplexConfigurationPayload.Delta
+- uid: Harp.Generators.Tests.ComplexConfigurationPayload.PwmPort
+  id: PwmPort
+  name: PwmPort
+  name.python: pwm_port
+  fullName: Harp.Generators.Tests.ComplexConfigurationPayload.PwmPort
+  parent: Harp.Generators.Tests.ComplexConfigurationPayload
+  type: field
+  langs:
+  - csharp
+  - python
+  harp:
+    member:
+      offset: 0
+      interfaceType:
+        name: PwmPort
+        uid: Harp.Generators.Tests.PwmPort
+- uid: Harp.Generators.Tests.ComplexConfigurationPayload.Invert
+  id: Invert
+  name: Invert
+  name.python: invert
+  fullName: Harp.Generators.Tests.ComplexConfigurationPayload.Invert
+  parent: Harp.Generators.Tests.ComplexConfigurationPayload
+  type: field
+  langs:
+  - csharp
+  - python
+  harp:
+    member:
+      offset: 1
+      defaultValue: 1
+      interfaceType:
+        name: bool
+- uid: Harp.Generators.Tests.ComplexConfigurationPayload.DutyCycle
+  id: DutyCycle
+  name: DutyCycle
+  name.python: duty_cycle
+  fullName: Harp.Generators.Tests.ComplexConfigurationPayload.DutyCycle
+  parent: Harp.Generators.Tests.ComplexConfigurationPayload
+  type: field
+  langs:
+  - csharp
+  - python
+  harp:
+    member:
+      offset: 4
+      length: 4
+      interfaceType:
+        name: float
+- uid: Harp.Generators.Tests.ComplexConfigurationPayload.Frequency
+  id: Frequency
+  name: Frequency
+  name.python: frequency
+  fullName: Harp.Generators.Tests.ComplexConfigurationPayload.Frequency
+  parent: Harp.Generators.Tests.ComplexConfigurationPayload
+  type: field
+  langs:
+  - csharp
+  - python
+  harp:
+    member:
+      offset: 8
+      length: 4
+      interfaceType:
+        name: float
+- uid: Harp.Generators.Tests.ComplexConfigurationPayload.EventsEnabled
+  id: EventsEnabled
+  name: EventsEnabled
+  name.python: events_enabled
+  fullName: Harp.Generators.Tests.ComplexConfigurationPayload.EventsEnabled
+  parent: Harp.Generators.Tests.ComplexConfigurationPayload
+  type: field
+  langs:
+  - csharp
+  - python
+  harp:
+    member:
+      offset: 12
+      interfaceType:
+        name: bool
+- uid: Harp.Generators.Tests.ComplexConfigurationPayload.Delta
+  id: Delta
+  name: Delta
+  name.python: delta
+  fullName: Harp.Generators.Tests.ComplexConfigurationPayload.Delta
+  parent: Harp.Generators.Tests.ComplexConfigurationPayload
+  type: field
+  langs:
+  - csharp
+  - python
+  harp:
+    member:
+      offset: 13
+      length: 4
+      interfaceType:
+        name: uint
+--- # Harp.Generators.Tests.VersionPayload.yml
+### YamlMime:UniversalReference
+items:
+- uid: Harp.Generators.Tests.VersionPayload
+  id: VersionPayload
+  name: VersionPayload
+  name.python: VersionPayload
+  fullName: Harp.Generators.Tests.VersionPayload
+  type: struct
+  langs:
+  - csharp
+  - python
+  summary: Represents the payload of the Version register.
+  harp:
+    payload:
+      registers:
+      - name: Version
+        uid: Harp.Generators.Tests.Version
+  children:
+  - Harp.Generators.Tests.VersionPayload.ProtocolVersion
+  - Harp.Generators.Tests.VersionPayload.FirmwareVersion
+  - Harp.Generators.Tests.VersionPayload.HardwareVersion
+  - Harp.Generators.Tests.VersionPayload.CoreId
+  - Harp.Generators.Tests.VersionPayload.InterfaceHash
+- uid: Harp.Generators.Tests.VersionPayload.ProtocolVersion
+  id: ProtocolVersion
+  name: ProtocolVersion
+  name.python: protocol_version
+  fullName: Harp.Generators.Tests.VersionPayload.ProtocolVersion
+  parent: Harp.Generators.Tests.VersionPayload
+  type: field
+  langs:
+  - csharp
+  - python
+  harp:
+    member:
+      offset: 0
+      length: 3
+      interfaceType:
+        name: HarpVersion
+        uid: Bonsai.Harp.HarpVersion
+- uid: Harp.Generators.Tests.VersionPayload.FirmwareVersion
+  id: FirmwareVersion
+  name: FirmwareVersion
+  name.python: firmware_version
+  fullName: Harp.Generators.Tests.VersionPayload.FirmwareVersion
+  parent: Harp.Generators.Tests.VersionPayload
+  type: field
+  langs:
+  - csharp
+  - python
+  harp:
+    member:
+      offset: 3
+      length: 3
+      interfaceType:
+        name: HarpVersion
+        uid: Bonsai.Harp.HarpVersion
+- uid: Harp.Generators.Tests.VersionPayload.HardwareVersion
+  id: HardwareVersion
+  name: HardwareVersion
+  name.python: hardware_version
+  fullName: Harp.Generators.Tests.VersionPayload.HardwareVersion
+  parent: Harp.Generators.Tests.VersionPayload
+  type: field
+  langs:
+  - csharp
+  - python
+  harp:
+    member:
+      offset: 6
+      length: 3
+      interfaceType:
+        name: HarpVersion
+        uid: Bonsai.Harp.HarpVersion
+- uid: Harp.Generators.Tests.VersionPayload.CoreId
+  id: CoreId
+  name: CoreId
+  name.python: core_id
+  fullName: Harp.Generators.Tests.VersionPayload.CoreId
+  parent: Harp.Generators.Tests.VersionPayload
+  type: field
+  langs:
+  - csharp
+  - python
+  harp:
+    member:
+      offset: 9
+      length: 3
+      interfaceType:
+        name: string
+- uid: Harp.Generators.Tests.VersionPayload.InterfaceHash
+  id: InterfaceHash
+  name: InterfaceHash
+  name.python: interface_hash
+  fullName: Harp.Generators.Tests.VersionPayload.InterfaceHash
+  parent: Harp.Generators.Tests.VersionPayload
+  type: field
+  langs:
+  - csharp
+  - python
+  harp:
+    member:
+      offset: 12
+      length: 20
+--- # Harp.Generators.Tests.CustomMemberConverterPayload.yml
+### YamlMime:UniversalReference
+items:
+- uid: Harp.Generators.Tests.CustomMemberConverterPayload
+  id: CustomMemberConverterPayload
+  name: CustomMemberConverterPayload
+  name.python: CustomMemberConverterPayload
+  fullName: Harp.Generators.Tests.CustomMemberConverterPayload
+  type: struct
+  langs:
+  - csharp
+  - python
+  summary: Represents the payload of the CustomMemberConverter register.
+  harp:
+    payload:
+      registers:
+      - name: CustomMemberConverter
+        uid: Harp.Generators.Tests.CustomMemberConverter
+  children:
+  - Harp.Generators.Tests.CustomMemberConverterPayload.Header
+  - Harp.Generators.Tests.CustomMemberConverterPayload.Data
+- uid: Harp.Generators.Tests.CustomMemberConverterPayload.Header
+  id: Header
+  name: Header
+  name.python: header
+  fullName: Harp.Generators.Tests.CustomMemberConverterPayload.Header
+  parent: Harp.Generators.Tests.CustomMemberConverterPayload
+  type: field
+  langs:
+  - csharp
+  - python
+  harp:
+    member:
+      offset: 0
+- uid: Harp.Generators.Tests.CustomMemberConverterPayload.Data
+  id: Data
+  name: Data
+  name.python: data
+  fullName: Harp.Generators.Tests.CustomMemberConverterPayload.Data
+  parent: Harp.Generators.Tests.CustomMemberConverterPayload
+  type: field
+  langs:
+  - csharp
+  - python
+  harp:
+    member:
+      offset: 1
+      length: 2
+      interfaceType:
+        name: int
+--- # Harp.Generators.Tests.BitmaskSplitterPayload.yml
+### YamlMime:UniversalReference
+items:
+- uid: Harp.Generators.Tests.BitmaskSplitterPayload
+  id: BitmaskSplitterPayload
+  name: BitmaskSplitterPayload
+  name.python: BitmaskSplitterPayload
+  fullName: Harp.Generators.Tests.BitmaskSplitterPayload
+  type: struct
+  langs:
+  - csharp
+  - python
+  summary: Represents the payload of the BitmaskSplitter register.
+  harp:
+    payload:
+      registers:
+      - name: BitmaskSplitter
+        uid: Harp.Generators.Tests.BitmaskSplitter
+  children:
+  - Harp.Generators.Tests.BitmaskSplitterPayload.Low
+  - Harp.Generators.Tests.BitmaskSplitterPayload.High
+- uid: Harp.Generators.Tests.BitmaskSplitterPayload.Low
+  id: Low
+  name: Low
+  name.python: low
+  fullName: Harp.Generators.Tests.BitmaskSplitterPayload.Low
+  parent: Harp.Generators.Tests.BitmaskSplitterPayload
+  type: field
+  langs:
+  - csharp
+  - python
+  harp:
+    member:
+      mask: "0xF"
+      interfaceType:
+        name: int
+- uid: Harp.Generators.Tests.BitmaskSplitterPayload.High
+  id: High
+  name: High
+  name.python: high
+  fullName: Harp.Generators.Tests.BitmaskSplitterPayload.High
+  parent: Harp.Generators.Tests.BitmaskSplitterPayload
+  type: field
+  langs:
+  - csharp
+  - python
+  harp:
+    member:
+      mask: "0xF0"
+      interfaceType:
+        name: int
+--- # Harp.Generators.Tests.MixedMemberLengthPayload.yml
+### YamlMime:UniversalReference
+items:
+- uid: Harp.Generators.Tests.MixedMemberLengthPayload
+  id: MixedMemberLengthPayload
+  name: MixedMemberLengthPayload
+  name.python: MixedMemberLengthPayload
+  fullName: Harp.Generators.Tests.MixedMemberLengthPayload
+  type: struct
+  langs:
+  - csharp
+  - python
+  summary: Represents the payload of the MixedMemberLength register.
+  harp:
+    payload:
+      registers:
+      - name: MixedMemberLength
+        uid: Harp.Generators.Tests.MixedMemberLength
+  children:
+  - Harp.Generators.Tests.MixedMemberLengthPayload.Absent
+  - Harp.Generators.Tests.MixedMemberLengthPayload.Single
+  - Harp.Generators.Tests.MixedMemberLengthPayload.Multiple
+- uid: Harp.Generators.Tests.MixedMemberLengthPayload.Absent
+  id: Absent
+  name: Absent
+  name.python: absent
+  fullName: Harp.Generators.Tests.MixedMemberLengthPayload.Absent
+  parent: Harp.Generators.Tests.MixedMemberLengthPayload
+  type: field
+  langs:
+  - csharp
+  - python
+  harp:
+    member:
+      offset: 0
+- uid: Harp.Generators.Tests.MixedMemberLengthPayload.Single
+  id: Single
+  name: Single
+  name.python: single
+  fullName: Harp.Generators.Tests.MixedMemberLengthPayload.Single
+  parent: Harp.Generators.Tests.MixedMemberLengthPayload
+  type: field
+  langs:
+  - csharp
+  - python
+  harp:
+    member:
+      offset: 1
+      length: 1
+- uid: Harp.Generators.Tests.MixedMemberLengthPayload.Multiple
+  id: Multiple
+  name: Multiple
+  name.python: multiple
+  fullName: Harp.Generators.Tests.MixedMemberLengthPayload.Multiple
+  parent: Harp.Generators.Tests.MixedMemberLengthPayload
+  type: field
+  langs:
+  - csharp
+  - python
+  harp:
+    member:
+      offset: 2
+      length: 2
+--- # Harp.Generators.Tests.RgbPayload.yml
+### YamlMime:UniversalReference
+items:
+- uid: Harp.Generators.Tests.RgbPayload
+  id: RgbPayload
+  name: RgbPayload
+  name.python: RgbPayload
+  fullName: Harp.Generators.Tests.RgbPayload
+  type: struct
+  langs:
+  - csharp
+  - python
+  summary: Represents the payload of the Rgb register.
+  harp:
+    payload:
+      registers:
+      - name: Rgb0
+        uid: Harp.Generators.Tests.Rgb0
+      - name: Rgb1
+        uid: Harp.Generators.Tests.Rgb1
+  children:
+  - Harp.Generators.Tests.RgbPayload.Red
+  - Harp.Generators.Tests.RgbPayload.Green
+  - Harp.Generators.Tests.RgbPayload.Blue
+- uid: Harp.Generators.Tests.RgbPayload.Red
+  id: Red
+  name: Red
+  name.python: red
+  fullName: Harp.Generators.Tests.RgbPayload.Red
+  parent: Harp.Generators.Tests.RgbPayload
+  type: field
+  langs:
+  - csharp
+  - python
+  harp:
+    member:
+      offset: 0
+- uid: Harp.Generators.Tests.RgbPayload.Green
+  id: Green
+  name: Green
+  name.python: green
+  fullName: Harp.Generators.Tests.RgbPayload.Green
+  parent: Harp.Generators.Tests.RgbPayload
+  type: field
+  langs:
+  - csharp
+  - python
+  harp:
+    member:
+      offset: 1
+- uid: Harp.Generators.Tests.RgbPayload.Blue
+  id: Blue
+  name: Blue
+  name.python: blue
+  fullName: Harp.Generators.Tests.RgbPayload.Blue
+  parent: Harp.Generators.Tests.RgbPayload
+  type: field
+  langs:
+  - csharp
+  - python
+  harp:
+    member:
+      offset: 2
+--- # Harp.Generators.Tests.StartPulsePayload.yml
+### YamlMime:UniversalReference
+items:
+- uid: Harp.Generators.Tests.StartPulsePayload
+  id: StartPulsePayload
+  name: StartPulsePayload
+  name.python: StartPulsePayload
+  fullName: Harp.Generators.Tests.StartPulsePayload
+  type: struct
+  langs:
+  - csharp
+  - python
+  summary: Represents the payload of the StartPulse register.
+  harp:
+    payload:
+      registers:
+      - name: StartPulse
+        uid: Harp.Generators.Tests.StartPulse
+  children:
+  - Harp.Generators.Tests.StartPulsePayload.DigitalOutput
+  - Harp.Generators.Tests.StartPulsePayload.PulseWidth
+- uid: Harp.Generators.Tests.StartPulsePayload.DigitalOutput
+  id: DigitalOutput
+  name: DigitalOutput
+  name.python: digital_output
+  fullName: Harp.Generators.Tests.StartPulsePayload.DigitalOutput
+  parent: Harp.Generators.Tests.StartPulsePayload
+  type: field
+  langs:
+  - csharp
+  - python
+  harp:
+    member:
+      offset: 0
+      mask: "0xC00"
+      interfaceType:
+        name: PwmPort
+        uid: Harp.Generators.Tests.PwmPort
+- uid: Harp.Generators.Tests.StartPulsePayload.PulseWidth
+  id: PulseWidth
+  name: PulseWidth
+  name.python: pulse_width
+  fullName: Harp.Generators.Tests.StartPulsePayload.PulseWidth
+  parent: Harp.Generators.Tests.StartPulsePayload
+  type: field
+  langs:
+  - csharp
+  - python
+  harp:
+    member:
+      offset: 0
+      mask: "0x3FF"
+      interfaceType:
+        name: ushort
+--- # Harp.Generators.Tests.StartPulseTrainPayload.yml
+### YamlMime:UniversalReference
+items:
+- uid: Harp.Generators.Tests.StartPulseTrainPayload
+  id: StartPulseTrainPayload
+  name: StartPulseTrainPayload
+  name.python: StartPulseTrainPayload
+  fullName: Harp.Generators.Tests.StartPulseTrainPayload
+  type: struct
+  langs:
+  - csharp
+  - python
+  summary: Represents the payload of the StartPulseTrain register.
+  harp:
+    payload:
+      registers:
+      - name: StartPulseTrain
+        uid: Harp.Generators.Tests.StartPulseTrain
+  children:
+  - Harp.Generators.Tests.StartPulseTrainPayload.DigitalOutput
+  - Harp.Generators.Tests.StartPulseTrainPayload.PulseWidth
+  - Harp.Generators.Tests.StartPulseTrainPayload.Frequency
+  - Harp.Generators.Tests.StartPulseTrainPayload.PulseCount
+- uid: Harp.Generators.Tests.StartPulseTrainPayload.DigitalOutput
+  id: DigitalOutput
+  name: DigitalOutput
+  name.python: digital_output
+  fullName: Harp.Generators.Tests.StartPulseTrainPayload.DigitalOutput
+  parent: Harp.Generators.Tests.StartPulseTrainPayload
+  type: field
+  langs:
+  - csharp
+  - python
+  harp:
+    member:
+      offset: 0
+      mask: "0xC00"
+      interfaceType:
+        name: PwmPort
+        uid: Harp.Generators.Tests.PwmPort
+- uid: Harp.Generators.Tests.StartPulseTrainPayload.PulseWidth
+  id: PulseWidth
+  name: PulseWidth
+  name.python: pulse_width
+  fullName: Harp.Generators.Tests.StartPulseTrainPayload.PulseWidth
+  parent: Harp.Generators.Tests.StartPulseTrainPayload
+  type: field
+  langs:
+  - csharp
+  - python
+  harp:
+    member:
+      offset: 0
+      mask: "0x3FF"
+      interfaceType:
+        name: ushort
+- uid: Harp.Generators.Tests.StartPulseTrainPayload.Frequency
+  id: Frequency
+  name: Frequency
+  name.python: frequency
+  fullName: Harp.Generators.Tests.StartPulseTrainPayload.Frequency
+  parent: Harp.Generators.Tests.StartPulseTrainPayload
+  type: field
+  langs:
+  - csharp
+  - python
+  harp:
+    member:
+      offset: 1
+      mask: "0xFF00"
+      defaultValue: 1
+      minValue: 1
+      maxValue: 255
+      interfaceType:
+        name: byte
+- uid: Harp.Generators.Tests.StartPulseTrainPayload.PulseCount
+  id: PulseCount
+  name: PulseCount
+  name.python: pulse_count
+  fullName: Harp.Generators.Tests.StartPulseTrainPayload.PulseCount
+  parent: Harp.Generators.Tests.StartPulseTrainPayload
+  type: field
+  langs:
+  - csharp
+  - python
+  harp:
+    member:
+      offset: 1
+      mask: "0xFF"
+      interfaceType:
+        name: byte
+--- # Harp.Generators.Tests.PortDigitalIOS.yml
+### YamlMime:UniversalReference
+items:
+- uid: Harp.Generators.Tests.PortDigitalIOS
+  id: PortDigitalIOS
+  name: PortDigitalIOS
+  name.python: PortDigitalIOS
+  fullName: Harp.Generators.Tests.PortDigitalIOS
+  type: enum
+  langs:
+  - csharp
+  - python
+  harp:
+    bitMask:
+      type: ushort
+  children:
+  - Harp.Generators.Tests.PortDigitalIOS.DIO0
+  - Harp.Generators.Tests.PortDigitalIOS.DIO1
+  - Harp.Generators.Tests.PortDigitalIOS.DIO2
+  - Harp.Generators.Tests.PortDigitalIOS.DIO3
+  - Harp.Generators.Tests.PortDigitalIOS.DIPort0
+  - Harp.Generators.Tests.PortDigitalIOS.TestDIPort1
+  - Harp.Generators.Tests.PortDigitalIOS.SupplyPort0
+  - Harp.Generators.Tests.PortDigitalIOS.PortDIO1
+- uid: Harp.Generators.Tests.PortDigitalIOS.DIO0
+  id: DIO0
+  name: DIO0
+  name.python: DIO0
+  fullName: Harp.Generators.Tests.PortDigitalIOS.DIO0
+  parent: Harp.Generators.Tests.PortDigitalIOS
+  type: field
+  langs:
+  - csharp
+  - python
+  harp:
+    maskValue:
+      value: "0x1"
+- uid: Harp.Generators.Tests.PortDigitalIOS.DIO1
+  id: DIO1
+  name: DIO1
+  name.python: DIO1
+  fullName: Harp.Generators.Tests.PortDigitalIOS.DIO1
+  parent: Harp.Generators.Tests.PortDigitalIOS
+  type: field
+  langs:
+  - csharp
+  - python
+  harp:
+    maskValue:
+      value: "0x2"
+- uid: Harp.Generators.Tests.PortDigitalIOS.DIO2
+  id: DIO2
+  name: DIO2
+  name.python: DIO2
+  fullName: Harp.Generators.Tests.PortDigitalIOS.DIO2
+  parent: Harp.Generators.Tests.PortDigitalIOS
+  type: field
+  langs:
+  - csharp
+  - python
+  harp:
+    maskValue:
+      value: "0x4"
+- uid: Harp.Generators.Tests.PortDigitalIOS.DIO3
+  id: DIO3
+  name: DIO3
+  name.python: DIO3
+  fullName: Harp.Generators.Tests.PortDigitalIOS.DIO3
+  parent: Harp.Generators.Tests.PortDigitalIOS
+  type: field
+  langs:
+  - csharp
+  - python
+  harp:
+    maskValue:
+      value: "0x8"
+- uid: Harp.Generators.Tests.PortDigitalIOS.DIPort0
+  id: DIPort0
+  name: DIPort0
+  name.python: DI_PORT0
+  fullName: Harp.Generators.Tests.PortDigitalIOS.DIPort0
+  parent: Harp.Generators.Tests.PortDigitalIOS
+  type: field
+  langs:
+  - csharp
+  - python
+  harp:
+    maskValue:
+      value: "0x100"
+- uid: Harp.Generators.Tests.PortDigitalIOS.TestDIPort1
+  id: TestDIPort1
+  name: TestDIPort1
+  name.python: TEST_DI_PORT1
+  fullName: Harp.Generators.Tests.PortDigitalIOS.TestDIPort1
+  parent: Harp.Generators.Tests.PortDigitalIOS
+  type: field
+  langs:
+  - csharp
+  - python
+  harp:
+    maskValue:
+      value: "0x200"
+- uid: Harp.Generators.Tests.PortDigitalIOS.SupplyPort0
+  id: SupplyPort0
+  name: SupplyPort0
+  name.python: SUPPLY_PORT0
+  fullName: Harp.Generators.Tests.PortDigitalIOS.SupplyPort0
+  parent: Harp.Generators.Tests.PortDigitalIOS
+  type: field
+  langs:
+  - csharp
+  - python
+  harp:
+    maskValue:
+      value: "0x400"
+- uid: Harp.Generators.Tests.PortDigitalIOS.PortDIO1
+  id: PortDIO1
+  name: PortDIO1
+  name.python: PORT_DIO1
+  fullName: Harp.Generators.Tests.PortDigitalIOS.PortDIO1
+  parent: Harp.Generators.Tests.PortDigitalIOS
+  type: field
+  langs:
+  - csharp
+  - python
+  harp:
+    maskValue:
+      value: "0x800"
+--- # Harp.Generators.Tests.PwmPort.yml
+### YamlMime:UniversalReference
+items:
+- uid: Harp.Generators.Tests.PwmPort
+  id: PwmPort
+  name: PwmPort
+  name.python: PwmPort
+  fullName: Harp.Generators.Tests.PwmPort
+  type: enum
+  langs:
+  - csharp
+  - python
+  harp:
+    groupMask:
+      type: byte
+  children:
+  - Harp.Generators.Tests.PwmPort.Pwm0
+  - Harp.Generators.Tests.PwmPort.Pwm1
+  - Harp.Generators.Tests.PwmPort.Pwm2
+  - Harp.Generators.Tests.PwmPort.Pwm3
+- uid: Harp.Generators.Tests.PwmPort.Pwm0
+  id: Pwm0
+  name: Pwm0
+  name.python: PWM0
+  fullName: Harp.Generators.Tests.PwmPort.Pwm0
+  parent: Harp.Generators.Tests.PwmPort
+  type: field
+  langs:
+  - csharp
+  - python
+  harp:
+    maskValue:
+      value: "1"
+- uid: Harp.Generators.Tests.PwmPort.Pwm1
+  id: Pwm1
+  name: Pwm1
+  name.python: PWM1
+  fullName: Harp.Generators.Tests.PwmPort.Pwm1
+  parent: Harp.Generators.Tests.PwmPort
+  type: field
+  langs:
+  - csharp
+  - python
+  harp:
+    maskValue:
+      value: "2"
+- uid: Harp.Generators.Tests.PwmPort.Pwm2
+  id: Pwm2
+  name: Pwm2
+  name.python: PWM2
+  fullName: Harp.Generators.Tests.PwmPort.Pwm2
+  parent: Harp.Generators.Tests.PwmPort
+  type: field
+  langs:
+  - csharp
+  - python
+  harp:
+    maskValue:
+      value: "4"
+- uid: Harp.Generators.Tests.PwmPort.Pwm3
+  id: Pwm3
+  name: Pwm3
+  name.python: PWM3
+  fullName: Harp.Generators.Tests.PwmPort.Pwm3
+  parent: Harp.Generators.Tests.PwmPort
+  type: field
+  langs:
+  - csharp
+  - python
+  harp:
+    maskValue:
+      value: "10"
+--- # Harp.Generators.Tests.EncoderModeMask.yml
+### YamlMime:UniversalReference
+items:
+- uid: Harp.Generators.Tests.EncoderModeMask
+  id: EncoderModeMask
+  name: EncoderModeMask
+  name.python: EncoderModeMask
+  fullName: Harp.Generators.Tests.EncoderModeMask
+  type: enum
+  langs:
+  - csharp
+  - python
+  summary: Specifies the type of encoder mode.
+  harp:
+    groupMask:
+      type: byte
+  children:
+  - Harp.Generators.Tests.EncoderModeMask.Position
+  - Harp.Generators.Tests.EncoderModeMask.Displacement
+- uid: Harp.Generators.Tests.EncoderModeMask.Position
+  id: Position
+  name: Position
+  name.python: POSITION
+  fullName: Harp.Generators.Tests.EncoderModeMask.Position
+  parent: Harp.Generators.Tests.EncoderModeMask
+  type: field
+  langs:
+  - csharp
+  - python
+  harp:
+    maskValue:
+      value: "0"
+- uid: Harp.Generators.Tests.EncoderModeMask.Displacement
+  id: Displacement
+  name: Displacement
+  name.python: DISPLACEMENT
+  fullName: Harp.Generators.Tests.EncoderModeMask.Displacement
+  parent: Harp.Generators.Tests.EncoderModeMask
+  type: field
+  langs:
+  - csharp
+  - python
+  harp:
+    maskValue:
+      value: "1"

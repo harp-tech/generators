@@ -1,0 +1,836 @@
+--- # toc.yml
+### YamlMime:TableOfContent
+- name: Registers
+  items:
+  - uid: Harp.Generators.Tests.WhoAmI
+    name: WhoAmI
+  - uid: Harp.Generators.Tests.HardwareVersionHigh
+    name: HardwareVersionHigh
+  - uid: Harp.Generators.Tests.HardwareVersionLow
+    name: HardwareVersionLow
+  - uid: Harp.Generators.Tests.AssemblyVersion
+    name: AssemblyVersion
+  - uid: Harp.Generators.Tests.CoreVersionHigh
+    name: CoreVersionHigh
+  - uid: Harp.Generators.Tests.CoreVersionLow
+    name: CoreVersionLow
+  - uid: Harp.Generators.Tests.FirmwareVersionHigh
+    name: FirmwareVersionHigh
+  - uid: Harp.Generators.Tests.FirmwareVersionLow
+    name: FirmwareVersionLow
+  - uid: Harp.Generators.Tests.TimestampSeconds
+    name: TimestampSeconds
+  - uid: Harp.Generators.Tests.TimestampMicroseconds
+    name: TimestampMicroseconds
+  - uid: Harp.Generators.Tests.OperationControl
+    name: OperationControl
+  - uid: Harp.Generators.Tests.ResetDevice
+    name: ResetDevice
+  - uid: Harp.Generators.Tests.DeviceName
+    name: DeviceName
+  - uid: Harp.Generators.Tests.SerialNumber
+    name: SerialNumber
+  - uid: Harp.Generators.Tests.ClockConfiguration
+    name: ClockConfiguration
+- name: Payloads
+  items:
+  - uid: Harp.Generators.Tests.OperationControlPayload
+    name: OperationControlPayload
+- name: Masks
+  items:
+  - uid: Harp.Generators.Tests.ResetFlags
+    name: ResetFlags
+  - uid: Harp.Generators.Tests.ClockConfigurationFlags
+    name: ClockConfigurationFlags
+  - uid: Harp.Generators.Tests.OperationMode
+    name: OperationMode
+  - uid: Harp.Generators.Tests.EnableFlag
+    name: EnableFlag
+--- # Harp.Generators.Tests.WhoAmI.yml
+### YamlMime:UniversalReference
+items:
+- uid: Harp.Generators.Tests.WhoAmI
+  id: WhoAmI
+  name: WhoAmI
+  name.python: WhoAmI
+  fullName: Harp.Generators.Tests.WhoAmI
+  type: class
+  langs:
+  - csharp
+  - python
+  summary: Specifies the identity class of the device.
+  harp:
+    register:
+      address: 0
+      payloadType: U16
+      access:
+      - Read
+--- # Harp.Generators.Tests.HardwareVersionHigh.yml
+### YamlMime:UniversalReference
+items:
+- uid: Harp.Generators.Tests.HardwareVersionHigh
+  id: HardwareVersionHigh
+  name: HardwareVersionHigh
+  name.python: HardwareVersionHigh
+  fullName: Harp.Generators.Tests.HardwareVersionHigh
+  type: class
+  langs:
+  - csharp
+  - python
+  summary: Specifies the major hardware version of the device.
+  harp:
+    register:
+      address: 1
+      payloadType: U8
+      access:
+      - Read
+--- # Harp.Generators.Tests.HardwareVersionLow.yml
+### YamlMime:UniversalReference
+items:
+- uid: Harp.Generators.Tests.HardwareVersionLow
+  id: HardwareVersionLow
+  name: HardwareVersionLow
+  name.python: HardwareVersionLow
+  fullName: Harp.Generators.Tests.HardwareVersionLow
+  type: class
+  langs:
+  - csharp
+  - python
+  summary: Specifies the minor hardware version of the device.
+  harp:
+    register:
+      address: 2
+      payloadType: U8
+      access:
+      - Read
+--- # Harp.Generators.Tests.AssemblyVersion.yml
+### YamlMime:UniversalReference
+items:
+- uid: Harp.Generators.Tests.AssemblyVersion
+  id: AssemblyVersion
+  name: AssemblyVersion
+  name.python: AssemblyVersion
+  fullName: Harp.Generators.Tests.AssemblyVersion
+  type: class
+  langs:
+  - csharp
+  - python
+  summary: Specifies the version of the assembled components in the device.
+  harp:
+    register:
+      address: 3
+      payloadType: U8
+      access:
+      - Read
+--- # Harp.Generators.Tests.CoreVersionHigh.yml
+### YamlMime:UniversalReference
+items:
+- uid: Harp.Generators.Tests.CoreVersionHigh
+  id: CoreVersionHigh
+  name: CoreVersionHigh
+  name.python: CoreVersionHigh
+  fullName: Harp.Generators.Tests.CoreVersionHigh
+  type: class
+  langs:
+  - csharp
+  - python
+  summary: Specifies the major version of the Harp core implemented by the device.
+  harp:
+    register:
+      address: 4
+      payloadType: U8
+      access:
+      - Read
+--- # Harp.Generators.Tests.CoreVersionLow.yml
+### YamlMime:UniversalReference
+items:
+- uid: Harp.Generators.Tests.CoreVersionLow
+  id: CoreVersionLow
+  name: CoreVersionLow
+  name.python: CoreVersionLow
+  fullName: Harp.Generators.Tests.CoreVersionLow
+  type: class
+  langs:
+  - csharp
+  - python
+  summary: Specifies the minor version of the Harp core implemented by the device.
+  harp:
+    register:
+      address: 5
+      payloadType: U8
+      access:
+      - Read
+--- # Harp.Generators.Tests.FirmwareVersionHigh.yml
+### YamlMime:UniversalReference
+items:
+- uid: Harp.Generators.Tests.FirmwareVersionHigh
+  id: FirmwareVersionHigh
+  name: FirmwareVersionHigh
+  name.python: FirmwareVersionHigh
+  fullName: Harp.Generators.Tests.FirmwareVersionHigh
+  type: class
+  langs:
+  - csharp
+  - python
+  summary: Specifies the major version of the Harp core implemented by the device.
+  harp:
+    register:
+      address: 6
+      payloadType: U8
+      access:
+      - Read
+--- # Harp.Generators.Tests.FirmwareVersionLow.yml
+### YamlMime:UniversalReference
+items:
+- uid: Harp.Generators.Tests.FirmwareVersionLow
+  id: FirmwareVersionLow
+  name: FirmwareVersionLow
+  name.python: FirmwareVersionLow
+  fullName: Harp.Generators.Tests.FirmwareVersionLow
+  type: class
+  langs:
+  - csharp
+  - python
+  summary: Specifies the minor version of the Harp core implemented by the device.
+  harp:
+    register:
+      address: 7
+      payloadType: U8
+      access:
+      - Read
+--- # Harp.Generators.Tests.TimestampSeconds.yml
+### YamlMime:UniversalReference
+items:
+- uid: Harp.Generators.Tests.TimestampSeconds
+  id: TimestampSeconds
+  name: TimestampSeconds
+  name.python: TimestampSeconds
+  fullName: Harp.Generators.Tests.TimestampSeconds
+  type: class
+  langs:
+  - csharp
+  - python
+  summary: Stores the integral part of the system timestamp, in seconds.
+  harp:
+    register:
+      address: 8
+      payloadType: U32
+      access:
+      - Read
+      - Write
+      - Event
+--- # Harp.Generators.Tests.TimestampMicroseconds.yml
+### YamlMime:UniversalReference
+items:
+- uid: Harp.Generators.Tests.TimestampMicroseconds
+  id: TimestampMicroseconds
+  name: TimestampMicroseconds
+  name.python: TimestampMicroseconds
+  fullName: Harp.Generators.Tests.TimestampMicroseconds
+  type: class
+  langs:
+  - csharp
+  - python
+  summary: Stores the fractional part of the system timestamp, in microseconds.
+  harp:
+    register:
+      address: 9
+      payloadType: U16
+      access:
+      - Read
+--- # Harp.Generators.Tests.OperationControl.yml
+### YamlMime:UniversalReference
+items:
+- uid: Harp.Generators.Tests.OperationControl
+  id: OperationControl
+  name: OperationControl
+  name.python: OperationControl
+  fullName: Harp.Generators.Tests.OperationControl
+  type: class
+  langs:
+  - csharp
+  - python
+  summary: Stores the configuration mode of the device.
+  harp:
+    register:
+      address: 10
+      payloadType: U8
+      access:
+      - Write
+      interfaceType:
+        name: OperationControlPayload
+        uid: Harp.Generators.Tests.OperationControlPayload
+--- # Harp.Generators.Tests.ResetDevice.yml
+### YamlMime:UniversalReference
+items:
+- uid: Harp.Generators.Tests.ResetDevice
+  id: ResetDevice
+  name: ResetDevice
+  name.python: ResetDevice
+  fullName: Harp.Generators.Tests.ResetDevice
+  type: class
+  langs:
+  - csharp
+  - python
+  summary: Resets the device and saves non-volatile registers.
+  harp:
+    register:
+      address: 11
+      payloadType: U8
+      access:
+      - Write
+      interfaceType:
+        name: ResetFlags
+        uid: Harp.Generators.Tests.ResetFlags
+--- # Harp.Generators.Tests.DeviceName.yml
+### YamlMime:UniversalReference
+items:
+- uid: Harp.Generators.Tests.DeviceName
+  id: DeviceName
+  name: DeviceName
+  name.python: DeviceName
+  fullName: Harp.Generators.Tests.DeviceName
+  type: class
+  langs:
+  - csharp
+  - python
+  summary: Stores the user-specified device name.
+  harp:
+    register:
+      address: 12
+      payloadType: U8
+      length: 25
+      access:
+      - Write
+      interfaceType:
+        name: string
+--- # Harp.Generators.Tests.SerialNumber.yml
+### YamlMime:UniversalReference
+items:
+- uid: Harp.Generators.Tests.SerialNumber
+  id: SerialNumber
+  name: SerialNumber
+  name.python: SerialNumber
+  fullName: Harp.Generators.Tests.SerialNumber
+  type: class
+  langs:
+  - csharp
+  - python
+  summary: Specifies the unique serial number of the device.
+  harp:
+    register:
+      address: 13
+      payloadType: U16
+      access:
+      - Write
+--- # Harp.Generators.Tests.ClockConfiguration.yml
+### YamlMime:UniversalReference
+items:
+- uid: Harp.Generators.Tests.ClockConfiguration
+  id: ClockConfiguration
+  name: ClockConfiguration
+  name.python: ClockConfiguration
+  fullName: Harp.Generators.Tests.ClockConfiguration
+  type: class
+  langs:
+  - csharp
+  - python
+  summary: Specifies the configuration for the device synchronization clock.
+  harp:
+    register:
+      address: 14
+      payloadType: U8
+      access:
+      - Write
+      interfaceType:
+        name: ClockConfigurationFlags
+        uid: Harp.Generators.Tests.ClockConfigurationFlags
+--- # Harp.Generators.Tests.OperationControlPayload.yml
+### YamlMime:UniversalReference
+items:
+- uid: Harp.Generators.Tests.OperationControlPayload
+  id: OperationControlPayload
+  name: OperationControlPayload
+  name.python: OperationControlPayload
+  fullName: Harp.Generators.Tests.OperationControlPayload
+  type: struct
+  langs:
+  - csharp
+  - python
+  summary: Represents the payload of the OperationControl register.
+  harp:
+    payload:
+      registers:
+      - name: OperationControl
+        uid: Harp.Generators.Tests.OperationControl
+  children:
+  - Harp.Generators.Tests.OperationControlPayload.OperationMode
+  - Harp.Generators.Tests.OperationControlPayload.DumpRegisters
+  - Harp.Generators.Tests.OperationControlPayload.MuteReplies
+  - Harp.Generators.Tests.OperationControlPayload.VisualIndicators
+  - Harp.Generators.Tests.OperationControlPayload.OperationLed
+  - Harp.Generators.Tests.OperationControlPayload.Heartbeat
+- uid: Harp.Generators.Tests.OperationControlPayload.OperationMode
+  id: OperationMode
+  name: OperationMode
+  name.python: operation_mode
+  fullName: Harp.Generators.Tests.OperationControlPayload.OperationMode
+  parent: Harp.Generators.Tests.OperationControlPayload
+  type: field
+  langs:
+  - csharp
+  - python
+  summary: Specifies the operation mode of the device.
+  harp:
+    member:
+      mask: "0x3"
+      interfaceType:
+        name: OperationMode
+        uid: Harp.Generators.Tests.OperationMode
+- uid: Harp.Generators.Tests.OperationControlPayload.DumpRegisters
+  id: DumpRegisters
+  name: DumpRegisters
+  name.python: dump_registers
+  fullName: Harp.Generators.Tests.OperationControlPayload.DumpRegisters
+  parent: Harp.Generators.Tests.OperationControlPayload
+  type: field
+  langs:
+  - csharp
+  - python
+  summary: Specifies whether the device should report the content of all registers on initialization.
+  harp:
+    member:
+      mask: "0x8"
+      interfaceType:
+        name: bool
+- uid: Harp.Generators.Tests.OperationControlPayload.MuteReplies
+  id: MuteReplies
+  name: MuteReplies
+  name.python: mute_replies
+  fullName: Harp.Generators.Tests.OperationControlPayload.MuteReplies
+  parent: Harp.Generators.Tests.OperationControlPayload
+  type: field
+  langs:
+  - csharp
+  - python
+  summary: Specifies whether the replies to all commands will be muted, i.e. not sent by the device.
+  harp:
+    member:
+      mask: "0x10"
+      interfaceType:
+        name: bool
+- uid: Harp.Generators.Tests.OperationControlPayload.VisualIndicators
+  id: VisualIndicators
+  name: VisualIndicators
+  name.python: visual_indicators
+  fullName: Harp.Generators.Tests.OperationControlPayload.VisualIndicators
+  parent: Harp.Generators.Tests.OperationControlPayload
+  type: field
+  langs:
+  - csharp
+  - python
+  summary: Specifies the state of all visual indicators on the device.
+  harp:
+    member:
+      mask: "0x20"
+      interfaceType:
+        name: EnableFlag
+        uid: Harp.Generators.Tests.EnableFlag
+- uid: Harp.Generators.Tests.OperationControlPayload.OperationLed
+  id: OperationLed
+  name: OperationLed
+  name.python: operation_led
+  fullName: Harp.Generators.Tests.OperationControlPayload.OperationLed
+  parent: Harp.Generators.Tests.OperationControlPayload
+  type: field
+  langs:
+  - csharp
+  - python
+  summary: Specifies whether the device state LED should report the operation mode of the device.
+  harp:
+    member:
+      mask: "0x40"
+      interfaceType:
+        name: EnableFlag
+        uid: Harp.Generators.Tests.EnableFlag
+- uid: Harp.Generators.Tests.OperationControlPayload.Heartbeat
+  id: Heartbeat
+  name: Heartbeat
+  name.python: heartbeat
+  fullName: Harp.Generators.Tests.OperationControlPayload.Heartbeat
+  parent: Harp.Generators.Tests.OperationControlPayload
+  type: field
+  langs:
+  - csharp
+  - python
+  summary: Specifies whether the device should report the content of the seconds register each second.
+  harp:
+    member:
+      mask: "0x80"
+      interfaceType:
+        name: EnableFlag
+        uid: Harp.Generators.Tests.EnableFlag
+--- # Harp.Generators.Tests.ResetFlags.yml
+### YamlMime:UniversalReference
+items:
+- uid: Harp.Generators.Tests.ResetFlags
+  id: ResetFlags
+  name: ResetFlags
+  name.python: ResetFlags
+  fullName: Harp.Generators.Tests.ResetFlags
+  type: enum
+  langs:
+  - csharp
+  - python
+  summary: Specifies the behavior of the non-volatile registers when resetting the device.
+  harp:
+    bitMask:
+      type: byte
+  children:
+  - Harp.Generators.Tests.ResetFlags.None
+  - Harp.Generators.Tests.ResetFlags.RestoreDefault
+  - Harp.Generators.Tests.ResetFlags.RestoreEeprom
+  - Harp.Generators.Tests.ResetFlags.Save
+  - Harp.Generators.Tests.ResetFlags.RestoreName
+  - Harp.Generators.Tests.ResetFlags.UpdateFirmware
+  - Harp.Generators.Tests.ResetFlags.BootFromDefault
+  - Harp.Generators.Tests.ResetFlags.BootFromEeprom
+- uid: Harp.Generators.Tests.ResetFlags.None
+  id: None
+  name: None
+  fullName: Harp.Generators.Tests.ResetFlags.None
+  parent: Harp.Generators.Tests.ResetFlags
+  type: field
+  langs:
+  - csharp
+  summary: All reset flags are cleared.
+  harp:
+    maskValue:
+      value: "0x0"
+- uid: Harp.Generators.Tests.ResetFlags.RestoreDefault
+  id: RestoreDefault
+  name: RestoreDefault
+  name.python: RESTORE_DEFAULT
+  fullName: Harp.Generators.Tests.ResetFlags.RestoreDefault
+  parent: Harp.Generators.Tests.ResetFlags
+  type: field
+  langs:
+  - csharp
+  - python
+  summary: The device will boot with all the registers reset to their default factory values.
+  harp:
+    maskValue:
+      value: "0x1"
+- uid: Harp.Generators.Tests.ResetFlags.RestoreEeprom
+  id: RestoreEeprom
+  name: RestoreEeprom
+  name.python: RESTORE_EEPROM
+  fullName: Harp.Generators.Tests.ResetFlags.RestoreEeprom
+  parent: Harp.Generators.Tests.ResetFlags
+  type: field
+  langs:
+  - csharp
+  - python
+  summary: The device will boot and restore all the registers to the values stored in non-volatile memory.
+  harp:
+    maskValue:
+      value: "0x2"
+- uid: Harp.Generators.Tests.ResetFlags.Save
+  id: Save
+  name: Save
+  name.python: SAVE
+  fullName: Harp.Generators.Tests.ResetFlags.Save
+  parent: Harp.Generators.Tests.ResetFlags
+  type: field
+  langs:
+  - csharp
+  - python
+  summary: The device will boot and save all the current register values to non-volatile memory.
+  harp:
+    maskValue:
+      value: "0x4"
+- uid: Harp.Generators.Tests.ResetFlags.RestoreName
+  id: RestoreName
+  name: RestoreName
+  name.python: RESTORE_NAME
+  fullName: Harp.Generators.Tests.ResetFlags.RestoreName
+  parent: Harp.Generators.Tests.ResetFlags
+  type: field
+  langs:
+  - csharp
+  - python
+  summary: The device will boot with the default device name.
+  harp:
+    maskValue:
+      value: "0x8"
+- uid: Harp.Generators.Tests.ResetFlags.UpdateFirmware
+  id: UpdateFirmware
+  name: UpdateFirmware
+  name.python: UPDATE_FIRMWARE
+  fullName: Harp.Generators.Tests.ResetFlags.UpdateFirmware
+  parent: Harp.Generators.Tests.ResetFlags
+  type: field
+  langs:
+  - csharp
+  - python
+  summary: The device will enter firmware update mode.
+  harp:
+    maskValue:
+      value: "0x20"
+- uid: Harp.Generators.Tests.ResetFlags.BootFromDefault
+  id: BootFromDefault
+  name: BootFromDefault
+  name.python: BOOT_FROM_DEFAULT
+  fullName: Harp.Generators.Tests.ResetFlags.BootFromDefault
+  parent: Harp.Generators.Tests.ResetFlags
+  type: field
+  langs:
+  - csharp
+  - python
+  summary: Specifies that the device has booted from default factory values.
+  harp:
+    maskValue:
+      value: "0x40"
+- uid: Harp.Generators.Tests.ResetFlags.BootFromEeprom
+  id: BootFromEeprom
+  name: BootFromEeprom
+  name.python: BOOT_FROM_EEPROM
+  fullName: Harp.Generators.Tests.ResetFlags.BootFromEeprom
+  parent: Harp.Generators.Tests.ResetFlags
+  type: field
+  langs:
+  - csharp
+  - python
+  summary: Specifies that the device has booted from non-volatile values stored in EEPROM.
+  harp:
+    maskValue:
+      value: "0x80"
+--- # Harp.Generators.Tests.ClockConfigurationFlags.yml
+### YamlMime:UniversalReference
+items:
+- uid: Harp.Generators.Tests.ClockConfigurationFlags
+  id: ClockConfigurationFlags
+  name: ClockConfigurationFlags
+  name.python: ClockConfigurationFlags
+  fullName: Harp.Generators.Tests.ClockConfigurationFlags
+  type: enum
+  langs:
+  - csharp
+  - python
+  summary: Specifies configuration flags for the device synchronization clock.
+  harp:
+    bitMask:
+      type: byte
+  children:
+  - Harp.Generators.Tests.ClockConfigurationFlags.None
+  - Harp.Generators.Tests.ClockConfigurationFlags.ClockRepeater
+  - Harp.Generators.Tests.ClockConfigurationFlags.ClockGenerator
+  - Harp.Generators.Tests.ClockConfigurationFlags.RepeaterCapability
+  - Harp.Generators.Tests.ClockConfigurationFlags.GeneratorCapability
+  - Harp.Generators.Tests.ClockConfigurationFlags.ClockUnlock
+  - Harp.Generators.Tests.ClockConfigurationFlags.ClockLock
+- uid: Harp.Generators.Tests.ClockConfigurationFlags.None
+  id: None
+  name: None
+  fullName: Harp.Generators.Tests.ClockConfigurationFlags.None
+  parent: Harp.Generators.Tests.ClockConfigurationFlags
+  type: field
+  langs:
+  - csharp
+  summary: All clock configuration flags are cleared.
+  harp:
+    maskValue:
+      value: "0x0"
+- uid: Harp.Generators.Tests.ClockConfigurationFlags.ClockRepeater
+  id: ClockRepeater
+  name: ClockRepeater
+  name.python: CLOCK_REPEATER
+  fullName: Harp.Generators.Tests.ClockConfigurationFlags.ClockRepeater
+  parent: Harp.Generators.Tests.ClockConfigurationFlags
+  type: field
+  langs:
+  - csharp
+  - python
+  summary: The device will repeat the clock synchronization signal to the clock output connector, if available.
+  harp:
+    maskValue:
+      value: "0x1"
+- uid: Harp.Generators.Tests.ClockConfigurationFlags.ClockGenerator
+  id: ClockGenerator
+  name: ClockGenerator
+  name.python: CLOCK_GENERATOR
+  fullName: Harp.Generators.Tests.ClockConfigurationFlags.ClockGenerator
+  parent: Harp.Generators.Tests.ClockConfigurationFlags
+  type: field
+  langs:
+  - csharp
+  - python
+  summary: The device resets and generates the clock synchronization signal on the clock output connector, if available.
+  harp:
+    maskValue:
+      value: "0x2"
+- uid: Harp.Generators.Tests.ClockConfigurationFlags.RepeaterCapability
+  id: RepeaterCapability
+  name: RepeaterCapability
+  name.python: REPEATER_CAPABILITY
+  fullName: Harp.Generators.Tests.ClockConfigurationFlags.RepeaterCapability
+  parent: Harp.Generators.Tests.ClockConfigurationFlags
+  type: field
+  langs:
+  - csharp
+  - python
+  summary: Specifies the device has the capability to repeat the clock synchronization signal to the clock output connector.
+  harp:
+    maskValue:
+      value: "0x8"
+- uid: Harp.Generators.Tests.ClockConfigurationFlags.GeneratorCapability
+  id: GeneratorCapability
+  name: GeneratorCapability
+  name.python: GENERATOR_CAPABILITY
+  fullName: Harp.Generators.Tests.ClockConfigurationFlags.GeneratorCapability
+  parent: Harp.Generators.Tests.ClockConfigurationFlags
+  type: field
+  langs:
+  - csharp
+  - python
+  summary: Specifies the device has the capability to generate the clock synchronization signal to the clock output connector.
+  harp:
+    maskValue:
+      value: "0x10"
+- uid: Harp.Generators.Tests.ClockConfigurationFlags.ClockUnlock
+  id: ClockUnlock
+  name: ClockUnlock
+  name.python: CLOCK_UNLOCK
+  fullName: Harp.Generators.Tests.ClockConfigurationFlags.ClockUnlock
+  parent: Harp.Generators.Tests.ClockConfigurationFlags
+  type: field
+  langs:
+  - csharp
+  - python
+  summary: The device will unlock the timestamp register counter and will accept commands to set new timestamp values.
+  harp:
+    maskValue:
+      value: "0x40"
+- uid: Harp.Generators.Tests.ClockConfigurationFlags.ClockLock
+  id: ClockLock
+  name: ClockLock
+  name.python: CLOCK_LOCK
+  fullName: Harp.Generators.Tests.ClockConfigurationFlags.ClockLock
+  parent: Harp.Generators.Tests.ClockConfigurationFlags
+  type: field
+  langs:
+  - csharp
+  - python
+  summary: The device will lock the timestamp register counter and will not accept commands to set new timestamp values.
+  harp:
+    maskValue:
+      value: "0x80"
+--- # Harp.Generators.Tests.OperationMode.yml
+### YamlMime:UniversalReference
+items:
+- uid: Harp.Generators.Tests.OperationMode
+  id: OperationMode
+  name: OperationMode
+  name.python: OperationMode
+  fullName: Harp.Generators.Tests.OperationMode
+  type: enum
+  langs:
+  - csharp
+  - python
+  summary: Specifies the operation mode of the device.
+  harp:
+    groupMask:
+      type: byte
+  children:
+  - Harp.Generators.Tests.OperationMode.Standby
+  - Harp.Generators.Tests.OperationMode.Active
+  - Harp.Generators.Tests.OperationMode.Speed
+- uid: Harp.Generators.Tests.OperationMode.Standby
+  id: Standby
+  name: Standby
+  name.python: STANDBY
+  fullName: Harp.Generators.Tests.OperationMode.Standby
+  parent: Harp.Generators.Tests.OperationMode
+  type: field
+  langs:
+  - csharp
+  - python
+  summary: Disable all event reporting on the device.
+  harp:
+    maskValue:
+      value: "0"
+- uid: Harp.Generators.Tests.OperationMode.Active
+  id: Active
+  name: Active
+  name.python: ACTIVE
+  fullName: Harp.Generators.Tests.OperationMode.Active
+  parent: Harp.Generators.Tests.OperationMode
+  type: field
+  langs:
+  - csharp
+  - python
+  summary: Event detection is enabled. Only enabled events are reported by the device.
+  harp:
+    maskValue:
+      value: "1"
+- uid: Harp.Generators.Tests.OperationMode.Speed
+  id: Speed
+  name: Speed
+  name.python: SPEED
+  fullName: Harp.Generators.Tests.OperationMode.Speed
+  parent: Harp.Generators.Tests.OperationMode
+  type: field
+  langs:
+  - csharp
+  - python
+  summary: The device enters speed mode.
+  harp:
+    maskValue:
+      value: "3"
+--- # Harp.Generators.Tests.EnableFlag.yml
+### YamlMime:UniversalReference
+items:
+- uid: Harp.Generators.Tests.EnableFlag
+  id: EnableFlag
+  name: EnableFlag
+  name.python: EnableFlag
+  fullName: Harp.Generators.Tests.EnableFlag
+  type: enum
+  langs:
+  - csharp
+  - python
+  summary: Specifies whether a specific register flag is enabled or disabled.
+  harp:
+    groupMask:
+      type: byte
+  children:
+  - Harp.Generators.Tests.EnableFlag.Disabled
+  - Harp.Generators.Tests.EnableFlag.Enabled
+- uid: Harp.Generators.Tests.EnableFlag.Disabled
+  id: Disabled
+  name: Disabled
+  name.python: DISABLED
+  fullName: Harp.Generators.Tests.EnableFlag.Disabled
+  parent: Harp.Generators.Tests.EnableFlag
+  type: field
+  langs:
+  - csharp
+  - python
+  summary: Specifies that the flag is disabled.
+  harp:
+    maskValue:
+      value: "0"
+- uid: Harp.Generators.Tests.EnableFlag.Enabled
+  id: Enabled
+  name: Enabled
+  name.python: ENABLED
+  fullName: Harp.Generators.Tests.EnableFlag.Enabled
+  parent: Harp.Generators.Tests.EnableFlag
+  type: field
+  langs:
+  - csharp
+  - python
+  summary: Specifies that the flag is enabled.
+  harp:
+    maskValue:
+      value: "1"

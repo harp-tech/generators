@@ -80,6 +80,19 @@ var implementation = generator.GenerateImplementation();
 
 Writing that implementation into `src/mypackage/mydevice` produces the `mypackage.mydevice` package, with the companion `converters` module beside it in the same directory.
 
+## Generating register documentation
+
+Language-neutral reference documentation for the register interface can be generated for a [DocFX](https://dotnet.github.io/docfx/) site.
+
+```csharp
+var generator = new DocumentationGenerator(deviceMetadata, "MyNamespace");
+var implementation = generator.GenerateImplementation();
+```
+
+The implementation holds a table of contents and a UniversalReference page for each public register, payload type and mask, listing the C# and Python names of the type and its members. The namespace must match the one passed to `InterfaceGenerator`, since every page targets the UID of a generated type.
+
+Register details such as address and access are stored in a `harp` property of each page. Displaying them requires a custom DocFX template.
+
 ## Contributing
 
 Bug reports and contributions are welcome at [the GitHub repository](https://github.com/harp-tech/generators).
