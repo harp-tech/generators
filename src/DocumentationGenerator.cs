@@ -55,6 +55,9 @@ public sealed class DocumentationGenerator
         }
 
         return new(
+            Device: deviceMetadata.IsApplicationDevice
+                ? TransformTemplate(new DocDevice(), DocumentationImplementation.DeviceFileName)
+                : string.Empty,
             Index: TransformTemplate(new DocIndex(), DocumentationImplementation.IndexFileName),
             Registers: registers);
     }
@@ -75,6 +78,10 @@ public sealed class DocumentationGenerator
 /// <summary>
 /// Represents the generated device interface reference documentation.
 /// </summary>
+/// <param name="Device">
+/// The generated page fragment listing the name, identity class and version of the device,
+/// or an empty string if the metadata describes the core register set.
+/// </param>
 /// <param name="Index">
 /// The generated page fragment indexing the device register interface.
 /// </param>
@@ -82,10 +89,16 @@ public sealed class DocumentationGenerator
 /// The generated register documentation overwrite pages, keyed by file name.
 /// </param>
 public readonly record struct DocumentationImplementation(
+    string Device,
     string Index,
     IReadOnlyList<KeyValuePair<string, string>> Registers)
     : IEnumerable<KeyValuePair<string, string>>
 {
+    /// <summary>
+    /// Represents the default name for the file storing the device summary.
+    /// </summary>
+    public const string DeviceFileName = "device.md";
+
     /// <summary>
     /// Represents the default name for the file storing the register index.
     /// </summary>
@@ -99,6 +112,8 @@ public readonly record struct DocumentationImplementation(
     /// </returns>
     public IEnumerator<KeyValuePair<string, string>> GetEnumerator()
     {
+        if (!string.IsNullOrEmpty(Device))
+            yield return new(DeviceFileName, Device);
         yield return new(IndexFileName, Index);
         foreach (var register in Registers ?? [])
         {

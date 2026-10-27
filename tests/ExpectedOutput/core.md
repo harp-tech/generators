@@ -1,7 +1,5 @@
 # registers.md
 
-### Registers
-
 | name | address | type | length | access | description | range | interfaceType |
 |-|-|-|-|-|-|-|-|
 | [WhoAmI](xref:Harp.Generators.Tests.WhoAmI) | 0 | U16 |  | Read | Specifies the identity class of the device. |  |  |

@@ -91,7 +91,7 @@ var implementation = generator.GenerateImplementation();
 
 The namespace must match the one passed to `InterfaceGenerator`, since every register page targets the UID of a generated type.
 
-An overwrite page is generated for each public register, together with a fragment indexing all registers for inclusion in a conceptual page. Each register page writes its contents to a `generatedContent` property, which requires a DocFX template [preprocessor](https://dotnet.github.io/docfx/tutorial/intro_template.html#preprocessor) to add it to the page model before rendering.
+An overwrite page is generated for each public register, together with two fragments for inclusion in a conceptual page, one listing the device name, WhoAmI and version, and one indexing all registers. Each register page writes its contents to a `generatedContent` property, which requires a DocFX template [preprocessor](https://dotnet.github.io/docfx/tutorial/intro_template.html#preprocessor) to add it to the page model before rendering.
 
 ## Contributing
 

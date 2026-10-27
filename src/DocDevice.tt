@@ -1,0 +1,14 @@
+﻿<#@ template debug="true" hostspecific="false" visibility="internal" language="C#" inherits="TemplateBase" #>
+<#@ parameter name="DeviceMetadata" type="DeviceMetadata" #>
+<#@ import namespace="Harp.Generators" #>
+<#@ output extension=".md" #>
+- Name: <#= DeviceMetadata.Device #>
+- WhoAmI: <#= DeviceMetadata.WhoAmI #>
+<#
+if (DeviceMetadata.FirmwareVersion != null)
+{
+#>
+- Version: <#= DeviceMetadata.FirmwareVersion #>
+<#
+}
+#>

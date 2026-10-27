@@ -7,27 +7,7 @@
 <#@ output extension=".md" #>
 <#
 var publicRegisters = DeviceMetadata.Registers.Where(register => register.Value.Visibility == RegisterVisibility.Public).ToList();
-if (DeviceMetadata.IsApplicationDevice)
-{
 #>
-### Device
-
-- Name: <#= DeviceMetadata.Device #>
-- WhoAmI: <#= DeviceMetadata.WhoAmI #>
-<#
-    if (DeviceMetadata.FirmwareVersion != null)
-    {
-#>
-- Version: <#= DeviceMetadata.FirmwareVersion #>
-<#
-    }
-#>
-
-<#
-}
-#>
-### Registers
-
 | name | address | type | length | access | description | range | interfaceType |
 |-|-|-|-|-|-|-|-|
 <#

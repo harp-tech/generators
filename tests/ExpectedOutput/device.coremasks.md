@@ -1,12 +1,10 @@
-# registers.md
-
-### Device
+# device.md
 
 - Name: CoreMasks
 - WhoAmI: 1234
 - Version: 0.1
 
-### Registers
+# registers.md
 
 | name | address | type | length | access | description | range | interfaceType |
 |-|-|-|-|-|-|-|-|

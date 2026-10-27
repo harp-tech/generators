@@ -1,12 +1,10 @@
-# registers.md
-
-### Device
+# device.md
 
 - Name: Tests
 - WhoAmI: 0
 - Version: 0.1
 
-### Registers
+# registers.md
 
 | name | address | type | length | access | description | range | interfaceType |
 |-|-|-|-|-|-|-|-|
