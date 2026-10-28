@@ -159,13 +159,6 @@ internal static partial class TemplateHelper
         return PrimitiveNumpyTypes.ContainsKey(interfaceType);
     }
 
-    static string GetMemberTypeName(PayloadMemberInfo member)
-    {
-        if (!string.IsNullOrEmpty(member.InterfaceType)) return member.InterfaceType;
-        else if (!string.IsNullOrEmpty(member.MaskType)) return member.MaskType;
-        else return string.Empty;
-    }
-
     public static string GetPythonFieldName(string name)
     {
         return FirmwareNamingConvention.Instance.Apply(name).ToLowerInvariant();
@@ -375,7 +368,7 @@ internal static partial class TemplateHelper
     {
         var offset = member.Offset.GetValueOrDefault(0);
         var offsetArgument = offset > 0 ? $", offset={offset}" : string.Empty;
-        var typeName = GetMemberTypeName(member);
+        var typeName = GetDeclaredType(member);
         var defaultArgument = GetPythonDefaultArgument(member, typeName, register.Type, member.Length, deviceMetadata);
         var converterBaseName = name;
         name = GetPythonFieldName(name);
@@ -459,20 +452,20 @@ internal static partial class TemplateHelper
             };
         }
 
+        if (IsArray(member, memberLength))
+        {
+            module.ProtocolImports.Add("ArrayConverter");
+            module.UsesNDArray = true;
+            return new PythonField
+            {
+                Name = name,
+                Annotation = $"NDArray[{elementType}]",
+                Descriptor = $"Field(ArrayConverter({elementType}, {memberLength}){offsetArgument}{defaultArgument})"
+            };
+        }
+
         if (string.IsNullOrEmpty(member.InterfaceType))
         {
-            if (memberLength > 0)
-            {
-                module.ProtocolImports.Add("ArrayConverter");
-                module.UsesNDArray = true;
-                return new PythonField
-                {
-                    Name = name,
-                    Annotation = $"NDArray[{elementType}]",
-                    Descriptor = $"Field(ArrayConverter({elementType}, {memberLength}){offsetArgument}{defaultArgument})"
-                };
-            }
-
             module.ProtocolImports.Add("IdentityConverter");
             return new PythonField
             {
@@ -532,7 +525,7 @@ internal static partial class TemplateHelper
         DeviceMetadata deviceMetadata)
     {
         var defaultValue = info.DefaultValue;
-        if (!defaultValue.HasValue || length > 0)
+        if (!defaultValue.HasValue || IsArray(info, length))
             return string.Empty;
 
         var value = defaultValue.GetValueOrDefault();

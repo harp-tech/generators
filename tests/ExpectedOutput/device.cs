@@ -2887,7 +2887,7 @@ namespace Harp.Generators.Tests
         /// Gets or sets a value to write on payload member Delta.
         /// </summary>
         [Description("")]
-        public uint Delta { get; set; }
+        public uint Delta { get; set; } = 1000;
 
         /// <summary>
         /// Creates a message payload for the ComplexConfiguration register.

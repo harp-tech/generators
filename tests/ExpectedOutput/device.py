@@ -123,7 +123,7 @@ class ComplexConfigurationPayload(StructPayload[np.uint8], length=17):
     duty_cycle: np.float32 = Field(IdentityConverter(np.float32), offset=4)
     frequency: np.float32 = Field(IdentityConverter(np.float32), offset=8)
     events_enabled: bool = Field(BoolConverter(), offset=12)
-    delta: np.uint32 = Field(IdentityConverter(np.uint32), offset=13)
+    delta: np.uint32 = Field(IdentityConverter(np.uint32), offset=13, default=np.uint32(1000))
 
 
 class VersionPayload(StructPayload[np.uint8], length=32):

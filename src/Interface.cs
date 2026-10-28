@@ -120,13 +120,20 @@ public class DeviceMetadata
     void Validate()
     {
         var errors = new List<string>();
+        var payloadTypes = new Dictionary<string, KeyValuePair<string, RegisterInfo>>();
         foreach (var register in Registers)
         {
-            ValidateDefaultValue(errors, register.Key, register.Value);
+            ValidateValue(errors, register.Key, register.Value, register.Value.Type);
+            ValidatePayloadType(errors, payloadTypes, register);
             if (register.Value.PayloadSpec != null)
             {
                 foreach (var member in register.Value.PayloadSpec)
-                    ValidateDefaultValue(errors, $"{register.Key}.{member.Key}", member.Value);
+                {
+                    var name = $"{register.Key}.{member.Key}";
+                    ValidateValue(errors, name, member.Value, register.Value.Type);
+                    if (member.Value.InterfaceType == "bool" && member.Value.Length > 1)
+                        errors.Add($"({name}) Interface type bool must span exactly one element.");
+                }
             }
         }
 
@@ -134,13 +141,40 @@ public class DeviceMetadata
             throw new YamlException($"Invalid device metadata:{Environment.NewLine}{string.Join(Environment.NewLine, errors)}");
     }
 
-    static void ValidateDefaultValue(List<string> errors, string name, ValueInfo info)
+    void ValidateValue(List<string> errors, string name, ValueInfo info, PayloadType payloadType)
     {
         var value = info.DefaultValue.GetValueOrDefault();
         if (value < info.MinValue)
             errors.Add($"({name}) Default value {value} is below the minimum value {info.MinValue}.");
         else if (value > info.MaxValue)
             errors.Add($"({name}) Default value {value} is above the maximum value {info.MaxValue}.");
+
+        if (!string.IsNullOrEmpty(info.MaskType) && !TemplateHelper.IsMaskType(this, info.MaskType))
+            errors.Add($"({name}) Mask type {info.MaskType} does not refer to a bit mask or group mask.");
+
+        if (info.InterfaceType == "string" && payloadType != PayloadType.U8)
+            errors.Add($"({name}) Interface type string requires payload type U8.");
+    }
+
+    static void ValidatePayloadType(
+        List<string> errors,
+        Dictionary<string, KeyValuePair<string, RegisterInfo>> payloadTypes,
+        KeyValuePair<string, RegisterInfo> register)
+    {
+        var info = register.Value;
+        if (info.PayloadSpec == null || string.IsNullOrEmpty(info.InterfaceType))
+            return;
+
+        if (!payloadTypes.TryGetValue(info.InterfaceType, out var declared))
+        {
+            payloadTypes.Add(info.InterfaceType, register);
+            return;
+        }
+
+        if (declared.Value.Type != info.Type ||
+            declared.Value.Length != info.Length ||
+            MetadataSerializer.Instance.Serialize(declared.Value.PayloadSpec) != MetadataSerializer.Instance.Serialize(info.PayloadSpec))
+            errors.Add($"({register.Key}) Payload type {info.InterfaceType} is declared by register {declared.Key} with a different payload type, length or payload spec.");
     }
 }
 
@@ -420,6 +454,11 @@ internal static partial class TemplateHelper
         return FindBitMask(deviceMetadata, typeName) != null;
     }
 
+    public static bool IsMaskType(DeviceMetadata deviceMetadata, string typeName)
+    {
+        return FindGroupMask(deviceMetadata, typeName) != null || IsBitMask(deviceMetadata, typeName);
+    }
+
     static List<string>? GetMaskValueNames(DeviceMetadata deviceMetadata, string maskType, long value)
     {
         var groupMask = FindGroupMask(deviceMetadata, maskType);
@@ -463,9 +502,18 @@ internal static partial class TemplateHelper
 
     static string GetInterfaceType(ValueInfo info, PayloadType payloadType, int length)
     {
-        if (!string.IsNullOrEmpty(info.InterfaceType)) return info.InterfaceType;
-        else if (!string.IsNullOrEmpty(info.MaskType)) return info.MaskType;
-        else return GetInterfaceType(payloadType, length);
+        var declaredType = GetDeclaredType(info);
+        return string.IsNullOrEmpty(declaredType) ? GetInterfaceType(payloadType, length) : declaredType;
+    }
+
+    static string GetDeclaredType(ValueInfo info)
+    {
+        return string.IsNullOrEmpty(info.InterfaceType) ? info.MaskType : info.InterfaceType;
+    }
+
+    static bool IsArray(ValueInfo info, int length)
+    {
+        return length > 0 && string.IsNullOrEmpty(GetDeclaredType(info));
     }
 
     public static string GetInterfaceType(PayloadType payloadType)
@@ -623,9 +671,7 @@ internal static partial class TemplateHelper
         else if (register.InterfaceType == "string")
             return $"PayloadMarshal.ReadUtf8String({expression}.Array!, {expression}.Offset, {expression}.Count)";
         else
-            return GetConversionToInterfaceType(
-                string.IsNullOrEmpty(register.InterfaceType) ? register.MaskType : register.InterfaceType,
-                expression);
+            return GetConversionToInterfaceType(GetDeclaredType(register), expression);
     }
 
     public static string GetFormatConversion(RegisterInfo register, string expression)
@@ -634,7 +680,7 @@ internal static partial class TemplateHelper
             return $"FormatPayload({expression})";
         else
             return GetConversionFromInterfaceType(
-                string.IsNullOrEmpty(register.InterfaceType) ? register.MaskType : register.InterfaceType,
+                GetDeclaredType(register),
                 GetPayloadInterfaceType(register),
                 expression);
     }
@@ -759,9 +805,7 @@ internal static partial class TemplateHelper
         {
             return $"ParsePayload{name}({expression})";
         }
-        return GetConversionToInterfaceType(
-            string.IsNullOrEmpty(member.InterfaceType) ? member.MaskType : member.InterfaceType,
-            expression);
+        return GetConversionToInterfaceType(GetDeclaredType(member), expression);
     }
 
     public static string GetPayloadMemberAssignmentFormatter(
@@ -813,12 +857,12 @@ internal static partial class TemplateHelper
         if (member.HasConverter)
             expression = $"FormatPayload{name}({expression})";
 
-        if (member.Length > 0)
+        var isBoolean = member.InterfaceType == "bool" && !member.HasConverter;
+        if (member.Length > 0 && !isBoolean)
             return expression;
 
-        var isBoolean = member.InterfaceType == "bool" && !member.HasConverter;
         var payloadInterfaceType = GetInterfaceType(payloadType);
-        var memberInterfaceType = string.IsNullOrEmpty(member.InterfaceType) ? member.MaskType : member.InterfaceType;
+        var memberInterfaceType = GetDeclaredType(member);
         if (!string.IsNullOrEmpty(memberInterfaceType))
         {
             if (isBoolean)

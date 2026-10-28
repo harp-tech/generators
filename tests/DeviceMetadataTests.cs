@@ -8,7 +8,13 @@ public sealed class DeviceMetadataTests
 {
     [DataTestMethod]
     [DataRow("errors.empty.yml", "empty")]
-    [DataRow("errors.validation.yml", "(PulseWidth)", "(Configuration.Level)")]
+    [DataRow("errors.validation.yml",
+        "(PulseWidth)",
+        "(Configuration.Level)",
+        "(TriggerMode)",
+        "(DeviceLabel)",
+        "(OutputState.Enabled)",
+        "(Color1)")]
     public void Load_InvalidMetadataThrows(string metadataFileName, params string[] expectedErrors)
     {
         metadataFileName = TestHelper.GetMetadataPath(metadataFileName);
