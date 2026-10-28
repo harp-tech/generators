@@ -41,6 +41,10 @@ registers:
         mask: 0xF
         maskType: PortDigitalIOS
         defaultValue: 3
+      OutputFlags:
+        offset: 3
+        maskType: PortDigitalIOS
+        defaultValue: 19
       DutyCycle:
         offset: 4
         length: 4
