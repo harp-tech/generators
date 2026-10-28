@@ -3378,7 +3378,7 @@ namespace Harp.Generators.Tests
         [Range(min: 1, max: long.MaxValue)]
         [Editor(DesignTypes.NumericUpDownEditor, DesignTypes.UITypeEditor)]
         [Description("The value for register PulseDOPort0.")]
-        public ushort PulseDOPort0 { get; set; } = 1;
+        public ushort PulseDOPort0 { get; set; } = 500;
 
         /// <summary>
         /// Creates a message payload for the PulseDOPort0 register.
@@ -3434,7 +3434,7 @@ namespace Harp.Generators.Tests
         [Range(min: 1, max: long.MaxValue)]
         [Editor(DesignTypes.NumericUpDownEditor, DesignTypes.UITypeEditor)]
         [Description("The value for register PulseDO0.")]
-        public ushort PulseDO0 { get; set; } = 1;
+        public ushort PulseDO0 { get; set; } = 500;
 
         /// <summary>
         /// Creates a message payload for the PulseDO0 register.

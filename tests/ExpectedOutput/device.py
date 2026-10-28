@@ -171,13 +171,13 @@ class PortDIOSetPayload(AnonymousPayload[np.uint8]):
 class PulseDOPort0Payload(AnonymousPayload[np.uint16]):
     """Represents the payload of the PulseDOPort0 register."""
 
-    __value__: np.uint16 = Field(IdentityConverter(np.uint16), default=np.uint16(1))
+    __value__: np.uint16 = Field(IdentityConverter(np.uint16), default=np.uint16(500))
 
 
 class PulseDO0Payload(AnonymousPayload[np.uint16]):
     """Represents the payload of the PulseDO0 register."""
 
-    __value__: np.uint16 = Field(IdentityConverter(np.uint16), default=np.uint16(1))
+    __value__: np.uint16 = Field(IdentityConverter(np.uint16), default=np.uint16(500))
 
 
 class MixedMemberLengthPayload(StructPayload[np.uint8], length=4):

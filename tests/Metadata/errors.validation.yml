@@ -1,0 +1,20 @@
+# yaml-language-server: $schema=https://harp-tech.org/draft-02/schema/registers.json
+device: ValidationErrorTests
+firmwareVersion: "0.1"
+hardwareTargets: "1.0"
+registers:
+  PulseWidth:
+    address: 32
+    type: U16
+    access: Write
+    minValue: 1
+  Configuration:
+    address: 33
+    type: U8
+    length: 2
+    access: Write
+    payloadSpec:
+      Level:
+        offset: 0
+        maxValue: 100
+        defaultValue: 200
