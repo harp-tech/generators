@@ -152,6 +152,7 @@ typedef struct
     uint16_t REG_START_PULSE_TRAIN[2];
     uint8_t REG_ENCODER_MODE;
     uint8_t REG_LED_ENABLED;
+    uint8_t REG_PORT_DIO_CLEAR;
 } AppRegs;
 
 /************************************************************************/
@@ -179,6 +180,7 @@ typedef struct
 #define ADD_REG_START_PULSE_TRAIN         101 // U16    Starts a PWM pulse train.
 #define ADD_REG_ENCODER_MODE              103 // U8     Configures the operation mode of the encoder.
 #define ADD_REG_LED_ENABLED               104 // U8     Specifies whether the status LED is enabled.
+#define ADD_REG_PORT_DIO_CLEAR            105 // U8
 
 /************************************************************************/
 /* Tests registers' memory limits                                       */
@@ -188,8 +190,8 @@ typedef struct
 /************************************************************************/
 /* Memory limits */
 #define APP_REGS_ADD_MIN                    0x20
-#define APP_REGS_ADD_MAX                    0x68
-#define APP_NBYTES_OF_REG_BANK              139
+#define APP_REGS_ADD_MAX                    0x69
+#define APP_NBYTES_OF_REG_BANK              140
 
 /************************************************************************/
 /* Registers' bits                                                      */

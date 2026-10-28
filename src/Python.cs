@@ -514,7 +514,7 @@ internal static partial class TemplateHelper
             return string.Empty;
 
         var value = (long)defaultValue.GetValueOrDefault();
-        var names = GetMaskValueNames(deviceMetadata, maskType, value);
+        var names = value == 0 && IsBitMask(deviceMetadata, maskType) ? null : GetMaskValueNames(deviceMetadata, maskType, value);
         if (names != null)
             return $", default={string.Join(" | ", names.Select(name => $"{maskType}.{FirmwareNamingConvention.Instance.Apply(name)}"))}";
         return FindGroupMask(deviceMetadata, maskType) != null ? $", default={value}" : $", default={maskType}({value})";

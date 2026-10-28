@@ -64,7 +64,8 @@ namespace Harp.Generators.Tests
             { 100, typeof(StartPulse) },
             { 101, typeof(StartPulseTrain) },
             { 103, typeof(EncoderMode) },
-            { 104, typeof(LedEnabled) }
+            { 104, typeof(LedEnabled) },
+            { 105, typeof(PortDIOClear) }
         };
 
         /// <summary>
@@ -302,6 +303,7 @@ namespace Harp.Generators.Tests
     /// <seealso cref="StartPulseTrain"/>
     /// <seealso cref="EncoderMode"/>
     /// <seealso cref="LedEnabled"/>
+    /// <seealso cref="PortDIOClear"/>
     [XmlInclude(typeof(DigitalInputs))]
     [XmlInclude(typeof(AnalogData))]
     [XmlInclude(typeof(ComplexConfiguration))]
@@ -323,6 +325,7 @@ namespace Harp.Generators.Tests
     [XmlInclude(typeof(StartPulseTrain))]
     [XmlInclude(typeof(EncoderMode))]
     [XmlInclude(typeof(LedEnabled))]
+    [XmlInclude(typeof(PortDIOClear))]
     [Description("Filters register-specific messages reported by the Tests device.")]
     public class FilterRegister : FilterRegisterBuilder, INamedElement
     {
@@ -365,6 +368,7 @@ namespace Harp.Generators.Tests
     /// <seealso cref="StartPulseTrain"/>
     /// <seealso cref="EncoderMode"/>
     /// <seealso cref="LedEnabled"/>
+    /// <seealso cref="PortDIOClear"/>
     [XmlInclude(typeof(DigitalInputs))]
     [XmlInclude(typeof(AnalogData))]
     [XmlInclude(typeof(ComplexConfiguration))]
@@ -386,6 +390,7 @@ namespace Harp.Generators.Tests
     [XmlInclude(typeof(StartPulseTrain))]
     [XmlInclude(typeof(EncoderMode))]
     [XmlInclude(typeof(LedEnabled))]
+    [XmlInclude(typeof(PortDIOClear))]
     [XmlInclude(typeof(TimestampedDigitalInputs))]
     [XmlInclude(typeof(TimestampedAnalogData))]
     [XmlInclude(typeof(TimestampedComplexConfiguration))]
@@ -407,6 +412,7 @@ namespace Harp.Generators.Tests
     [XmlInclude(typeof(TimestampedStartPulseTrain))]
     [XmlInclude(typeof(TimestampedEncoderMode))]
     [XmlInclude(typeof(TimestampedLedEnabled))]
+    [XmlInclude(typeof(TimestampedPortDIOClear))]
     [Description("Filters and selects specific messages reported by the Tests device.")]
     public partial class Parse : ParseBuilder, INamedElement
     {
@@ -446,6 +452,7 @@ namespace Harp.Generators.Tests
     /// <seealso cref="StartPulseTrain"/>
     /// <seealso cref="EncoderMode"/>
     /// <seealso cref="LedEnabled"/>
+    /// <seealso cref="PortDIOClear"/>
     [XmlInclude(typeof(DigitalInputs))]
     [XmlInclude(typeof(AnalogData))]
     [XmlInclude(typeof(ComplexConfiguration))]
@@ -467,6 +474,7 @@ namespace Harp.Generators.Tests
     [XmlInclude(typeof(StartPulseTrain))]
     [XmlInclude(typeof(EncoderMode))]
     [XmlInclude(typeof(LedEnabled))]
+    [XmlInclude(typeof(PortDIOClear))]
     [Description("Formats a sequence of values as specific Tests register messages.")]
     public partial class Format : FormatBuilder, INamedElement
     {
@@ -2742,6 +2750,103 @@ namespace Harp.Generators.Tests
     }
 
     /// <summary>
+    /// Represents a register that manipulates messages from register PortDIOClear.
+    /// </summary>
+    [Description("")]
+    public partial class PortDIOClear
+    {
+        /// <summary>
+        /// Represents the address of the <see cref="PortDIOClear"/> register. This field is constant.
+        /// </summary>
+        public const int Address = 105;
+
+        /// <summary>
+        /// Represents the payload type of the <see cref="PortDIOClear"/> register. This field is constant.
+        /// </summary>
+        public const PayloadType RegisterType = PayloadType.U8;
+
+        /// <summary>
+        /// Represents the length of the <see cref="PortDIOClear"/> register. This field is constant.
+        /// </summary>
+        public const int RegisterLength = 1;
+
+        /// <summary>
+        /// Returns the payload data for <see cref="PortDIOClear"/> register messages.
+        /// </summary>
+        /// <param name="message">A <see cref="HarpMessage"/> object representing the register message.</param>
+        /// <returns>A value representing the message payload.</returns>
+        public static PortDigitalIOS GetPayload(HarpMessage message)
+        {
+            return (PortDigitalIOS)message.GetPayloadByte();
+        }
+
+        /// <summary>
+        /// Returns the timestamped payload data for <see cref="PortDIOClear"/> register messages.
+        /// </summary>
+        /// <param name="message">A <see cref="HarpMessage"/> object representing the register message.</param>
+        /// <returns>A value representing the timestamped message payload.</returns>
+        public static Timestamped<PortDigitalIOS> GetTimestampedPayload(HarpMessage message)
+        {
+            var (payload, timestamp) = message.GetTimestampedPayloadByte();
+            return Timestamped.Create((PortDigitalIOS)payload, timestamp);
+        }
+
+        /// <summary>
+        /// Returns a Harp message for the <see cref="PortDIOClear"/> register.
+        /// </summary>
+        /// <param name="messageType">The type of the Harp message.</param>
+        /// <param name="value">The value to be stored in the message payload.</param>
+        /// <returns>
+        /// A <see cref="HarpMessage"/> object for the <see cref="PortDIOClear"/> register
+        /// with the specified message type and payload.
+        /// </returns>
+        public static HarpMessage FromPayload(MessageType messageType, PortDigitalIOS value)
+        {
+            return HarpMessage.FromByte(Address, messageType, (byte)value);
+        }
+
+        /// <summary>
+        /// Returns a timestamped Harp message for the <see cref="PortDIOClear"/>
+        /// register.
+        /// </summary>
+        /// <param name="timestamp">The timestamp of the message payload, in seconds.</param>
+        /// <param name="messageType">The type of the Harp message.</param>
+        /// <param name="value">The value to be stored in the message payload.</param>
+        /// <returns>
+        /// A <see cref="HarpMessage"/> object for the <see cref="PortDIOClear"/> register
+        /// with the specified message type, timestamp, and payload.
+        /// </returns>
+        public static HarpMessage FromPayload(double timestamp, MessageType messageType, PortDigitalIOS value)
+        {
+            return HarpMessage.FromByte(Address, timestamp, messageType, (byte)value);
+        }
+    }
+
+    /// <summary>
+    /// Provides methods for manipulating timestamped messages from the
+    /// PortDIOClear register.
+    /// </summary>
+    /// <seealso cref="PortDIOClear"/>
+    [Description("Filters and selects timestamped messages from the PortDIOClear register.")]
+    public partial class TimestampedPortDIOClear
+    {
+        /// <summary>
+        /// Represents the address of the <see cref="PortDIOClear"/> register. This field is constant.
+        /// </summary>
+        public const int Address = PortDIOClear.Address;
+
+        /// <summary>
+        /// Returns timestamped payload data for <see cref="PortDIOClear"/> register messages.
+        /// </summary>
+        /// <param name="message">A <see cref="HarpMessage"/> object representing the register message.</param>
+        /// <returns>A value representing the timestamped message payload.</returns>
+        public static Timestamped<PortDigitalIOS> GetPayload(HarpMessage message)
+        {
+            return PortDIOClear.GetTimestampedPayload(message);
+        }
+    }
+
+    /// <summary>
     /// Represents an operator which creates standard message payloads for the
     /// Tests device.
     /// </summary>
@@ -2766,6 +2871,7 @@ namespace Harp.Generators.Tests
     /// <seealso cref="CreateStartPulseTrainPayload"/>
     /// <seealso cref="CreateEncoderModePayload"/>
     /// <seealso cref="CreateLedEnabledPayload"/>
+    /// <seealso cref="CreatePortDIOClearPayload"/>
     [XmlInclude(typeof(CreateDigitalInputsPayload))]
     [XmlInclude(typeof(CreateAnalogDataPayload))]
     [XmlInclude(typeof(CreateComplexConfigurationPayload))]
@@ -2787,6 +2893,7 @@ namespace Harp.Generators.Tests
     [XmlInclude(typeof(CreateStartPulseTrainPayload))]
     [XmlInclude(typeof(CreateEncoderModePayload))]
     [XmlInclude(typeof(CreateLedEnabledPayload))]
+    [XmlInclude(typeof(CreatePortDIOClearPayload))]
     [XmlInclude(typeof(CreateTimestampedDigitalInputsPayload))]
     [XmlInclude(typeof(CreateTimestampedAnalogDataPayload))]
     [XmlInclude(typeof(CreateTimestampedComplexConfigurationPayload))]
@@ -2808,6 +2915,7 @@ namespace Harp.Generators.Tests
     [XmlInclude(typeof(CreateTimestampedStartPulseTrainPayload))]
     [XmlInclude(typeof(CreateTimestampedEncoderModePayload))]
     [XmlInclude(typeof(CreateTimestampedLedEnabledPayload))]
+    [XmlInclude(typeof(CreateTimestampedPortDIOClearPayload))]
     [Description("Creates standard message payloads for the Tests device.")]
     public partial class CreateMessage : CreateMessageBuilder, INamedElement
     {
@@ -4175,6 +4283,60 @@ namespace Harp.Generators.Tests
         public HarpMessage GetMessage(double timestamp, MessageType messageType)
         {
             return Harp.Generators.Tests.LedEnabled.FromPayload(timestamp, messageType, GetPayload());
+        }
+    }
+
+    /// <summary>
+    /// Represents an operator that creates a message payload
+    /// for register PortDIOClear.
+    /// </summary>
+    [DisplayName("PortDIOClearPayload")]
+    [Description("Creates a message payload for register PortDIOClear.")]
+    public partial class CreatePortDIOClearPayload
+    {
+        /// <summary>
+        /// Gets or sets the value for register PortDIOClear.
+        /// </summary>
+        [Description("The value for register PortDIOClear.")]
+        public PortDigitalIOS PortDIOClear { get; set; } = PortDigitalIOS.None;
+
+        /// <summary>
+        /// Creates a message payload for the PortDIOClear register.
+        /// </summary>
+        /// <returns>The created message payload value.</returns>
+        public PortDigitalIOS GetPayload()
+        {
+            return PortDIOClear;
+        }
+
+        /// <summary>
+        /// Creates a message for register PortDIOClear.
+        /// </summary>
+        /// <param name="messageType">Specifies the type of the created message.</param>
+        /// <returns>A new message for the PortDIOClear register.</returns>
+        public HarpMessage GetMessage(MessageType messageType)
+        {
+            return Harp.Generators.Tests.PortDIOClear.FromPayload(messageType, GetPayload());
+        }
+    }
+
+    /// <summary>
+    /// Represents an operator that creates a timestamped message payload
+    /// for register PortDIOClear.
+    /// </summary>
+    [DisplayName("TimestampedPortDIOClearPayload")]
+    [Description("Creates a timestamped message payload for register PortDIOClear.")]
+    public partial class CreateTimestampedPortDIOClearPayload : CreatePortDIOClearPayload
+    {
+        /// <summary>
+        /// Creates a timestamped message for register PortDIOClear.
+        /// </summary>
+        /// <param name="timestamp">The timestamp of the message payload, in seconds.</param>
+        /// <param name="messageType">Specifies the type of the created message.</param>
+        /// <returns>A new timestamped message for the PortDIOClear register.</returns>
+        public HarpMessage GetMessage(double timestamp, MessageType messageType)
+        {
+            return Harp.Generators.Tests.PortDIOClear.FromPayload(timestamp, messageType, GetPayload());
         }
     }
 

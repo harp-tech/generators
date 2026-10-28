@@ -44,6 +44,8 @@
     name: EncoderMode
   - uid: Harp.Generators.Tests.LedEnabled
     name: LedEnabled
+  - uid: Harp.Generators.Tests.PortDIOClear
+    name: PortDIOClear
 - name: Payloads
   items:
   - uid: Harp.Generators.Tests.AnalogDataPayload
@@ -538,6 +540,29 @@ items:
       interfaceType:
         name: bool
       logFile: Tests_104.bin
+--- # Harp.Generators.Tests.PortDIOClear.yml
+### YamlMime:UniversalReference
+items:
+- uid: Harp.Generators.Tests.PortDIOClear
+  id: PortDIOClear
+  name: PortDIOClear
+  name.python: PortDIOClear
+  fullName: Harp.Generators.Tests.PortDIOClear
+  type: class
+  langs:
+  - csharp
+  - python
+  harp:
+    register:
+      address: 105
+      payloadType: U8
+      access:
+      - Write
+      defaultValue: 0
+      interfaceType:
+        name: PortDigitalIOS
+        uid: Harp.Generators.Tests.PortDigitalIOS
+      logFile: Tests_105.bin
 --- # Harp.Generators.Tests.AnalogDataPayload.yml
 ### YamlMime:UniversalReference
 items:
@@ -1300,6 +1325,7 @@ items:
     bitMask:
       type: ushort
   children:
+  - Harp.Generators.Tests.PortDigitalIOS.None
   - Harp.Generators.Tests.PortDigitalIOS.DIO0
   - Harp.Generators.Tests.PortDigitalIOS.DIO1
   - Harp.Generators.Tests.PortDigitalIOS.DIO2
@@ -1308,6 +1334,17 @@ items:
   - Harp.Generators.Tests.PortDigitalIOS.TestDIPort1
   - Harp.Generators.Tests.PortDigitalIOS.SupplyPort0
   - Harp.Generators.Tests.PortDigitalIOS.PortDIO1
+- uid: Harp.Generators.Tests.PortDigitalIOS.None
+  id: None
+  name: None
+  fullName: Harp.Generators.Tests.PortDigitalIOS.None
+  parent: Harp.Generators.Tests.PortDigitalIOS
+  type: field
+  langs:
+  - csharp
+  harp:
+    maskValue:
+      value: "0x0"
 - uid: Harp.Generators.Tests.PortDigitalIOS.DIO0
   id: DIO0
   name: DIO0

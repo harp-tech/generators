@@ -29,7 +29,8 @@ void (*app_func_rd_pointer[])(void) = {
     &app_read_REG_START_PULSE,
     &app_read_REG_START_PULSE_TRAIN,
     &app_read_REG_ENCODER_MODE,
-    &app_read_REG_LED_ENABLED
+    &app_read_REG_LED_ENABLED,
+    &app_read_REG_PORT_DIO_CLEAR
 };
 
 bool (*app_func_wr_pointer[])(void*) = {
@@ -53,7 +54,8 @@ bool (*app_func_wr_pointer[])(void*) = {
     &app_write_REG_START_PULSE,
     &app_write_REG_START_PULSE_TRAIN,
     &app_write_REG_ENCODER_MODE,
-    &app_write_REG_LED_ENABLED
+    &app_write_REG_LED_ENABLED,
+    &app_write_REG_PORT_DIO_CLEAR
 };
 
 /************************************************************************/
@@ -380,5 +382,22 @@ bool app_write_REG_LED_ENABLED(void *a)
     uint8_t reg = *((uint8_t*)a);
 
     app_regs.REG_LED_ENABLED = reg;
+    return true;
+}
+
+/************************************************************************/
+/* REG_PORT_DIO_CLEAR                                                   */
+/************************************************************************/
+void app_read_REG_PORT_DIO_CLEAR(void)
+{
+    //app_regs.REG_PORT_DIO_CLEAR = 0;
+
+}
+
+bool app_write_REG_PORT_DIO_CLEAR(void *a)
+{
+    uint8_t reg = *((uint8_t*)a);
+
+    app_regs.REG_PORT_DIO_CLEAR = reg;
     return true;
 }

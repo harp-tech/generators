@@ -140,6 +140,15 @@ public class DeviceMetadata
             }
         }
 
+        foreach (var bitMask in BitMasks)
+        {
+            foreach (var bit in bitMask.Value.Bits)
+            {
+                if (bit.Value.Value == 0 && bit.Key != "None")
+                    errors.Add($"({bitMask.Key}.{bit.Key}) A bit mask member with value zero must be named None.");
+            }
+        }
+
         if (errors.Count > 0)
             throw new YamlException($"Invalid device metadata:{Environment.NewLine}{string.Join(Environment.NewLine, errors)}");
     }

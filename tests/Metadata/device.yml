@@ -241,9 +241,16 @@ registers:
     defaultValue: 1
     interfaceType: bool
     description: Specifies whether the status LED is enabled.
+  PortDIOClear:
+    address: 105
+    type: U8
+    access: Write
+    maskType: PortDigitalIOS
+    defaultValue: 0
 bitMasks:
   PortDigitalIOS:
     bits:
+      None: 0x0
       DIO0: 0x1
       DIO1: 0x2
       DIO2: 0x4

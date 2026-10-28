@@ -56,6 +56,7 @@ __all__ = [
     "StartPulseTrainPayload",
     "EncoderModePayload",
     "LedEnabledPayload",
+    "PortDIOClearPayload",
     "DigitalInputs",
     "AnalogData",
     "ComplexConfiguration",
@@ -77,6 +78,7 @@ __all__ = [
     "StartPulseTrain",
     "EncoderMode",
     "LedEnabled",
+    "PortDIOClear",
     "REGISTER_MAP",
 ]
 
@@ -231,6 +233,12 @@ class LedEnabledPayload(AnonymousPayload[np.uint8]):
     __value__: bool = Field(BoolConverter(), default=True)
 
 
+class PortDIOClearPayload(AnonymousPayload[np.uint8]):
+    """Represents the payload of the PortDIOClear register."""
+
+    __value__: PortDigitalIOS = BitMask(enum=PortDigitalIOS, default=PortDigitalIOS(0))
+
+
 class DigitalInputs(RegisterU8):
     address: ClassVar[int] = 32
 
@@ -359,6 +367,12 @@ class LedEnabled(RegisterBase[bool]):
     payload_class = LedEnabledPayload
 
 
+class PortDIOClear(RegisterBase[PortDigitalIOS]):
+    address: ClassVar[int] = 105
+    payload_type: ClassVar[PayloadType] = PayloadType.U8
+    payload_class = PortDIOClearPayload
+
+
 REGISTER_MAP: dict[int, type[RegisterBase[Any]]] = {
     **_CORE_REGISTER_MAP,
     32: DigitalInputs,
@@ -382,4 +396,5 @@ REGISTER_MAP: dict[int, type[RegisterBase[Any]]] = {
     101: StartPulseTrain,
     103: EncoderMode,
     104: LedEnabled,
+    105: PortDIOClear,
 }

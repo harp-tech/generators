@@ -95,3 +95,8 @@ registers:
       Scale:
         offset: 0
         interfaceType: float
+bitMasks:
+  Channels:
+    bits:
+      Off: 0x0
+      Channel0: 0x1

@@ -164,7 +164,7 @@ var maxMaskNameLength = Math.Max(maxBitMaskNameLength, maxGroupMaskNameLength);
 foreach (var bitMask in DeviceMetadata.BitMasks)
 {
     var mask = bitMask.Value;
-    foreach (var bitField in mask.Bits)
+    foreach (var bitField in mask.Bits.Where(bitField => bitField.Value.Value != 0))
     {
         var fieldInfo = bitField.Value;
         var fieldName = TemplateHelper.GetFirmwareName(bitField.Key);
