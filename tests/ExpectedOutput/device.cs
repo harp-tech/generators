@@ -1155,26 +1155,32 @@ namespace Harp.Generators.Tests
         /// <summary>
         /// Represents the length of the <see cref="CustomMemberConverter"/> register. This field is constant.
         /// </summary>
-        public const int RegisterLength = 3;
+        public const int RegisterLength = 4;
 
         private static partial int ParsePayloadData(byte[] payloadData, int offset, int count);
+
+        private static partial bool ParsePayloadEnabled(byte[] payloadEnabled, int offset, int count);
 
         static CustomMemberConverterPayload ParsePayload(byte[] payload)
         {
             CustomMemberConverterPayload result;
             result.Header = payload[0];
             result.Data = ParsePayloadData(payload, 1, 2);
+            result.Enabled = ParsePayloadEnabled(payload, 3, 1);
             return result;
         }
 
         private static partial byte[] FormatPayloadData(int data);
 
+        private static partial byte[] FormatPayloadEnabled(bool enabled);
+
         static byte[] FormatPayload(CustomMemberConverterPayload value)
         {
             byte[] result;
-            result = new byte[3];
+            result = new byte[4];
             result[0] = value.Header;
             PayloadMarshal.Write(result, 1, 2, FormatPayloadData(value.Data));
+            PayloadMarshal.Write(result, 3, 1, FormatPayloadEnabled(value.Enabled));
             return result;
         }
 
@@ -3151,6 +3157,12 @@ namespace Harp.Generators.Tests
         public int Data { get; set; }
 
         /// <summary>
+        /// Gets or sets a value to write on payload member Enabled.
+        /// </summary>
+        [Description("")]
+        public bool Enabled { get; set; }
+
+        /// <summary>
         /// Creates a message payload for the CustomMemberConverter register.
         /// </summary>
         /// <returns>The created message payload value.</returns>
@@ -3159,6 +3171,7 @@ namespace Harp.Generators.Tests
             CustomMemberConverterPayload value;
             value.Header = Header;
             value.Data = Data;
+            value.Enabled = Enabled;
             return value;
         }
 
@@ -4234,12 +4247,15 @@ namespace Harp.Generators.Tests
         /// </summary>
         /// <param name="header"></param>
         /// <param name="data"></param>
+        /// <param name="enabled"></param>
         public CustomMemberConverterPayload(
             byte header,
-            int data)
+            int data,
+            bool enabled)
         {
             Header = header;
             Data = data;
+            Enabled = enabled;
         }
 
         /// <summary>
@@ -4253,6 +4269,11 @@ namespace Harp.Generators.Tests
         public int Data;
 
         /// <summary>
+        /// 
+        /// </summary>
+        public bool Enabled;
+
+        /// <summary>
         /// Returns a <see cref="string"/> that represents the payload of
         /// the CustomMemberConverter register.
         /// </summary>
@@ -4264,7 +4285,8 @@ namespace Harp.Generators.Tests
         {
             return "CustomMemberConverterPayload { " +
                 "Header = " + Header + ", " +
-                "Data = " + Data + " " +
+                "Data = " + Data + ", " +
+                "Enabled = " + Enabled + " " +
             "}";
         }
     }

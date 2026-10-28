@@ -131,7 +131,7 @@ public class DeviceMetadata
                 {
                     var name = $"{register.Key}.{member.Key}";
                     ValidateValue(errors, name, member.Value, register.Value.Type, member.Value.Length);
-                    if (member.Value.InterfaceType == "bool" && member.Value.Length > 1)
+                    if (TemplateHelper.HasBoolConversion(member.Value) && member.Value.Length > 1)
                         errors.Add($"({name}) Interface type bool must span exactly one element.");
                 }
             }
@@ -521,6 +521,16 @@ internal static partial class TemplateHelper
         return length > 0 && string.IsNullOrEmpty(GetDeclaredType(info));
     }
 
+    public static bool HasBoolConversion(ValueInfo info)
+    {
+        return info.InterfaceType == "bool" && !info.HasConverter;
+    }
+
+    static bool UsesPayloadSpan(PayloadMemberInfo member)
+    {
+        return member.Length > 0 && !HasBoolConversion(member);
+    }
+
     public static string GetInterfaceType(PayloadType payloadType)
     {
         return payloadType switch
@@ -759,7 +769,7 @@ internal static partial class TemplateHelper
         var memberLength = member.Length;
         var memberOffset = member.Offset.GetValueOrDefault();
         var payloadInterfaceType = GetInterfaceType(payloadType);
-        if (memberLength > 0 && member.InterfaceType != "bool")
+        if (UsesPayloadSpan(member))
         {
             if (member.Converter == MemberConverter.RawPayload)
                 throw new NotSupportedException("Raw payload converters inside payload spec is not currently supported.");
@@ -795,7 +805,7 @@ internal static partial class TemplateHelper
             var mask = member.Mask.Value;
             var shift = GetMaskShift(mask);
             expression = $"({expression} & 0x{mask:X})";
-            if (member.InterfaceType != "bool" || member.HasConverter)
+            if (!HasBoolConversion(member))
             {
                 if (shift > 0)
                 {
@@ -829,7 +839,7 @@ internal static partial class TemplateHelper
             member,
             $"value.{name}",
             payloadType);
-        if (memberLength > 0 && member.InterfaceType != "bool")
+        if (UsesPayloadSpan(member))
         {
             if (member.Converter == MemberConverter.RawPayload)
                 throw new NotSupportedException("Raw payload converters inside payload spec is not currently supported.");
@@ -862,10 +872,10 @@ internal static partial class TemplateHelper
         if (member.HasConverter)
             expression = $"FormatPayload{name}({expression})";
 
-        var isBoolean = member.InterfaceType == "bool" && !member.HasConverter;
-        if (member.Length > 0 && !isBoolean)
+        if (UsesPayloadSpan(member))
             return expression;
 
+        var isBoolean = HasBoolConversion(member);
         var payloadInterfaceType = GetInterfaceType(payloadType);
         var memberInterfaceType = GetDeclaredType(member);
         if (!string.IsNullOrEmpty(memberInterfaceType))

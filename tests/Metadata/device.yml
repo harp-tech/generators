@@ -104,7 +104,7 @@ registers:
   CustomMemberConverter:
     address: 38
     type: U8
-    length: 3
+    length: 4
     access: Read
     payloadSpec:
       Header:
@@ -113,6 +113,11 @@ registers:
         offset: 1
         length: 2
         interfaceType: int
+        converter: Payload
+      Enabled:
+        offset: 3
+        length: 1
+        interfaceType: bool
         converter: Payload
   BitmaskSplitter:
     address: 39

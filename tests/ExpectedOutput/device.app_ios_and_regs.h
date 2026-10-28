@@ -137,7 +137,7 @@ typedef struct
     uint8_t REG_VERSION[32];
     uint32_t REG_CUSTOM_PAYLOAD[3];
     uint32_t REG_CUSTOM_RAW_PAYLOAD[3];
-    uint8_t REG_CUSTOM_MEMBER_CONVERTER[3];
+    uint8_t REG_CUSTOM_MEMBER_CONVERTER[4];
     uint8_t REG_BITMASK_SPLITTER;
     int32_t REG_COUNTER0;
     uint8_t REG_PORT_DIO_SET;
@@ -187,7 +187,7 @@ typedef struct
 /* Memory limits */
 #define APP_REGS_ADD_MIN                    0x20
 #define APP_REGS_ADD_MAX                    0x67
-#define APP_NBYTES_OF_REG_BANK              136
+#define APP_NBYTES_OF_REG_BANK              137
 
 /************************************************************************/
 /* Registers' bits                                                      */
