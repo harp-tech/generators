@@ -76,28 +76,6 @@ internal sealed class PythonRegister
 
 internal static partial class TemplateHelper
 {
-    static readonly Dictionary<string, string> PrimitiveNumpyTypes = new()
-    {
-        { "byte", "np.uint8" },
-        { "sbyte", "np.int8" },
-        { "short", "np.int16" },
-        { "ushort", "np.uint16" },
-        { "int", "np.int32" },
-        { "uint", "np.uint32" },
-        { "long", "np.int64" },
-        { "ulong", "np.uint64" },
-        { "float", "np.float32" },
-    };
-
-    static readonly Dictionary<string, int> PrimitiveSizes = new()
-    {
-        { "byte", 1 }, { "sbyte", 1 },
-        { "short", 2 }, { "ushort", 2 },
-        { "int", 4 }, { "uint", 4 },
-        { "long", 8 }, { "ulong", 8 },
-        { "float", 4 },
-    };
-
     static readonly HashSet<string> StandardConverterInterfaceTypes = ["HarpVersion"];
 
     static void AddCoreImport(PythonModule module, DeviceMetadata deviceMetadata, string typeName)
@@ -156,7 +134,7 @@ internal static partial class TemplateHelper
 
     static bool IsPrimitiveInterfaceType(string interfaceType)
     {
-        return PrimitiveNumpyTypes.ContainsKey(interfaceType);
+        return GetInterfaceTypeSize(interfaceType, out _, out _);
     }
 
     public static string GetPythonFieldName(string name)
@@ -475,10 +453,10 @@ internal static partial class TemplateHelper
             };
         }
 
-        if (IsPrimitiveInterfaceType(member.InterfaceType) && PrimitiveSizes[member.InterfaceType] == span)
+        if (GetInterfaceTypeSize(member.InterfaceType, out var primitiveType, out var primitiveSize) && primitiveSize == span)
         {
             module.ProtocolImports.Add("IdentityConverter");
-            var numpyType = PrimitiveNumpyTypes[member.InterfaceType];
+            var numpyType = GetPythonNumpyType(primitiveType);
             return new PythonField
             {
                 Name = name,
@@ -505,15 +483,15 @@ internal static partial class TemplateHelper
         return new PythonField
         {
             Name = name,
-            Annotation = PrimitiveNumpyTypes[member.InterfaceType],
+            Annotation = GetValueNumpyType(member, register.Type),
             Descriptor = $"Field({converterName}(){offsetArgument}{defaultArgument})"
         };
     }
 
     static string GetValueNumpyType(ValueInfo info, PayloadType payloadType)
     {
-        if (!string.IsNullOrEmpty(info.InterfaceType) && PrimitiveNumpyTypes.TryGetValue(info.InterfaceType, out var numpyType))
-            return numpyType;
+        if (GetInterfaceTypeSize(info.InterfaceType, out var primitiveType, out _))
+            return GetPythonNumpyType(primitiveType);
         return GetPythonNumpyType(payloadType);
     }
 
