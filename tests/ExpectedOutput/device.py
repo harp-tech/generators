@@ -28,6 +28,8 @@ from harp.device.core import REGISTER_MAP as _CORE_REGISTER_MAP
 
 from .converters import (
     DataConverter,
+    EnabledConverter,
+    LowConverter,
     ModeConverter,
 )
 
@@ -154,14 +156,14 @@ class CustomMemberConverterPayload(StructPayload[np.uint8], length=5):
 
     header: np.uint8 = Field(IdentityConverter(np.uint8))
     data: np.int32 = Field(DataConverter(), offset=1)
-    enabled: bool = Field(BoolConverter(), offset=3)
+    enabled: bool = Field(EnabledConverter(), offset=3)
     mode: np.int32 = Field(ModeConverter(), offset=4)
 
 
 class BitmaskSplitterPayload(StructPayload[np.uint8]):
     """Represents the payload of the BitmaskSplitter register."""
 
-    low: np.int32 = Field(IdentityConverter(np.int32), mask=0xF)
+    low: np.int32 = Field(LowConverter(), mask=0xF)
     high: np.int32 = Field(IdentityConverter(np.int32), mask=0xF0)
 
 

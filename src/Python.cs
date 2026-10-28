@@ -350,142 +350,116 @@ internal static partial class TemplateHelper
         var defaultArgument = GetPythonDefaultArgument(member, typeName, register.Type, member.Length, deviceMetadata);
         var converterBaseName = name;
         name = GetPythonFieldName(name);
+        var annotation = GetPythonMemberAnnotation(module, member, typeName, register, deviceMetadata, elementType);
+        var span = Math.Max(1, member.Length) * elementSize;
+        var usesMemberConverter = member.HasConverter ||
+            (GetInterfaceTypeSize(member.InterfaceType, out _, out var primitiveSize) && primitiveSize != span && !member.Mask.HasValue);
+        var isGroupMask = !usesMemberConverter && FindGroupMask(deviceMetadata, typeName) != null;
+        var mask = member.Mask ?? (isGroupMask ? (int)((1L << (elementSize * 8)) - 1) : null);
+        var maskArgument = mask.HasValue ? $", mask=0x{mask.GetValueOrDefault():X}" : string.Empty;
 
-        if (FindGroupMask(deviceMetadata, typeName) != null)
+        string descriptor;
+        if (isGroupMask)
         {
             module.ProtocolImports.Add("GroupMask");
-            AddCoreImport(module, deviceMetadata, typeName);
-            var elementMask = (1L << (elementSize * 8)) - 1;
-            var enumMask = member.Mask.GetValueOrDefault((int)elementMask);
-            return new PythonField
-            {
-                Name = name,
-                Annotation = typeName,
-                Descriptor = $"GroupMask(enum={typeName}, mask=0x{enumMask:X}{offsetArgument}{defaultArgument})"
-            };
+            descriptor = $"GroupMask(enum={typeName}";
         }
-
-        if (IsBitMask(deviceMetadata, typeName))
+        else if (!usesMemberConverter && IsBitMask(deviceMetadata, typeName))
         {
             module.ProtocolImports.Add("BitMask");
-            AddCoreImport(module, deviceMetadata, typeName);
-            var maskArgument = member.Mask.HasValue ? $", mask=0x{member.Mask.GetValueOrDefault():X}" : string.Empty;
-            return new PythonField
-            {
-                Name = name,
-                Annotation = typeName,
-                Descriptor = $"BitMask(enum={typeName}{maskArgument}{offsetArgument}{defaultArgument})"
-            };
+            descriptor = $"BitMask(enum={typeName}";
         }
-
-        if (member.Mask.HasValue)
+        else
         {
-            var mask = member.Mask.GetValueOrDefault();
-            if (member.InterfaceType == "bool")
-            {
-                module.ProtocolImports.Add("Field");
-                module.ProtocolImports.Add("BoolConverter");
-                return new PythonField
-                {
-                    Name = name,
-                    Annotation = "bool",
-                    Descriptor = $"Field(BoolConverter(), mask=0x{mask:X}{offsetArgument}{defaultArgument})"
-                };
-            }
-
             module.ProtocolImports.Add("Field");
-            module.ProtocolImports.Add("IdentityConverter");
-            var numpyType = GetValueNumpyType(member, register.Type);
-            return new PythonField
-            {
-                Name = name,
-                Annotation = numpyType,
-                Descriptor = $"Field(IdentityConverter({numpyType}), mask=0x{mask:X}{offsetArgument}{defaultArgument})"
-            };
+            var converter = usesMemberConverter
+                ? GetPythonMemberConverter(module, converterBaseName)
+                : GetPythonBuiltInConverter(module, member, typeName, annotation, span, elementType);
+            descriptor = $"Field({converter}";
         }
 
-        module.ProtocolImports.Add("Field");
-        var memberLength = member.Length;
-        var span = Math.Max(1, memberLength) * elementSize;
+        return new PythonField
+        {
+            Name = name,
+            Annotation = annotation,
+            Descriptor = $"{descriptor}{maskArgument}{offsetArgument}{defaultArgument})"
+        };
+    }
+
+    static string GetPythonMemberConverter(PythonModule module, string memberName)
+    {
+        var memberConverter = $"{memberName}Converter";
+        module.ExtensionImports.Add(memberConverter);
+        return $"{memberConverter}()";
+    }
+
+    static string GetPythonBuiltInConverter(
+        PythonModule module,
+        PayloadMemberInfo member,
+        string typeName,
+        string annotation,
+        int span,
+        string elementType)
+    {
+        if (member.InterfaceType == "bool")
+        {
+            module.ProtocolImports.Add("BoolConverter");
+            return "BoolConverter()";
+        }
+
+        if (member.Mask.HasValue || IsPrimitiveInterfaceType(typeName) ||
+            (string.IsNullOrEmpty(typeName) && !IsArray(member, member.Length)))
+        {
+            module.ProtocolImports.Add("IdentityConverter");
+            return $"IdentityConverter({annotation})";
+        }
 
         if (member.InterfaceType == "string")
         {
             module.ProtocolImports.Add("StringConverter");
-            return new PythonField
-            {
-                Name = name,
-                Annotation = "str",
-                Descriptor = $"Field(StringConverter({span}){offsetArgument}{defaultArgument})"
-            };
+            return $"StringConverter({span})";
         }
 
-        if (member.InterfaceType == "bool")
-        {
-            module.ProtocolImports.Add("BoolConverter");
-            return new PythonField
-            {
-                Name = name,
-                Annotation = "bool",
-                Descriptor = $"Field(BoolConverter(){offsetArgument}{defaultArgument})"
-            };
-        }
-
-        if (IsArray(member, memberLength))
+        if (IsArray(member, member.Length))
         {
             module.ProtocolImports.Add("ArrayConverter");
+            return $"ArrayConverter({elementType}, {member.Length})";
+        }
+
+        var domainConverter = $"{member.InterfaceType}Converter";
+        AddConverterImports(module, member.InterfaceType, domainConverter);
+        return $"{domainConverter}({elementType})";
+    }
+
+    static string GetPythonMemberAnnotation(
+        PythonModule module,
+        PayloadMemberInfo member,
+        string typeName,
+        RegisterInfo register,
+        DeviceMetadata deviceMetadata,
+        string elementType)
+    {
+        if (member.InterfaceType == "bool")
+            return "bool";
+        if (member.InterfaceType == "string")
+            return "str";
+        if (IsArray(member, member.Length))
+        {
             module.UsesNDArray = true;
-            return new PythonField
-            {
-                Name = name,
-                Annotation = $"NDArray[{elementType}]",
-                Descriptor = $"Field(ArrayConverter({elementType}, {memberLength}){offsetArgument}{defaultArgument})"
-            };
+            return $"NDArray[{elementType}]";
         }
+        if (string.IsNullOrEmpty(typeName))
+            return elementType;
+        if (IsPrimitiveInterfaceType(typeName))
+            return GetValueNumpyType(member, register.Type);
 
-        if (string.IsNullOrEmpty(member.InterfaceType))
-        {
-            module.ProtocolImports.Add("IdentityConverter");
-            return new PythonField
-            {
-                Name = name,
-                Annotation = elementType,
-                Descriptor = $"Field(IdentityConverter({elementType}){offsetArgument}{defaultArgument})"
-            };
-        }
-
-        if (GetInterfaceTypeSize(member.InterfaceType, out var primitiveType, out var primitiveSize) && primitiveSize == span)
-        {
-            module.ProtocolImports.Add("IdentityConverter");
-            var numpyType = GetPythonNumpyType(primitiveType);
-            return new PythonField
-            {
-                Name = name,
-                Annotation = numpyType,
-                Descriptor = $"Field(IdentityConverter({numpyType}){offsetArgument}{defaultArgument})"
-            };
-        }
-
-        if (!IsPrimitiveInterfaceType(member.InterfaceType))
-        {
-            var domainType = member.InterfaceType;
-            var domainConverter = $"{domainType}Converter";
-            AddConverterImports(module, domainType, domainConverter);
-            return new PythonField
-            {
-                Name = name,
-                Annotation = domainType,
-                Descriptor = $"Field({domainConverter}({elementType}){offsetArgument}{defaultArgument})"
-            };
-        }
-
-        var converterName = $"{converterBaseName}Converter";
-        module.ExtensionImports.Add(converterName);
-        return new PythonField
-        {
-            Name = name,
-            Annotation = GetValueNumpyType(member, register.Type),
-            Descriptor = $"Field({converterName}(){offsetArgument}{defaultArgument})"
-        };
+        if (IsMaskType(deviceMetadata, typeName))
+            AddCoreImport(module, deviceMetadata, typeName);
+        else if (StandardConverterInterfaceTypes.Contains(typeName))
+            module.ProtocolImports.Add(typeName);
+        else
+            module.ExtensionImports.Add(typeName);
+        return typeName;
     }
 
     static string GetValueNumpyType(ValueInfo info, PayloadType payloadType)

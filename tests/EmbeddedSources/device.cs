@@ -49,12 +49,12 @@ namespace Harp.Generators.Tests
 
         private static partial bool ParsePayloadEnabled(byte[] payloadEnabled, int offset, int count)
         {
-            return payloadEnabled[offset] == 0xFF;
+            return payloadEnabled[offset] == 0;
         }
 
         private static partial byte[] FormatPayloadEnabled(bool enabled)
         {
-            return [enabled ? (byte)0xFF : (byte)0];
+            return [enabled ? (byte)0 : (byte)0xFF];
         }
 
         private static partial int ParsePayloadMode(byte payloadMode)
