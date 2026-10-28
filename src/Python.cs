@@ -367,8 +367,7 @@ internal static partial class TemplateHelper
         name = GetPythonFieldName(name);
         var annotation = GetPythonMemberAnnotation(module, member, typeName, register, deviceMetadata, elementType);
         var span = Math.Max(1, member.Length) * elementSize;
-        var usesMemberConverter = member.HasConverter ||
-            (GetInterfaceTypeSize(member.InterfaceType, out _, out var primitiveSize) && primitiveSize != span && !member.Mask.HasValue);
+        var usesMemberConverter = member.HasConverter;
         var isGroupMask = !usesMemberConverter && FindGroupMask(deviceMetadata, typeName) != null;
         var mask = member.Mask ?? (isGroupMask ? (int)((1L << (elementSize * 8)) - 1) : null);
         var maskArgument = mask.HasValue ? $", mask=0x{mask.GetValueOrDefault():X}" : string.Empty;

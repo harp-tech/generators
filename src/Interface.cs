@@ -123,14 +123,17 @@ public class DeviceMetadata
         var payloadTypes = new Dictionary<string, KeyValuePair<string, RegisterInfo>>();
         foreach (var register in Registers)
         {
-            ValidateValue(errors, register.Key, register.Value, register.Value.Type, register.Value.Length);
+            ValidateValue(errors, register.Key, register.Value, register.Value.Type);
+            ValidatePrimitiveType(errors, register.Key, register.Value, register.Value.Type, register.Value.Length, allowSpan: false);
             ValidatePayloadType(errors, payloadTypes, register);
             if (register.Value.PayloadSpec != null)
             {
                 foreach (var member in register.Value.PayloadSpec)
                 {
                     var name = $"{register.Key}.{member.Key}";
-                    ValidateValue(errors, name, member.Value, register.Value.Type, member.Value.Length);
+                    ValidateValue(errors, name, member.Value, register.Value.Type);
+                    if (!member.Value.Mask.HasValue)
+                        ValidatePrimitiveType(errors, name, member.Value, register.Value.Type, member.Value.Length, allowSpan: true);
                     if (TemplateHelper.HasBoolConversion(member.Value) && member.Value.Length > 1)
                         errors.Add($"({name}) Interface type bool must span exactly one element.");
                 }
@@ -141,7 +144,7 @@ public class DeviceMetadata
             throw new YamlException($"Invalid device metadata:{Environment.NewLine}{string.Join(Environment.NewLine, errors)}");
     }
 
-    void ValidateValue(List<string> errors, string name, ValueInfo info, PayloadType payloadType, int length)
+    void ValidateValue(List<string> errors, string name, ValueInfo info, PayloadType payloadType)
     {
         var value = info.DefaultValue.GetValueOrDefault();
         if (value < info.MinValue)
@@ -154,11 +157,29 @@ public class DeviceMetadata
 
         if (info.InterfaceType == "string" && payloadType != PayloadType.U8)
             errors.Add($"({name}) Interface type string requires payload type U8.");
+    }
 
-        var span = length * TemplateHelper.GetPayloadTypeSize(payloadType);
-        if (length > 1 && !info.HasConverter &&
-            TemplateHelper.GetInterfaceTypeSize(info.InterfaceType, out _, out var size) && size != span)
-            errors.Add($"({name}) Interface type {info.InterfaceType} is {size} bytes, but {length} elements of payload type {payloadType} span {span} bytes.");
+    static void ValidatePrimitiveType(
+        List<string> errors,
+        string name,
+        ValueInfo info,
+        PayloadType payloadType,
+        int length,
+        bool allowSpan)
+    {
+        if (info.HasConverter || !TemplateHelper.GetInterfaceTypeSize(info.InterfaceType, out var primitiveType, out var size))
+            return;
+
+        if (allowSpan && length > 1)
+        {
+            var span = length * TemplateHelper.GetPayloadTypeSize(payloadType);
+            if (size != span)
+                errors.Add($"({name}) Interface type {info.InterfaceType} is {size} bytes, but {length} elements of payload type {payloadType} span {span} bytes.");
+        }
+        else if (!allowSpan && length > 0)
+            errors.Add($"({name}) Interface type {info.InterfaceType} cannot be declared on a register with a length.");
+        else if (primitiveType != payloadType)
+            errors.Add($"({name}) Interface type {info.InterfaceType} on a single element requires payload type {primitiveType}, but the payload type is {payloadType}.");
     }
 
     static void ValidatePayloadType(

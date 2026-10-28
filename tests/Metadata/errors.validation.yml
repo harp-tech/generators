@@ -75,3 +75,23 @@ registers:
         offset: 2
       Blue:
         offset: 1
+  Window:
+    address: 40
+    type: U8
+    length: 4
+    access: Write
+    interfaceType: uint
+  Gain:
+    address: 41
+    type: U8
+    access: Write
+    interfaceType: int
+  Calibration:
+    address: 42
+    type: U32
+    length: 2
+    access: Write
+    payloadSpec:
+      Scale:
+        offset: 0
+        interfaceType: float
