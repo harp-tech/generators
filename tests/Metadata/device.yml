@@ -220,6 +220,7 @@ registers:
     type: U8
     access: Write
     maskType: EncoderReading
+    defaultValue: 1
     description: Configures the operation mode of the encoder.
 bitMasks:
   PortDigitalIOS:

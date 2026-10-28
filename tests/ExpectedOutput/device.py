@@ -19,7 +19,6 @@ from harp.protocol import (
     PayloadType,
     RegisterBase,
     RegisterS32,
-    RegisterU16,
     RegisterU16Array,
     RegisterU8,
     StringConverter,
@@ -46,6 +45,8 @@ __all__ = [
     "CustomMemberConverterPayload",
     "BitmaskSplitterPayload",
     "PortDIOSetPayload",
+    "PulseDOPort0Payload",
+    "PulseDO0Payload",
     "MixedMemberLengthPayload",
     "RgbPayload",
     "StartPulsePayload",
@@ -164,7 +165,19 @@ class BitmaskSplitterPayload(StructPayload[np.uint8]):
 class PortDIOSetPayload(AnonymousPayload[np.uint8]):
     """Represents the payload of the PortDIOSet register."""
 
-    __value__: PortDigitalIOS = BitMask(enum=PortDigitalIOS)
+    __value__: PortDigitalIOS = BitMask(enum=PortDigitalIOS, default=PortDigitalIOS.DIO0 | PortDigitalIOS.DIO1)
+
+
+class PulseDOPort0Payload(AnonymousPayload[np.uint16]):
+    """Represents the payload of the PulseDOPort0 register."""
+
+    __value__: np.uint16 = Field(IdentityConverter(np.uint16), default=np.uint16(1))
+
+
+class PulseDO0Payload(AnonymousPayload[np.uint16]):
+    """Represents the payload of the PulseDO0 register."""
+
+    __value__: np.uint16 = Field(IdentityConverter(np.uint16), default=np.uint16(1))
 
 
 class MixedMemberLengthPayload(StructPayload[np.uint8], length=4):
@@ -202,7 +215,7 @@ class StartPulseTrainPayload(StructPayload[np.uint16], length=2):
 class EncoderModePayload(AnonymousPayload[np.uint8]):
     """Represents the payload of the EncoderMode register."""
 
-    __value__: EncoderReading = GroupMask(enum=EncoderReading, mask=0xFF)
+    __value__: EncoderReading = GroupMask(enum=EncoderReading, mask=0xFF, default=EncoderReading.DISPLACEMENT)
 
 
 class DigitalInputs(RegisterU8):
@@ -261,12 +274,16 @@ class PortDIOSet(RegisterBase[PortDigitalIOS]):
     payload_class = PortDIOSetPayload
 
 
-class PulseDOPort0(RegisterU16):
+class PulseDOPort0(RegisterBase[np.uint16]):
     address: ClassVar[int] = 42
+    payload_type: ClassVar[PayloadType] = PayloadType.U16
+    payload_class = PulseDOPort0Payload
 
 
-class PulseDO0(RegisterU16):
+class PulseDO0(RegisterBase[np.uint16]):
     address: ClassVar[int] = 43
+    payload_type: ClassVar[PayloadType] = PayloadType.U16
+    payload_class = PulseDO0Payload
 
 
 class MultiElementPayload(RegisterU16Array):

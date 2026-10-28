@@ -3948,7 +3948,7 @@ namespace Harp.Generators.Tests
         /// Gets or sets the value that configures the operation mode of the encoder.
         /// </summary>
         [Description("The value that configures the operation mode of the encoder.")]
-        public EncoderReading EncoderMode { get; set; }
+        public EncoderReading EncoderMode { get; set; } = EncoderReading.Displacement;
 
         /// <summary>
         /// Creates a message payload for the EncoderMode register.

@@ -217,9 +217,12 @@ internal static partial class TemplateHelper
         var isString = register.InterfaceType == "string";
         var isCustom = register.HasConverter
             || (!string.IsNullOrEmpty(register.InterfaceType) && !IsPrimitiveInterfaceType(register.InterfaceType) && !isString);
+        var hasNumericDefault = string.IsNullOrEmpty(register.InterfaceType)
+            && register.Length == 0
+            && (register.DefaultValue ?? register.MinValue).HasValue;
         var className = register.Visibility == RegisterVisibility.Private ? $"_{name}" : name;
 
-        if (register.PayloadSpec == null && !hasMask && !isString && !isCustom)
+        if (register.PayloadSpec == null && !hasMask && !isString && !isCustom && !hasNumericDefault)
         {
             var isArray = register.Length > 0;
             module.ProtocolImports.Add(isArray ? $"Register{GetPythonScalarType(register.Type)}Array" : $"Register{GetPythonScalarType(register.Type)}");
@@ -289,6 +292,8 @@ internal static partial class TemplateHelper
         payload.IsAnonymous = true;
         payload.Length = null;
 
+        var maskDefaultArgument = GetPythonMaskDefaultArgument(
+            deviceMetadata, register.MaskType, register.DefaultValue ?? register.MinValue);
         if (FindGroupMask(deviceMetadata, register.MaskType) != null)
         {
             module.ProtocolImports.Add("GroupMask");
@@ -299,7 +304,7 @@ internal static partial class TemplateHelper
             {
                 Name = "__value__",
                 Annotation = register.MaskType,
-                Descriptor = $"GroupMask(enum={register.MaskType}, mask=0x{elementMask:X})"
+                Descriptor = $"GroupMask(enum={register.MaskType}, mask=0x{elementMask:X}{maskDefaultArgument})"
             });
         }
         else if (IsBitMask(deviceMetadata, register.MaskType))
@@ -311,7 +316,7 @@ internal static partial class TemplateHelper
             {
                 Name = "__value__",
                 Annotation = register.MaskType,
-                Descriptor = $"BitMask(enum={register.MaskType})"
+                Descriptor = $"BitMask(enum={register.MaskType}{maskDefaultArgument})"
             });
         }
         else if (register.InterfaceType == "string")
@@ -324,6 +329,24 @@ internal static partial class TemplateHelper
                 Name = "__value__",
                 Annotation = "str",
                 Descriptor = $"Field(StringConverter({Math.Max(1, register.Length) * elementSize}))"
+            });
+        }
+        else if (string.IsNullOrEmpty(register.InterfaceType)
+            && string.IsNullOrEmpty(register.MaskType)
+            && !register.HasConverter)
+        {
+            module.ProtocolImports.Add("Field");
+            module.ProtocolImports.Add("IdentityConverter");
+            var defaultValue = register.DefaultValue ?? register.MinValue;
+            var defaultArgument = defaultValue.HasValue
+                ? $", default={elementType}({FormatNumericLiteral(defaultValue.GetValueOrDefault())})"
+                : string.Empty;
+            payload.UnwrapType = elementType;
+            payload.Fields.Add(new PythonField
+            {
+                Name = "__value__",
+                Annotation = elementType,
+                Descriptor = $"Field(IdentityConverter({elementType}){defaultArgument})"
             });
         }
         else
@@ -511,14 +534,8 @@ internal static partial class TemplateHelper
             return string.Empty;
 
         var value = defaultValue.GetValueOrDefault();
-        var isGroupMask = FindGroupMask(deviceMetadata, typeName) != null;
-        if (isGroupMask || IsBitMask(deviceMetadata, typeName))
-        {
-            var names = GetMaskValueNames(deviceMetadata, typeName, (long)value);
-            if (names != null)
-                return $", default={string.Join(" | ", names.Select(name => $"{typeName}.{FirmwareNamingConvention.Instance.Apply(name)}"))}";
-            return isGroupMask ? $", default={(long)value}" : $", default={typeName}({(long)value})";
-        }
+        if (FindGroupMask(deviceMetadata, typeName) != null || IsBitMask(deviceMetadata, typeName))
+            return GetPythonMaskDefaultArgument(deviceMetadata, typeName, value);
 
         if (member.InterfaceType == "bool")
             return $", default={(value != 0 ? "True" : "False")}";
@@ -528,6 +545,18 @@ internal static partial class TemplateHelper
             return string.Empty;
 
         return $", default={GetMemberNumpyType(member, register)}({FormatNumericLiteral(value)})";
+    }
+
+    static string GetPythonMaskDefaultArgument(DeviceMetadata deviceMetadata, string maskType, float? defaultValue)
+    {
+        if (!defaultValue.HasValue)
+            return string.Empty;
+
+        var value = (long)defaultValue.GetValueOrDefault();
+        var names = GetMaskValueNames(deviceMetadata, maskType, value);
+        if (names != null)
+            return $", default={string.Join(" | ", names.Select(name => $"{maskType}.{FirmwareNamingConvention.Instance.Apply(name)}"))}";
+        return FindGroupMask(deviceMetadata, maskType) != null ? $", default={value}" : $", default={maskType}({value})";
     }
 
     static string FormatNumericLiteral(float value)
