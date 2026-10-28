@@ -670,11 +670,18 @@ internal static partial class TemplateHelper
         return member.Converter switch
         {
             MemberConverter.RawPayload => $"ArraySegment<byte> {parameterName}",
-            MemberConverter.Payload => member.Length > 0
+            MemberConverter.Payload => UsesPayloadSpan(member)
                 ? $"{GetInterfaceType(payloadType, 0)}[] {parameterName}, int offset, int count"
                 : $"{GetInterfaceType(payloadType, 0)} {parameterName}",
             _ => $"{GetInterfaceType(payloadType, member.Length)} {parameterName}"
         };
+    }
+
+    public static string GetConverterReturnType(PayloadMemberInfo member, PayloadType payloadType)
+    {
+        return UsesPayloadSpan(member)
+            ? $"{GetInterfaceType(payloadType, 0)}[]"
+            : GetInterfaceType(payloadType, 0);
     }
 
     public static string GetParseConversion(RegisterInfo register, string expression)

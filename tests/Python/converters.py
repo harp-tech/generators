@@ -39,3 +39,24 @@ class DataConverter(Converter[np.int32]):
         view[...] = np.frombuffer(
             int(value).to_bytes(self._length, "little", signed=True), dtype=np.uint8
         )
+
+
+class ModeConverter(Converter[np.int32]):
+    """Maps one raw unsigned byte to and from a numpy int32.
+
+    Models interfaceType: int over a single element of the CustomMemberConverter payload.
+    """
+
+    init_kwarg_type = int
+
+    def __init__(self) -> None:
+        self.dtype = np.dtype(np.uint8)
+
+    def decode_scalar(self, view: np.generic) -> np.int32:
+        return np.int32(np.asarray(view).item())
+
+    def decode_batch(self, view: NDArray[np.generic]) -> Any:
+        return np.asarray(view).astype(np.int32)
+
+    def encode_into(self, view: NDArray[np.generic], value: np.int32) -> None:
+        view[...] = np.uint8(int(value))

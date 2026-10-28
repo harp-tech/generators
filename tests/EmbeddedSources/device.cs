@@ -56,6 +56,16 @@ namespace Harp.Generators.Tests
         {
             return [enabled ? (byte)0xFF : (byte)0];
         }
+
+        private static partial int ParsePayloadMode(byte payloadMode)
+        {
+            return payloadMode;
+        }
+
+        private static partial byte FormatPayloadMode(int mode)
+        {
+            return (byte)mode;
+        }
     }
     
     public partial class BitmaskSplitter

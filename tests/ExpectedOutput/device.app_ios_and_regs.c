@@ -93,7 +93,7 @@ uint16_t app_regs_n_elements[] = {
     32,
     3,
     3,
-    4,
+    5,
     1,
     1,
     1,

@@ -28,6 +28,7 @@ from harp.device.core import REGISTER_MAP as _CORE_REGISTER_MAP
 
 from .converters import (
     DataConverter,
+    ModeConverter,
 )
 
 
@@ -148,12 +149,13 @@ class CustomRawPayloadPayload(AnonymousPayload[np.uint32]):
     __value__: HarpVersion = Field(HarpVersionConverter(np.uint32))
 
 
-class CustomMemberConverterPayload(StructPayload[np.uint8], length=4):
+class CustomMemberConverterPayload(StructPayload[np.uint8], length=5):
     """Represents the payload of the CustomMemberConverter register."""
 
     header: np.uint8 = Field(IdentityConverter(np.uint8))
     data: np.int32 = Field(DataConverter(), offset=1)
     enabled: bool = Field(BoolConverter(), offset=3)
+    mode: np.int32 = Field(ModeConverter(), offset=4)
 
 
 class BitmaskSplitterPayload(StructPayload[np.uint8]):

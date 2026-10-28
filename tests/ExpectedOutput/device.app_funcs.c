@@ -134,7 +134,7 @@ bool app_write_REG_CUSTOM_RAW_PAYLOAD(void *a) { return false; }
 /************************************************************************/
 /* REG_CUSTOM_MEMBER_CONVERTER                                          */
 /************************************************************************/
-// This register is an array with 4 positions
+// This register is an array with 5 positions
 void app_read_REG_CUSTOM_MEMBER_CONVERTER(void)
 {
     //app_regs.REG_CUSTOM_MEMBER_CONVERTER[0] = 0;

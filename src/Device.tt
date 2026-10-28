@@ -574,9 +574,10 @@ if (isPrivate)
             {
                 var paramName = CamelCaseNamingConvention.Instance.Apply(member.Key);
                 var memberType = TemplateHelper.GetInterfaceType(member.Value, register.Type);
+                var converterReturnType = TemplateHelper.GetConverterReturnType(member.Value, register.Type);
 #>
 
-        private static partial <#= payloadInterfaceType #> FormatPayload<#= member.Key #>(<#= memberType #> <#= paramName #>);
+        private static partial <#= converterReturnType #> FormatPayload<#= member.Key #>(<#= memberType #> <#= paramName #>);
 <#
             }
         }

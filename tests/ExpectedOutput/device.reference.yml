@@ -220,7 +220,7 @@ items:
     register:
       address: 38
       payloadType: U8
-      length: 4
+      length: 5
       access:
       - Read
       interfaceType:
@@ -876,6 +876,7 @@ items:
   - Harp.Generators.Tests.CustomMemberConverterPayload.Header
   - Harp.Generators.Tests.CustomMemberConverterPayload.Data
   - Harp.Generators.Tests.CustomMemberConverterPayload.Enabled
+  - Harp.Generators.Tests.CustomMemberConverterPayload.Mode
 - uid: Harp.Generators.Tests.CustomMemberConverterPayload.Header
   id: Header
   name: Header
@@ -921,6 +922,21 @@ items:
       length: 1
       interfaceType:
         name: bool
+- uid: Harp.Generators.Tests.CustomMemberConverterPayload.Mode
+  id: Mode
+  name: Mode
+  name.python: mode
+  fullName: Harp.Generators.Tests.CustomMemberConverterPayload.Mode
+  parent: Harp.Generators.Tests.CustomMemberConverterPayload
+  type: field
+  langs:
+  - csharp
+  - python
+  harp:
+    member:
+      offset: 4
+      interfaceType:
+        name: int
 --- # Harp.Generators.Tests.BitmaskSplitterPayload.yml
 ### YamlMime:UniversalReference
 items:
