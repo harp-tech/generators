@@ -309,6 +309,7 @@ items:
       payloadType: U16
       access:
       - Write
+      defaultValue: 500
       minValue: 1
       logFile: Tests_42.bin
 --- # Harp.Generators.Tests.PulseDO0.yml
@@ -329,6 +330,7 @@ items:
       payloadType: U16
       access:
       - Write
+      defaultValue: 500
       minValue: 1
       logFile: Tests_43.bin
 --- # Harp.Generators.Tests.MultiElementPayload.yml

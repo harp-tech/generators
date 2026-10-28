@@ -94,7 +94,10 @@ public class DeviceMetadata
     public static DeviceMetadata Load(TextReader reader)
     {
         var parser = new MergingParser(new Parser(reader));
-        return MetadataDeserializer.Instance.Deserialize<DeviceMetadata>(parser);
+        var deviceMetadata = MetadataDeserializer.Instance.Deserialize<DeviceMetadata?>(parser)
+            ?? throw new YamlException("The device metadata document is empty.");
+        deviceMetadata.Validate();
+        return deviceMetadata;
     }
 
     /// <summary>
@@ -112,6 +115,32 @@ public class DeviceMetadata
     {
         using var reader = new StringReader(text);
         return Load(reader);
+    }
+
+    void Validate()
+    {
+        var errors = new List<string>();
+        foreach (var register in Registers)
+        {
+            ValidateDefaultValue(errors, register.Key, register.Value);
+            if (register.Value.PayloadSpec != null)
+            {
+                foreach (var member in register.Value.PayloadSpec)
+                    ValidateDefaultValue(errors, $"{register.Key}.{member.Key}", member.Value);
+            }
+        }
+
+        if (errors.Count > 0)
+            throw new YamlException($"Invalid device metadata:{Environment.NewLine}{string.Join(Environment.NewLine, errors)}");
+    }
+
+    static void ValidateDefaultValue(List<string> errors, string name, ValueInfo info)
+    {
+        var value = info.DefaultValue.GetValueOrDefault();
+        if (value < info.MinValue)
+            errors.Add($"({name}) Default value {value} is below the minimum value {info.MinValue}.");
+        else if (value > info.MaxValue)
+            errors.Add($"({name}) Default value {value} is above the maximum value {info.MaxValue}.");
     }
 }
 
@@ -534,7 +563,7 @@ internal static partial class TemplateHelper
         int length)
     {
         var maskType = info.MaskType;
-        var defaultValue = info.DefaultValue ?? info.MinValue;
+        var defaultValue = info.DefaultValue;
         if (defaultValue.HasValue)
         {
             if (interfaceType == "bool")

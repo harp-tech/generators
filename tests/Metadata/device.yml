@@ -139,6 +139,7 @@ registers:
     type: U16
     access: Write
     minValue: 1
+    defaultValue: 500
   PulseDO0:
     <<: *pulseDO
     address: 43

@@ -219,7 +219,7 @@ internal static partial class TemplateHelper
             || (!string.IsNullOrEmpty(register.InterfaceType) && !IsPrimitiveInterfaceType(register.InterfaceType) && !isString);
         var hasNumericDefault = string.IsNullOrEmpty(register.InterfaceType)
             && register.Length == 0
-            && (register.DefaultValue ?? register.MinValue).HasValue;
+            && register.DefaultValue.HasValue;
         var className = register.Visibility == RegisterVisibility.Private ? $"_{name}" : name;
 
         if (register.PayloadSpec == null && !hasMask && !isString && !isCustom && !hasNumericDefault)
@@ -292,8 +292,7 @@ internal static partial class TemplateHelper
         payload.IsAnonymous = true;
         payload.Length = null;
 
-        var maskDefaultArgument = GetPythonMaskDefaultArgument(
-            deviceMetadata, register.MaskType, register.DefaultValue ?? register.MinValue);
+        var maskDefaultArgument = GetPythonMaskDefaultArgument(deviceMetadata, register.MaskType, register.DefaultValue);
         if (FindGroupMask(deviceMetadata, register.MaskType) != null)
         {
             module.ProtocolImports.Add("GroupMask");
@@ -532,7 +531,7 @@ internal static partial class TemplateHelper
         int length,
         DeviceMetadata deviceMetadata)
     {
-        var defaultValue = info.DefaultValue ?? info.MinValue;
+        var defaultValue = info.DefaultValue;
         if (!defaultValue.HasValue || length > 0)
             return string.Empty;
 
