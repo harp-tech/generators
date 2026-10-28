@@ -100,3 +100,6 @@ bitMasks:
     bits:
       Off: 0x0
       Channel0: 0x1
+      Channel1: 0x2
+      Both: 0x3
+      Again: 0x2

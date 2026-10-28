@@ -19,6 +19,8 @@ public sealed class DeviceMetadataTests
         "(Gain)",
         "(Calibration.Scale)",
         "(Channels.Off)",
+        "(Channels.Both)",
+        "(Channels.Again)",
         "(Color1)")]
     public void Load_InvalidMetadataThrows(string metadataFileName, params string[] expectedErrors)
     {

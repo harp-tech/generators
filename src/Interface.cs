@@ -141,13 +141,7 @@ public class DeviceMetadata
         }
 
         foreach (var bitMask in BitMasks)
-        {
-            foreach (var bit in bitMask.Value.Bits)
-            {
-                if (bit.Value.Value == 0 && bit.Key != "None")
-                    errors.Add($"({bitMask.Key}.{bit.Key}) A bit mask member with value zero must be named None.");
-            }
-        }
+            ValidateBitMask(errors, bitMask.Key, bitMask.Value);
 
         if (errors.Count > 0)
             throw new YamlException($"Invalid device metadata:{Environment.NewLine}{string.Join(Environment.NewLine, errors)}");
@@ -189,6 +183,27 @@ public class DeviceMetadata
             errors.Add($"({name}) Interface type {info.InterfaceType} cannot be declared on a register with a length.");
         else if (primitiveType != payloadType)
             errors.Add($"({name}) Interface type {info.InterfaceType} on a single element requires payload type {primitiveType}, but the payload type is {payloadType}.");
+    }
+
+    static void ValidateBitMask(List<string> errors, string maskName, BitMaskInfo mask)
+    {
+        var declaredBits = new Dictionary<int, string>();
+        foreach (var bit in mask.Bits)
+        {
+            var name = $"{maskName}.{bit.Key}";
+            var value = bit.Value.Value;
+            if (value == 0)
+            {
+                if (bit.Key != "None")
+                    errors.Add($"({name}) A bit mask member with value zero must be named None.");
+            }
+            else if ((value & (value - 1)) != 0)
+                errors.Add($"({name}) Bit mask value 0x{value:X} is not a single bit.");
+            else if (declaredBits.TryGetValue(value, out var declaredName))
+                errors.Add($"({name}) Bit mask value 0x{value:X} is already declared by {maskName}.{declaredName}.");
+            else
+                declaredBits.Add(value, bit.Key);
+        }
     }
 
     static void ValidatePayloadType(
