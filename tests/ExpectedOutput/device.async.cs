@@ -841,7 +841,7 @@ namespace Harp.Generators.Tests
         /// A task that represents the asynchronous read operation. The task result contains
         /// the register payload.
         /// </returns>
-        public async Task<EncoderModeMask> ReadEncoderModeAsync(CancellationToken cancellationToken = default)
+        public async Task<EncoderReading> ReadEncoderModeAsync(CancellationToken cancellationToken = default)
         {
             var reply = await CommandAsync(HarpCommand.ReadByte(EncoderMode.Address), cancellationToken);
             return EncoderMode.GetPayload(reply);
@@ -857,7 +857,7 @@ namespace Harp.Generators.Tests
         /// A task that represents the asynchronous read operation. The task result contains
         /// the timestamped register payload.
         /// </returns>
-        public async Task<Timestamped<EncoderModeMask>> ReadTimestampedEncoderModeAsync(CancellationToken cancellationToken = default)
+        public async Task<Timestamped<EncoderReading>> ReadTimestampedEncoderModeAsync(CancellationToken cancellationToken = default)
         {
             var reply = await CommandAsync(HarpCommand.ReadByte(EncoderMode.Address), cancellationToken);
             return EncoderMode.GetTimestampedPayload(reply);
@@ -871,7 +871,7 @@ namespace Harp.Generators.Tests
         /// A <see cref="CancellationToken"/> which can be used to cancel the operation.
         /// </param>
         /// <returns>The task object representing the asynchronous write operation.</returns>
-        public async Task WriteEncoderModeAsync(EncoderModeMask value, CancellationToken cancellationToken = default)
+        public async Task WriteEncoderModeAsync(EncoderReading value, CancellationToken cancellationToken = default)
         {
             var request = EncoderMode.FromPayload(MessageType.Write, value);
             await CommandAsync(request, cancellationToken);

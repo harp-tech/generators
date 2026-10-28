@@ -325,14 +325,6 @@ internal static partial class TemplateHelper
         return string.IsNullOrEmpty(text) ? string.Empty : separator + text;
     }
 
-    public static string GetFirmwareGroupMaskName(string value)
-    {
-        var suffixIndex = value.LastIndexOf("Mask");
-        if (suffixIndex >= 1)
-            value = value.Substring(0, suffixIndex);
-        return GetFirmwareName(value);
-    }
-
     public static int GetMaxFirmwareBitMaskNameLength(DeviceMetadata deviceMetadata)
     {
         return deviceMetadata.BitMasks.Values
@@ -344,7 +336,7 @@ internal static partial class TemplateHelper
     public static int GetMaxFirmwareGroupMaskNameLength(DeviceMetadata deviceMetadata)
     {
         return (from groupMask in deviceMetadata.GroupMasks
-                let maskName = GetFirmwareGroupMaskName(groupMask.Key)
+                let maskName = GetFirmwareName(groupMask.Key)
                 from member in groupMask.Value.Values
                 let memberName = GetFirmwareName(member.Key)
                 select maskName.Length + memberName.Length)
@@ -548,41 +540,5 @@ public sealed class FirmwareNamingConvention : INamingConvention
             value.Split(Separator),
             word => PascalCaseNamingConvention.Instance.Apply(word.ToLowerInvariant()));
         return string.Concat(words);
-    }
-}
-
-class FirmwareGroupMaskNamingConvention : INamingConvention
-{
-    public static readonly FirmwareGroupMaskNamingConvention Instance = new();
-    static readonly string[] TrimSuffixes = ["StateConfiguration", "Configuration"];
-    static readonly Dictionary<string, string> TokenSubstitutions = new()
-    {
-        { "DIGITAL_INPUT", "DI" },
-        { "DIGITAL_OUTPUT", "DO" }
-    };
-
-    public string Apply(string value)
-    {
-        for (int i = 0; i < TrimSuffixes.Length; i++)
-        {
-            var trimIndex = value.LastIndexOf(TrimSuffixes[i]);
-            if (trimIndex >= 0)
-            {
-                value = value.Substring(0, trimIndex);
-                break;
-            }
-        }
-
-        var result = FirmwareNamingConvention.Instance.Apply(value);
-        foreach (var substitution in TokenSubstitutions)
-        {
-            result = result.Replace(substitution.Key, substitution.Value);
-        }
-        return result;
-    }
-
-    public string Reverse(string value)
-    {
-        throw new NotImplementedException();
     }
 }

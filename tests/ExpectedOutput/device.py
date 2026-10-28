@@ -37,7 +37,7 @@ __all__ = [
     "WHO_AM_I",
     "PortDigitalIOS",
     "PwmPort",
-    "EncoderModeMask",
+    "EncoderReading",
     "AnalogDataPayload",
     "ComplexConfigurationPayload",
     "VersionPayload",
@@ -96,7 +96,7 @@ class PwmPort(enum.IntEnum):
     PWM3 = 10
 
 
-class EncoderModeMask(enum.IntEnum):
+class EncoderReading(enum.IntEnum):
     """Specifies the type of encoder mode."""
 
     POSITION = 0
@@ -200,7 +200,7 @@ class StartPulseTrainPayload(StructPayload[np.uint16], length=2):
 class EncoderModePayload(AnonymousPayload[np.uint8]):
     """Represents the payload of the EncoderMode register."""
 
-    __value__: EncoderModeMask = GroupMask(enum=EncoderModeMask, mask=0xFF)
+    __value__: EncoderReading = GroupMask(enum=EncoderReading, mask=0xFF)
 
 
 class DigitalInputs(RegisterU8):
@@ -311,7 +311,7 @@ class StartPulseTrain(RegisterBase[StartPulseTrainPayload]):
     payload_class = StartPulseTrainPayload
 
 
-class EncoderMode(RegisterBase[EncoderModeMask]):
+class EncoderMode(RegisterBase[EncoderReading]):
     """Configures the operation mode of the encoder."""
 
     address: ClassVar[int] = 103

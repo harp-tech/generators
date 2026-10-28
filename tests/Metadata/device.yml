@@ -208,7 +208,7 @@ registers:
     address: 103
     type: U8
     access: Write
-    maskType: EncoderModeMask
+    maskType: EncoderReading
     description: Configures the operation mode of the encoder.
 bitMasks:
   PortDigitalIOS:
@@ -228,7 +228,7 @@ groupMasks:
       Pwm1: 0x2
       Pwm2: 0x4
       Pwm3: 0xA
-  EncoderModeMask:
+  EncoderReading:
     description: Specifies the type of encoder mode.
     values:
       Position: 0x0
