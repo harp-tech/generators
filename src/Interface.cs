@@ -177,9 +177,52 @@ public enum MemberConverter
 }
 
 /// <summary>
+/// Represents information about how a value is represented and constrained.
+/// </summary>
+public abstract class ValueInfo
+{
+    /// <summary>
+    /// Specifies the name of the bit mask or group mask used to represent the value.
+    /// </summary>
+    public string MaskType = "";
+
+    /// <summary>
+    /// Specifies the minimum allowable value.
+    /// </summary>
+    public float? MinValue;
+
+    /// <summary>
+    /// Specifies the maximum allowable value.
+    /// </summary>
+    public float? MaxValue;
+
+    /// <summary>
+    /// Specifies the default value.
+    /// </summary>
+    public float? DefaultValue;
+
+    /// <summary>
+    /// Specifies the name of the type used to represent the value in the high-level interface.
+    /// </summary>
+    public string InterfaceType = "";
+
+    /// <summary>
+    /// Specifies a custom converter which will be used to parse or format the value.
+    /// </summary>
+    public MemberConverter Converter;
+
+    /// <summary>
+    /// Gets a value indicating whether a custom converter will be used to parse or
+    /// format the value.
+    /// </summary>
+    [YamlIgnore]
+    public bool HasConverter => Converter > MemberConverter.None;
+}
+
+/// <summary>
 /// Represents information about the functionality and operation of a specific register.
 /// </summary>
-public class RegisterInfo
+public class RegisterInfo : ValueInfo
 {
     /// <summary>
     /// Specifies the unique 8-bit address of the register.
@@ -213,58 +256,23 @@ public class RegisterInfo
     public bool Volatile;
 
     /// <summary>
-    /// Specifies the name of the bit mask or group mask used to represent the payload value.
-    /// </summary>
-    public string MaskType = "";
-
-    /// <summary>
-    /// Specifies the minimum allowable value for the payload.
-    /// </summary>
-    public float? MinValue;
-
-    /// <summary>
-    /// Specifies the maximum allowable value for the payload.
-    /// </summary>
-    public float? MaxValue;
-
-    /// <summary>
-    /// Specifies the default value for the payload.
-    /// </summary>
-    public float? DefaultValue;
-
-    /// <summary>
-    /// Specifies the name of the type used to represent the payload value in the high-level interface.
-    /// </summary>
-    public string InterfaceType = "";
-
-    /// <summary>
-    /// Specifies a custom converter which will be used to parse or format the payload value.
-    /// </summary>
-    public MemberConverter Converter;
-
-    /// <summary>
     /// Specifies a summary description of the register function.
     /// </summary>
+    [YamlMember(Order = 1)]
     public string Description = "";
 
     /// <summary>
     /// Specifies a collection of payload members describing the contents
     /// of the raw payload value.
     /// </summary>
+    [YamlMember(Order = 2)]
     public Dictionary<string, PayloadMemberInfo>? PayloadSpec;
-
-    /// <summary>
-    /// Gets a value indicating whether a custom converter will be used to parse or
-    /// format the payload.
-    /// </summary>
-    [YamlIgnore]
-    public bool HasConverter => Converter > MemberConverter.None;
 }
 
 /// <summary>
 /// Represents information about a specific payload member.
 /// </summary>
-public class PayloadMemberInfo
+public class PayloadMemberInfo : ValueInfo
 {
     /// <summary>
     /// Specifies the zero-based index at which encoding of this payload member starts.
@@ -283,46 +291,10 @@ public class PayloadMemberInfo
     public int? Mask;
 
     /// <summary>
-    /// Specifies the name of the bit mask or group mask used to represent this payload member.
-    /// </summary>
-    public string MaskType = "";
-
-    /// <summary>
-    /// Specifies the minimum allowable value for this payload member.
-    /// </summary>
-    public float? MinValue;
-
-    /// <summary>
-    /// Specifies the maximum allowable value for this payload member.
-    /// </summary>
-    public float? MaxValue;
-
-    /// <summary>
-    /// Specifies the default value for this payload member.
-    /// </summary>
-    public float? DefaultValue;
-
-    /// <summary>
-    /// Specifies the name of the type used to represent this payload member in the high-level interface.
-    /// </summary>
-    public string InterfaceType = "";
-
-    /// <summary>
-    /// Specifies a custom converter which will be used to parse or format this payload member.
-    /// </summary>
-    public MemberConverter Converter;
-
-    /// <summary>
     /// Specifies a summary description of this payload member.
     /// </summary>
+    [YamlMember(Order = 1)]
     public string Description = "";
-
-    /// <summary>
-    /// Gets a value indicating whether a custom converter will be used to parse or
-    /// format this payload member.
-    /// </summary>
-    [YamlIgnore]
-    public bool HasConverter => Converter > MemberConverter.None;
 }
 
 /// <summary>
@@ -451,17 +423,20 @@ internal static partial class TemplateHelper
 
     public static string GetInterfaceType(string name, RegisterInfo register)
     {
-        if (!string.IsNullOrEmpty(register.InterfaceType)) return register.InterfaceType;
-        else if (register.PayloadSpec != null) return $"{name}Payload";
-        else if (!string.IsNullOrEmpty(register.MaskType)) return register.MaskType;
-        else return GetInterfaceType(register.Type, register.Length);
+        if (register.PayloadSpec != null && string.IsNullOrEmpty(register.InterfaceType)) return $"{name}Payload";
+        else return GetInterfaceType(register, register.Type, register.Length);
     }
 
     public static string GetInterfaceType(PayloadMemberInfo member, PayloadType payloadType)
     {
-        if (!string.IsNullOrEmpty(member.InterfaceType)) return member.InterfaceType;
-        else if (!string.IsNullOrEmpty(member.MaskType)) return member.MaskType;
-        else return GetInterfaceType(payloadType, member.Length);
+        return GetInterfaceType(member, payloadType, member.Length);
+    }
+
+    static string GetInterfaceType(ValueInfo info, PayloadType payloadType, int length)
+    {
+        if (!string.IsNullOrEmpty(info.InterfaceType)) return info.InterfaceType;
+        else if (!string.IsNullOrEmpty(info.MaskType)) return info.MaskType;
+        else return GetInterfaceType(payloadType, length);
     }
 
     public static string GetInterfaceType(PayloadType payloadType)
@@ -553,14 +528,13 @@ internal static partial class TemplateHelper
 
     public static string GetDefaultValueAssignment(
         DeviceMetadata deviceMetadata,
-        float? defaultValue,
-        float? minValue,
+        ValueInfo info,
         PayloadType payloadType,
         string interfaceType,
-        string maskType,
         int length)
     {
-        defaultValue ??= minValue;
+        var maskType = info.MaskType;
+        var defaultValue = info.DefaultValue ?? info.MinValue;
         if (defaultValue.HasValue)
         {
             if (interfaceType == "bool")

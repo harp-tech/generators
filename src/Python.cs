@@ -337,10 +337,8 @@ internal static partial class TemplateHelper
         {
             module.ProtocolImports.Add("Field");
             module.ProtocolImports.Add("IdentityConverter");
-            var defaultValue = register.DefaultValue ?? register.MinValue;
-            var defaultArgument = defaultValue.HasValue
-                ? $", default={elementType}({FormatNumericLiteral(defaultValue.GetValueOrDefault())})"
-                : string.Empty;
+            var defaultArgument = GetPythonDefaultArgument(
+                register, string.Empty, register.Type, register.Length, deviceMetadata);
             payload.UnwrapType = elementType;
             payload.Fields.Add(new PythonField
             {
@@ -379,7 +377,7 @@ internal static partial class TemplateHelper
         var offset = member.Offset.GetValueOrDefault(0);
         var offsetArgument = offset > 0 ? $", offset={offset}" : string.Empty;
         var typeName = GetMemberTypeName(member);
-        var defaultArgument = GetPythonDefaultArgument(member, typeName, register, deviceMetadata);
+        var defaultArgument = GetPythonDefaultArgument(member, typeName, register.Type, member.Length, deviceMetadata);
         var converterBaseName = name;
         name = GetPythonFieldName(name);
 
@@ -427,7 +425,7 @@ internal static partial class TemplateHelper
 
             module.ProtocolImports.Add("Field");
             module.ProtocolImports.Add("IdentityConverter");
-            var numpyType = GetMemberNumpyType(member, register);
+            var numpyType = GetValueNumpyType(member, register.Type);
             return new PythonField
             {
                 Name = name,
@@ -520,31 +518,36 @@ internal static partial class TemplateHelper
         };
     }
 
-    static string GetMemberNumpyType(PayloadMemberInfo member, RegisterInfo register)
+    static string GetValueNumpyType(ValueInfo info, PayloadType payloadType)
     {
-        if (!string.IsNullOrEmpty(member.InterfaceType) && PrimitiveNumpyTypes.TryGetValue(member.InterfaceType, out var numpyType))
+        if (!string.IsNullOrEmpty(info.InterfaceType) && PrimitiveNumpyTypes.TryGetValue(info.InterfaceType, out var numpyType))
             return numpyType;
-        return GetPythonNumpyType(register.Type);
+        return GetPythonNumpyType(payloadType);
     }
 
-    static string GetPythonDefaultArgument(PayloadMemberInfo member, string typeName, RegisterInfo register, DeviceMetadata deviceMetadata)
+    static string GetPythonDefaultArgument(
+        ValueInfo info,
+        string typeName,
+        PayloadType payloadType,
+        int length,
+        DeviceMetadata deviceMetadata)
     {
-        var defaultValue = member.DefaultValue ?? member.MinValue;
-        if (!defaultValue.HasValue || member.Length > 0)
+        var defaultValue = info.DefaultValue ?? info.MinValue;
+        if (!defaultValue.HasValue || length > 0)
             return string.Empty;
 
         var value = defaultValue.GetValueOrDefault();
         if (FindGroupMask(deviceMetadata, typeName) != null || IsBitMask(deviceMetadata, typeName))
             return GetPythonMaskDefaultArgument(deviceMetadata, typeName, value);
 
-        if (member.InterfaceType == "bool")
+        if (info.InterfaceType == "bool")
             return $", default={(value != 0 ? "True" : "False")}";
 
-        if (member.InterfaceType == "string" || member.HasConverter ||
-            (!string.IsNullOrEmpty(member.InterfaceType) && !IsPrimitiveInterfaceType(member.InterfaceType)))
+        if (info.InterfaceType == "string" || info.HasConverter ||
+            (!string.IsNullOrEmpty(info.InterfaceType) && !IsPrimitiveInterfaceType(info.InterfaceType)))
             return string.Empty;
 
-        return $", default={GetMemberNumpyType(member, register)}({FormatNumericLiteral(value)})";
+        return $", default={GetValueNumpyType(info, payloadType)}({FormatNumericLiteral(value)})";
     }
 
     static string GetPythonMaskDefaultArgument(DeviceMetadata deviceMetadata, string maskType, float? defaultValue)
