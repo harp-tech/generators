@@ -39,6 +39,16 @@ registers:
         offset: 0
         length: 2
         interfaceType: bool
+  Timing:
+    address: 39
+    type: U8
+    length: 2
+    access: Write
+    payloadSpec:
+      Period:
+        offset: 0
+        length: 2
+        interfaceType: uint
   Color0:
     address: 37
     type: U8

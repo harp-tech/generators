@@ -123,14 +123,14 @@ public class DeviceMetadata
         var payloadTypes = new Dictionary<string, KeyValuePair<string, RegisterInfo>>();
         foreach (var register in Registers)
         {
-            ValidateValue(errors, register.Key, register.Value, register.Value.Type);
+            ValidateValue(errors, register.Key, register.Value, register.Value.Type, register.Value.Length);
             ValidatePayloadType(errors, payloadTypes, register);
             if (register.Value.PayloadSpec != null)
             {
                 foreach (var member in register.Value.PayloadSpec)
                 {
                     var name = $"{register.Key}.{member.Key}";
-                    ValidateValue(errors, name, member.Value, register.Value.Type);
+                    ValidateValue(errors, name, member.Value, register.Value.Type, member.Value.Length);
                     if (member.Value.InterfaceType == "bool" && member.Value.Length > 1)
                         errors.Add($"({name}) Interface type bool must span exactly one element.");
                 }
@@ -141,7 +141,7 @@ public class DeviceMetadata
             throw new YamlException($"Invalid device metadata:{Environment.NewLine}{string.Join(Environment.NewLine, errors)}");
     }
 
-    void ValidateValue(List<string> errors, string name, ValueInfo info, PayloadType payloadType)
+    void ValidateValue(List<string> errors, string name, ValueInfo info, PayloadType payloadType, int length)
     {
         var value = info.DefaultValue.GetValueOrDefault();
         if (value < info.MinValue)
@@ -154,6 +154,11 @@ public class DeviceMetadata
 
         if (info.InterfaceType == "string" && payloadType != PayloadType.U8)
             errors.Add($"({name}) Interface type string requires payload type U8.");
+
+        var span = length * TemplateHelper.GetPayloadTypeSize(payloadType);
+        if (length > 1 && !info.HasConverter &&
+            TemplateHelper.GetInterfaceTypeSize(info.InterfaceType, out _, out var size) && size != span)
+            errors.Add($"({name}) Interface type {info.InterfaceType} is {size} bytes, but {length} elements of payload type {payloadType} span {span} bytes.");
     }
 
     static void ValidatePayloadType(
