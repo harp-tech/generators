@@ -1,0 +1,14 @@
+# yaml-language-server: $schema=https://harp-tech.org/draft-02/schema/registers.json
+device: MaskErrorTests
+firmwareVersion: "0.1"
+hardwareTargets: "1.0"
+registers:
+  Status:
+    address: 32
+    type: U32
+    access: Event
+bitMasks:
+  WideFlags:
+    bits:
+      Low: 0x1
+      High: 0x100000000

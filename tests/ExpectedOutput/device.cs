@@ -65,7 +65,9 @@ namespace Harp.Generators.Tests
             { 101, typeof(StartPulseTrain) },
             { 103, typeof(EncoderMode) },
             { 104, typeof(LedEnabled) },
-            { 105, typeof(PortDIOClear) }
+            { 105, typeof(PortDIOClear) },
+            { 106, typeof(WideStatus) },
+            { 107, typeof(Threshold) }
         };
 
         /// <summary>
@@ -304,6 +306,8 @@ namespace Harp.Generators.Tests
     /// <seealso cref="EncoderMode"/>
     /// <seealso cref="LedEnabled"/>
     /// <seealso cref="PortDIOClear"/>
+    /// <seealso cref="WideStatus"/>
+    /// <seealso cref="Threshold"/>
     [XmlInclude(typeof(DigitalInputs))]
     [XmlInclude(typeof(AnalogData))]
     [XmlInclude(typeof(ComplexConfiguration))]
@@ -326,6 +330,8 @@ namespace Harp.Generators.Tests
     [XmlInclude(typeof(EncoderMode))]
     [XmlInclude(typeof(LedEnabled))]
     [XmlInclude(typeof(PortDIOClear))]
+    [XmlInclude(typeof(WideStatus))]
+    [XmlInclude(typeof(Threshold))]
     [Description("Filters register-specific messages reported by the Tests device.")]
     public class FilterRegister : FilterRegisterBuilder, INamedElement
     {
@@ -369,6 +375,8 @@ namespace Harp.Generators.Tests
     /// <seealso cref="EncoderMode"/>
     /// <seealso cref="LedEnabled"/>
     /// <seealso cref="PortDIOClear"/>
+    /// <seealso cref="WideStatus"/>
+    /// <seealso cref="Threshold"/>
     [XmlInclude(typeof(DigitalInputs))]
     [XmlInclude(typeof(AnalogData))]
     [XmlInclude(typeof(ComplexConfiguration))]
@@ -391,6 +399,8 @@ namespace Harp.Generators.Tests
     [XmlInclude(typeof(EncoderMode))]
     [XmlInclude(typeof(LedEnabled))]
     [XmlInclude(typeof(PortDIOClear))]
+    [XmlInclude(typeof(WideStatus))]
+    [XmlInclude(typeof(Threshold))]
     [XmlInclude(typeof(TimestampedDigitalInputs))]
     [XmlInclude(typeof(TimestampedAnalogData))]
     [XmlInclude(typeof(TimestampedComplexConfiguration))]
@@ -413,6 +423,8 @@ namespace Harp.Generators.Tests
     [XmlInclude(typeof(TimestampedEncoderMode))]
     [XmlInclude(typeof(TimestampedLedEnabled))]
     [XmlInclude(typeof(TimestampedPortDIOClear))]
+    [XmlInclude(typeof(TimestampedWideStatus))]
+    [XmlInclude(typeof(TimestampedThreshold))]
     [Description("Filters and selects specific messages reported by the Tests device.")]
     public partial class Parse : ParseBuilder, INamedElement
     {
@@ -453,6 +465,8 @@ namespace Harp.Generators.Tests
     /// <seealso cref="EncoderMode"/>
     /// <seealso cref="LedEnabled"/>
     /// <seealso cref="PortDIOClear"/>
+    /// <seealso cref="WideStatus"/>
+    /// <seealso cref="Threshold"/>
     [XmlInclude(typeof(DigitalInputs))]
     [XmlInclude(typeof(AnalogData))]
     [XmlInclude(typeof(ComplexConfiguration))]
@@ -475,6 +489,8 @@ namespace Harp.Generators.Tests
     [XmlInclude(typeof(EncoderMode))]
     [XmlInclude(typeof(LedEnabled))]
     [XmlInclude(typeof(PortDIOClear))]
+    [XmlInclude(typeof(WideStatus))]
+    [XmlInclude(typeof(Threshold))]
     [Description("Formats a sequence of values as specific Tests register messages.")]
     public partial class Format : FormatBuilder, INamedElement
     {
@@ -729,8 +745,8 @@ namespace Harp.Generators.Tests
             ComplexConfigurationPayload result;
             result.PwmPort = (PwmPort)payload[0];
             result.Invert = payload[1] != 0;
-            result.InputFlags = (PortDigitalIOS)(byte)(payload[2] & 0xF);
-            result.OutputFlags = (PortDigitalIOS)payload[3];
+            result.InputFlags = (DigitalChannels)(byte)(payload[2] & 0xF);
+            result.OutputFlags = (DigitalChannels)payload[3];
             result.DutyCycle = PayloadMarshal.ReadSingle(payload, 4);
             result.Frequency = PayloadMarshal.ReadSingle(payload, 8);
             result.EventsEnabled = payload[12] != 0;
@@ -1509,7 +1525,7 @@ namespace Harp.Generators.Tests
         /// <summary>
         /// Represents the payload type of the <see cref="PortDIOSet"/> register. This field is constant.
         /// </summary>
-        public const PayloadType RegisterType = PayloadType.U8;
+        public const PayloadType RegisterType = PayloadType.U16;
 
         /// <summary>
         /// Represents the length of the <see cref="PortDIOSet"/> register. This field is constant.
@@ -1523,7 +1539,7 @@ namespace Harp.Generators.Tests
         /// <returns>A value representing the message payload.</returns>
         public static PortDigitalIOS GetPayload(HarpMessage message)
         {
-            return (PortDigitalIOS)message.GetPayloadByte();
+            return (PortDigitalIOS)message.GetPayloadUInt16();
         }
 
         /// <summary>
@@ -1533,7 +1549,7 @@ namespace Harp.Generators.Tests
         /// <returns>A value representing the timestamped message payload.</returns>
         public static Timestamped<PortDigitalIOS> GetTimestampedPayload(HarpMessage message)
         {
-            var (payload, timestamp) = message.GetTimestampedPayloadByte();
+            var (payload, timestamp) = message.GetTimestampedPayloadUInt16();
             return Timestamped.Create((PortDigitalIOS)payload, timestamp);
         }
 
@@ -1548,7 +1564,7 @@ namespace Harp.Generators.Tests
         /// </returns>
         public static HarpMessage FromPayload(MessageType messageType, PortDigitalIOS value)
         {
-            return HarpMessage.FromByte(Address, messageType, (byte)value);
+            return HarpMessage.FromUInt16(Address, messageType, (ushort)value);
         }
 
         /// <summary>
@@ -1564,7 +1580,7 @@ namespace Harp.Generators.Tests
         /// </returns>
         public static HarpMessage FromPayload(double timestamp, MessageType messageType, PortDigitalIOS value)
         {
-            return HarpMessage.FromByte(Address, timestamp, messageType, (byte)value);
+            return HarpMessage.FromUInt16(Address, timestamp, messageType, (ushort)value);
         }
     }
 
@@ -2763,7 +2779,7 @@ namespace Harp.Generators.Tests
         /// <summary>
         /// Represents the payload type of the <see cref="PortDIOClear"/> register. This field is constant.
         /// </summary>
-        public const PayloadType RegisterType = PayloadType.U8;
+        public const PayloadType RegisterType = PayloadType.U16;
 
         /// <summary>
         /// Represents the length of the <see cref="PortDIOClear"/> register. This field is constant.
@@ -2777,7 +2793,7 @@ namespace Harp.Generators.Tests
         /// <returns>A value representing the message payload.</returns>
         public static PortDigitalIOS GetPayload(HarpMessage message)
         {
-            return (PortDigitalIOS)message.GetPayloadByte();
+            return (PortDigitalIOS)message.GetPayloadUInt16();
         }
 
         /// <summary>
@@ -2787,7 +2803,7 @@ namespace Harp.Generators.Tests
         /// <returns>A value representing the timestamped message payload.</returns>
         public static Timestamped<PortDigitalIOS> GetTimestampedPayload(HarpMessage message)
         {
-            var (payload, timestamp) = message.GetTimestampedPayloadByte();
+            var (payload, timestamp) = message.GetTimestampedPayloadUInt16();
             return Timestamped.Create((PortDigitalIOS)payload, timestamp);
         }
 
@@ -2802,7 +2818,7 @@ namespace Harp.Generators.Tests
         /// </returns>
         public static HarpMessage FromPayload(MessageType messageType, PortDigitalIOS value)
         {
-            return HarpMessage.FromByte(Address, messageType, (byte)value);
+            return HarpMessage.FromUInt16(Address, messageType, (ushort)value);
         }
 
         /// <summary>
@@ -2818,7 +2834,7 @@ namespace Harp.Generators.Tests
         /// </returns>
         public static HarpMessage FromPayload(double timestamp, MessageType messageType, PortDigitalIOS value)
         {
-            return HarpMessage.FromByte(Address, timestamp, messageType, (byte)value);
+            return HarpMessage.FromUInt16(Address, timestamp, messageType, (ushort)value);
         }
     }
 
@@ -2843,6 +2859,199 @@ namespace Harp.Generators.Tests
         public static Timestamped<PortDigitalIOS> GetPayload(HarpMessage message)
         {
             return PortDIOClear.GetTimestampedPayload(message);
+        }
+    }
+
+    /// <summary>
+    /// Represents a register that manipulates messages from register WideStatus.
+    /// </summary>
+    [Description("")]
+    public partial class WideStatus
+    {
+        /// <summary>
+        /// Represents the address of the <see cref="WideStatus"/> register. This field is constant.
+        /// </summary>
+        public const int Address = 106;
+
+        /// <summary>
+        /// Represents the payload type of the <see cref="WideStatus"/> register. This field is constant.
+        /// </summary>
+        public const PayloadType RegisterType = PayloadType.U32;
+
+        /// <summary>
+        /// Represents the length of the <see cref="WideStatus"/> register. This field is constant.
+        /// </summary>
+        public const int RegisterLength = 1;
+
+        /// <summary>
+        /// Returns the payload data for <see cref="WideStatus"/> register messages.
+        /// </summary>
+        /// <param name="message">A <see cref="HarpMessage"/> object representing the register message.</param>
+        /// <returns>A value representing the message payload.</returns>
+        public static WideStatusFlags GetPayload(HarpMessage message)
+        {
+            return (WideStatusFlags)message.GetPayloadUInt32();
+        }
+
+        /// <summary>
+        /// Returns the timestamped payload data for <see cref="WideStatus"/> register messages.
+        /// </summary>
+        /// <param name="message">A <see cref="HarpMessage"/> object representing the register message.</param>
+        /// <returns>A value representing the timestamped message payload.</returns>
+        public static Timestamped<WideStatusFlags> GetTimestampedPayload(HarpMessage message)
+        {
+            var (payload, timestamp) = message.GetTimestampedPayloadUInt32();
+            return Timestamped.Create((WideStatusFlags)payload, timestamp);
+        }
+
+        /// <summary>
+        /// Returns a Harp message for the <see cref="WideStatus"/> register.
+        /// </summary>
+        /// <param name="messageType">The type of the Harp message.</param>
+        /// <param name="value">The value to be stored in the message payload.</param>
+        /// <returns>
+        /// A <see cref="HarpMessage"/> object for the <see cref="WideStatus"/> register
+        /// with the specified message type and payload.
+        /// </returns>
+        public static HarpMessage FromPayload(MessageType messageType, WideStatusFlags value)
+        {
+            return HarpMessage.FromUInt32(Address, messageType, (uint)value);
+        }
+
+        /// <summary>
+        /// Returns a timestamped Harp message for the <see cref="WideStatus"/>
+        /// register.
+        /// </summary>
+        /// <param name="timestamp">The timestamp of the message payload, in seconds.</param>
+        /// <param name="messageType">The type of the Harp message.</param>
+        /// <param name="value">The value to be stored in the message payload.</param>
+        /// <returns>
+        /// A <see cref="HarpMessage"/> object for the <see cref="WideStatus"/> register
+        /// with the specified message type, timestamp, and payload.
+        /// </returns>
+        public static HarpMessage FromPayload(double timestamp, MessageType messageType, WideStatusFlags value)
+        {
+            return HarpMessage.FromUInt32(Address, timestamp, messageType, (uint)value);
+        }
+    }
+
+    /// <summary>
+    /// Provides methods for manipulating timestamped messages from the
+    /// WideStatus register.
+    /// </summary>
+    /// <seealso cref="WideStatus"/>
+    [Description("Filters and selects timestamped messages from the WideStatus register.")]
+    public partial class TimestampedWideStatus
+    {
+        /// <summary>
+        /// Represents the address of the <see cref="WideStatus"/> register. This field is constant.
+        /// </summary>
+        public const int Address = WideStatus.Address;
+
+        /// <summary>
+        /// Returns timestamped payload data for <see cref="WideStatus"/> register messages.
+        /// </summary>
+        /// <param name="message">A <see cref="HarpMessage"/> object representing the register message.</param>
+        /// <returns>A value representing the timestamped message payload.</returns>
+        public static Timestamped<WideStatusFlags> GetPayload(HarpMessage message)
+        {
+            return WideStatus.GetTimestampedPayload(message);
+        }
+    }
+
+    /// <summary>
+    /// Represents a register that specifies a threshold whose default needs more than single precision.
+    /// </summary>
+    [Description("Specifies a threshold whose default needs more than single precision.")]
+    public partial class Threshold
+    {
+        /// <summary>
+        /// Represents the address of the <see cref="Threshold"/> register. This field is constant.
+        /// </summary>
+        public const int Address = 107;
+
+        /// <summary>
+        /// Represents the payload type of the <see cref="Threshold"/> register. This field is constant.
+        /// </summary>
+        public const PayloadType RegisterType = PayloadType.U32;
+
+        /// <summary>
+        /// Represents the length of the <see cref="Threshold"/> register. This field is constant.
+        /// </summary>
+        public const int RegisterLength = 1;
+
+        /// <summary>
+        /// Returns the payload data for <see cref="Threshold"/> register messages.
+        /// </summary>
+        /// <param name="message">A <see cref="HarpMessage"/> object representing the register message.</param>
+        /// <returns>A value representing the message payload.</returns>
+        public static uint GetPayload(HarpMessage message)
+        {
+            return message.GetPayloadUInt32();
+        }
+
+        /// <summary>
+        /// Returns the timestamped payload data for <see cref="Threshold"/> register messages.
+        /// </summary>
+        /// <param name="message">A <see cref="HarpMessage"/> object representing the register message.</param>
+        /// <returns>A value representing the timestamped message payload.</returns>
+        public static Timestamped<uint> GetTimestampedPayload(HarpMessage message)
+        {
+            return message.GetTimestampedPayloadUInt32();
+        }
+
+        /// <summary>
+        /// Returns a Harp message for the <see cref="Threshold"/> register.
+        /// </summary>
+        /// <param name="messageType">The type of the Harp message.</param>
+        /// <param name="value">The value to be stored in the message payload.</param>
+        /// <returns>
+        /// A <see cref="HarpMessage"/> object for the <see cref="Threshold"/> register
+        /// with the specified message type and payload.
+        /// </returns>
+        public static HarpMessage FromPayload(MessageType messageType, uint value)
+        {
+            return HarpMessage.FromUInt32(Address, messageType, value);
+        }
+
+        /// <summary>
+        /// Returns a timestamped Harp message for the <see cref="Threshold"/>
+        /// register.
+        /// </summary>
+        /// <param name="timestamp">The timestamp of the message payload, in seconds.</param>
+        /// <param name="messageType">The type of the Harp message.</param>
+        /// <param name="value">The value to be stored in the message payload.</param>
+        /// <returns>
+        /// A <see cref="HarpMessage"/> object for the <see cref="Threshold"/> register
+        /// with the specified message type, timestamp, and payload.
+        /// </returns>
+        public static HarpMessage FromPayload(double timestamp, MessageType messageType, uint value)
+        {
+            return HarpMessage.FromUInt32(Address, timestamp, messageType, value);
+        }
+    }
+
+    /// <summary>
+    /// Provides methods for manipulating timestamped messages from the
+    /// Threshold register.
+    /// </summary>
+    /// <seealso cref="Threshold"/>
+    [Description("Filters and selects timestamped messages from the Threshold register.")]
+    public partial class TimestampedThreshold
+    {
+        /// <summary>
+        /// Represents the address of the <see cref="Threshold"/> register. This field is constant.
+        /// </summary>
+        public const int Address = Threshold.Address;
+
+        /// <summary>
+        /// Returns timestamped payload data for <see cref="Threshold"/> register messages.
+        /// </summary>
+        /// <param name="message">A <see cref="HarpMessage"/> object representing the register message.</param>
+        /// <returns>A value representing the timestamped message payload.</returns>
+        public static Timestamped<uint> GetPayload(HarpMessage message)
+        {
+            return Threshold.GetTimestampedPayload(message);
         }
     }
 
@@ -2872,6 +3081,8 @@ namespace Harp.Generators.Tests
     /// <seealso cref="CreateEncoderModePayload"/>
     /// <seealso cref="CreateLedEnabledPayload"/>
     /// <seealso cref="CreatePortDIOClearPayload"/>
+    /// <seealso cref="CreateWideStatusPayload"/>
+    /// <seealso cref="CreateThresholdPayload"/>
     [XmlInclude(typeof(CreateDigitalInputsPayload))]
     [XmlInclude(typeof(CreateAnalogDataPayload))]
     [XmlInclude(typeof(CreateComplexConfigurationPayload))]
@@ -2894,6 +3105,8 @@ namespace Harp.Generators.Tests
     [XmlInclude(typeof(CreateEncoderModePayload))]
     [XmlInclude(typeof(CreateLedEnabledPayload))]
     [XmlInclude(typeof(CreatePortDIOClearPayload))]
+    [XmlInclude(typeof(CreateWideStatusPayload))]
+    [XmlInclude(typeof(CreateThresholdPayload))]
     [XmlInclude(typeof(CreateTimestampedDigitalInputsPayload))]
     [XmlInclude(typeof(CreateTimestampedAnalogDataPayload))]
     [XmlInclude(typeof(CreateTimestampedComplexConfigurationPayload))]
@@ -2916,6 +3129,8 @@ namespace Harp.Generators.Tests
     [XmlInclude(typeof(CreateTimestampedEncoderModePayload))]
     [XmlInclude(typeof(CreateTimestampedLedEnabledPayload))]
     [XmlInclude(typeof(CreateTimestampedPortDIOClearPayload))]
+    [XmlInclude(typeof(CreateTimestampedWideStatusPayload))]
+    [XmlInclude(typeof(CreateTimestampedThresholdPayload))]
     [Description("Creates standard message payloads for the Tests device.")]
     public partial class CreateMessage : CreateMessageBuilder, INamedElement
     {
@@ -3085,13 +3300,13 @@ namespace Harp.Generators.Tests
         /// Gets or sets a value to write on payload member InputFlags.
         /// </summary>
         [Description("")]
-        public PortDigitalIOS InputFlags { get; set; } = PortDigitalIOS.DIO0 | PortDigitalIOS.DIO1;
+        public DigitalChannels InputFlags { get; set; } = DigitalChannels.Channel0 | DigitalChannels.Channel1;
 
         /// <summary>
         /// Gets or sets a value to write on payload member OutputFlags.
         /// </summary>
         [Description("")]
-        public PortDigitalIOS OutputFlags { get; set; } = (PortDigitalIOS)19;
+        public DigitalChannels OutputFlags { get; set; } = (DigitalChannels)19;
 
         /// <summary>
         /// Gets or sets a value to write on payload member DutyCycle.
@@ -4341,6 +4556,114 @@ namespace Harp.Generators.Tests
     }
 
     /// <summary>
+    /// Represents an operator that creates a message payload
+    /// for register WideStatus.
+    /// </summary>
+    [DisplayName("WideStatusPayload")]
+    [Description("Creates a message payload for register WideStatus.")]
+    public partial class CreateWideStatusPayload
+    {
+        /// <summary>
+        /// Gets or sets the value for register WideStatus.
+        /// </summary>
+        [Description("The value for register WideStatus.")]
+        public WideStatusFlags WideStatus { get; set; }
+
+        /// <summary>
+        /// Creates a message payload for the WideStatus register.
+        /// </summary>
+        /// <returns>The created message payload value.</returns>
+        public WideStatusFlags GetPayload()
+        {
+            return WideStatus;
+        }
+
+        /// <summary>
+        /// Creates a message for register WideStatus.
+        /// </summary>
+        /// <param name="messageType">Specifies the type of the created message.</param>
+        /// <returns>A new message for the WideStatus register.</returns>
+        public HarpMessage GetMessage(MessageType messageType)
+        {
+            return Harp.Generators.Tests.WideStatus.FromPayload(messageType, GetPayload());
+        }
+    }
+
+    /// <summary>
+    /// Represents an operator that creates a timestamped message payload
+    /// for register WideStatus.
+    /// </summary>
+    [DisplayName("TimestampedWideStatusPayload")]
+    [Description("Creates a timestamped message payload for register WideStatus.")]
+    public partial class CreateTimestampedWideStatusPayload : CreateWideStatusPayload
+    {
+        /// <summary>
+        /// Creates a timestamped message for register WideStatus.
+        /// </summary>
+        /// <param name="timestamp">The timestamp of the message payload, in seconds.</param>
+        /// <param name="messageType">Specifies the type of the created message.</param>
+        /// <returns>A new timestamped message for the WideStatus register.</returns>
+        public HarpMessage GetMessage(double timestamp, MessageType messageType)
+        {
+            return Harp.Generators.Tests.WideStatus.FromPayload(timestamp, messageType, GetPayload());
+        }
+    }
+
+    /// <summary>
+    /// Represents an operator that creates a message payload
+    /// that specifies a threshold whose default needs more than single precision.
+    /// </summary>
+    [DisplayName("ThresholdPayload")]
+    [Description("Creates a message payload that specifies a threshold whose default needs more than single precision.")]
+    public partial class CreateThresholdPayload
+    {
+        /// <summary>
+        /// Gets or sets the value that specifies a threshold whose default needs more than single precision.
+        /// </summary>
+        [Description("The value that specifies a threshold whose default needs more than single precision.")]
+        public uint Threshold { get; set; } = 16777217;
+
+        /// <summary>
+        /// Creates a message payload for the Threshold register.
+        /// </summary>
+        /// <returns>The created message payload value.</returns>
+        public uint GetPayload()
+        {
+            return Threshold;
+        }
+
+        /// <summary>
+        /// Creates a message that specifies a threshold whose default needs more than single precision.
+        /// </summary>
+        /// <param name="messageType">Specifies the type of the created message.</param>
+        /// <returns>A new message for the Threshold register.</returns>
+        public HarpMessage GetMessage(MessageType messageType)
+        {
+            return Harp.Generators.Tests.Threshold.FromPayload(messageType, GetPayload());
+        }
+    }
+
+    /// <summary>
+    /// Represents an operator that creates a timestamped message payload
+    /// that specifies a threshold whose default needs more than single precision.
+    /// </summary>
+    [DisplayName("TimestampedThresholdPayload")]
+    [Description("Creates a timestamped message payload that specifies a threshold whose default needs more than single precision.")]
+    public partial class CreateTimestampedThresholdPayload : CreateThresholdPayload
+    {
+        /// <summary>
+        /// Creates a timestamped message that specifies a threshold whose default needs more than single precision.
+        /// </summary>
+        /// <param name="timestamp">The timestamp of the message payload, in seconds.</param>
+        /// <param name="messageType">Specifies the type of the created message.</param>
+        /// <returns>A new timestamped message for the Threshold register.</returns>
+        public HarpMessage GetMessage(double timestamp, MessageType messageType)
+        {
+            return Harp.Generators.Tests.Threshold.FromPayload(timestamp, messageType, GetPayload());
+        }
+    }
+
+    /// <summary>
     /// Represents the payload of the AnalogData register.
     /// </summary>
     public struct AnalogDataPayload
@@ -4422,8 +4745,8 @@ namespace Harp.Generators.Tests
         public ComplexConfigurationPayload(
             PwmPort pwmPort,
             bool invert,
-            PortDigitalIOS inputFlags,
-            PortDigitalIOS outputFlags,
+            DigitalChannels inputFlags,
+            DigitalChannels outputFlags,
             float dutyCycle,
             float frequency,
             bool eventsEnabled,
@@ -4452,12 +4775,12 @@ namespace Harp.Generators.Tests
         /// <summary>
         /// 
         /// </summary>
-        public PortDigitalIOS InputFlags;
+        public DigitalChannels InputFlags;
 
         /// <summary>
         /// 
         /// </summary>
-        public PortDigitalIOS OutputFlags;
+        public DigitalChannels OutputFlags;
 
         /// <summary>
         /// 
@@ -4913,6 +5236,30 @@ namespace Harp.Generators.Tests
         TestDIPort1 = 0x200,
         SupplyPort0 = 0x400,
         PortDIO1 = 0x800
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    [Flags]
+    public enum DigitalChannels : byte
+    {
+        None = 0x0,
+        Channel0 = 0x1,
+        Channel1 = 0x2,
+        Channel2 = 0x4,
+        Channel3 = 0x8
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    [Flags]
+    public enum WideStatusFlags : uint
+    {
+        None = 0x0,
+        Ready = 0x1,
+        Overflow = 0x80000000
     }
 
     /// <summary>

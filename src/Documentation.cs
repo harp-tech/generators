@@ -93,13 +93,13 @@ internal sealed class RegisterDetails
     public List<string> Access = [];
 
     [YamlMember(Alias = "defaultValue")]
-    public float? DefaultValue;
+    public double?DefaultValue;
 
     [YamlMember(Alias = "minValue")]
-    public float? MinValue;
+    public double?MinValue;
 
     [YamlMember(Alias = "maxValue")]
-    public float? MaxValue;
+    public double?MaxValue;
 
     [YamlMember(Alias = "interfaceType")]
     public ReferenceType? InterfaceType;
@@ -126,13 +126,13 @@ internal sealed class PayloadMemberDetails
     public string? Mask;
 
     [YamlMember(Alias = "defaultValue")]
-    public float? DefaultValue;
+    public double?DefaultValue;
 
     [YamlMember(Alias = "minValue")]
-    public float? MinValue;
+    public double?MinValue;
 
     [YamlMember(Alias = "maxValue")]
-    public float? MaxValue;
+    public double?MaxValue;
 
     [YamlMember(Alias = "interfaceType")]
     public ReferenceType? InterfaceType;

@@ -369,7 +369,9 @@ internal static partial class TemplateHelper
         var span = Math.Max(1, member.Length) * elementSize;
         var usesMemberConverter = member.HasConverter;
         var isGroupMask = !usesMemberConverter && FindGroupMask(deviceMetadata, typeName) != null;
-        var mask = member.Mask ?? (isGroupMask ? (int)((1L << (elementSize * 8)) - 1) : null);
+        var mask = (ulong?)member.Mask;
+        if (mask is null && isGroupMask)
+            mask = GetElementMask(register.Type);
         var maskArgument = mask.HasValue ? $", mask=0x{mask.GetValueOrDefault():X}" : string.Empty;
 
         string descriptor;
@@ -508,19 +510,19 @@ internal static partial class TemplateHelper
         return $", default={GetValueNumpyType(info, payloadType)}({FormatNumericLiteral(value)})";
     }
 
-    static string GetPythonMaskDefaultArgument(DeviceMetadata deviceMetadata, string maskType, float? defaultValue)
+    static string GetPythonMaskDefaultArgument(DeviceMetadata deviceMetadata, string maskType, double? defaultValue)
     {
         if (!defaultValue.HasValue)
             return string.Empty;
 
-        var value = (long)defaultValue.GetValueOrDefault();
+        var value = (uint)defaultValue.GetValueOrDefault();
         var names = value == 0 && IsBitMask(deviceMetadata, maskType) ? null : GetMaskValueNames(deviceMetadata, maskType, value);
         if (names != null)
             return $", default={string.Join(" | ", names.Select(name => $"{maskType}.{FirmwareNamingConvention.Instance.Apply(name)}"))}";
         return FindGroupMask(deviceMetadata, maskType) != null ? $", default={value}" : $", default={maskType}({value})";
     }
 
-    static string FormatNumericLiteral(float value)
+    static string FormatNumericLiteral(double value)
     {
         return value == Math.Floor(value)
             ? ((long)value).ToString(CultureInfo.InvariantCulture)
