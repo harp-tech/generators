@@ -876,5 +876,51 @@ namespace Harp.Generators.Tests
             var request = EncoderMode.FromPayload(MessageType.Write, value);
             await CommandAsync(request, cancellationToken);
         }
+
+        /// <summary>
+        /// Asynchronously reads the contents of the <see cref="LedEnabled"/> register.
+        /// </summary>
+        /// <param name="cancellationToken">
+        /// A <see cref="CancellationToken"/> which can be used to cancel the operation.
+        /// </param>
+        /// <returns>
+        /// A task that represents the asynchronous read operation. The task result contains
+        /// the register payload.
+        /// </returns>
+        public async Task<bool> ReadLedEnabledAsync(CancellationToken cancellationToken = default)
+        {
+            var reply = await CommandAsync(HarpCommand.ReadByte(LedEnabled.Address), cancellationToken);
+            return LedEnabled.GetPayload(reply);
+        }
+
+        /// <summary>
+        /// Asynchronously reads the timestamped contents of the <see cref="LedEnabled"/> register.
+        /// </summary>
+        /// <param name="cancellationToken">
+        /// A <see cref="CancellationToken"/> which can be used to cancel the operation.
+        /// </param>
+        /// <returns>
+        /// A task that represents the asynchronous read operation. The task result contains
+        /// the timestamped register payload.
+        /// </returns>
+        public async Task<Timestamped<bool>> ReadTimestampedLedEnabledAsync(CancellationToken cancellationToken = default)
+        {
+            var reply = await CommandAsync(HarpCommand.ReadByte(LedEnabled.Address), cancellationToken);
+            return LedEnabled.GetTimestampedPayload(reply);
+        }
+
+        /// <summary>
+        /// Asynchronously writes a value to the <see cref="LedEnabled"/> register.
+        /// </summary>
+        /// <param name="value">The value to write in the register.</param>
+        /// <param name="cancellationToken">
+        /// A <see cref="CancellationToken"/> which can be used to cancel the operation.
+        /// </param>
+        /// <returns>The task object representing the asynchronous write operation.</returns>
+        public async Task WriteLedEnabledAsync(bool value, CancellationToken cancellationToken = default)
+        {
+            var request = LedEnabled.FromPayload(MessageType.Write, value);
+            await CommandAsync(request, cancellationToken);
+        }
     }
 }

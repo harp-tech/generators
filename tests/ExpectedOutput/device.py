@@ -55,6 +55,7 @@ __all__ = [
     "StartPulsePayload",
     "StartPulseTrainPayload",
     "EncoderModePayload",
+    "LedEnabledPayload",
     "DigitalInputs",
     "AnalogData",
     "ComplexConfiguration",
@@ -75,6 +76,7 @@ __all__ = [
     "StartPulse",
     "StartPulseTrain",
     "EncoderMode",
+    "LedEnabled",
     "REGISTER_MAP",
 ]
 
@@ -223,6 +225,12 @@ class EncoderModePayload(AnonymousPayload[np.uint8]):
     __value__: EncoderReading = GroupMask(enum=EncoderReading, mask=0xFF, default=EncoderReading.DISPLACEMENT)
 
 
+class LedEnabledPayload(AnonymousPayload[np.uint8]):
+    """Represents the payload of the LedEnabled register."""
+
+    __value__: bool = Field(BoolConverter(), default=True)
+
+
 class DigitalInputs(RegisterU8):
     address: ClassVar[int] = 32
 
@@ -343,6 +351,14 @@ class EncoderMode(RegisterBase[EncoderReading]):
     payload_class = EncoderModePayload
 
 
+class LedEnabled(RegisterBase[bool]):
+    """Specifies whether the status LED is enabled."""
+
+    address: ClassVar[int] = 104
+    payload_type: ClassVar[PayloadType] = PayloadType.U8
+    payload_class = LedEnabledPayload
+
+
 REGISTER_MAP: dict[int, type[RegisterBase[Any]]] = {
     **_CORE_REGISTER_MAP,
     32: DigitalInputs,
@@ -365,4 +381,5 @@ REGISTER_MAP: dict[int, type[RegisterBase[Any]]] = {
     100: StartPulse,
     101: StartPulseTrain,
     103: EncoderMode,
+    104: LedEnabled,
 }

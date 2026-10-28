@@ -63,7 +63,8 @@ namespace Harp.Generators.Tests
             { 48, typeof(Rgb1) },
             { 100, typeof(StartPulse) },
             { 101, typeof(StartPulseTrain) },
-            { 103, typeof(EncoderMode) }
+            { 103, typeof(EncoderMode) },
+            { 104, typeof(LedEnabled) }
         };
 
         /// <summary>
@@ -300,6 +301,7 @@ namespace Harp.Generators.Tests
     /// <seealso cref="StartPulse"/>
     /// <seealso cref="StartPulseTrain"/>
     /// <seealso cref="EncoderMode"/>
+    /// <seealso cref="LedEnabled"/>
     [XmlInclude(typeof(DigitalInputs))]
     [XmlInclude(typeof(AnalogData))]
     [XmlInclude(typeof(ComplexConfiguration))]
@@ -320,6 +322,7 @@ namespace Harp.Generators.Tests
     [XmlInclude(typeof(StartPulse))]
     [XmlInclude(typeof(StartPulseTrain))]
     [XmlInclude(typeof(EncoderMode))]
+    [XmlInclude(typeof(LedEnabled))]
     [Description("Filters register-specific messages reported by the Tests device.")]
     public class FilterRegister : FilterRegisterBuilder, INamedElement
     {
@@ -361,6 +364,7 @@ namespace Harp.Generators.Tests
     /// <seealso cref="StartPulse"/>
     /// <seealso cref="StartPulseTrain"/>
     /// <seealso cref="EncoderMode"/>
+    /// <seealso cref="LedEnabled"/>
     [XmlInclude(typeof(DigitalInputs))]
     [XmlInclude(typeof(AnalogData))]
     [XmlInclude(typeof(ComplexConfiguration))]
@@ -381,6 +385,7 @@ namespace Harp.Generators.Tests
     [XmlInclude(typeof(StartPulse))]
     [XmlInclude(typeof(StartPulseTrain))]
     [XmlInclude(typeof(EncoderMode))]
+    [XmlInclude(typeof(LedEnabled))]
     [XmlInclude(typeof(TimestampedDigitalInputs))]
     [XmlInclude(typeof(TimestampedAnalogData))]
     [XmlInclude(typeof(TimestampedComplexConfiguration))]
@@ -401,6 +406,7 @@ namespace Harp.Generators.Tests
     [XmlInclude(typeof(TimestampedStartPulse))]
     [XmlInclude(typeof(TimestampedStartPulseTrain))]
     [XmlInclude(typeof(TimestampedEncoderMode))]
+    [XmlInclude(typeof(TimestampedLedEnabled))]
     [Description("Filters and selects specific messages reported by the Tests device.")]
     public partial class Parse : ParseBuilder, INamedElement
     {
@@ -439,6 +445,7 @@ namespace Harp.Generators.Tests
     /// <seealso cref="StartPulse"/>
     /// <seealso cref="StartPulseTrain"/>
     /// <seealso cref="EncoderMode"/>
+    /// <seealso cref="LedEnabled"/>
     [XmlInclude(typeof(DigitalInputs))]
     [XmlInclude(typeof(AnalogData))]
     [XmlInclude(typeof(ComplexConfiguration))]
@@ -459,6 +466,7 @@ namespace Harp.Generators.Tests
     [XmlInclude(typeof(StartPulse))]
     [XmlInclude(typeof(StartPulseTrain))]
     [XmlInclude(typeof(EncoderMode))]
+    [XmlInclude(typeof(LedEnabled))]
     [Description("Formats a sequence of values as specific Tests register messages.")]
     public partial class Format : FormatBuilder, INamedElement
     {
@@ -2637,6 +2645,103 @@ namespace Harp.Generators.Tests
     }
 
     /// <summary>
+    /// Represents a register that specifies whether the status LED is enabled.
+    /// </summary>
+    [Description("Specifies whether the status LED is enabled.")]
+    public partial class LedEnabled
+    {
+        /// <summary>
+        /// Represents the address of the <see cref="LedEnabled"/> register. This field is constant.
+        /// </summary>
+        public const int Address = 104;
+
+        /// <summary>
+        /// Represents the payload type of the <see cref="LedEnabled"/> register. This field is constant.
+        /// </summary>
+        public const PayloadType RegisterType = PayloadType.U8;
+
+        /// <summary>
+        /// Represents the length of the <see cref="LedEnabled"/> register. This field is constant.
+        /// </summary>
+        public const int RegisterLength = 1;
+
+        /// <summary>
+        /// Returns the payload data for <see cref="LedEnabled"/> register messages.
+        /// </summary>
+        /// <param name="message">A <see cref="HarpMessage"/> object representing the register message.</param>
+        /// <returns>A value representing the message payload.</returns>
+        public static bool GetPayload(HarpMessage message)
+        {
+            return message.GetPayloadByte() != 0;
+        }
+
+        /// <summary>
+        /// Returns the timestamped payload data for <see cref="LedEnabled"/> register messages.
+        /// </summary>
+        /// <param name="message">A <see cref="HarpMessage"/> object representing the register message.</param>
+        /// <returns>A value representing the timestamped message payload.</returns>
+        public static Timestamped<bool> GetTimestampedPayload(HarpMessage message)
+        {
+            var (payload, timestamp) = message.GetTimestampedPayloadByte();
+            return Timestamped.Create(payload != 0, timestamp);
+        }
+
+        /// <summary>
+        /// Returns a Harp message for the <see cref="LedEnabled"/> register.
+        /// </summary>
+        /// <param name="messageType">The type of the Harp message.</param>
+        /// <param name="value">The value to be stored in the message payload.</param>
+        /// <returns>
+        /// A <see cref="HarpMessage"/> object for the <see cref="LedEnabled"/> register
+        /// with the specified message type and payload.
+        /// </returns>
+        public static HarpMessage FromPayload(MessageType messageType, bool value)
+        {
+            return HarpMessage.FromByte(Address, messageType, (byte)(value ? 1 : 0));
+        }
+
+        /// <summary>
+        /// Returns a timestamped Harp message for the <see cref="LedEnabled"/>
+        /// register.
+        /// </summary>
+        /// <param name="timestamp">The timestamp of the message payload, in seconds.</param>
+        /// <param name="messageType">The type of the Harp message.</param>
+        /// <param name="value">The value to be stored in the message payload.</param>
+        /// <returns>
+        /// A <see cref="HarpMessage"/> object for the <see cref="LedEnabled"/> register
+        /// with the specified message type, timestamp, and payload.
+        /// </returns>
+        public static HarpMessage FromPayload(double timestamp, MessageType messageType, bool value)
+        {
+            return HarpMessage.FromByte(Address, timestamp, messageType, (byte)(value ? 1 : 0));
+        }
+    }
+
+    /// <summary>
+    /// Provides methods for manipulating timestamped messages from the
+    /// LedEnabled register.
+    /// </summary>
+    /// <seealso cref="LedEnabled"/>
+    [Description("Filters and selects timestamped messages from the LedEnabled register.")]
+    public partial class TimestampedLedEnabled
+    {
+        /// <summary>
+        /// Represents the address of the <see cref="LedEnabled"/> register. This field is constant.
+        /// </summary>
+        public const int Address = LedEnabled.Address;
+
+        /// <summary>
+        /// Returns timestamped payload data for <see cref="LedEnabled"/> register messages.
+        /// </summary>
+        /// <param name="message">A <see cref="HarpMessage"/> object representing the register message.</param>
+        /// <returns>A value representing the timestamped message payload.</returns>
+        public static Timestamped<bool> GetPayload(HarpMessage message)
+        {
+            return LedEnabled.GetTimestampedPayload(message);
+        }
+    }
+
+    /// <summary>
     /// Represents an operator which creates standard message payloads for the
     /// Tests device.
     /// </summary>
@@ -2660,6 +2765,7 @@ namespace Harp.Generators.Tests
     /// <seealso cref="CreateStartPulsePayload"/>
     /// <seealso cref="CreateStartPulseTrainPayload"/>
     /// <seealso cref="CreateEncoderModePayload"/>
+    /// <seealso cref="CreateLedEnabledPayload"/>
     [XmlInclude(typeof(CreateDigitalInputsPayload))]
     [XmlInclude(typeof(CreateAnalogDataPayload))]
     [XmlInclude(typeof(CreateComplexConfigurationPayload))]
@@ -2680,6 +2786,7 @@ namespace Harp.Generators.Tests
     [XmlInclude(typeof(CreateStartPulsePayload))]
     [XmlInclude(typeof(CreateStartPulseTrainPayload))]
     [XmlInclude(typeof(CreateEncoderModePayload))]
+    [XmlInclude(typeof(CreateLedEnabledPayload))]
     [XmlInclude(typeof(CreateTimestampedDigitalInputsPayload))]
     [XmlInclude(typeof(CreateTimestampedAnalogDataPayload))]
     [XmlInclude(typeof(CreateTimestampedComplexConfigurationPayload))]
@@ -2700,6 +2807,7 @@ namespace Harp.Generators.Tests
     [XmlInclude(typeof(CreateTimestampedStartPulsePayload))]
     [XmlInclude(typeof(CreateTimestampedStartPulseTrainPayload))]
     [XmlInclude(typeof(CreateTimestampedEncoderModePayload))]
+    [XmlInclude(typeof(CreateTimestampedLedEnabledPayload))]
     [Description("Creates standard message payloads for the Tests device.")]
     public partial class CreateMessage : CreateMessageBuilder, INamedElement
     {
@@ -4013,6 +4121,60 @@ namespace Harp.Generators.Tests
         public HarpMessage GetMessage(double timestamp, MessageType messageType)
         {
             return Harp.Generators.Tests.EncoderMode.FromPayload(timestamp, messageType, GetPayload());
+        }
+    }
+
+    /// <summary>
+    /// Represents an operator that creates a message payload
+    /// that specifies whether the status LED is enabled.
+    /// </summary>
+    [DisplayName("LedEnabledPayload")]
+    [Description("Creates a message payload that specifies whether the status LED is enabled.")]
+    public partial class CreateLedEnabledPayload
+    {
+        /// <summary>
+        /// Gets or sets the value that specifies whether the status LED is enabled.
+        /// </summary>
+        [Description("The value that specifies whether the status LED is enabled.")]
+        public bool LedEnabled { get; set; } = true;
+
+        /// <summary>
+        /// Creates a message payload for the LedEnabled register.
+        /// </summary>
+        /// <returns>The created message payload value.</returns>
+        public bool GetPayload()
+        {
+            return LedEnabled;
+        }
+
+        /// <summary>
+        /// Creates a message that specifies whether the status LED is enabled.
+        /// </summary>
+        /// <param name="messageType">Specifies the type of the created message.</param>
+        /// <returns>A new message for the LedEnabled register.</returns>
+        public HarpMessage GetMessage(MessageType messageType)
+        {
+            return Harp.Generators.Tests.LedEnabled.FromPayload(messageType, GetPayload());
+        }
+    }
+
+    /// <summary>
+    /// Represents an operator that creates a timestamped message payload
+    /// that specifies whether the status LED is enabled.
+    /// </summary>
+    [DisplayName("TimestampedLedEnabledPayload")]
+    [Description("Creates a timestamped message payload that specifies whether the status LED is enabled.")]
+    public partial class CreateTimestampedLedEnabledPayload : CreateLedEnabledPayload
+    {
+        /// <summary>
+        /// Creates a timestamped message that specifies whether the status LED is enabled.
+        /// </summary>
+        /// <param name="timestamp">The timestamp of the message payload, in seconds.</param>
+        /// <param name="messageType">Specifies the type of the created message.</param>
+        /// <returns>A new timestamped message for the LedEnabled register.</returns>
+        public HarpMessage GetMessage(double timestamp, MessageType messageType)
+        {
+            return Harp.Generators.Tests.LedEnabled.FromPayload(timestamp, messageType, GetPayload());
         }
     }
 

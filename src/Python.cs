@@ -186,14 +186,15 @@ internal static partial class TemplateHelper
     {
         var hasMask = !string.IsNullOrEmpty(register.MaskType);
         var isString = register.InterfaceType == "string";
+        var isBoolean = HasBoolConversion(register);
         var isCustom = register.HasConverter
-            || (!string.IsNullOrEmpty(register.InterfaceType) && !IsPrimitiveInterfaceType(register.InterfaceType) && !isString);
+            || (!string.IsNullOrEmpty(register.InterfaceType) && !IsPrimitiveInterfaceType(register.InterfaceType) && !isString && !isBoolean);
         var hasNumericDefault = string.IsNullOrEmpty(register.InterfaceType)
             && register.Length == 0
             && register.DefaultValue.HasValue;
         var className = register.Visibility == RegisterVisibility.Private ? $"_{name}" : name;
 
-        if (register.PayloadSpec == null && !hasMask && !isString && !isCustom && !hasNumericDefault)
+        if (register.PayloadSpec == null && !hasMask && !isString && !isBoolean && !isCustom && !hasNumericDefault)
         {
             var isArray = register.Length > 0;
             module.ProtocolImports.Add(isArray ? $"Register{GetPythonScalarType(register.Type)}Array" : $"Register{GetPythonScalarType(register.Type)}");
@@ -299,6 +300,20 @@ internal static partial class TemplateHelper
                 Name = "__value__",
                 Annotation = "str",
                 Descriptor = $"Field(StringConverter({Math.Max(1, register.Length) * elementSize}))"
+            });
+        }
+        else if (HasBoolConversion(register))
+        {
+            module.ProtocolImports.Add("Field");
+            module.ProtocolImports.Add("BoolConverter");
+            var defaultArgument = GetPythonDefaultArgument(
+                register, string.Empty, register.Type, register.Length, deviceMetadata);
+            payload.UnwrapType = "bool";
+            payload.Fields.Add(new PythonField
+            {
+                Name = "__value__",
+                Annotation = "bool",
+                Descriptor = $"Field(BoolConverter(){defaultArgument})"
             });
         }
         else if (string.IsNullOrEmpty(register.InterfaceType)

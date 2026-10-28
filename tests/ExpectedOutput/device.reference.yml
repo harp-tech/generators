@@ -42,6 +42,8 @@
     name: StartPulseTrain
   - uid: Harp.Generators.Tests.EncoderMode
     name: EncoderMode
+  - uid: Harp.Generators.Tests.LedEnabled
+    name: LedEnabled
 - name: Payloads
   items:
   - uid: Harp.Generators.Tests.AnalogDataPayload
@@ -513,6 +515,29 @@ items:
         name: EncoderReading
         uid: Harp.Generators.Tests.EncoderReading
       logFile: Tests_103.bin
+--- # Harp.Generators.Tests.LedEnabled.yml
+### YamlMime:UniversalReference
+items:
+- uid: Harp.Generators.Tests.LedEnabled
+  id: LedEnabled
+  name: LedEnabled
+  name.python: LedEnabled
+  fullName: Harp.Generators.Tests.LedEnabled
+  type: class
+  langs:
+  - csharp
+  - python
+  summary: Specifies whether the status LED is enabled.
+  harp:
+    register:
+      address: 104
+      payloadType: U8
+      access:
+      - Write
+      defaultValue: 1
+      interfaceType:
+        name: bool
+      logFile: Tests_104.bin
 --- # Harp.Generators.Tests.AnalogDataPayload.yml
 ### YamlMime:UniversalReference
 items:

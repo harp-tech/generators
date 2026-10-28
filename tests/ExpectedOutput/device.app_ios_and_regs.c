@@ -83,6 +83,7 @@ uint8_t app_regs_type[] = {
     TYPE_U8,
     TYPE_U16,
     TYPE_U16,
+    TYPE_U8,
     TYPE_U8
 };
 
@@ -106,6 +107,7 @@ uint16_t app_regs_n_elements[] = {
     3,
     1,
     2,
+    1,
     1
 };
 
@@ -129,5 +131,6 @@ uint8_t *app_regs_pointer[] = {
     (uint8_t*)(&app_regs.REG_RGB1),
     (uint8_t*)(&app_regs.REG_START_PULSE),
     (uint8_t*)(&app_regs.REG_START_PULSE_TRAIN),
-    (uint8_t*)(&app_regs.REG_ENCODER_MODE)
+    (uint8_t*)(&app_regs.REG_ENCODER_MODE),
+    (uint8_t*)(&app_regs.REG_LED_ENABLED)
 };

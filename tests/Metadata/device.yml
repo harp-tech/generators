@@ -234,6 +234,13 @@ registers:
     maskType: EncoderReading
     defaultValue: 1
     description: Configures the operation mode of the encoder.
+  LedEnabled:
+    address: 104
+    type: U8
+    access: Write
+    defaultValue: 1
+    interfaceType: bool
+    description: Specifies whether the status LED is enabled.
 bitMasks:
   PortDigitalIOS:
     bits:
