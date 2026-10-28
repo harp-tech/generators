@@ -15,7 +15,7 @@ void init_ios(void)
     io_pin2in(&PORTE, 4, PULL_IO_UP, SENSE_IO_EDGES_BOTH);               // POKE1_IR
     io_pin2in(&PORTE, 5, PULL_IO_UP, SENSE_IO_EDGES_BOTH);               // POKE1_IO
     io_pin2in(&PORTF, 4, PULL_IO_UP, SENSE_IO_EDGES_BOTH);               // POKE2_IR
-    io_pin2in(&PORTF, 5, PULL_IO_UP, SENSE_IO_EDGES_BOTH);               // POKE2_IO
+    io_pin2in(&PORTF, 5, PULL_IO_UP, SENSE_IO_NO_INT_USED);              // POKE2_IO
     io_pin2in(&PORTJ, 0, PULL_IO_DOWN, SENSE_IO_EDGES_BOTH);             // ADC1_AVAILABLE
     io_pin2in(&PORTH, 0, PULL_IO_TRISTATE, SENSE_IO_EDGES_BOTH);         // DI3
 

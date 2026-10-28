@@ -6,3 +6,11 @@ IO_PULLDOWN:
   pinMode: pulldown
   triggerMode: toggle
   interruptPriority: low
+IO_POLLED:
+  port: PORTJ
+  pinNumber: 1
+  direction: input
+  pinMode: pullup
+  triggerMode: none
+  interruptPriority: low
+  interruptNumber: 0

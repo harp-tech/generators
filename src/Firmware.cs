@@ -364,6 +364,7 @@ internal static partial class TemplateHelper
     {
         return trigger switch
         {
+            TriggerMode.None => "SENSE_IO_NO_INT_USED",
             TriggerMode.Rising => "SENSE_IO_EDGE_RISING",
             TriggerMode.Falling => "SENSE_IO_EDGE_FALLING",
             TriggerMode.Toggle => "SENSE_IO_EDGES_BOTH",

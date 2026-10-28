@@ -128,7 +128,6 @@ POKE2_IO:
   pinNumber: 5
   direction: input
   pinMode: pullup
-  triggerMode: toggle
   interruptPriority: "off"
   interruptNumber: 0
   description: Poke 2 DIO

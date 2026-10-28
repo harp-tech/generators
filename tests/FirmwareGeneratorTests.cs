@@ -17,7 +17,9 @@ public sealed class FirmwareGeneratorTests
 
     [DataTestMethod]
     [DataRow("device.yml")]
-    [DataRow("errors.yml", "Interrupt number must be specified if interrupt priority is set.")]
+    [DataRow("errors.yml",
+        "(IO_PULLDOWN) Interrupt number must be specified if interrupt priority is set.",
+        "(IO_POLLED) Trigger mode must be specified if interrupt priority is set.")]
     public void FirmwareTemplate_GenerateAndBuild(string metadataFileName, params string[] expectedErrors)
     {
         metadataFileName = TestHelper.GetMetadataPath(metadataFileName);

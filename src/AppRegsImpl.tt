@@ -75,6 +75,8 @@ if (inputPins.Count > 0)
             var pinName = TemplateHelper.GetFirmwareName(pin.Key);
             if (!pinInfo.InterruptNumber.HasValue)
                 Error($"({pinName}) Interrupt number must be specified if interrupt priority is set.");
+            if (pinInfo.TriggerMode == TriggerMode.None)
+                Error($"({pinName}) Trigger mode must be specified if interrupt priority is set.");
             var interruptNumber = pinInfo.InterruptNumber.GetValueOrDefault();
             var interruptPriority = TemplateHelper.GetFirmwareInterruptPriority(pinInfo.InterruptPriority);
             var descriptionPadding = new string(' ', 36 - port.Length - interruptPriority.Length - pinNumber.Length);
