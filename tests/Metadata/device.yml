@@ -34,6 +34,7 @@ registers:
         defaultValue: 2
       Invert:
         offset: 1
+        length: 1
         defaultValue: 1
         interfaceType: bool
       InputFlags:
@@ -59,6 +60,7 @@ registers:
       Delta:
         offset: 13
         length: 4
+        defaultValue: 1000
         interfaceType: uint
   Version:
     address: 35

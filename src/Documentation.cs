@@ -333,7 +333,7 @@ internal static partial class TemplateHelper
 
     static ReferenceType? GetMemberReferenceType(DeviceMetadata deviceMetadata, string ns, PayloadMemberInfo member)
     {
-        var interfaceType = GetMemberTypeName(member);
+        var interfaceType = GetDeclaredType(member);
         return string.IsNullOrEmpty(interfaceType) ? null : GetReferenceType(deviceMetadata, ns, interfaceType);
     }
 

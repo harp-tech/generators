@@ -18,3 +18,50 @@ registers:
         offset: 0
         maxValue: 100
         defaultValue: 200
+  TriggerMode:
+    address: 34
+    type: U8
+    access: Write
+    maskType: TriggerModes
+  DeviceLabel:
+    address: 35
+    type: U16
+    length: 8
+    access: Write
+    interfaceType: string
+  OutputState:
+    address: 36
+    type: U8
+    length: 2
+    access: Write
+    payloadSpec:
+      Enabled:
+        offset: 0
+        length: 2
+        interfaceType: bool
+  Color0:
+    address: 37
+    type: U8
+    length: 3
+    access: Write
+    interfaceType: ColorPayload
+    payloadSpec:
+      Red:
+        offset: 0
+      Green:
+        offset: 1
+      Blue:
+        offset: 2
+  Color1:
+    address: 38
+    type: U8
+    length: 3
+    access: Write
+    interfaceType: ColorPayload
+    payloadSpec:
+      Red:
+        offset: 0
+      Green:
+        offset: 2
+      Blue:
+        offset: 1
