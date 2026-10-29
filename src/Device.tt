@@ -953,6 +953,7 @@ foreach (var registerMetadata in deviceRegisters)
         /// <summary>
         /// <#= member.Value.Description #>
         /// </summary>
+        [Description("<#= member.Value.Description #>")]
         public <#= memberType #> <#= member.Key #>;
 <#
     }

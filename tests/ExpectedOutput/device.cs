@@ -4690,21 +4690,25 @@ namespace Harp.Generators.Tests
         /// <summary>
         /// 
         /// </summary>
+        [Description("")]
         public float Analog0;
 
         /// <summary>
         /// 
         /// </summary>
+        [Description("")]
         public float Analog1;
 
         /// <summary>
         /// 
         /// </summary>
+        [Description("")]
         public float Analog2;
 
         /// <summary>
         /// 
         /// </summary>
+        [Description("")]
         public float[] Accelerometer;
 
         /// <summary>
@@ -4765,41 +4769,49 @@ namespace Harp.Generators.Tests
         /// <summary>
         /// 
         /// </summary>
+        [Description("")]
         public PwmPort PwmPort;
 
         /// <summary>
         /// 
         /// </summary>
+        [Description("")]
         public bool Invert;
 
         /// <summary>
         /// 
         /// </summary>
+        [Description("")]
         public DigitalChannels InputFlags;
 
         /// <summary>
         /// 
         /// </summary>
+        [Description("")]
         public DigitalChannels OutputFlags;
 
         /// <summary>
         /// 
         /// </summary>
+        [Description("")]
         public float DutyCycle;
 
         /// <summary>
         /// 
         /// </summary>
+        [Description("")]
         public float Frequency;
 
         /// <summary>
         /// 
         /// </summary>
+        [Description("")]
         public bool EventsEnabled;
 
         /// <summary>
         /// 
         /// </summary>
+        [Description("")]
         public uint Delta;
 
         /// <summary>
@@ -4855,26 +4867,31 @@ namespace Harp.Generators.Tests
         /// <summary>
         /// 
         /// </summary>
+        [Description("")]
         public HarpVersion ProtocolVersion;
 
         /// <summary>
         /// 
         /// </summary>
+        [Description("")]
         public HarpVersion FirmwareVersion;
 
         /// <summary>
         /// 
         /// </summary>
+        [Description("")]
         public HarpVersion HardwareVersion;
 
         /// <summary>
         /// 
         /// </summary>
+        [Description("")]
         public string CoreId;
 
         /// <summary>
         /// 
         /// </summary>
+        [Description("")]
         public byte[] InterfaceHash;
 
         /// <summary>
@@ -4924,21 +4941,25 @@ namespace Harp.Generators.Tests
         /// <summary>
         /// 
         /// </summary>
+        [Description("")]
         public byte Header;
 
         /// <summary>
         /// 
         /// </summary>
+        [Description("")]
         public int Data;
 
         /// <summary>
         /// 
         /// </summary>
+        [Description("")]
         public bool Enabled;
 
         /// <summary>
         /// 
         /// </summary>
+        [Description("")]
         public int Mode;
 
         /// <summary>
@@ -4981,11 +5002,13 @@ namespace Harp.Generators.Tests
         /// <summary>
         /// 
         /// </summary>
+        [Description("")]
         public int Low;
 
         /// <summary>
         /// 
         /// </summary>
+        [Description("")]
         public int High;
 
         /// <summary>
@@ -5029,16 +5052,19 @@ namespace Harp.Generators.Tests
         /// <summary>
         /// 
         /// </summary>
+        [Description("")]
         public byte Absent;
 
         /// <summary>
         /// 
         /// </summary>
+        [Description("")]
         public byte[] Single;
 
         /// <summary>
         /// 
         /// </summary>
+        [Description("")]
         public byte[] Multiple;
 
         /// <summary>
@@ -5083,16 +5109,19 @@ namespace Harp.Generators.Tests
         /// <summary>
         /// 
         /// </summary>
+        [Description("")]
         public byte Red;
 
         /// <summary>
         /// 
         /// </summary>
+        [Description("")]
         public byte Green;
 
         /// <summary>
         /// 
         /// </summary>
+        [Description("")]
         public byte Blue;
 
         /// <summary>
@@ -5134,11 +5163,13 @@ namespace Harp.Generators.Tests
         /// <summary>
         /// 
         /// </summary>
+        [Description("")]
         public PwmPort DigitalOutput;
 
         /// <summary>
         /// 
         /// </summary>
+        [Description("")]
         public ushort PulseWidth;
 
         /// <summary>
@@ -5185,21 +5216,25 @@ namespace Harp.Generators.Tests
         /// <summary>
         /// 
         /// </summary>
+        [Description("")]
         public PwmPort DigitalOutput;
 
         /// <summary>
         /// 
         /// </summary>
+        [Description("")]
         public ushort PulseWidth;
 
         /// <summary>
         /// 
         /// </summary>
+        [Description("")]
         public byte Frequency;
 
         /// <summary>
         /// 
         /// </summary>
+        [Description("")]
         public byte PulseCount;
 
         /// <summary>

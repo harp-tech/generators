@@ -2393,31 +2393,37 @@ namespace Harp.Generators.Tests
         /// <summary>
         /// Specifies the operation mode of the device.
         /// </summary>
+        [Description("Specifies the operation mode of the device.")]
         public OperationMode OperationMode;
 
         /// <summary>
         /// Specifies whether the device should report the content of all registers on initialization.
         /// </summary>
+        [Description("Specifies whether the device should report the content of all registers on initialization.")]
         public bool DumpRegisters;
 
         /// <summary>
         /// Specifies whether the replies to all commands will be muted, i.e. not sent by the device.
         /// </summary>
+        [Description("Specifies whether the replies to all commands will be muted, i.e. not sent by the device.")]
         public bool MuteReplies;
 
         /// <summary>
         /// Specifies the state of all visual indicators on the device.
         /// </summary>
+        [Description("Specifies the state of all visual indicators on the device.")]
         public EnableFlag VisualIndicators;
 
         /// <summary>
         /// Specifies whether the device state LED should report the operation mode of the device.
         /// </summary>
+        [Description("Specifies whether the device state LED should report the operation mode of the device.")]
         public EnableFlag OperationLed;
 
         /// <summary>
         /// Specifies whether the device should report the content of the seconds register each second.
         /// </summary>
+        [Description("Specifies whether the device should report the content of the seconds register each second.")]
         public EnableFlag Heartbeat;
 
         /// <summary>
