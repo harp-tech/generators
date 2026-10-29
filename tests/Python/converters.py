@@ -39,3 +39,66 @@ class DataConverter(Converter[np.int32]):
         view[...] = np.frombuffer(
             int(value).to_bytes(self._length, "little", signed=True), dtype=np.uint8
         )
+
+
+class EnabledConverter(Converter[bool]):
+    """Maps one raw unsigned byte to and from an active-low bool, writing true as zero.
+
+    Models interfaceType: bool with a custom converter in the CustomMemberConverter payload.
+    """
+
+    init_kwarg_type = bool
+
+    def __init__(self) -> None:
+        self.dtype = np.dtype(np.uint8)
+
+    def decode_scalar(self, view: np.generic) -> bool:
+        return np.asarray(view).item() == 0
+
+    def decode_batch(self, view: NDArray[np.generic]) -> Any:
+        return np.asarray(view) == 0
+
+    def encode_into(self, view: NDArray[np.generic], value: bool) -> None:
+        view[...] = np.uint8(0 if value else 0xFF)
+
+
+class ModeConverter(Converter[np.int32]):
+    """Maps one raw unsigned byte to and from a numpy int32.
+
+    Models interfaceType: int over a single element of the CustomMemberConverter payload.
+    """
+
+    init_kwarg_type = int
+
+    def __init__(self) -> None:
+        self.dtype = np.dtype(np.uint8)
+
+    def decode_scalar(self, view: np.generic) -> np.int32:
+        return np.int32(np.asarray(view).item())
+
+    def decode_batch(self, view: NDArray[np.generic]) -> Any:
+        return np.asarray(view).astype(np.int32)
+
+    def encode_into(self, view: NDArray[np.generic], value: np.int32) -> None:
+        view[...] = np.uint8(int(value))
+
+
+class LowConverter(Converter[np.int32]):
+    """Maps the masked low nibble of one raw unsigned byte to and from a numpy int32.
+
+    Models interfaceType: int with a custom converter under the mask of the BitmaskSplitter payload.
+    """
+
+    init_kwarg_type = int
+
+    def __init__(self) -> None:
+        self.dtype = np.dtype(np.uint8)
+
+    def decode_scalar(self, view: np.generic) -> np.int32:
+        return np.int32(np.asarray(view).item())
+
+    def decode_batch(self, view: NDArray[np.generic]) -> Any:
+        return np.asarray(view).astype(np.int32)
+
+    def encode_into(self, view: NDArray[np.generic], value: np.int32) -> None:
+        view[...] = np.uint8(int(value))

@@ -28,6 +28,9 @@ from harp.device.core import REGISTER_MAP as _CORE_REGISTER_MAP
 
 from .converters import (
     DataConverter,
+    EnabledConverter,
+    LowConverter,
+    ModeConverter,
 )
 
 
@@ -52,6 +55,7 @@ __all__ = [
     "StartPulsePayload",
     "StartPulseTrainPayload",
     "EncoderModePayload",
+    "LedEnabledPayload",
     "DigitalInputs",
     "AnalogData",
     "ComplexConfiguration",
@@ -72,6 +76,7 @@ __all__ = [
     "StartPulse",
     "StartPulseTrain",
     "EncoderMode",
+    "LedEnabled",
     "REGISTER_MAP",
 ]
 
@@ -148,17 +153,19 @@ class CustomRawPayloadPayload(AnonymousPayload[np.uint32]):
     __value__: HarpVersion = Field(HarpVersionConverter(np.uint32))
 
 
-class CustomMemberConverterPayload(StructPayload[np.uint8], length=3):
+class CustomMemberConverterPayload(StructPayload[np.uint8], length=5):
     """Represents the payload of the CustomMemberConverter register."""
 
     header: np.uint8 = Field(IdentityConverter(np.uint8))
     data: np.int32 = Field(DataConverter(), offset=1)
+    enabled: bool = Field(EnabledConverter(), offset=3)
+    mode: np.int32 = Field(ModeConverter(), offset=4)
 
 
 class BitmaskSplitterPayload(StructPayload[np.uint8]):
     """Represents the payload of the BitmaskSplitter register."""
 
-    low: np.int32 = Field(IdentityConverter(np.int32), mask=0xF)
+    low: np.int32 = Field(LowConverter(), mask=0xF)
     high: np.int32 = Field(IdentityConverter(np.int32), mask=0xF0)
 
 
@@ -216,6 +223,12 @@ class EncoderModePayload(AnonymousPayload[np.uint8]):
     """Represents the payload of the EncoderMode register."""
 
     __value__: EncoderReading = GroupMask(enum=EncoderReading, mask=0xFF, default=EncoderReading.DISPLACEMENT)
+
+
+class LedEnabledPayload(AnonymousPayload[np.uint8]):
+    """Represents the payload of the LedEnabled register."""
+
+    __value__: bool = Field(BoolConverter(), default=True)
 
 
 class DigitalInputs(RegisterU8):
@@ -338,6 +351,14 @@ class EncoderMode(RegisterBase[EncoderReading]):
     payload_class = EncoderModePayload
 
 
+class LedEnabled(RegisterBase[bool]):
+    """Specifies whether the status LED is enabled."""
+
+    address: ClassVar[int] = 104
+    payload_type: ClassVar[PayloadType] = PayloadType.U8
+    payload_class = LedEnabledPayload
+
+
 REGISTER_MAP: dict[int, type[RegisterBase[Any]]] = {
     **_CORE_REGISTER_MAP,
     32: DigitalInputs,
@@ -360,4 +381,5 @@ REGISTER_MAP: dict[int, type[RegisterBase[Any]]] = {
     100: StartPulse,
     101: StartPulseTrain,
     103: EncoderMode,
+    104: LedEnabled,
 }

@@ -104,7 +104,7 @@ registers:
   CustomMemberConverter:
     address: 38
     type: U8
-    length: 3
+    length: 5
     access: Read
     payloadSpec:
       Header:
@@ -112,6 +112,15 @@ registers:
       Data:
         offset: 1
         length: 2
+        interfaceType: int
+        converter: Payload
+      Enabled:
+        offset: 3
+        length: 1
+        interfaceType: bool
+        converter: Payload
+      Mode:
+        offset: 4
         interfaceType: int
         converter: Payload
   BitmaskSplitter:
@@ -225,6 +234,13 @@ registers:
     maskType: EncoderReading
     defaultValue: 1
     description: Configures the operation mode of the encoder.
+  LedEnabled:
+    address: 104
+    type: U8
+    access: Write
+    defaultValue: 1
+    interfaceType: bool
+    description: Specifies whether the status LED is enabled.
 bitMasks:
   PortDigitalIOS:
     bits:

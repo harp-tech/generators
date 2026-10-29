@@ -14,6 +14,10 @@ public sealed class DeviceMetadataTests
         "(TriggerMode)",
         "(DeviceLabel)",
         "(OutputState.Enabled)",
+        "(Timing.Period)",
+        "(Window)",
+        "(Gain)",
+        "(Calibration.Scale)",
         "(Color1)")]
     public void Load_InvalidMetadataThrows(string metadataFileName, params string[] expectedErrors)
     {

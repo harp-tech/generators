@@ -124,6 +124,7 @@ public class DeviceMetadata
         foreach (var register in Registers)
         {
             ValidateValue(errors, register.Key, register.Value, register.Value.Type);
+            ValidatePrimitiveType(errors, register.Key, register.Value, register.Value.Type, register.Value.Length, allowSpan: false);
             ValidatePayloadType(errors, payloadTypes, register);
             if (register.Value.PayloadSpec != null)
             {
@@ -131,7 +132,9 @@ public class DeviceMetadata
                 {
                     var name = $"{register.Key}.{member.Key}";
                     ValidateValue(errors, name, member.Value, register.Value.Type);
-                    if (member.Value.InterfaceType == "bool" && member.Value.Length > 1)
+                    if (!member.Value.Mask.HasValue)
+                        ValidatePrimitiveType(errors, name, member.Value, register.Value.Type, member.Value.Length, allowSpan: true);
+                    if (TemplateHelper.HasBoolConversion(member.Value) && member.Value.Length > 1)
                         errors.Add($"({name}) Interface type bool must span exactly one element.");
                 }
             }
@@ -154,6 +157,29 @@ public class DeviceMetadata
 
         if (info.InterfaceType == "string" && payloadType != PayloadType.U8)
             errors.Add($"({name}) Interface type string requires payload type U8.");
+    }
+
+    static void ValidatePrimitiveType(
+        List<string> errors,
+        string name,
+        ValueInfo info,
+        PayloadType payloadType,
+        int length,
+        bool allowSpan)
+    {
+        if (info.HasConverter || !TemplateHelper.GetInterfaceTypeSize(info.InterfaceType, out var primitiveType, out var size))
+            return;
+
+        if (allowSpan && length > 1)
+        {
+            var span = length * TemplateHelper.GetPayloadTypeSize(payloadType);
+            if (size != span)
+                errors.Add($"({name}) Interface type {info.InterfaceType} is {size} bytes, but {length} elements of payload type {payloadType} span {span} bytes.");
+        }
+        else if (!allowSpan && length > 0)
+            errors.Add($"({name}) Interface type {info.InterfaceType} cannot be declared on a register with a length.");
+        else if (primitiveType != payloadType)
+            errors.Add($"({name}) Interface type {info.InterfaceType} on a single element requires payload type {primitiveType}, but the payload type is {payloadType}.");
     }
 
     static void ValidatePayloadType(
@@ -516,6 +542,16 @@ internal static partial class TemplateHelper
         return length > 0 && string.IsNullOrEmpty(GetDeclaredType(info));
     }
 
+    public static bool HasBoolConversion(ValueInfo info)
+    {
+        return info.InterfaceType == "bool" && !info.HasConverter;
+    }
+
+    static bool UsesPayloadSpan(PayloadMemberInfo member)
+    {
+        return member.Length > 0 && !HasBoolConversion(member);
+    }
+
     public static string GetInterfaceType(PayloadType payloadType)
     {
         return payloadType switch
@@ -655,11 +691,18 @@ internal static partial class TemplateHelper
         return member.Converter switch
         {
             MemberConverter.RawPayload => $"ArraySegment<byte> {parameterName}",
-            MemberConverter.Payload => member.Length > 0
+            MemberConverter.Payload => UsesPayloadSpan(member)
                 ? $"{GetInterfaceType(payloadType, 0)}[] {parameterName}, int offset, int count"
                 : $"{GetInterfaceType(payloadType, 0)} {parameterName}",
             _ => $"{GetInterfaceType(payloadType, member.Length)} {parameterName}"
         };
+    }
+
+    public static string GetConverterReturnType(PayloadMemberInfo member, PayloadType payloadType)
+    {
+        return UsesPayloadSpan(member)
+            ? $"{GetInterfaceType(payloadType, 0)}[]"
+            : GetInterfaceType(payloadType, 0);
     }
 
     public static string GetParseConversion(RegisterInfo register, string expression)
@@ -754,7 +797,7 @@ internal static partial class TemplateHelper
         var memberLength = member.Length;
         var memberOffset = member.Offset.GetValueOrDefault();
         var payloadInterfaceType = GetInterfaceType(payloadType);
-        if (memberLength > 0 && member.InterfaceType != "bool")
+        if (UsesPayloadSpan(member))
         {
             if (member.Converter == MemberConverter.RawPayload)
                 throw new NotSupportedException("Raw payload converters inside payload spec is not currently supported.");
@@ -790,7 +833,7 @@ internal static partial class TemplateHelper
             var mask = member.Mask.Value;
             var shift = GetMaskShift(mask);
             expression = $"({expression} & 0x{mask:X})";
-            if (member.InterfaceType != "bool" || member.HasConverter)
+            if (!HasBoolConversion(member))
             {
                 if (shift > 0)
                 {
@@ -824,7 +867,7 @@ internal static partial class TemplateHelper
             member,
             $"value.{name}",
             payloadType);
-        if (memberLength > 0 && member.InterfaceType != "bool")
+        if (UsesPayloadSpan(member))
         {
             if (member.Converter == MemberConverter.RawPayload)
                 throw new NotSupportedException("Raw payload converters inside payload spec is not currently supported.");
@@ -857,10 +900,10 @@ internal static partial class TemplateHelper
         if (member.HasConverter)
             expression = $"FormatPayload{name}({expression})";
 
-        var isBoolean = member.InterfaceType == "bool" && !member.HasConverter;
-        if (member.Length > 0 && !isBoolean)
+        if (UsesPayloadSpan(member))
             return expression;
 
+        var isBoolean = HasBoolConversion(member);
         var payloadInterfaceType = GetInterfaceType(payloadType);
         var memberInterfaceType = GetDeclaredType(member);
         if (!string.IsNullOrEmpty(memberInterfaceType))

@@ -42,6 +42,8 @@
     name: StartPulseTrain
   - uid: Harp.Generators.Tests.EncoderMode
     name: EncoderMode
+  - uid: Harp.Generators.Tests.LedEnabled
+    name: LedEnabled
 - name: Payloads
   items:
   - uid: Harp.Generators.Tests.AnalogDataPayload
@@ -220,7 +222,7 @@ items:
     register:
       address: 38
       payloadType: U8
-      length: 3
+      length: 5
       access:
       - Read
       interfaceType:
@@ -513,6 +515,29 @@ items:
         name: EncoderReading
         uid: Harp.Generators.Tests.EncoderReading
       logFile: Tests_103.bin
+--- # Harp.Generators.Tests.LedEnabled.yml
+### YamlMime:UniversalReference
+items:
+- uid: Harp.Generators.Tests.LedEnabled
+  id: LedEnabled
+  name: LedEnabled
+  name.python: LedEnabled
+  fullName: Harp.Generators.Tests.LedEnabled
+  type: class
+  langs:
+  - csharp
+  - python
+  summary: Specifies whether the status LED is enabled.
+  harp:
+    register:
+      address: 104
+      payloadType: U8
+      access:
+      - Write
+      defaultValue: 1
+      interfaceType:
+        name: bool
+      logFile: Tests_104.bin
 --- # Harp.Generators.Tests.AnalogDataPayload.yml
 ### YamlMime:UniversalReference
 items:
@@ -875,6 +900,8 @@ items:
   children:
   - Harp.Generators.Tests.CustomMemberConverterPayload.Header
   - Harp.Generators.Tests.CustomMemberConverterPayload.Data
+  - Harp.Generators.Tests.CustomMemberConverterPayload.Enabled
+  - Harp.Generators.Tests.CustomMemberConverterPayload.Mode
 - uid: Harp.Generators.Tests.CustomMemberConverterPayload.Header
   id: Header
   name: Header
@@ -902,6 +929,37 @@ items:
     member:
       offset: 1
       length: 2
+      interfaceType:
+        name: int
+- uid: Harp.Generators.Tests.CustomMemberConverterPayload.Enabled
+  id: Enabled
+  name: Enabled
+  name.python: enabled
+  fullName: Harp.Generators.Tests.CustomMemberConverterPayload.Enabled
+  parent: Harp.Generators.Tests.CustomMemberConverterPayload
+  type: field
+  langs:
+  - csharp
+  - python
+  harp:
+    member:
+      offset: 3
+      length: 1
+      interfaceType:
+        name: bool
+- uid: Harp.Generators.Tests.CustomMemberConverterPayload.Mode
+  id: Mode
+  name: Mode
+  name.python: mode
+  fullName: Harp.Generators.Tests.CustomMemberConverterPayload.Mode
+  parent: Harp.Generators.Tests.CustomMemberConverterPayload
+  type: field
+  langs:
+  - csharp
+  - python
+  harp:
+    member:
+      offset: 4
       interfaceType:
         name: int
 --- # Harp.Generators.Tests.BitmaskSplitterPayload.yml

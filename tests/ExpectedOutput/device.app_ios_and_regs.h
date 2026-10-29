@@ -137,7 +137,7 @@ typedef struct
     uint8_t REG_VERSION[32];
     uint32_t REG_CUSTOM_PAYLOAD[3];
     uint32_t REG_CUSTOM_RAW_PAYLOAD[3];
-    uint8_t REG_CUSTOM_MEMBER_CONVERTER[3];
+    uint8_t REG_CUSTOM_MEMBER_CONVERTER[5];
     uint8_t REG_BITMASK_SPLITTER;
     int32_t REG_COUNTER0;
     uint8_t REG_PORT_DIO_SET;
@@ -151,6 +151,7 @@ typedef struct
     uint16_t REG_START_PULSE;
     uint16_t REG_START_PULSE_TRAIN[2];
     uint8_t REG_ENCODER_MODE;
+    uint8_t REG_LED_ENABLED;
 } AppRegs;
 
 /************************************************************************/
@@ -177,6 +178,7 @@ typedef struct
 #define ADD_REG_START_PULSE               100 // U16    Starts a PWM pulse.
 #define ADD_REG_START_PULSE_TRAIN         101 // U16    Starts a PWM pulse train.
 #define ADD_REG_ENCODER_MODE              103 // U8     Configures the operation mode of the encoder.
+#define ADD_REG_LED_ENABLED               104 // U8     Specifies whether the status LED is enabled.
 
 /************************************************************************/
 /* Tests registers' memory limits                                       */
@@ -186,8 +188,8 @@ typedef struct
 /************************************************************************/
 /* Memory limits */
 #define APP_REGS_ADD_MIN                    0x20
-#define APP_REGS_ADD_MAX                    0x67
-#define APP_NBYTES_OF_REG_BANK              136
+#define APP_REGS_ADD_MAX                    0x68
+#define APP_NBYTES_OF_REG_BANK              139
 
 /************************************************************************/
 /* Registers' bits                                                      */

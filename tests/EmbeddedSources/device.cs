@@ -46,6 +46,26 @@ namespace Harp.Generators.Tests
             PayloadMarshal.Write(result, 0, (short)data);
             return result;
         }
+
+        private static partial bool ParsePayloadEnabled(byte[] payloadEnabled, int offset, int count)
+        {
+            return payloadEnabled[offset] == 0;
+        }
+
+        private static partial byte[] FormatPayloadEnabled(bool enabled)
+        {
+            return [enabled ? (byte)0 : (byte)0xFF];
+        }
+
+        private static partial int ParsePayloadMode(byte payloadMode)
+        {
+            return payloadMode;
+        }
+
+        private static partial byte FormatPayloadMode(int mode)
+        {
+            return (byte)mode;
+        }
     }
     
     public partial class BitmaskSplitter
