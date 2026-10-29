@@ -140,7 +140,7 @@ typedef struct
     uint8_t REG_CUSTOM_MEMBER_CONVERTER[5];
     uint8_t REG_BITMASK_SPLITTER;
     int32_t REG_COUNTER0;
-    uint8_t REG_PORT_DIO_SET;
+    uint16_t REG_PORT_DIO_SET;
     uint16_t REG_PULSE_DO_PORT0;
     uint16_t REG_PULSE_DO0;
     uint16_t REG_MULTI_ELEMENT_PAYLOAD[3];
@@ -152,6 +152,9 @@ typedef struct
     uint16_t REG_START_PULSE_TRAIN[2];
     uint8_t REG_ENCODER_MODE;
     uint8_t REG_LED_ENABLED;
+    uint16_t REG_PORT_DIO_CLEAR;
+    uint32_t REG_WIDE_STATUS;
+    uint32_t REG_THRESHOLD;
 } AppRegs;
 
 /************************************************************************/
@@ -167,7 +170,7 @@ typedef struct
 #define ADD_REG_CUSTOM_MEMBER_CONVERTER    38 // U8
 #define ADD_REG_BITMASK_SPLITTER           39 // U8
 #define ADD_REG_COUNTER0                   40 // I32
-#define ADD_REG_PORT_DIO_SET               41 // U8
+#define ADD_REG_PORT_DIO_SET               41 // U16
 #define ADD_REG_PULSE_DO_PORT0             42 // U16
 #define ADD_REG_PULSE_DO0                  43 // U16
 #define ADD_REG_MULTI_ELEMENT_PAYLOAD      44 // U16
@@ -179,6 +182,9 @@ typedef struct
 #define ADD_REG_START_PULSE_TRAIN         101 // U16    Starts a PWM pulse train.
 #define ADD_REG_ENCODER_MODE              103 // U8     Configures the operation mode of the encoder.
 #define ADD_REG_LED_ENABLED               104 // U8     Specifies whether the status LED is enabled.
+#define ADD_REG_PORT_DIO_CLEAR            105 // U16
+#define ADD_REG_WIDE_STATUS               106 // U32
+#define ADD_REG_THRESHOLD                 107 // U32    Specifies a threshold whose default needs more than single precision.
 
 /************************************************************************/
 /* Tests registers' memory limits                                       */
@@ -188,8 +194,8 @@ typedef struct
 /************************************************************************/
 /* Memory limits */
 #define APP_REGS_ADD_MIN                    0x20
-#define APP_REGS_ADD_MAX                    0x68
-#define APP_NBYTES_OF_REG_BANK              139
+#define APP_REGS_ADD_MAX                    0x6B
+#define APP_NBYTES_OF_REG_BANK              150
 
 /************************************************************************/
 /* Registers' bits                                                      */
@@ -202,6 +208,12 @@ typedef struct
 #define B_TEST_DI_PORT1                    (1<<9)       //
 #define B_SUPPLY_PORT0                     (1<<10)      //
 #define B_PORT_DIO1                        (1<<11)      //
+#define B_CHANNEL0                         (1<<0)       //
+#define B_CHANNEL1                         (1<<1)       //
+#define B_CHANNEL2                         (1<<2)       //
+#define B_CHANNEL3                         (1<<3)       //
+#define B_READY                            (1<<0)       //
+#define B_OVERFLOW                         (1UL<<31)    //
 #define MSK_PWM_PORT                       0x0F         //
 #define GM_PWM_PORT_PWM0                   0x01         //
 #define GM_PWM_PORT_PWM1                   0x02         //

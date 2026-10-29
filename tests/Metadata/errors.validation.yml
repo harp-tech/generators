@@ -95,3 +95,29 @@ registers:
       Scale:
         offset: 0
         interfaceType: float
+  LineState:
+    address: 43
+    type: U8
+    access: Write
+    maskType: WideLines
+  LineConfig:
+    address: 44
+    type: U8
+    access: Write
+    payloadSpec:
+      Low:
+        offset: 0
+        mask: 0xF
+        maskType: WideLines
+bitMasks:
+  WideLines:
+    bits:
+      Line0: 0x1
+      Line8: 0x100
+  Channels:
+    bits:
+      Off: 0x0
+      Channel0: 0x1
+      Channel1: 0x2
+      Both: 0x3
+      Again: 0x2

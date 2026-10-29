@@ -29,7 +29,10 @@ void (*app_func_rd_pointer[])(void) = {
     &app_read_REG_START_PULSE,
     &app_read_REG_START_PULSE_TRAIN,
     &app_read_REG_ENCODER_MODE,
-    &app_read_REG_LED_ENABLED
+    &app_read_REG_LED_ENABLED,
+    &app_read_REG_PORT_DIO_CLEAR,
+    &app_read_REG_WIDE_STATUS,
+    &app_read_REG_THRESHOLD
 };
 
 bool (*app_func_wr_pointer[])(void*) = {
@@ -53,7 +56,10 @@ bool (*app_func_wr_pointer[])(void*) = {
     &app_write_REG_START_PULSE,
     &app_write_REG_START_PULSE_TRAIN,
     &app_write_REG_ENCODER_MODE,
-    &app_write_REG_LED_ENABLED
+    &app_write_REG_LED_ENABLED,
+    &app_write_REG_PORT_DIO_CLEAR,
+    &app_write_REG_WIDE_STATUS,
+    &app_write_REG_THRESHOLD
 };
 
 /************************************************************************/
@@ -184,7 +190,7 @@ void app_read_REG_PORT_DIO_SET(void)
 
 bool app_write_REG_PORT_DIO_SET(void *a)
 {
-    uint8_t reg = *((uint8_t*)a);
+    uint16_t reg = *((uint16_t*)a);
 
     app_regs.REG_PORT_DIO_SET = reg;
     return true;
@@ -380,5 +386,50 @@ bool app_write_REG_LED_ENABLED(void *a)
     uint8_t reg = *((uint8_t*)a);
 
     app_regs.REG_LED_ENABLED = reg;
+    return true;
+}
+
+/************************************************************************/
+/* REG_PORT_DIO_CLEAR                                                   */
+/************************************************************************/
+void app_read_REG_PORT_DIO_CLEAR(void)
+{
+    //app_regs.REG_PORT_DIO_CLEAR = 0;
+
+}
+
+bool app_write_REG_PORT_DIO_CLEAR(void *a)
+{
+    uint16_t reg = *((uint16_t*)a);
+
+    app_regs.REG_PORT_DIO_CLEAR = reg;
+    return true;
+}
+
+/************************************************************************/
+/* REG_WIDE_STATUS                                                      */
+/************************************************************************/
+void app_read_REG_WIDE_STATUS(void)
+{
+    //app_regs.REG_WIDE_STATUS = 0;
+
+}
+
+bool app_write_REG_WIDE_STATUS(void *a) { return false; }
+
+/************************************************************************/
+/* REG_THRESHOLD                                                        */
+/************************************************************************/
+void app_read_REG_THRESHOLD(void)
+{
+    //app_regs.REG_THRESHOLD = 0;
+
+}
+
+bool app_write_REG_THRESHOLD(void *a)
+{
+    uint32_t reg = *((uint32_t*)a);
+
+    app_regs.REG_THRESHOLD = reg;
     return true;
 }

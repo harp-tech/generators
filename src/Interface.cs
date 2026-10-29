@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Numerics;
 using Bonsai.Harp;
 using YamlDotNet.Core;
 using YamlDotNet.Core.Events;
@@ -120,11 +121,15 @@ public class DeviceMetadata
     void Validate()
     {
         var errors = new List<string>();
+        foreach (var bitMask in BitMasks)
+            ValidateBitMask(errors, bitMask.Key, bitMask.Value);
+
         var payloadTypes = new Dictionary<string, KeyValuePair<string, RegisterInfo>>();
         foreach (var register in Registers)
         {
             ValidateValue(errors, register.Key, register.Value, register.Value.Type);
             ValidatePrimitiveType(errors, register.Key, register.Value, register.Value.Type, register.Value.Length, allowSpan: false);
+            ValidateMaskType(errors, register.Key, register.Value, register.Value.Type, memberMask: null);
             ValidatePayloadType(errors, payloadTypes, register);
             if (register.Value.PayloadSpec != null)
             {
@@ -134,6 +139,7 @@ public class DeviceMetadata
                     ValidateValue(errors, name, member.Value, register.Value.Type);
                     if (!member.Value.Mask.HasValue)
                         ValidatePrimitiveType(errors, name, member.Value, register.Value.Type, member.Value.Length, allowSpan: true);
+                    ValidateMaskType(errors, name, member.Value, register.Value.Type, member.Value.Mask);
                     if (TemplateHelper.HasBoolConversion(member.Value) && member.Value.Length > 1)
                         errors.Add($"({name}) Interface type bool must span exactly one element.");
                 }
@@ -144,16 +150,13 @@ public class DeviceMetadata
             throw new YamlException($"Invalid device metadata:{Environment.NewLine}{string.Join(Environment.NewLine, errors)}");
     }
 
-    void ValidateValue(List<string> errors, string name, ValueInfo info, PayloadType payloadType)
+    static void ValidateValue(List<string> errors, string name, ValueInfo info, PayloadType payloadType)
     {
         var value = info.DefaultValue.GetValueOrDefault();
         if (value < info.MinValue)
             errors.Add($"({name}) Default value {value} is below the minimum value {info.MinValue}.");
         else if (value > info.MaxValue)
             errors.Add($"({name}) Default value {value} is above the maximum value {info.MaxValue}.");
-
-        if (!string.IsNullOrEmpty(info.MaskType) && !TemplateHelper.IsMaskType(this, info.MaskType))
-            errors.Add($"({name}) Mask type {info.MaskType} does not refer to a bit mask or group mask.");
 
         if (info.InterfaceType == "string" && payloadType != PayloadType.U8)
             errors.Add($"({name}) Interface type string requires payload type U8.");
@@ -180,6 +183,55 @@ public class DeviceMetadata
             errors.Add($"({name}) Interface type {info.InterfaceType} cannot be declared on a register with a length.");
         else if (primitiveType != payloadType)
             errors.Add($"({name}) Interface type {info.InterfaceType} on a single element requires payload type {primitiveType}, but the payload type is {payloadType}.");
+    }
+
+    void ValidateMaskType(List<string> errors, string name, ValueInfo info, PayloadType payloadType, uint? memberMask)
+    {
+        if (string.IsNullOrEmpty(info.MaskType))
+            return;
+
+        if (!TemplateHelper.IsMaskType(this, info.MaskType))
+        {
+            errors.Add($"({name}) Mask type {info.MaskType} does not refer to a bit mask or group mask.");
+            return;
+        }
+
+        var bitMask = TemplateHelper.FindBitMask(this, info.MaskType);
+        if (bitMask is null)
+            return;
+
+        var usedMask = bitMask.Bits.Values.Aggregate(0u, (mask, bit) => mask | bit.Value);
+        var allowedMask = memberMask ?? TemplateHelper.GetElementMask(payloadType);
+        var shift = memberMask.HasValue ? TemplateHelper.GetMaskShift(memberMask.GetValueOrDefault()) : 0;
+        if ((((ulong)usedMask << shift) & ~allowedMask) == 0)
+            return;
+
+        var excessBits = bitMask.Bits
+            .Where(bit => (((ulong)bit.Value.Value << shift) & ~allowedMask) != 0)
+            .Select(bit => bit.Key);
+        var target = memberMask.HasValue ? $"the member mask 0x{memberMask.GetValueOrDefault():X}" : $"payload type {payloadType}";
+        errors.Add($"({name}) Bit mask {info.MaskType} has bits outside {target}: {string.Join(", ", excessBits)}.");
+    }
+
+    static void ValidateBitMask(List<string> errors, string maskName, BitMaskInfo mask)
+    {
+        var declaredBits = new Dictionary<uint, string>();
+        foreach (var bit in mask.Bits)
+        {
+            var name = $"{maskName}.{bit.Key}";
+            var value = bit.Value.Value;
+            if (value == 0)
+            {
+                if (bit.Key != "None")
+                    errors.Add($"({name}) A bit mask member with value zero must be named None.");
+            }
+            else if ((value & (value - 1)) != 0)
+                errors.Add($"({name}) Bit mask value 0x{value:X} is not a single bit.");
+            else if (declaredBits.TryGetValue(value, out var declaredName))
+                errors.Add($"({name}) Bit mask value 0x{value:X} is already declared by {maskName}.{declaredName}.");
+            else
+                declaredBits.Add(value, bit.Key);
+        }
     }
 
     static void ValidatePayloadType(
@@ -278,17 +330,17 @@ public abstract class ValueInfo
     /// <summary>
     /// Specifies the minimum allowable value.
     /// </summary>
-    public float? MinValue;
+    public double? MinValue;
 
     /// <summary>
     /// Specifies the maximum allowable value.
     /// </summary>
-    public float? MaxValue;
+    public double? MaxValue;
 
     /// <summary>
     /// Specifies the default value.
     /// </summary>
-    public float? DefaultValue;
+    public double? DefaultValue;
 
     /// <summary>
     /// Specifies the name of the type used to represent the value in the high-level interface.
@@ -377,7 +429,7 @@ public class PayloadMemberInfo : ValueInfo
     /// Specifies the mask used to read and write this payload member.
     /// </summary>
     [YamlConverter(typeof(HexValueTypeConverter))]
-    public int? Mask;
+    public uint? Mask;
 
     /// <summary>
     /// Specifies a summary description of this payload member.
@@ -441,7 +493,7 @@ public class MaskValue
     /// Specifies the numerical mask value.
     /// </summary>
     [YamlConverter(typeof(HexValueTypeConverter))]
-    public int Value;
+    public uint Value;
 
     /// <summary>
     /// Specifies a summary description of the mask value function.
@@ -468,7 +520,7 @@ internal static partial class TemplateHelper
         return CoreMetadata.Value.GroupMasks.TryGetValue(typeName, out groupMask) ? groupMask : null;
     }
 
-    static BitMaskInfo? FindBitMask(DeviceMetadata deviceMetadata, string typeName)
+    public static BitMaskInfo? FindBitMask(DeviceMetadata deviceMetadata, string typeName)
     {
         if (deviceMetadata.BitMasks.TryGetValue(typeName, out var bitMask)) return bitMask;
         if (deviceMetadata.GroupMasks.ContainsKey(typeName)) return null;
@@ -485,7 +537,7 @@ internal static partial class TemplateHelper
         return FindGroupMask(deviceMetadata, typeName) != null || IsBitMask(deviceMetadata, typeName);
     }
 
-    static List<string>? GetMaskValueNames(DeviceMetadata deviceMetadata, string maskType, long value)
+    static List<string>? GetMaskValueNames(DeviceMetadata deviceMetadata, string maskType, uint value)
     {
         var groupMask = FindGroupMask(deviceMetadata, maskType);
         var entries = groupMask?.Values ?? FindBitMask(deviceMetadata, maskType)?.Bits;
@@ -632,7 +684,13 @@ internal static partial class TemplateHelper
         return (int)payloadType & 0xF;
     }
 
-    public static string GetRangeAttributeDeclaration(float? minValue, float? maxValue)
+    public static ulong GetElementMask(PayloadType payloadType)
+    {
+        var size = GetPayloadTypeSize(payloadType);
+        return size >= 8 ? ulong.MaxValue : (1UL << (size * 8)) - 1;
+    }
+
+    public static string GetRangeAttributeDeclaration(double? minValue, double? maxValue)
     {
         var minValueDeclaration = minValue.HasValue ? minValue.Value.ToString() : "long.MinValue";
         var maxValueDeclaration = maxValue.HasValue ? maxValue.Value.ToString() : "long.MaxValue";
@@ -654,7 +712,7 @@ internal static partial class TemplateHelper
                 return $" = {(defaultValue.GetValueOrDefault() != 0 ? "true" : "false")};";
             if (interfaceType == maskType)
             {
-                var value = (long)defaultValue.GetValueOrDefault();
+                var value = (uint)defaultValue.GetValueOrDefault();
                 var names = GetMaskValueNames(deviceMetadata, maskType, value);
                 return names is null
                     ? $" = ({maskType}){value};"
@@ -751,20 +809,19 @@ internal static partial class TemplateHelper
         return expression;
     }
 
-    static int GetMaskShift(int mask)
+    public static int GetMaskShift(uint mask)
     {
-        var lsb = mask & (~mask + 1);
-        return (int)Math.Log(lsb, 2);
+        return BitOperations.TrailingZeroCount(mask);
     }
 
-    public static int GetMaskSelect(GroupMaskInfo groupMask)
+    public static uint GetMaskSelect(GroupMaskInfo groupMask)
     {
         var maxValue = groupMask.Values.Max(member => member.Value.Value);
         if (maxValue == 0)
             return 1;
 
-        var msb = 1 << (int)Math.Log(maxValue, 2);
-        return (msb << 1) - 1;
+        var msb = BitOperations.Log2(maxValue);
+        return msb == 31 ? uint.MaxValue : (2u << msb) - 1;
     }
 
     static int GetMemberSize(
@@ -972,9 +1029,19 @@ class HexValueTypeConverter : IYamlTypeConverter
 
     public bool Accepts(Type type) => false;
 
+    static readonly IDeserializer ScalarDeserializer = new DeserializerBuilder().Build();
+
     public object? ReadYaml(IParser parser, Type type, ObjectDeserializer rootDeserializer)
     {
-        return rootDeserializer(type);
+        return ParseMask(parser.Consume<Scalar>());
+    }
+
+    public static uint ParseMask(Scalar scalar)
+    {
+        var value = ScalarDeserializer.Deserialize<ulong>(scalar.Value);
+        if (value > uint.MaxValue)
+            throw new YamlException(scalar.Start, scalar.End, $"Mask value {scalar.Value} does not fit in 32 bits.");
+        return (uint)value;
     }
 
     public void WriteYaml(IEmitter emitter, object? value, Type type, ObjectSerializer serializer)
@@ -986,9 +1053,6 @@ class HexValueTypeConverter : IYamlTypeConverter
 class MaskValueTypeConverter : IYamlTypeConverter
 {
     public static readonly MaskValueTypeConverter Instance = new();
-    static readonly IDeserializer ValueDeserializer = new DeserializerBuilder()
-        .WithTypeConverter(HexValueTypeConverter.Instance)
-        .Build();
     static readonly IValueSerializer DefaultSerializer = new SerializerBuilder()
         .WithNamingConvention(CamelCaseNamingConvention.Instance)
         .ConfigureDefaultValuesHandling(DefaultValuesHandling.OmitNull)
@@ -1008,11 +1072,11 @@ class MaskValueTypeConverter : IYamlTypeConverter
                 var value = parser.Consume<Scalar>();
                 if (string.IsNullOrEmpty(value.Value))
                 {
-                    maskValue.Value = ValueDeserializer.Deserialize<int>(key.Value);
+                    maskValue.Value = HexValueTypeConverter.ParseMask(key);
                 }
                 else if (key.Value.Equals(nameof(maskValue.Value), StringComparison.OrdinalIgnoreCase))
                 {
-                    maskValue.Value = ValueDeserializer.Deserialize<int>(value.Value);
+                    maskValue.Value = HexValueTypeConverter.ParseMask(value);
                 }
                 else if (key.Value.Equals(nameof(maskValue.Description), StringComparison.OrdinalIgnoreCase))
                 {
@@ -1024,7 +1088,7 @@ class MaskValueTypeConverter : IYamlTypeConverter
         else
         {
             var scalar = parser.Consume<Scalar>();
-            return new MaskValue { Value = ValueDeserializer.Deserialize<int>(scalar.Value) };
+            return new MaskValue { Value = HexValueTypeConverter.ParseMask(scalar) };
         }
     }
 
@@ -1034,7 +1098,7 @@ class MaskValueTypeConverter : IYamlTypeConverter
             return;
 
         if (string.IsNullOrEmpty(maskValue.Description))
-            HexValueTypeConverter.Instance.WriteYaml(emitter, maskValue.Value, typeof(int), serializer);
+            HexValueTypeConverter.Instance.WriteYaml(emitter, maskValue.Value, typeof(uint), serializer);
         else
             DefaultSerializer.SerializeValue(emitter, value, type);
     }

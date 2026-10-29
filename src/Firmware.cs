@@ -329,6 +329,7 @@ internal static partial class TemplateHelper
     {
         return deviceMetadata.BitMasks.Values
             .SelectMany(mask => mask.Bits)
+            .Where(bitField => bitField.Value.Value != 0)
             .Select(bitField => GetFirmwareName(bitField.Key).Length)
             .Prepend(0).Max();
     }

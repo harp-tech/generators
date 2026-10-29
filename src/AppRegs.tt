@@ -164,15 +164,16 @@ var maxMaskNameLength = Math.Max(maxBitMaskNameLength, maxGroupMaskNameLength);
 foreach (var bitMask in DeviceMetadata.BitMasks)
 {
     var mask = bitMask.Value;
-    foreach (var bitField in mask.Bits)
+    foreach (var bitField in mask.Bits.Where(bitField => bitField.Value.Value != 0))
     {
         var fieldInfo = bitField.Value;
         var fieldName = TemplateHelper.GetFirmwareName(bitField.Key);
         var fieldNamePadding = new string(' ', maxMaskNameLength - fieldName.Length + 6);
-        var bitShift = (int)Math.Log(fieldInfo.Value, 2);
-        var bitShiftPadding = new string(' ', 8 - bitShift.ToString().Length);
+        var bitShift = TemplateHelper.GetMaskShift(fieldInfo.Value);
+        var bitLiteral = bitShift < 16 ? "1" : "1UL";
+        var bitShiftPadding = new string(' ', Math.Max(1, 9 - bitLiteral.Length - bitShift.ToString().Length));
 #>
-#define B_<#= fieldName #><#= fieldNamePadding #>(1<<<#= bitShift #>)<#= bitShiftPadding #>//<#= TemplateHelper.GetOptionalText(" ", fieldInfo.Description) #>
+#define B_<#= fieldName #><#= fieldNamePadding #>(<#= bitLiteral #><<<#= bitShift #>)<#= bitShiftPadding #>//<#= TemplateHelper.GetOptionalText(" ", fieldInfo.Description) #>
 <#
     }
 }

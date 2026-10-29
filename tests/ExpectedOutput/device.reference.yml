@@ -44,6 +44,12 @@
     name: EncoderMode
   - uid: Harp.Generators.Tests.LedEnabled
     name: LedEnabled
+  - uid: Harp.Generators.Tests.PortDIOClear
+    name: PortDIOClear
+  - uid: Harp.Generators.Tests.WideStatus
+    name: WideStatus
+  - uid: Harp.Generators.Tests.Threshold
+    name: Threshold
 - name: Payloads
   items:
   - uid: Harp.Generators.Tests.AnalogDataPayload
@@ -68,6 +74,10 @@
   items:
   - uid: Harp.Generators.Tests.PortDigitalIOS
     name: PortDigitalIOS
+  - uid: Harp.Generators.Tests.DigitalChannels
+    name: DigitalChannels
+  - uid: Harp.Generators.Tests.WideStatusFlags
+    name: WideStatusFlags
   - uid: Harp.Generators.Tests.PwmPort
     name: PwmPort
   - uid: Harp.Generators.Tests.EncoderReading
@@ -285,7 +295,7 @@ items:
   harp:
     register:
       address: 41
-      payloadType: U8
+      payloadType: U16
       access:
       - Write
       defaultValue: 3
@@ -538,6 +548,72 @@ items:
       interfaceType:
         name: bool
       logFile: Tests_104.bin
+--- # Harp.Generators.Tests.PortDIOClear.yml
+### YamlMime:UniversalReference
+items:
+- uid: Harp.Generators.Tests.PortDIOClear
+  id: PortDIOClear
+  name: PortDIOClear
+  name.python: PortDIOClear
+  fullName: Harp.Generators.Tests.PortDIOClear
+  type: class
+  langs:
+  - csharp
+  - python
+  harp:
+    register:
+      address: 105
+      payloadType: U16
+      access:
+      - Write
+      defaultValue: 0
+      interfaceType:
+        name: PortDigitalIOS
+        uid: Harp.Generators.Tests.PortDigitalIOS
+      logFile: Tests_105.bin
+--- # Harp.Generators.Tests.WideStatus.yml
+### YamlMime:UniversalReference
+items:
+- uid: Harp.Generators.Tests.WideStatus
+  id: WideStatus
+  name: WideStatus
+  name.python: WideStatus
+  fullName: Harp.Generators.Tests.WideStatus
+  type: class
+  langs:
+  - csharp
+  - python
+  harp:
+    register:
+      address: 106
+      payloadType: U32
+      access:
+      - Event
+      interfaceType:
+        name: WideStatusFlags
+        uid: Harp.Generators.Tests.WideStatusFlags
+      logFile: Tests_106.bin
+--- # Harp.Generators.Tests.Threshold.yml
+### YamlMime:UniversalReference
+items:
+- uid: Harp.Generators.Tests.Threshold
+  id: Threshold
+  name: Threshold
+  name.python: Threshold
+  fullName: Harp.Generators.Tests.Threshold
+  type: class
+  langs:
+  - csharp
+  - python
+  summary: Specifies a threshold whose default needs more than single precision.
+  harp:
+    register:
+      address: 107
+      payloadType: U32
+      access:
+      - Write
+      defaultValue: 16777217
+      logFile: Tests_107.bin
 --- # Harp.Generators.Tests.AnalogDataPayload.yml
 ### YamlMime:UniversalReference
 items:
@@ -691,8 +767,8 @@ items:
       mask: "0xF"
       defaultValue: 3
       interfaceType:
-        name: PortDigitalIOS
-        uid: Harp.Generators.Tests.PortDigitalIOS
+        name: DigitalChannels
+        uid: Harp.Generators.Tests.DigitalChannels
 - uid: Harp.Generators.Tests.ComplexConfigurationPayload.OutputFlags
   id: OutputFlags
   name: OutputFlags
@@ -708,8 +784,8 @@ items:
       offset: 3
       defaultValue: 19
       interfaceType:
-        name: PortDigitalIOS
-        uid: Harp.Generators.Tests.PortDigitalIOS
+        name: DigitalChannels
+        uid: Harp.Generators.Tests.DigitalChannels
 - uid: Harp.Generators.Tests.ComplexConfigurationPayload.DutyCycle
   id: DutyCycle
   name: DutyCycle
@@ -1300,6 +1376,7 @@ items:
     bitMask:
       type: ushort
   children:
+  - Harp.Generators.Tests.PortDigitalIOS.None
   - Harp.Generators.Tests.PortDigitalIOS.DIO0
   - Harp.Generators.Tests.PortDigitalIOS.DIO1
   - Harp.Generators.Tests.PortDigitalIOS.DIO2
@@ -1308,6 +1385,17 @@ items:
   - Harp.Generators.Tests.PortDigitalIOS.TestDIPort1
   - Harp.Generators.Tests.PortDigitalIOS.SupplyPort0
   - Harp.Generators.Tests.PortDigitalIOS.PortDIO1
+- uid: Harp.Generators.Tests.PortDigitalIOS.None
+  id: None
+  name: None
+  fullName: Harp.Generators.Tests.PortDigitalIOS.None
+  parent: Harp.Generators.Tests.PortDigitalIOS
+  type: field
+  langs:
+  - csharp
+  harp:
+    maskValue:
+      value: "0x0"
 - uid: Harp.Generators.Tests.PortDigitalIOS.DIO0
   id: DIO0
   name: DIO0
@@ -1412,6 +1500,122 @@ items:
   harp:
     maskValue:
       value: "0x800"
+--- # Harp.Generators.Tests.DigitalChannels.yml
+### YamlMime:UniversalReference
+items:
+- uid: Harp.Generators.Tests.DigitalChannels
+  id: DigitalChannels
+  name: DigitalChannels
+  name.python: DigitalChannels
+  fullName: Harp.Generators.Tests.DigitalChannels
+  type: enum
+  langs:
+  - csharp
+  - python
+  harp:
+    bitMask:
+      type: byte
+  children:
+  - Harp.Generators.Tests.DigitalChannels.Channel0
+  - Harp.Generators.Tests.DigitalChannels.Channel1
+  - Harp.Generators.Tests.DigitalChannels.Channel2
+  - Harp.Generators.Tests.DigitalChannels.Channel3
+- uid: Harp.Generators.Tests.DigitalChannels.Channel0
+  id: Channel0
+  name: Channel0
+  name.python: CHANNEL0
+  fullName: Harp.Generators.Tests.DigitalChannels.Channel0
+  parent: Harp.Generators.Tests.DigitalChannels
+  type: field
+  langs:
+  - csharp
+  - python
+  harp:
+    maskValue:
+      value: "0x1"
+- uid: Harp.Generators.Tests.DigitalChannels.Channel1
+  id: Channel1
+  name: Channel1
+  name.python: CHANNEL1
+  fullName: Harp.Generators.Tests.DigitalChannels.Channel1
+  parent: Harp.Generators.Tests.DigitalChannels
+  type: field
+  langs:
+  - csharp
+  - python
+  harp:
+    maskValue:
+      value: "0x2"
+- uid: Harp.Generators.Tests.DigitalChannels.Channel2
+  id: Channel2
+  name: Channel2
+  name.python: CHANNEL2
+  fullName: Harp.Generators.Tests.DigitalChannels.Channel2
+  parent: Harp.Generators.Tests.DigitalChannels
+  type: field
+  langs:
+  - csharp
+  - python
+  harp:
+    maskValue:
+      value: "0x4"
+- uid: Harp.Generators.Tests.DigitalChannels.Channel3
+  id: Channel3
+  name: Channel3
+  name.python: CHANNEL3
+  fullName: Harp.Generators.Tests.DigitalChannels.Channel3
+  parent: Harp.Generators.Tests.DigitalChannels
+  type: field
+  langs:
+  - csharp
+  - python
+  harp:
+    maskValue:
+      value: "0x8"
+--- # Harp.Generators.Tests.WideStatusFlags.yml
+### YamlMime:UniversalReference
+items:
+- uid: Harp.Generators.Tests.WideStatusFlags
+  id: WideStatusFlags
+  name: WideStatusFlags
+  name.python: WideStatusFlags
+  fullName: Harp.Generators.Tests.WideStatusFlags
+  type: enum
+  langs:
+  - csharp
+  - python
+  harp:
+    bitMask:
+      type: uint
+  children:
+  - Harp.Generators.Tests.WideStatusFlags.Ready
+  - Harp.Generators.Tests.WideStatusFlags.Overflow
+- uid: Harp.Generators.Tests.WideStatusFlags.Ready
+  id: Ready
+  name: Ready
+  name.python: READY
+  fullName: Harp.Generators.Tests.WideStatusFlags.Ready
+  parent: Harp.Generators.Tests.WideStatusFlags
+  type: field
+  langs:
+  - csharp
+  - python
+  harp:
+    maskValue:
+      value: "0x1"
+- uid: Harp.Generators.Tests.WideStatusFlags.Overflow
+  id: Overflow
+  name: Overflow
+  name.python: OVERFLOW
+  fullName: Harp.Generators.Tests.WideStatusFlags.Overflow
+  parent: Harp.Generators.Tests.WideStatusFlags
+  type: field
+  langs:
+  - csharp
+  - python
+  harp:
+    maskValue:
+      value: "0x80000000"
 --- # Harp.Generators.Tests.PwmPort.yml
 ### YamlMime:UniversalReference
 items:

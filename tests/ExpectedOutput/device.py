@@ -38,6 +38,8 @@ __all__ = [
     "DEVICE_NAME",
     "WHO_AM_I",
     "PortDigitalIOS",
+    "DigitalChannels",
+    "WideStatusFlags",
     "PwmPort",
     "EncoderReading",
     "AnalogDataPayload",
@@ -56,6 +58,9 @@ __all__ = [
     "StartPulseTrainPayload",
     "EncoderModePayload",
     "LedEnabledPayload",
+    "PortDIOClearPayload",
+    "WideStatusPayload",
+    "ThresholdPayload",
     "DigitalInputs",
     "AnalogData",
     "ComplexConfiguration",
@@ -77,6 +82,9 @@ __all__ = [
     "StartPulseTrain",
     "EncoderMode",
     "LedEnabled",
+    "PortDIOClear",
+    "WideStatus",
+    "Threshold",
     "REGISTER_MAP",
 ]
 
@@ -93,6 +101,18 @@ class PortDigitalIOS(enum.IntFlag):
     TEST_DI_PORT1 = 0x200
     SUPPLY_PORT0 = 0x400
     PORT_DIO1 = 0x800
+
+
+class DigitalChannels(enum.IntFlag):
+    CHANNEL0 = 0x1
+    CHANNEL1 = 0x2
+    CHANNEL2 = 0x4
+    CHANNEL3 = 0x8
+
+
+class WideStatusFlags(enum.IntFlag):
+    READY = 0x1
+    OVERFLOW = 0x80000000
 
 
 class PwmPort(enum.IntEnum):
@@ -123,8 +143,8 @@ class ComplexConfigurationPayload(StructPayload[np.uint8], length=17):
 
     pwm_port: PwmPort = GroupMask(enum=PwmPort, mask=0xFF, default=PwmPort.PWM1)
     invert: bool = Field(BoolConverter(), offset=1, default=True)
-    input_flags: PortDigitalIOS = BitMask(enum=PortDigitalIOS, mask=0xF, offset=2, default=PortDigitalIOS.DIO0 | PortDigitalIOS.DIO1)
-    output_flags: PortDigitalIOS = BitMask(enum=PortDigitalIOS, offset=3, default=PortDigitalIOS(19))
+    input_flags: DigitalChannels = BitMask(enum=DigitalChannels, mask=0xF, offset=2, default=DigitalChannels.CHANNEL0 | DigitalChannels.CHANNEL1)
+    output_flags: DigitalChannels = BitMask(enum=DigitalChannels, offset=3, default=DigitalChannels(19))
     duty_cycle: np.float32 = Field(IdentityConverter(np.float32), offset=4)
     frequency: np.float32 = Field(IdentityConverter(np.float32), offset=8)
     events_enabled: bool = Field(BoolConverter(), offset=12)
@@ -169,7 +189,7 @@ class BitmaskSplitterPayload(StructPayload[np.uint8]):
     high: np.int32 = Field(IdentityConverter(np.int32), mask=0xF0)
 
 
-class PortDIOSetPayload(AnonymousPayload[np.uint8]):
+class PortDIOSetPayload(AnonymousPayload[np.uint16]):
     """Represents the payload of the PortDIOSet register."""
 
     __value__: PortDigitalIOS = BitMask(enum=PortDigitalIOS, default=PortDigitalIOS.DIO0 | PortDigitalIOS.DIO1)
@@ -231,6 +251,24 @@ class LedEnabledPayload(AnonymousPayload[np.uint8]):
     __value__: bool = Field(BoolConverter(), default=True)
 
 
+class PortDIOClearPayload(AnonymousPayload[np.uint16]):
+    """Represents the payload of the PortDIOClear register."""
+
+    __value__: PortDigitalIOS = BitMask(enum=PortDigitalIOS, default=PortDigitalIOS(0))
+
+
+class WideStatusPayload(AnonymousPayload[np.uint32]):
+    """Represents the payload of the WideStatus register."""
+
+    __value__: WideStatusFlags = BitMask(enum=WideStatusFlags)
+
+
+class ThresholdPayload(AnonymousPayload[np.uint32]):
+    """Represents the payload of the Threshold register."""
+
+    __value__: np.uint32 = Field(IdentityConverter(np.uint32), default=np.uint32(16777217))
+
+
 class DigitalInputs(RegisterU8):
     address: ClassVar[int] = 32
 
@@ -283,7 +321,7 @@ class Counter0(RegisterS32):
 
 class PortDIOSet(RegisterBase[PortDigitalIOS]):
     address: ClassVar[int] = 41
-    payload_type: ClassVar[PayloadType] = PayloadType.U8
+    payload_type: ClassVar[PayloadType] = PayloadType.U16
     payload_class = PortDIOSetPayload
 
 
@@ -359,6 +397,26 @@ class LedEnabled(RegisterBase[bool]):
     payload_class = LedEnabledPayload
 
 
+class PortDIOClear(RegisterBase[PortDigitalIOS]):
+    address: ClassVar[int] = 105
+    payload_type: ClassVar[PayloadType] = PayloadType.U16
+    payload_class = PortDIOClearPayload
+
+
+class WideStatus(RegisterBase[WideStatusFlags]):
+    address: ClassVar[int] = 106
+    payload_type: ClassVar[PayloadType] = PayloadType.U32
+    payload_class = WideStatusPayload
+
+
+class Threshold(RegisterBase[np.uint32]):
+    """Specifies a threshold whose default needs more than single precision."""
+
+    address: ClassVar[int] = 107
+    payload_type: ClassVar[PayloadType] = PayloadType.U32
+    payload_class = ThresholdPayload
+
+
 REGISTER_MAP: dict[int, type[RegisterBase[Any]]] = {
     **_CORE_REGISTER_MAP,
     32: DigitalInputs,
@@ -382,4 +440,7 @@ REGISTER_MAP: dict[int, type[RegisterBase[Any]]] = {
     101: StartPulseTrain,
     103: EncoderMode,
     104: LedEnabled,
+    105: PortDIOClear,
+    106: WideStatus,
+    107: Threshold,
 }

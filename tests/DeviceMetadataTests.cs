@@ -8,6 +8,7 @@ public sealed class DeviceMetadataTests
 {
     [DataTestMethod]
     [DataRow("errors.empty.yml", "empty")]
+    [DataRow("errors.mask.yml", "does not fit in 32 bits")]
     [DataRow("errors.validation.yml",
         "(PulseWidth)",
         "(Configuration.Level)",
@@ -18,6 +19,11 @@ public sealed class DeviceMetadataTests
         "(Window)",
         "(Gain)",
         "(Calibration.Scale)",
+        "(Channels.Off)",
+        "(Channels.Both)",
+        "(Channels.Again)",
+        "(LineState)",
+        "(LineConfig.Low)",
         "(Color1)")]
     public void Load_InvalidMetadataThrows(string metadataFileName, params string[] expectedErrors)
     {
