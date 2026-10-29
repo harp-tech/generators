@@ -2062,37 +2062,43 @@ namespace Harp.Generators.Tests
     public partial class CreateOperationControlPayload
     {
         /// <summary>
-        /// Gets or sets a value that specifies the operation mode of the device.
+        /// Gets or sets the value of the OperationMode payload member.
+        /// Specifies the operation mode of the device.
         /// </summary>
         [Description("Specifies the operation mode of the device.")]
         public OperationMode OperationMode { get; set; }
 
         /// <summary>
-        /// Gets or sets a value that specifies whether the device should report the content of all registers on initialization.
+        /// Gets or sets the value of the DumpRegisters payload member.
+        /// Specifies whether the device should report the content of all registers on initialization.
         /// </summary>
         [Description("Specifies whether the device should report the content of all registers on initialization.")]
         public bool DumpRegisters { get; set; }
 
         /// <summary>
-        /// Gets or sets a value that specifies whether the replies to all commands will be muted, i.e. not sent by the device.
+        /// Gets or sets the value of the MuteReplies payload member.
+        /// Specifies whether the replies to all commands will be muted, i.e. not sent by the device.
         /// </summary>
         [Description("Specifies whether the replies to all commands will be muted, i.e. not sent by the device.")]
         public bool MuteReplies { get; set; }
 
         /// <summary>
-        /// Gets or sets a value that specifies the state of all visual indicators on the device.
+        /// Gets or sets the value of the VisualIndicators payload member.
+        /// Specifies the state of all visual indicators on the device.
         /// </summary>
         [Description("Specifies the state of all visual indicators on the device.")]
         public EnableFlag VisualIndicators { get; set; }
 
         /// <summary>
-        /// Gets or sets a value that specifies whether the device state LED should report the operation mode of the device.
+        /// Gets or sets the value of the OperationLed payload member.
+        /// Specifies whether the device state LED should report the operation mode of the device.
         /// </summary>
         [Description("Specifies whether the device state LED should report the operation mode of the device.")]
         public EnableFlag OperationLed { get; set; }
 
         /// <summary>
-        /// Gets or sets a value that specifies whether the device should report the content of the seconds register each second.
+        /// Gets or sets the value of the Heartbeat payload member.
+        /// Specifies whether the device should report the content of the seconds register each second.
         /// </summary>
         [Description("Specifies whether the device should report the content of the seconds register each second.")]
         public EnableFlag Heartbeat { get; set; }
@@ -2393,31 +2399,37 @@ namespace Harp.Generators.Tests
         /// <summary>
         /// Specifies the operation mode of the device.
         /// </summary>
+        [Description("Specifies the operation mode of the device.")]
         public OperationMode OperationMode;
 
         /// <summary>
         /// Specifies whether the device should report the content of all registers on initialization.
         /// </summary>
+        [Description("Specifies whether the device should report the content of all registers on initialization.")]
         public bool DumpRegisters;
 
         /// <summary>
         /// Specifies whether the replies to all commands will be muted, i.e. not sent by the device.
         /// </summary>
+        [Description("Specifies whether the replies to all commands will be muted, i.e. not sent by the device.")]
         public bool MuteReplies;
 
         /// <summary>
         /// Specifies the state of all visual indicators on the device.
         /// </summary>
+        [Description("Specifies the state of all visual indicators on the device.")]
         public EnableFlag VisualIndicators;
 
         /// <summary>
         /// Specifies whether the device state LED should report the operation mode of the device.
         /// </summary>
+        [Description("Specifies whether the device state LED should report the operation mode of the device.")]
         public EnableFlag OperationLed;
 
         /// <summary>
         /// Specifies whether the device should report the content of the seconds register each second.
         /// </summary>
+        [Description("Specifies whether the device should report the content of the seconds register each second.")]
         public EnableFlag Heartbeat;
 
         /// <summary>

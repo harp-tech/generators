@@ -204,10 +204,12 @@ registers:
         offset: 0
         mask: 0xC00
         maskType: PwmPort
+        description: Specifies the digital output on which to start the pulse.
       PulseWidth:
         offset: 0
         mask: 0x3FF
         interfaceType: ushort
+        description: Specifies the width of the pulse, where values < 1 mean "no pulse" & are ignored.
   StartPulseTrain:
     address: 101
     type: U16
@@ -271,11 +273,20 @@ bitMasks:
       SupplyPort0: 0x400
       PortDIO1: 0x800
   DigitalChannels:
+    description: Specifies a set of digital channels.
     bits:
-      Channel0: 0x1
-      Channel1: 0x2
-      Channel2: 0x4
-      Channel3: 0x8
+      Channel0:
+        value: 0x1
+        description: Specifies digital channel 0.
+      Channel1:
+        value: 0x2
+        description: Specifies digital channel 1.
+      Channel2:
+        value: 0x4
+        description: Specifies digital channel 2.
+      Channel3:
+        value: 0x8
+        description: Specifies digital channel 3.
   WideStatusFlags:
     bits:
       Ready: 0x1
@@ -290,5 +301,9 @@ groupMasks:
   EncoderReading:
     description: Specifies the type of encoder mode.
     values:
-      Position: 0x0
-      Displacement: 0x1
+      Position:
+        value: 0x0
+        description: Specifies that the encoder reports its absolute position.
+      Displacement:
+        value: 0x1
+        description: Specifies that the encoder reports its displacement since the last reading.

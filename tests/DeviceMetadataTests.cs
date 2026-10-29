@@ -24,6 +24,7 @@ public sealed class DeviceMetadataTests
         "(Channels.Again)",
         "(LineState)",
         "(LineConfig.Low)",
+        "(Notes)",
         "(Color1)")]
     public void Load_InvalidMetadataThrows(string metadataFileName, params string[] expectedErrors)
     {

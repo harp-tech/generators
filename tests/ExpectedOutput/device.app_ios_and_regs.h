@@ -208,10 +208,10 @@ typedef struct
 #define B_TEST_DI_PORT1                    (1<<9)       //
 #define B_SUPPLY_PORT0                     (1<<10)      //
 #define B_PORT_DIO1                        (1<<11)      //
-#define B_CHANNEL0                         (1<<0)       //
-#define B_CHANNEL1                         (1<<1)       //
-#define B_CHANNEL2                         (1<<2)       //
-#define B_CHANNEL3                         (1<<3)       //
+#define B_CHANNEL0                         (1<<0)       // Specifies digital channel 0.
+#define B_CHANNEL1                         (1<<1)       // Specifies digital channel 1.
+#define B_CHANNEL2                         (1<<2)       // Specifies digital channel 2.
+#define B_CHANNEL3                         (1<<3)       // Specifies digital channel 3.
 #define B_READY                            (1<<0)       //
 #define B_OVERFLOW                         (1UL<<31)    //
 #define MSK_PWM_PORT                       0x0F         //
@@ -220,7 +220,7 @@ typedef struct
 #define GM_PWM_PORT_PWM2                   0x04         //
 #define GM_PWM_PORT_PWM3                   0x0A         //
 #define MSK_ENCODER_READING                0x01         //
-#define GM_ENCODER_READING_POSITION        0x00         //
-#define GM_ENCODER_READING_DISPLACEMENT    0x01         //
+#define GM_ENCODER_READING_POSITION        0x00         // Specifies that the encoder reports its absolute position.
+#define GM_ENCODER_READING_DISPLACEMENT    0x01         // Specifies that the encoder reports its displacement since the last reading.
 
 #endif /* _APP_REGS_H_ */

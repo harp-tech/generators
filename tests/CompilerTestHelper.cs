@@ -25,7 +25,7 @@ internal static class CompilerTestHelper
 
     static byte[] Compile(string[] code)
     {
-        var options = CSharpParseOptions.Default;
+        var options = CSharpParseOptions.Default.WithDocumentationMode(DocumentationMode.Diagnose);
         var syntaxTrees = Array.ConvertAll(code, text => CSharpSyntaxTree.ParseText(StripGeneratedHeader(text), options));
         var serializerDependencies = new[]
         {
@@ -59,6 +59,7 @@ internal static class CompilerTestHelper
         }
 
         AssertNoNullableWarnings(result.Diagnostics);
+        AssertNoWarnings(result.Diagnostics);
         return memoryStream.ToArray();
     }
 
@@ -90,6 +91,25 @@ internal static class CompilerTestHelper
         {
             var errorLog = new StringBuilder();
             errorLog.AppendLine("The compiled sources report nullable warnings:");
+            foreach (var warning in warnings)
+                errorLog.AppendLine(warning);
+            Assert.Fail(errorLog.ToString());
+        }
+    }
+
+    static readonly HashSet<string> AllowedWarnings = ["CS1591", "CS1701"];
+
+    static void AssertNoWarnings(IEnumerable<Diagnostic> diagnostics)
+    {
+        var warnings = (from diagnostic in diagnostics
+                        where diagnostic.Severity == DiagnosticSeverity.Warning
+                           && !AllowedWarnings.Contains(diagnostic.Id)
+                        select $"{diagnostic.Id}: {diagnostic.GetMessage()}")
+                       .ToList();
+        if (warnings.Count > 0)
+        {
+            var errorLog = new StringBuilder();
+            errorLog.AppendLine("The compiled sources report warnings:");
             foreach (var warning in warnings)
                 errorLog.AppendLine(warning);
             Assert.Fail(errorLog.ToString());
