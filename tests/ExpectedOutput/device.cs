@@ -3208,27 +3208,23 @@ namespace Harp.Generators.Tests
     public partial class CreateAnalogDataPayload
     {
         /// <summary>
-        /// Gets or sets a value to write on payload member Analog0.
+        /// Gets or sets the value of the Analog0 payload member.
         /// </summary>
-        [Description("")]
         public float Analog0 { get; set; }
 
         /// <summary>
-        /// Gets or sets a value to write on payload member Analog1.
+        /// Gets or sets the value of the Analog1 payload member.
         /// </summary>
-        [Description("")]
         public float Analog1 { get; set; }
 
         /// <summary>
-        /// Gets or sets a value to write on payload member Analog2.
+        /// Gets or sets the value of the Analog2 payload member.
         /// </summary>
-        [Description("")]
         public float Analog2 { get; set; }
 
         /// <summary>
-        /// Gets or sets a value to write on payload member Accelerometer.
+        /// Gets or sets the value of the Accelerometer payload member.
         /// </summary>
-        [Description("")]
         public float[] Accelerometer { get; set; } = new float[3];
 
         /// <summary>
@@ -3285,51 +3281,43 @@ namespace Harp.Generators.Tests
     public partial class CreateComplexConfigurationPayload
     {
         /// <summary>
-        /// Gets or sets a value to write on payload member PwmPort.
+        /// Gets or sets the value of the PwmPort payload member.
         /// </summary>
-        [Description("")]
         public PwmPort PwmPort { get; set; } = PwmPort.Pwm1;
 
         /// <summary>
-        /// Gets or sets a value to write on payload member Invert.
+        /// Gets or sets the value of the Invert payload member.
         /// </summary>
-        [Description("")]
         public bool Invert { get; set; } = true;
 
         /// <summary>
-        /// Gets or sets a value to write on payload member InputFlags.
+        /// Gets or sets the value of the InputFlags payload member.
         /// </summary>
-        [Description("")]
         public DigitalChannels InputFlags { get; set; } = DigitalChannels.Channel0 | DigitalChannels.Channel1;
 
         /// <summary>
-        /// Gets or sets a value to write on payload member OutputFlags.
+        /// Gets or sets the value of the OutputFlags payload member.
         /// </summary>
-        [Description("")]
         public DigitalChannels OutputFlags { get; set; } = (DigitalChannels)19;
 
         /// <summary>
-        /// Gets or sets a value to write on payload member DutyCycle.
+        /// Gets or sets the value of the DutyCycle payload member.
         /// </summary>
-        [Description("")]
         public float DutyCycle { get; set; }
 
         /// <summary>
-        /// Gets or sets a value to write on payload member Frequency.
+        /// Gets or sets the value of the Frequency payload member.
         /// </summary>
-        [Description("")]
         public float Frequency { get; set; }
 
         /// <summary>
-        /// Gets or sets a value to write on payload member EventsEnabled.
+        /// Gets or sets the value of the EventsEnabled payload member.
         /// </summary>
-        [Description("")]
         public bool EventsEnabled { get; set; }
 
         /// <summary>
-        /// Gets or sets a value to write on payload member Delta.
+        /// Gets or sets the value of the Delta payload member.
         /// </summary>
-        [Description("")]
         public uint Delta { get; set; } = 1000;
 
         /// <summary>
@@ -3390,33 +3378,28 @@ namespace Harp.Generators.Tests
     public partial class CreateVersionPayload
     {
         /// <summary>
-        /// Gets or sets a value to write on payload member ProtocolVersion.
+        /// Gets or sets the value of the ProtocolVersion payload member.
         /// </summary>
-        [Description("")]
         public HarpVersion ProtocolVersion { get; set; } = new();
 
         /// <summary>
-        /// Gets or sets a value to write on payload member FirmwareVersion.
+        /// Gets or sets the value of the FirmwareVersion payload member.
         /// </summary>
-        [Description("")]
         public HarpVersion FirmwareVersion { get; set; } = new();
 
         /// <summary>
-        /// Gets or sets a value to write on payload member HardwareVersion.
+        /// Gets or sets the value of the HardwareVersion payload member.
         /// </summary>
-        [Description("")]
         public HarpVersion HardwareVersion { get; set; } = new();
 
         /// <summary>
-        /// Gets or sets a value to write on payload member CoreId.
+        /// Gets or sets the value of the CoreId payload member.
         /// </summary>
-        [Description("")]
         public string CoreId { get; set; } = string.Empty;
 
         /// <summary>
-        /// Gets or sets a value to write on payload member InterfaceHash.
+        /// Gets or sets the value of the InterfaceHash payload member.
         /// </summary>
-        [Description("")]
         public byte[] InterfaceHash { get; set; } = new byte[20];
 
         /// <summary>
@@ -3582,27 +3565,23 @@ namespace Harp.Generators.Tests
     public partial class CreateCustomMemberConverterPayload
     {
         /// <summary>
-        /// Gets or sets a value to write on payload member Header.
+        /// Gets or sets the value of the Header payload member.
         /// </summary>
-        [Description("")]
         public byte Header { get; set; }
 
         /// <summary>
-        /// Gets or sets a value to write on payload member Data.
+        /// Gets or sets the value of the Data payload member.
         /// </summary>
-        [Description("")]
         public int Data { get; set; }
 
         /// <summary>
-        /// Gets or sets a value to write on payload member Enabled.
+        /// Gets or sets the value of the Enabled payload member.
         /// </summary>
-        [Description("")]
         public bool Enabled { get; set; }
 
         /// <summary>
-        /// Gets or sets a value to write on payload member Mode.
+        /// Gets or sets the value of the Mode payload member.
         /// </summary>
-        [Description("")]
         public int Mode { get; set; }
 
         /// <summary>
@@ -3659,15 +3638,13 @@ namespace Harp.Generators.Tests
     public partial class CreateBitmaskSplitterPayload
     {
         /// <summary>
-        /// Gets or sets a value to write on payload member Low.
+        /// Gets or sets the value of the Low payload member.
         /// </summary>
-        [Description("")]
         public int Low { get; set; }
 
         /// <summary>
-        /// Gets or sets a value to write on payload member High.
+        /// Gets or sets the value of the High payload member.
         /// </summary>
-        [Description("")]
         public int High { get; set; }
 
         /// <summary>
@@ -4050,21 +4027,18 @@ namespace Harp.Generators.Tests
     public partial class CreateMixedMemberLengthPayload
     {
         /// <summary>
-        /// Gets or sets a value to write on payload member Absent.
+        /// Gets or sets the value of the Absent payload member.
         /// </summary>
-        [Description("")]
         public byte Absent { get; set; }
 
         /// <summary>
-        /// Gets or sets a value to write on payload member Single.
+        /// Gets or sets the value of the Single payload member.
         /// </summary>
-        [Description("")]
         public byte[] Single { get; set; } = new byte[1];
 
         /// <summary>
-        /// Gets or sets a value to write on payload member Multiple.
+        /// Gets or sets the value of the Multiple payload member.
         /// </summary>
-        [Description("")]
         public byte[] Multiple { get; set; } = new byte[2];
 
         /// <summary>
@@ -4120,21 +4094,18 @@ namespace Harp.Generators.Tests
     public partial class CreateRgb0Payload
     {
         /// <summary>
-        /// Gets or sets a value to write on payload member Red.
+        /// Gets or sets the value of the Red payload member.
         /// </summary>
-        [Description("")]
         public byte Red { get; set; }
 
         /// <summary>
-        /// Gets or sets a value to write on payload member Green.
+        /// Gets or sets the value of the Green payload member.
         /// </summary>
-        [Description("")]
         public byte Green { get; set; }
 
         /// <summary>
-        /// Gets or sets a value to write on payload member Blue.
+        /// Gets or sets the value of the Blue payload member.
         /// </summary>
-        [Description("")]
         public byte Blue { get; set; }
 
         /// <summary>
@@ -4190,21 +4161,18 @@ namespace Harp.Generators.Tests
     public partial class CreateRgb1Payload
     {
         /// <summary>
-        /// Gets or sets a value to write on payload member Red.
+        /// Gets or sets the value of the Red payload member.
         /// </summary>
-        [Description("")]
         public byte Red { get; set; }
 
         /// <summary>
-        /// Gets or sets a value to write on payload member Green.
+        /// Gets or sets the value of the Green payload member.
         /// </summary>
-        [Description("")]
         public byte Green { get; set; }
 
         /// <summary>
-        /// Gets or sets a value to write on payload member Blue.
+        /// Gets or sets the value of the Blue payload member.
         /// </summary>
-        [Description("")]
         public byte Blue { get; set; }
 
         /// <summary>
@@ -4260,15 +4228,17 @@ namespace Harp.Generators.Tests
     public partial class CreateStartPulsePayload
     {
         /// <summary>
-        /// Gets or sets a value to write on payload member DigitalOutput.
+        /// Gets or sets the value of the DigitalOutput payload member.
+        /// Specifies the digital output on which to start the pulse.
         /// </summary>
-        [Description("")]
+        [Description("Specifies the digital output on which to start the pulse.")]
         public PwmPort DigitalOutput { get; set; }
 
         /// <summary>
-        /// Gets or sets a value to write on payload member PulseWidth.
+        /// Gets or sets the value of the PulseWidth payload member.
+        /// Specifies the width of the pulse, where values &lt; 1 mean "no pulse" &amp; are ignored.
         /// </summary>
-        [Description("")]
+        [Description("Specifies the width of the pulse, where values < 1 mean \"no pulse\" & are ignored.")]
         public ushort PulseWidth { get; set; }
 
         /// <summary>
@@ -4323,29 +4293,29 @@ namespace Harp.Generators.Tests
     public partial class CreateStartPulseTrainPayload
     {
         /// <summary>
-        /// Gets or sets a value to write on payload member DigitalOutput.
+        /// Gets or sets the value of the DigitalOutput payload member.
+        /// Specifies the digital output on which to start the pulse.
         /// </summary>
-        [Description("")]
+        [Description("Specifies the digital output on which to start the pulse.")]
         public PwmPort DigitalOutput { get; set; }
 
         /// <summary>
-        /// Gets or sets a value to write on payload member PulseWidth.
+        /// Gets or sets the value of the PulseWidth payload member.
+        /// Specifies the width of the pulse, where values &lt; 1 mean "no pulse" &amp; are ignored.
         /// </summary>
-        [Description("")]
+        [Description("Specifies the width of the pulse, where values < 1 mean \"no pulse\" & are ignored.")]
         public ushort PulseWidth { get; set; }
 
         /// <summary>
-        /// Gets or sets a value to write on payload member Frequency.
+        /// Gets or sets the value of the Frequency payload member.
         /// </summary>
         [Range(min: 1, max: 255)]
         [Editor(DesignTypes.NumericUpDownEditor, DesignTypes.UITypeEditor)]
-        [Description("")]
         public byte Frequency { get; set; } = 1;
 
         /// <summary>
-        /// Gets or sets a value to write on payload member PulseCount.
+        /// Gets or sets the value of the PulseCount payload member.
         /// </summary>
-        [Description("")]
         public byte PulseCount { get; set; }
 
         /// <summary>
@@ -4671,10 +4641,10 @@ namespace Harp.Generators.Tests
         /// <summary>
         /// Initializes a new instance of the <see cref="AnalogDataPayload"/> structure.
         /// </summary>
-        /// <param name="analog0"></param>
-        /// <param name="analog1"></param>
-        /// <param name="analog2"></param>
-        /// <param name="accelerometer"></param>
+        /// <param name="analog0">The value of the Analog0 payload member.</param>
+        /// <param name="analog1">The value of the Analog1 payload member.</param>
+        /// <param name="analog2">The value of the Analog2 payload member.</param>
+        /// <param name="accelerometer">The value of the Accelerometer payload member.</param>
         public AnalogDataPayload(
             float analog0,
             float analog1,
@@ -4687,28 +4657,9 @@ namespace Harp.Generators.Tests
             Accelerometer = accelerometer;
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        [Description("")]
         public float Analog0;
-
-        /// <summary>
-        /// 
-        /// </summary>
-        [Description("")]
         public float Analog1;
-
-        /// <summary>
-        /// 
-        /// </summary>
-        [Description("")]
         public float Analog2;
-
-        /// <summary>
-        /// 
-        /// </summary>
-        [Description("")]
         public float[] Accelerometer;
 
         /// <summary>
@@ -4738,14 +4689,14 @@ namespace Harp.Generators.Tests
         /// <summary>
         /// Initializes a new instance of the <see cref="ComplexConfigurationPayload"/> structure.
         /// </summary>
-        /// <param name="pwmPort"></param>
-        /// <param name="invert"></param>
-        /// <param name="inputFlags"></param>
-        /// <param name="outputFlags"></param>
-        /// <param name="dutyCycle"></param>
-        /// <param name="frequency"></param>
-        /// <param name="eventsEnabled"></param>
-        /// <param name="delta"></param>
+        /// <param name="pwmPort">The value of the PwmPort payload member.</param>
+        /// <param name="invert">The value of the Invert payload member.</param>
+        /// <param name="inputFlags">The value of the InputFlags payload member.</param>
+        /// <param name="outputFlags">The value of the OutputFlags payload member.</param>
+        /// <param name="dutyCycle">The value of the DutyCycle payload member.</param>
+        /// <param name="frequency">The value of the Frequency payload member.</param>
+        /// <param name="eventsEnabled">The value of the EventsEnabled payload member.</param>
+        /// <param name="delta">The value of the Delta payload member.</param>
         public ComplexConfigurationPayload(
             PwmPort pwmPort,
             bool invert,
@@ -4766,52 +4717,13 @@ namespace Harp.Generators.Tests
             Delta = delta;
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        [Description("")]
         public PwmPort PwmPort;
-
-        /// <summary>
-        /// 
-        /// </summary>
-        [Description("")]
         public bool Invert;
-
-        /// <summary>
-        /// 
-        /// </summary>
-        [Description("")]
         public DigitalChannels InputFlags;
-
-        /// <summary>
-        /// 
-        /// </summary>
-        [Description("")]
         public DigitalChannels OutputFlags;
-
-        /// <summary>
-        /// 
-        /// </summary>
-        [Description("")]
         public float DutyCycle;
-
-        /// <summary>
-        /// 
-        /// </summary>
-        [Description("")]
         public float Frequency;
-
-        /// <summary>
-        /// 
-        /// </summary>
-        [Description("")]
         public bool EventsEnabled;
-
-        /// <summary>
-        /// 
-        /// </summary>
-        [Description("")]
         public uint Delta;
 
         /// <summary>
@@ -4845,11 +4757,11 @@ namespace Harp.Generators.Tests
         /// <summary>
         /// Initializes a new instance of the <see cref="VersionPayload"/> structure.
         /// </summary>
-        /// <param name="protocolVersion"></param>
-        /// <param name="firmwareVersion"></param>
-        /// <param name="hardwareVersion"></param>
-        /// <param name="coreId"></param>
-        /// <param name="interfaceHash"></param>
+        /// <param name="protocolVersion">The value of the ProtocolVersion payload member.</param>
+        /// <param name="firmwareVersion">The value of the FirmwareVersion payload member.</param>
+        /// <param name="hardwareVersion">The value of the HardwareVersion payload member.</param>
+        /// <param name="coreId">The value of the CoreId payload member.</param>
+        /// <param name="interfaceHash">The value of the InterfaceHash payload member.</param>
         public VersionPayload(
             HarpVersion protocolVersion,
             HarpVersion firmwareVersion,
@@ -4864,34 +4776,10 @@ namespace Harp.Generators.Tests
             InterfaceHash = interfaceHash;
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        [Description("")]
         public HarpVersion ProtocolVersion;
-
-        /// <summary>
-        /// 
-        /// </summary>
-        [Description("")]
         public HarpVersion FirmwareVersion;
-
-        /// <summary>
-        /// 
-        /// </summary>
-        [Description("")]
         public HarpVersion HardwareVersion;
-
-        /// <summary>
-        /// 
-        /// </summary>
-        [Description("")]
         public string CoreId;
-
-        /// <summary>
-        /// 
-        /// </summary>
-        [Description("")]
         public byte[] InterfaceHash;
 
         /// <summary>
@@ -4922,10 +4810,10 @@ namespace Harp.Generators.Tests
         /// <summary>
         /// Initializes a new instance of the <see cref="CustomMemberConverterPayload"/> structure.
         /// </summary>
-        /// <param name="header"></param>
-        /// <param name="data"></param>
-        /// <param name="enabled"></param>
-        /// <param name="mode"></param>
+        /// <param name="header">The value of the Header payload member.</param>
+        /// <param name="data">The value of the Data payload member.</param>
+        /// <param name="enabled">The value of the Enabled payload member.</param>
+        /// <param name="mode">The value of the Mode payload member.</param>
         public CustomMemberConverterPayload(
             byte header,
             int data,
@@ -4938,28 +4826,9 @@ namespace Harp.Generators.Tests
             Mode = mode;
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        [Description("")]
         public byte Header;
-
-        /// <summary>
-        /// 
-        /// </summary>
-        [Description("")]
         public int Data;
-
-        /// <summary>
-        /// 
-        /// </summary>
-        [Description("")]
         public bool Enabled;
-
-        /// <summary>
-        /// 
-        /// </summary>
-        [Description("")]
         public int Mode;
 
         /// <summary>
@@ -4989,8 +4858,8 @@ namespace Harp.Generators.Tests
         /// <summary>
         /// Initializes a new instance of the <see cref="BitmaskSplitterPayload"/> structure.
         /// </summary>
-        /// <param name="low"></param>
-        /// <param name="high"></param>
+        /// <param name="low">The value of the Low payload member.</param>
+        /// <param name="high">The value of the High payload member.</param>
         public BitmaskSplitterPayload(
             int low,
             int high)
@@ -4999,16 +4868,7 @@ namespace Harp.Generators.Tests
             High = high;
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        [Description("")]
         public int Low;
-
-        /// <summary>
-        /// 
-        /// </summary>
-        [Description("")]
         public int High;
 
         /// <summary>
@@ -5036,9 +4896,9 @@ namespace Harp.Generators.Tests
         /// <summary>
         /// Initializes a new instance of the <see cref="MixedMemberLengthPayload"/> structure.
         /// </summary>
-        /// <param name="absent"></param>
-        /// <param name="single"></param>
-        /// <param name="multiple"></param>
+        /// <param name="absent">The value of the Absent payload member.</param>
+        /// <param name="single">The value of the Single payload member.</param>
+        /// <param name="multiple">The value of the Multiple payload member.</param>
         public MixedMemberLengthPayload(
             byte absent,
             byte[] single,
@@ -5049,22 +4909,8 @@ namespace Harp.Generators.Tests
             Multiple = multiple;
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        [Description("")]
         public byte Absent;
-
-        /// <summary>
-        /// 
-        /// </summary>
-        [Description("")]
         public byte[] Single;
-
-        /// <summary>
-        /// 
-        /// </summary>
-        [Description("")]
         public byte[] Multiple;
 
         /// <summary>
@@ -5093,9 +4939,9 @@ namespace Harp.Generators.Tests
         /// <summary>
         /// Initializes a new instance of the <see cref="RgbPayload"/> structure.
         /// </summary>
-        /// <param name="red"></param>
-        /// <param name="green"></param>
-        /// <param name="blue"></param>
+        /// <param name="red">The value of the Red payload member.</param>
+        /// <param name="green">The value of the Green payload member.</param>
+        /// <param name="blue">The value of the Blue payload member.</param>
         public RgbPayload(
             byte red,
             byte green,
@@ -5106,22 +4952,8 @@ namespace Harp.Generators.Tests
             Blue = blue;
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        [Description("")]
         public byte Red;
-
-        /// <summary>
-        /// 
-        /// </summary>
-        [Description("")]
         public byte Green;
-
-        /// <summary>
-        /// 
-        /// </summary>
-        [Description("")]
         public byte Blue;
 
         /// <summary>
@@ -5150,8 +4982,8 @@ namespace Harp.Generators.Tests
         /// <summary>
         /// Initializes a new instance of the <see cref="StartPulsePayload"/> structure.
         /// </summary>
-        /// <param name="digitalOutput"></param>
-        /// <param name="pulseWidth"></param>
+        /// <param name="digitalOutput">Specifies the digital output on which to start the pulse.</param>
+        /// <param name="pulseWidth">Specifies the width of the pulse, where values &lt; 1 mean "no pulse" &amp; are ignored.</param>
         public StartPulsePayload(
             PwmPort digitalOutput,
             ushort pulseWidth)
@@ -5161,15 +4993,15 @@ namespace Harp.Generators.Tests
         }
 
         /// <summary>
-        /// 
+        /// Specifies the digital output on which to start the pulse.
         /// </summary>
-        [Description("")]
+        [Description("Specifies the digital output on which to start the pulse.")]
         public PwmPort DigitalOutput;
 
         /// <summary>
-        /// 
+        /// Specifies the width of the pulse, where values &lt; 1 mean "no pulse" &amp; are ignored.
         /// </summary>
-        [Description("")]
+        [Description("Specifies the width of the pulse, where values < 1 mean \"no pulse\" & are ignored.")]
         public ushort PulseWidth;
 
         /// <summary>
@@ -5197,10 +5029,10 @@ namespace Harp.Generators.Tests
         /// <summary>
         /// Initializes a new instance of the <see cref="StartPulseTrainPayload"/> structure.
         /// </summary>
-        /// <param name="digitalOutput"></param>
-        /// <param name="pulseWidth"></param>
-        /// <param name="frequency"></param>
-        /// <param name="pulseCount"></param>
+        /// <param name="digitalOutput">Specifies the digital output on which to start the pulse.</param>
+        /// <param name="pulseWidth">Specifies the width of the pulse, where values &lt; 1 mean "no pulse" &amp; are ignored.</param>
+        /// <param name="frequency">The value of the Frequency payload member.</param>
+        /// <param name="pulseCount">The value of the PulseCount payload member.</param>
         public StartPulseTrainPayload(
             PwmPort digitalOutput,
             ushort pulseWidth,
@@ -5214,27 +5046,17 @@ namespace Harp.Generators.Tests
         }
 
         /// <summary>
-        /// 
+        /// Specifies the digital output on which to start the pulse.
         /// </summary>
-        [Description("")]
+        [Description("Specifies the digital output on which to start the pulse.")]
         public PwmPort DigitalOutput;
 
         /// <summary>
-        /// 
+        /// Specifies the width of the pulse, where values &lt; 1 mean "no pulse" &amp; are ignored.
         /// </summary>
-        [Description("")]
+        [Description("Specifies the width of the pulse, where values < 1 mean \"no pulse\" & are ignored.")]
         public ushort PulseWidth;
-
-        /// <summary>
-        /// 
-        /// </summary>
-        [Description("")]
         public byte Frequency;
-
-        /// <summary>
-        /// 
-        /// </summary>
-        [Description("")]
         public byte PulseCount;
 
         /// <summary>
@@ -5256,9 +5078,6 @@ namespace Harp.Generators.Tests
         }
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     [Flags]
     public enum PortDigitalIOS : ushort
     {
@@ -5274,21 +5093,41 @@ namespace Harp.Generators.Tests
     }
 
     /// <summary>
-    /// 
+    /// Specifies a set of digital channels.
     /// </summary>
     [Flags]
     public enum DigitalChannels : byte
     {
+        /// <summary>
+        /// Specifies that no flags are defined.
+        /// </summary>
         None = 0x0,
+
+        /// <summary>
+        /// Specifies digital channel 0.
+        /// </summary>
+        [Description("Specifies digital channel 0.")]
         Channel0 = 0x1,
+
+        /// <summary>
+        /// Specifies digital channel 1.
+        /// </summary>
+        [Description("Specifies digital channel 1.")]
         Channel1 = 0x2,
+
+        /// <summary>
+        /// Specifies digital channel 2.
+        /// </summary>
+        [Description("Specifies digital channel 2.")]
         Channel2 = 0x4,
+
+        /// <summary>
+        /// Specifies digital channel 3.
+        /// </summary>
+        [Description("Specifies digital channel 3.")]
         Channel3 = 0x8
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     [Flags]
     public enum WideStatusFlags : uint
     {
@@ -5297,9 +5136,6 @@ namespace Harp.Generators.Tests
         Overflow = 0x80000000
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     public enum PwmPort : byte
     {
         Pwm0 = 1,
@@ -5313,7 +5149,16 @@ namespace Harp.Generators.Tests
     /// </summary>
     public enum EncoderReading : byte
     {
+        /// <summary>
+        /// Specifies that the encoder reports its absolute position.
+        /// </summary>
+        [Description("Specifies that the encoder reports its absolute position.")]
         Position = 0,
+
+        /// <summary>
+        /// Specifies that the encoder reports its displacement since the last reading.
+        /// </summary>
+        [Description("Specifies that the encoder reports its displacement since the last reading.")]
         Displacement = 1
     }
 

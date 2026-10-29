@@ -109,6 +109,14 @@ registers:
         offset: 0
         mask: 0xF
         maskType: WideLines
+  Notes:
+    address: 45
+    type: U8
+    access: Write
+    description: |
+      Specifies the first paragraph.
+
+      Specifies the second paragraph.
 bitMasks:
   WideLines:
     bits:

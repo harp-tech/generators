@@ -121,12 +121,26 @@ public class DeviceMetadata
     void Validate()
     {
         var errors = new List<string>();
+        ValidateDescription(errors, Device, Description);
         foreach (var bitMask in BitMasks)
+        {
             ValidateBitMask(errors, bitMask.Key, bitMask.Value);
+            ValidateDescription(errors, bitMask.Key, bitMask.Value.Description);
+            foreach (var bit in bitMask.Value.Bits)
+                ValidateDescription(errors, $"{bitMask.Key}.{bit.Key}", bit.Value.Description);
+        }
+
+        foreach (var groupMask in GroupMasks)
+        {
+            ValidateDescription(errors, groupMask.Key, groupMask.Value.Description);
+            foreach (var value in groupMask.Value.Values)
+                ValidateDescription(errors, $"{groupMask.Key}.{value.Key}", value.Value.Description);
+        }
 
         var payloadTypes = new Dictionary<string, KeyValuePair<string, RegisterInfo>>();
         foreach (var register in Registers)
         {
+            ValidateDescription(errors, register.Key, register.Value.Description);
             ValidateValue(errors, register.Key, register.Value, register.Value.Type);
             ValidatePrimitiveType(errors, register.Key, register.Value, register.Value.Type, register.Value.Length, allowSpan: false);
             ValidateMaskType(errors, register.Key, register.Value, register.Value.Type, memberMask: null);
@@ -136,6 +150,7 @@ public class DeviceMetadata
                 foreach (var member in register.Value.PayloadSpec)
                 {
                     var name = $"{register.Key}.{member.Key}";
+                    ValidateDescription(errors, name, member.Value.Description);
                     ValidateValue(errors, name, member.Value, register.Value.Type);
                     if (!member.Value.Mask.HasValue)
                         ValidatePrimitiveType(errors, name, member.Value, register.Value.Type, member.Value.Length, allowSpan: true);
@@ -148,6 +163,12 @@ public class DeviceMetadata
 
         if (errors.Count > 0)
             throw new YamlException($"Invalid device metadata:{Environment.NewLine}{string.Join(Environment.NewLine, errors)}");
+    }
+
+    static void ValidateDescription(List<string> errors, string name, string description)
+    {
+        if (description.IndexOfAny(['\r', '\n']) >= 0)
+            errors.Add($"({name}) Description must be a single line.");
     }
 
     static void ValidateValue(List<string> errors, string name, ValueInfo info, PayloadType payloadType)

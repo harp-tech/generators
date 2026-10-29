@@ -785,15 +785,10 @@ foreach (var registerMetadata in publicRegisters)
         {
             var memberType = TemplateHelper.GetInterfaceType(member.Value, register.Type);
             defaultValue = TemplateHelper.GetDefaultValueAssignment(DeviceMetadata, member.Value, register.Type, memberType, member.Value.Length);
-            var memberDescription = string.IsNullOrEmpty(member.Value.Description)
-                ? $"to write on payload member {member.Key}"
-                : $"that {char.ToLower(member.Value.Description[0])}{member.Value.Description.Substring(1).TrimEnd('.')}";
 #>
 
-        /// <summary>
-        /// Gets or sets a value <#= memberDescription #>.
-        /// </summary>
 <#
+            WriteSummary("        ", $"Gets or sets the value of the {member.Key} payload member.", member.Value.Description);
             if (member.Value.MinValue.HasValue || member.Value.MaxValue.HasValue)
             {
 #>
@@ -801,8 +796,8 @@ foreach (var registerMetadata in publicRegisters)
         [Editor(DesignTypes.NumericUpDownEditor, DesignTypes.UITypeEditor)]
 <#
             }
+            WriteDescriptionAttribute("        ", member.Value.Description);
 #>
-        [Description("<#= member.Value.Description #>")]
         public <#= memberType #> <#= member.Key #> { get; set; }<#= defaultValue #>
 <#
         }
@@ -916,8 +911,11 @@ foreach (var registerMetadata in deviceRegisters)
     foreach (var member in register.PayloadSpec)
     {
         var paramName = CamelCaseNamingConvention.Instance.Apply(member.Key);
+        var paramDescription = string.IsNullOrEmpty(member.Value.Description)
+            ? $"The value of the {member.Key} payload member."
+            : member.Value.Description;
 #>
-        /// <param name="<#= paramName #>"><#= member.Value.Description #></param>
+        /// <param name="<#= paramName #>"><#= GetXmlText(paramDescription) #></param>
 <#
     }
 #>
@@ -944,18 +942,18 @@ foreach (var registerMetadata in deviceRegisters)
     }
 #>
         }
+
 <#
+    var memberIndex = 0;
     foreach (var member in register.PayloadSpec)
     {
         var memberType = TemplateHelper.GetInterfaceType(member.Value, register.Type);
+        if (memberIndex > 0 && !string.IsNullOrEmpty(member.Value.Description)) WriteLine("");
+        WriteDocumentation("        ", member.Value.Description);
 #>
-
-        /// <summary>
-        /// <#= member.Value.Description #>
-        /// </summary>
-        [Description("<#= member.Value.Description #>")]
         public <#= memberType #> <#= member.Key #>;
 <#
+        memberIndex++;
     }
 #>
 
@@ -971,7 +969,7 @@ foreach (var registerMetadata in deviceRegisters)
         {
             return "<#= interfaceType #> { " +
 <#
-    var memberIndex = 0;
+    memberIndex = 0;
     foreach (var member in register.PayloadSpec)
     {
 #>
@@ -991,9 +989,7 @@ foreach (var bitMask in DeviceMetadata.BitMasks)
     var mask = bitMask.Value;
 #>
 
-    /// <summary>
-    /// <#= mask.Description #>
-    /// </summary>
+<# WriteSummary("    ", mask.Description); #>
     [Flags]
     public enum <#= bitMask.Key #> : <#= mask.InterfaceType #>
     {
@@ -1005,11 +1001,7 @@ foreach (var bitMask in DeviceMetadata.BitMasks)
         bitCount++;
         if (mask.Bits.Values.Any(fieldInfo => !string.IsNullOrEmpty(fieldInfo.Description)))
         {
-#>
-        /// <summary>
-        /// Specifies that no flags are defined.
-        /// </summary>
-<#
+            WriteSummary("        ", "Specifies that no flags are defined.");
         }
 #>
         None = 0x0<#= ++bitIndex < bitCount ? "," : string.Empty #>
@@ -1019,18 +1011,8 @@ foreach (var bitMask in DeviceMetadata.BitMasks)
     foreach (var bitField in mask.Bits)
     {
         var fieldInfo = bitField.Value;
-#>
-<#
-        if (!string.IsNullOrEmpty(fieldInfo.Description))
-        {
-            if (bitIndex > 0) WriteLine("");
-#>
-        /// <summary>
-        /// <#= fieldInfo.Description #>
-        /// </summary>
-        [Description("<#= fieldInfo.Description #>")]
-<#
-        }
+        if (bitIndex > 0 && !string.IsNullOrEmpty(fieldInfo.Description)) WriteLine("");
+        WriteDocumentation("        ", fieldInfo.Description);
 #>
         <#= bitField.Key #> = 0x<#= fieldInfo.Value.ToString("X") #><#= ++bitIndex < bitCount ? "," : string.Empty #>
 <#
@@ -1046,9 +1028,7 @@ foreach (var groupMask in DeviceMetadata.GroupMasks)
     var mask = groupMask.Value;
 #>
 
-    /// <summary>
-    /// <#= mask.Description #>
-    /// </summary>
+<# WriteSummary("    ", mask.Description); #>
     public enum <#= groupMask.Key #> : <#= mask.InterfaceType #>
     {
 <#
@@ -1056,18 +1036,8 @@ foreach (var groupMask in DeviceMetadata.GroupMasks)
     foreach (var member in mask.Values)
     {
         var memberInfo = member.Value;
-#>
-<#
-        if (!string.IsNullOrEmpty(memberInfo.Description))
-        {
-            if (memberIndex > 0) WriteLine("");
-#>
-        /// <summary>
-        /// <#= memberInfo.Description #>
-        /// </summary>
-        [Description("<#= memberInfo.Description #>")]
-<#
-        }
+        if (memberIndex > 0 && !string.IsNullOrEmpty(memberInfo.Description)) WriteLine("");
+        WriteDocumentation("        ", memberInfo.Description);
 #>
         <#= member.Key #> = <#= memberInfo.Value #><#= ++memberIndex < mask.Values.Count ? "," : string.Empty #>
 <#
@@ -1183,3 +1153,34 @@ foreach (var groupMask in DeviceMetadata.GroupMasks)
         }
     }
 }
+<#+
+void WriteSummary(string indent, params string[] fragments)
+{
+    var text = fragments.Where(fragment => !string.IsNullOrEmpty(fragment)).ToList();
+    if (text.Count == 0) return;
+    WriteLine($"{indent}/// <summary>");
+    foreach (var fragment in text)
+    {
+        WriteLine($"{indent}/// {GetXmlText(fragment)}");
+    }
+    WriteLine($"{indent}/// </summary>");
+}
+
+string GetXmlText(string text)
+{
+    return text.Replace("&", "&amp;").Replace("<", "&lt;").Replace(">", "&gt;");
+}
+
+void WriteDescriptionAttribute(string indent, string text)
+{
+    if (string.IsNullOrEmpty(text)) return;
+    var escaped = text.Replace("\\", "\\\\").Replace("\"", "\\\"");
+    WriteLine($"{indent}[Description(\"{escaped}\")]");
+}
+
+void WriteDocumentation(string indent, string text)
+{
+    WriteSummary(indent, text);
+    WriteDescriptionAttribute(indent, text);
+}
+#>

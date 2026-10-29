@@ -1246,6 +1246,7 @@ items:
   langs:
   - csharp
   - python
+  summary: Specifies the digital output on which to start the pulse.
   harp:
     member:
       offset: 0
@@ -1263,6 +1264,7 @@ items:
   langs:
   - csharp
   - python
+  summary: Specifies the width of the pulse, where values < 1 mean "no pulse" & are ignored.
   harp:
     member:
       offset: 0
@@ -1302,6 +1304,7 @@ items:
   langs:
   - csharp
   - python
+  summary: Specifies the digital output on which to start the pulse.
   harp:
     member:
       offset: 0
@@ -1319,6 +1322,7 @@ items:
   langs:
   - csharp
   - python
+  summary: Specifies the width of the pulse, where values < 1 mean "no pulse" & are ignored.
   harp:
     member:
       offset: 0
@@ -1512,6 +1516,7 @@ items:
   langs:
   - csharp
   - python
+  summary: Specifies a set of digital channels.
   harp:
     bitMask:
       type: byte
@@ -1530,6 +1535,7 @@ items:
   langs:
   - csharp
   - python
+  summary: Specifies digital channel 0.
   harp:
     maskValue:
       value: "0x1"
@@ -1543,6 +1549,7 @@ items:
   langs:
   - csharp
   - python
+  summary: Specifies digital channel 1.
   harp:
     maskValue:
       value: "0x2"
@@ -1556,6 +1563,7 @@ items:
   langs:
   - csharp
   - python
+  summary: Specifies digital channel 2.
   harp:
     maskValue:
       value: "0x4"
@@ -1569,6 +1577,7 @@ items:
   langs:
   - csharp
   - python
+  summary: Specifies digital channel 3.
   harp:
     maskValue:
       value: "0x8"
@@ -1717,6 +1726,7 @@ items:
   langs:
   - csharp
   - python
+  summary: Specifies that the encoder reports its absolute position.
   harp:
     maskValue:
       value: "0"
@@ -1730,6 +1740,7 @@ items:
   langs:
   - csharp
   - python
+  summary: Specifies that the encoder reports its displacement since the last reading.
   harp:
     maskValue:
       value: "1"

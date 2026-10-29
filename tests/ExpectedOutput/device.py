@@ -104,10 +104,19 @@ class PortDigitalIOS(enum.IntFlag):
 
 
 class DigitalChannels(enum.IntFlag):
+    """Specifies a set of digital channels."""
+
     CHANNEL0 = 0x1
+    """Specifies digital channel 0."""
+
     CHANNEL1 = 0x2
+    """Specifies digital channel 1."""
+
     CHANNEL2 = 0x4
+    """Specifies digital channel 2."""
+
     CHANNEL3 = 0x8
+    """Specifies digital channel 3."""
 
 
 class WideStatusFlags(enum.IntFlag):
@@ -126,7 +135,10 @@ class EncoderReading(enum.IntEnum):
     """Specifies the type of encoder mode."""
 
     POSITION = 0
+    """Specifies that the encoder reports its absolute position."""
+
     DISPLACEMENT = 1
+    """Specifies that the encoder reports its displacement since the last reading."""
 
 
 class AnalogDataPayload(StructPayload[np.float32], length=6):
@@ -227,14 +239,21 @@ class StartPulsePayload(StructPayload[np.uint16]):
     """Represents the payload of the StartPulse register."""
 
     digital_output: PwmPort = GroupMask(enum=PwmPort, mask=0xC00)
+    """Specifies the digital output on which to start the pulse."""
+
     pulse_width: np.uint16 = Field(IdentityConverter(np.uint16), mask=0x3FF)
+    """Specifies the width of the pulse, where values < 1 mean "no pulse" & are ignored."""
 
 
 class StartPulseTrainPayload(StructPayload[np.uint16], length=2):
     """Represents the payload of the StartPulseTrain register."""
 
     digital_output: PwmPort = GroupMask(enum=PwmPort, mask=0xC00)
+    """Specifies the digital output on which to start the pulse."""
+
     pulse_width: np.uint16 = Field(IdentityConverter(np.uint16), mask=0x3FF)
+    """Specifies the width of the pulse, where values < 1 mean "no pulse" & are ignored."""
+
     frequency: np.uint8 = Field(IdentityConverter(np.uint8), mask=0xFF00, offset=1, default=np.uint8(1))
     pulse_count: np.uint8 = Field(IdentityConverter(np.uint8), mask=0xFF, offset=1)
 
