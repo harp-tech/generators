@@ -38,7 +38,8 @@ namespace Harp.Generators.Tests
     }
 
     /// <summary>
-    /// Represents a register that specifies the identity class of the device.
+    /// Provides methods for manipulating messages from the WhoAmI register.
+    /// Specifies the identity class of the device.
     /// </summary>
     [Description("Specifies the identity class of the device.")]
     public partial class WhoAmI
@@ -110,11 +111,11 @@ namespace Harp.Generators.Tests
     }
 
     /// <summary>
-    /// Provides methods for manipulating timestamped messages from the
-    /// WhoAmI register.
+    /// Provides methods for parsing timestamped values from WhoAmI register messages.
+    /// Specifies the identity class of the device.
     /// </summary>
     /// <seealso cref="WhoAmI"/>
-    [Description("Filters and selects timestamped messages from the WhoAmI register.")]
+    [Description("The WhoAmI register, with timestamps. Specifies the identity class of the device.")]
     public partial class TimestampedWhoAmI
     {
         /// <summary>
@@ -134,7 +135,8 @@ namespace Harp.Generators.Tests
     }
 
     /// <summary>
-    /// Represents a register that specifies the major hardware version of the device.
+    /// Provides methods for manipulating messages from the HardwareVersionHigh register.
+    /// Specifies the major hardware version of the device.
     /// </summary>
     [Description("Specifies the major hardware version of the device.")]
     public partial class HardwareVersionHigh
@@ -206,11 +208,11 @@ namespace Harp.Generators.Tests
     }
 
     /// <summary>
-    /// Provides methods for manipulating timestamped messages from the
-    /// HardwareVersionHigh register.
+    /// Provides methods for parsing timestamped values from HardwareVersionHigh register messages.
+    /// Specifies the major hardware version of the device.
     /// </summary>
     /// <seealso cref="HardwareVersionHigh"/>
-    [Description("Filters and selects timestamped messages from the HardwareVersionHigh register.")]
+    [Description("The HardwareVersionHigh register, with timestamps. Specifies the major hardware version of the device.")]
     public partial class TimestampedHardwareVersionHigh
     {
         /// <summary>
@@ -230,7 +232,8 @@ namespace Harp.Generators.Tests
     }
 
     /// <summary>
-    /// Represents a register that specifies the minor hardware version of the device.
+    /// Provides methods for manipulating messages from the HardwareVersionLow register.
+    /// Specifies the minor hardware version of the device.
     /// </summary>
     [Description("Specifies the minor hardware version of the device.")]
     public partial class HardwareVersionLow
@@ -302,11 +305,11 @@ namespace Harp.Generators.Tests
     }
 
     /// <summary>
-    /// Provides methods for manipulating timestamped messages from the
-    /// HardwareVersionLow register.
+    /// Provides methods for parsing timestamped values from HardwareVersionLow register messages.
+    /// Specifies the minor hardware version of the device.
     /// </summary>
     /// <seealso cref="HardwareVersionLow"/>
-    [Description("Filters and selects timestamped messages from the HardwareVersionLow register.")]
+    [Description("The HardwareVersionLow register, with timestamps. Specifies the minor hardware version of the device.")]
     public partial class TimestampedHardwareVersionLow
     {
         /// <summary>
@@ -326,7 +329,8 @@ namespace Harp.Generators.Tests
     }
 
     /// <summary>
-    /// Represents a register that specifies the version of the assembled components in the device.
+    /// Provides methods for manipulating messages from the AssemblyVersion register.
+    /// Specifies the version of the assembled components in the device.
     /// </summary>
     [Description("Specifies the version of the assembled components in the device.")]
     public partial class AssemblyVersion
@@ -398,11 +402,11 @@ namespace Harp.Generators.Tests
     }
 
     /// <summary>
-    /// Provides methods for manipulating timestamped messages from the
-    /// AssemblyVersion register.
+    /// Provides methods for parsing timestamped values from AssemblyVersion register messages.
+    /// Specifies the version of the assembled components in the device.
     /// </summary>
     /// <seealso cref="AssemblyVersion"/>
-    [Description("Filters and selects timestamped messages from the AssemblyVersion register.")]
+    [Description("The AssemblyVersion register, with timestamps. Specifies the version of the assembled components in the device.")]
     public partial class TimestampedAssemblyVersion
     {
         /// <summary>
@@ -422,7 +426,8 @@ namespace Harp.Generators.Tests
     }
 
     /// <summary>
-    /// Represents a register that specifies the major version of the Harp core implemented by the device.
+    /// Provides methods for manipulating messages from the CoreVersionHigh register.
+    /// Specifies the major version of the Harp core implemented by the device.
     /// </summary>
     [Description("Specifies the major version of the Harp core implemented by the device.")]
     public partial class CoreVersionHigh
@@ -494,11 +499,11 @@ namespace Harp.Generators.Tests
     }
 
     /// <summary>
-    /// Provides methods for manipulating timestamped messages from the
-    /// CoreVersionHigh register.
+    /// Provides methods for parsing timestamped values from CoreVersionHigh register messages.
+    /// Specifies the major version of the Harp core implemented by the device.
     /// </summary>
     /// <seealso cref="CoreVersionHigh"/>
-    [Description("Filters and selects timestamped messages from the CoreVersionHigh register.")]
+    [Description("The CoreVersionHigh register, with timestamps. Specifies the major version of the Harp core implemented by the device.")]
     public partial class TimestampedCoreVersionHigh
     {
         /// <summary>
@@ -518,7 +523,8 @@ namespace Harp.Generators.Tests
     }
 
     /// <summary>
-    /// Represents a register that specifies the minor version of the Harp core implemented by the device.
+    /// Provides methods for manipulating messages from the CoreVersionLow register.
+    /// Specifies the minor version of the Harp core implemented by the device.
     /// </summary>
     [Description("Specifies the minor version of the Harp core implemented by the device.")]
     public partial class CoreVersionLow
@@ -590,11 +596,11 @@ namespace Harp.Generators.Tests
     }
 
     /// <summary>
-    /// Provides methods for manipulating timestamped messages from the
-    /// CoreVersionLow register.
+    /// Provides methods for parsing timestamped values from CoreVersionLow register messages.
+    /// Specifies the minor version of the Harp core implemented by the device.
     /// </summary>
     /// <seealso cref="CoreVersionLow"/>
-    [Description("Filters and selects timestamped messages from the CoreVersionLow register.")]
+    [Description("The CoreVersionLow register, with timestamps. Specifies the minor version of the Harp core implemented by the device.")]
     public partial class TimestampedCoreVersionLow
     {
         /// <summary>
@@ -614,7 +620,8 @@ namespace Harp.Generators.Tests
     }
 
     /// <summary>
-    /// Represents a register that specifies the major version of the Harp core implemented by the device.
+    /// Provides methods for manipulating messages from the FirmwareVersionHigh register.
+    /// Specifies the major version of the Harp core implemented by the device.
     /// </summary>
     [Description("Specifies the major version of the Harp core implemented by the device.")]
     public partial class FirmwareVersionHigh
@@ -686,11 +693,11 @@ namespace Harp.Generators.Tests
     }
 
     /// <summary>
-    /// Provides methods for manipulating timestamped messages from the
-    /// FirmwareVersionHigh register.
+    /// Provides methods for parsing timestamped values from FirmwareVersionHigh register messages.
+    /// Specifies the major version of the Harp core implemented by the device.
     /// </summary>
     /// <seealso cref="FirmwareVersionHigh"/>
-    [Description("Filters and selects timestamped messages from the FirmwareVersionHigh register.")]
+    [Description("The FirmwareVersionHigh register, with timestamps. Specifies the major version of the Harp core implemented by the device.")]
     public partial class TimestampedFirmwareVersionHigh
     {
         /// <summary>
@@ -710,7 +717,8 @@ namespace Harp.Generators.Tests
     }
 
     /// <summary>
-    /// Represents a register that specifies the minor version of the Harp core implemented by the device.
+    /// Provides methods for manipulating messages from the FirmwareVersionLow register.
+    /// Specifies the minor version of the Harp core implemented by the device.
     /// </summary>
     [Description("Specifies the minor version of the Harp core implemented by the device.")]
     public partial class FirmwareVersionLow
@@ -782,11 +790,11 @@ namespace Harp.Generators.Tests
     }
 
     /// <summary>
-    /// Provides methods for manipulating timestamped messages from the
-    /// FirmwareVersionLow register.
+    /// Provides methods for parsing timestamped values from FirmwareVersionLow register messages.
+    /// Specifies the minor version of the Harp core implemented by the device.
     /// </summary>
     /// <seealso cref="FirmwareVersionLow"/>
-    [Description("Filters and selects timestamped messages from the FirmwareVersionLow register.")]
+    [Description("The FirmwareVersionLow register, with timestamps. Specifies the minor version of the Harp core implemented by the device.")]
     public partial class TimestampedFirmwareVersionLow
     {
         /// <summary>
@@ -806,7 +814,8 @@ namespace Harp.Generators.Tests
     }
 
     /// <summary>
-    /// Represents a register that stores the integral part of the system timestamp, in seconds.
+    /// Provides methods for manipulating messages from the TimestampSeconds register.
+    /// Stores the integral part of the system timestamp, in seconds.
     /// </summary>
     [Description("Stores the integral part of the system timestamp, in seconds.")]
     public partial class TimestampSeconds
@@ -878,11 +887,11 @@ namespace Harp.Generators.Tests
     }
 
     /// <summary>
-    /// Provides methods for manipulating timestamped messages from the
-    /// TimestampSeconds register.
+    /// Provides methods for parsing timestamped values from TimestampSeconds register messages.
+    /// Stores the integral part of the system timestamp, in seconds.
     /// </summary>
     /// <seealso cref="TimestampSeconds"/>
-    [Description("Filters and selects timestamped messages from the TimestampSeconds register.")]
+    [Description("The TimestampSeconds register, with timestamps. Stores the integral part of the system timestamp, in seconds.")]
     public partial class TimestampedTimestampSeconds
     {
         /// <summary>
@@ -902,7 +911,8 @@ namespace Harp.Generators.Tests
     }
 
     /// <summary>
-    /// Represents a register that stores the fractional part of the system timestamp, in microseconds.
+    /// Provides methods for manipulating messages from the TimestampMicroseconds register.
+    /// Stores the fractional part of the system timestamp, in microseconds.
     /// </summary>
     [Description("Stores the fractional part of the system timestamp, in microseconds.")]
     public partial class TimestampMicroseconds
@@ -974,11 +984,11 @@ namespace Harp.Generators.Tests
     }
 
     /// <summary>
-    /// Provides methods for manipulating timestamped messages from the
-    /// TimestampMicroseconds register.
+    /// Provides methods for parsing timestamped values from TimestampMicroseconds register messages.
+    /// Stores the fractional part of the system timestamp, in microseconds.
     /// </summary>
     /// <seealso cref="TimestampMicroseconds"/>
-    [Description("Filters and selects timestamped messages from the TimestampMicroseconds register.")]
+    [Description("The TimestampMicroseconds register, with timestamps. Stores the fractional part of the system timestamp, in microseconds.")]
     public partial class TimestampedTimestampMicroseconds
     {
         /// <summary>
@@ -998,7 +1008,8 @@ namespace Harp.Generators.Tests
     }
 
     /// <summary>
-    /// Represents a register that stores the configuration mode of the device.
+    /// Provides methods for manipulating messages from the OperationControl register.
+    /// Stores the configuration mode of the device.
     /// </summary>
     [Description("Stores the configuration mode of the device.")]
     public partial class OperationControl
@@ -1095,11 +1106,11 @@ namespace Harp.Generators.Tests
     }
 
     /// <summary>
-    /// Provides methods for manipulating timestamped messages from the
-    /// OperationControl register.
+    /// Provides methods for parsing timestamped values from OperationControl register messages.
+    /// Stores the configuration mode of the device.
     /// </summary>
     /// <seealso cref="OperationControl"/>
-    [Description("Filters and selects timestamped messages from the OperationControl register.")]
+    [Description("The OperationControl register, with timestamps. Stores the configuration mode of the device.")]
     public partial class TimestampedOperationControl
     {
         /// <summary>
@@ -1119,7 +1130,8 @@ namespace Harp.Generators.Tests
     }
 
     /// <summary>
-    /// Represents a register that resets the device and saves non-volatile registers.
+    /// Provides methods for manipulating messages from the ResetDevice register.
+    /// Resets the device and saves non-volatile registers.
     /// </summary>
     [Description("Resets the device and saves non-volatile registers.")]
     public partial class ResetDevice
@@ -1192,11 +1204,11 @@ namespace Harp.Generators.Tests
     }
 
     /// <summary>
-    /// Provides methods for manipulating timestamped messages from the
-    /// ResetDevice register.
+    /// Provides methods for parsing timestamped values from ResetDevice register messages.
+    /// Resets the device and saves non-volatile registers.
     /// </summary>
     /// <seealso cref="ResetDevice"/>
-    [Description("Filters and selects timestamped messages from the ResetDevice register.")]
+    [Description("The ResetDevice register, with timestamps. Resets the device and saves non-volatile registers.")]
     public partial class TimestampedResetDevice
     {
         /// <summary>
@@ -1216,7 +1228,8 @@ namespace Harp.Generators.Tests
     }
 
     /// <summary>
-    /// Represents a register that stores the user-specified device name.
+    /// Provides methods for manipulating messages from the DeviceName register.
+    /// Stores the user-specified device name.
     /// </summary>
     [Description("Stores the user-specified device name.")]
     public partial class DeviceName
@@ -1297,11 +1310,11 @@ namespace Harp.Generators.Tests
     }
 
     /// <summary>
-    /// Provides methods for manipulating timestamped messages from the
-    /// DeviceName register.
+    /// Provides methods for parsing timestamped values from DeviceName register messages.
+    /// Stores the user-specified device name.
     /// </summary>
     /// <seealso cref="DeviceName"/>
-    [Description("Filters and selects timestamped messages from the DeviceName register.")]
+    [Description("The DeviceName register, with timestamps. Stores the user-specified device name.")]
     public partial class TimestampedDeviceName
     {
         /// <summary>
@@ -1321,7 +1334,8 @@ namespace Harp.Generators.Tests
     }
 
     /// <summary>
-    /// Represents a register that specifies the unique serial number of the device.
+    /// Provides methods for manipulating messages from the SerialNumber register.
+    /// Specifies the unique serial number of the device.
     /// </summary>
     [Description("Specifies the unique serial number of the device.")]
     public partial class SerialNumber
@@ -1393,11 +1407,11 @@ namespace Harp.Generators.Tests
     }
 
     /// <summary>
-    /// Provides methods for manipulating timestamped messages from the
-    /// SerialNumber register.
+    /// Provides methods for parsing timestamped values from SerialNumber register messages.
+    /// Specifies the unique serial number of the device.
     /// </summary>
     /// <seealso cref="SerialNumber"/>
-    [Description("Filters and selects timestamped messages from the SerialNumber register.")]
+    [Description("The SerialNumber register, with timestamps. Specifies the unique serial number of the device.")]
     public partial class TimestampedSerialNumber
     {
         /// <summary>
@@ -1417,7 +1431,8 @@ namespace Harp.Generators.Tests
     }
 
     /// <summary>
-    /// Represents a register that specifies the configuration for the device synchronization clock.
+    /// Provides methods for manipulating messages from the ClockConfiguration register.
+    /// Specifies the configuration for the device synchronization clock.
     /// </summary>
     [Description("Specifies the configuration for the device synchronization clock.")]
     public partial class ClockConfiguration
@@ -1490,11 +1505,11 @@ namespace Harp.Generators.Tests
     }
 
     /// <summary>
-    /// Provides methods for manipulating timestamped messages from the
-    /// ClockConfiguration register.
+    /// Provides methods for parsing timestamped values from ClockConfiguration register messages.
+    /// Specifies the configuration for the device synchronization clock.
     /// </summary>
     /// <seealso cref="ClockConfiguration"/>
-    [Description("Filters and selects timestamped messages from the ClockConfiguration register.")]
+    [Description("The ClockConfiguration register, with timestamps. Specifies the configuration for the device synchronization clock.")]
     public partial class TimestampedClockConfiguration
     {
         /// <summary>
@@ -1514,17 +1529,17 @@ namespace Harp.Generators.Tests
     }
 
     /// <summary>
-    /// Represents an operator that creates a message payload
-    /// that specifies the identity class of the device.
+    /// Represents an operator that creates a message payload for the WhoAmI register.
+    /// Specifies the identity class of the device.
     /// </summary>
     [DisplayName("WhoAmIPayload")]
-    [Description("Creates a message payload that specifies the identity class of the device.")]
+    [Description("Payload for the WhoAmI register. Specifies the identity class of the device.")]
     public partial class CreateWhoAmIPayload
     {
         /// <summary>
-        /// Gets or sets the value that specifies the identity class of the device.
+        /// Gets or sets the value for the WhoAmI register.
         /// </summary>
-        [Description("The value that specifies the identity class of the device.")]
+        [Description("The value for the WhoAmI register.")]
         public ushort WhoAmI { get; set; }
 
         /// <summary>
@@ -1537,7 +1552,7 @@ namespace Harp.Generators.Tests
         }
 
         /// <summary>
-        /// Creates a message that specifies the identity class of the device.
+        /// Creates a message for the WhoAmI register.
         /// </summary>
         /// <param name="messageType">Specifies the type of the created message.</param>
         /// <returns>A new message for the WhoAmI register.</returns>
@@ -1548,15 +1563,15 @@ namespace Harp.Generators.Tests
     }
 
     /// <summary>
-    /// Represents an operator that creates a timestamped message payload
-    /// that specifies the identity class of the device.
+    /// Represents an operator that creates a timestamped message payload for the WhoAmI register.
+    /// Specifies the identity class of the device.
     /// </summary>
     [DisplayName("TimestampedWhoAmIPayload")]
-    [Description("Creates a timestamped message payload that specifies the identity class of the device.")]
+    [Description("Timestamped payload for the WhoAmI register. Specifies the identity class of the device.")]
     public partial class CreateTimestampedWhoAmIPayload : CreateWhoAmIPayload
     {
         /// <summary>
-        /// Creates a timestamped message that specifies the identity class of the device.
+        /// Creates a timestamped message for the WhoAmI register.
         /// </summary>
         /// <param name="timestamp">The timestamp of the message payload, in seconds.</param>
         /// <param name="messageType">Specifies the type of the created message.</param>
@@ -1568,17 +1583,17 @@ namespace Harp.Generators.Tests
     }
 
     /// <summary>
-    /// Represents an operator that creates a message payload
-    /// that specifies the major hardware version of the device.
+    /// Represents an operator that creates a message payload for the HardwareVersionHigh register.
+    /// Specifies the major hardware version of the device.
     /// </summary>
     [DisplayName("HardwareVersionHighPayload")]
-    [Description("Creates a message payload that specifies the major hardware version of the device.")]
+    [Description("Payload for the HardwareVersionHigh register. Specifies the major hardware version of the device.")]
     public partial class CreateHardwareVersionHighPayload
     {
         /// <summary>
-        /// Gets or sets the value that specifies the major hardware version of the device.
+        /// Gets or sets the value for the HardwareVersionHigh register.
         /// </summary>
-        [Description("The value that specifies the major hardware version of the device.")]
+        [Description("The value for the HardwareVersionHigh register.")]
         public byte HardwareVersionHigh { get; set; }
 
         /// <summary>
@@ -1591,7 +1606,7 @@ namespace Harp.Generators.Tests
         }
 
         /// <summary>
-        /// Creates a message that specifies the major hardware version of the device.
+        /// Creates a message for the HardwareVersionHigh register.
         /// </summary>
         /// <param name="messageType">Specifies the type of the created message.</param>
         /// <returns>A new message for the HardwareVersionHigh register.</returns>
@@ -1602,15 +1617,15 @@ namespace Harp.Generators.Tests
     }
 
     /// <summary>
-    /// Represents an operator that creates a timestamped message payload
-    /// that specifies the major hardware version of the device.
+    /// Represents an operator that creates a timestamped message payload for the HardwareVersionHigh register.
+    /// Specifies the major hardware version of the device.
     /// </summary>
     [DisplayName("TimestampedHardwareVersionHighPayload")]
-    [Description("Creates a timestamped message payload that specifies the major hardware version of the device.")]
+    [Description("Timestamped payload for the HardwareVersionHigh register. Specifies the major hardware version of the device.")]
     public partial class CreateTimestampedHardwareVersionHighPayload : CreateHardwareVersionHighPayload
     {
         /// <summary>
-        /// Creates a timestamped message that specifies the major hardware version of the device.
+        /// Creates a timestamped message for the HardwareVersionHigh register.
         /// </summary>
         /// <param name="timestamp">The timestamp of the message payload, in seconds.</param>
         /// <param name="messageType">Specifies the type of the created message.</param>
@@ -1622,17 +1637,17 @@ namespace Harp.Generators.Tests
     }
 
     /// <summary>
-    /// Represents an operator that creates a message payload
-    /// that specifies the minor hardware version of the device.
+    /// Represents an operator that creates a message payload for the HardwareVersionLow register.
+    /// Specifies the minor hardware version of the device.
     /// </summary>
     [DisplayName("HardwareVersionLowPayload")]
-    [Description("Creates a message payload that specifies the minor hardware version of the device.")]
+    [Description("Payload for the HardwareVersionLow register. Specifies the minor hardware version of the device.")]
     public partial class CreateHardwareVersionLowPayload
     {
         /// <summary>
-        /// Gets or sets the value that specifies the minor hardware version of the device.
+        /// Gets or sets the value for the HardwareVersionLow register.
         /// </summary>
-        [Description("The value that specifies the minor hardware version of the device.")]
+        [Description("The value for the HardwareVersionLow register.")]
         public byte HardwareVersionLow { get; set; }
 
         /// <summary>
@@ -1645,7 +1660,7 @@ namespace Harp.Generators.Tests
         }
 
         /// <summary>
-        /// Creates a message that specifies the minor hardware version of the device.
+        /// Creates a message for the HardwareVersionLow register.
         /// </summary>
         /// <param name="messageType">Specifies the type of the created message.</param>
         /// <returns>A new message for the HardwareVersionLow register.</returns>
@@ -1656,15 +1671,15 @@ namespace Harp.Generators.Tests
     }
 
     /// <summary>
-    /// Represents an operator that creates a timestamped message payload
-    /// that specifies the minor hardware version of the device.
+    /// Represents an operator that creates a timestamped message payload for the HardwareVersionLow register.
+    /// Specifies the minor hardware version of the device.
     /// </summary>
     [DisplayName("TimestampedHardwareVersionLowPayload")]
-    [Description("Creates a timestamped message payload that specifies the minor hardware version of the device.")]
+    [Description("Timestamped payload for the HardwareVersionLow register. Specifies the minor hardware version of the device.")]
     public partial class CreateTimestampedHardwareVersionLowPayload : CreateHardwareVersionLowPayload
     {
         /// <summary>
-        /// Creates a timestamped message that specifies the minor hardware version of the device.
+        /// Creates a timestamped message for the HardwareVersionLow register.
         /// </summary>
         /// <param name="timestamp">The timestamp of the message payload, in seconds.</param>
         /// <param name="messageType">Specifies the type of the created message.</param>
@@ -1676,17 +1691,17 @@ namespace Harp.Generators.Tests
     }
 
     /// <summary>
-    /// Represents an operator that creates a message payload
-    /// that specifies the version of the assembled components in the device.
+    /// Represents an operator that creates a message payload for the AssemblyVersion register.
+    /// Specifies the version of the assembled components in the device.
     /// </summary>
     [DisplayName("AssemblyVersionPayload")]
-    [Description("Creates a message payload that specifies the version of the assembled components in the device.")]
+    [Description("Payload for the AssemblyVersion register. Specifies the version of the assembled components in the device.")]
     public partial class CreateAssemblyVersionPayload
     {
         /// <summary>
-        /// Gets or sets the value that specifies the version of the assembled components in the device.
+        /// Gets or sets the value for the AssemblyVersion register.
         /// </summary>
-        [Description("The value that specifies the version of the assembled components in the device.")]
+        [Description("The value for the AssemblyVersion register.")]
         public byte AssemblyVersion { get; set; }
 
         /// <summary>
@@ -1699,7 +1714,7 @@ namespace Harp.Generators.Tests
         }
 
         /// <summary>
-        /// Creates a message that specifies the version of the assembled components in the device.
+        /// Creates a message for the AssemblyVersion register.
         /// </summary>
         /// <param name="messageType">Specifies the type of the created message.</param>
         /// <returns>A new message for the AssemblyVersion register.</returns>
@@ -1710,15 +1725,15 @@ namespace Harp.Generators.Tests
     }
 
     /// <summary>
-    /// Represents an operator that creates a timestamped message payload
-    /// that specifies the version of the assembled components in the device.
+    /// Represents an operator that creates a timestamped message payload for the AssemblyVersion register.
+    /// Specifies the version of the assembled components in the device.
     /// </summary>
     [DisplayName("TimestampedAssemblyVersionPayload")]
-    [Description("Creates a timestamped message payload that specifies the version of the assembled components in the device.")]
+    [Description("Timestamped payload for the AssemblyVersion register. Specifies the version of the assembled components in the device.")]
     public partial class CreateTimestampedAssemblyVersionPayload : CreateAssemblyVersionPayload
     {
         /// <summary>
-        /// Creates a timestamped message that specifies the version of the assembled components in the device.
+        /// Creates a timestamped message for the AssemblyVersion register.
         /// </summary>
         /// <param name="timestamp">The timestamp of the message payload, in seconds.</param>
         /// <param name="messageType">Specifies the type of the created message.</param>
@@ -1730,17 +1745,17 @@ namespace Harp.Generators.Tests
     }
 
     /// <summary>
-    /// Represents an operator that creates a message payload
-    /// that specifies the major version of the Harp core implemented by the device.
+    /// Represents an operator that creates a message payload for the CoreVersionHigh register.
+    /// Specifies the major version of the Harp core implemented by the device.
     /// </summary>
     [DisplayName("CoreVersionHighPayload")]
-    [Description("Creates a message payload that specifies the major version of the Harp core implemented by the device.")]
+    [Description("Payload for the CoreVersionHigh register. Specifies the major version of the Harp core implemented by the device.")]
     public partial class CreateCoreVersionHighPayload
     {
         /// <summary>
-        /// Gets or sets the value that specifies the major version of the Harp core implemented by the device.
+        /// Gets or sets the value for the CoreVersionHigh register.
         /// </summary>
-        [Description("The value that specifies the major version of the Harp core implemented by the device.")]
+        [Description("The value for the CoreVersionHigh register.")]
         public byte CoreVersionHigh { get; set; }
 
         /// <summary>
@@ -1753,7 +1768,7 @@ namespace Harp.Generators.Tests
         }
 
         /// <summary>
-        /// Creates a message that specifies the major version of the Harp core implemented by the device.
+        /// Creates a message for the CoreVersionHigh register.
         /// </summary>
         /// <param name="messageType">Specifies the type of the created message.</param>
         /// <returns>A new message for the CoreVersionHigh register.</returns>
@@ -1764,15 +1779,15 @@ namespace Harp.Generators.Tests
     }
 
     /// <summary>
-    /// Represents an operator that creates a timestamped message payload
-    /// that specifies the major version of the Harp core implemented by the device.
+    /// Represents an operator that creates a timestamped message payload for the CoreVersionHigh register.
+    /// Specifies the major version of the Harp core implemented by the device.
     /// </summary>
     [DisplayName("TimestampedCoreVersionHighPayload")]
-    [Description("Creates a timestamped message payload that specifies the major version of the Harp core implemented by the device.")]
+    [Description("Timestamped payload for the CoreVersionHigh register. Specifies the major version of the Harp core implemented by the device.")]
     public partial class CreateTimestampedCoreVersionHighPayload : CreateCoreVersionHighPayload
     {
         /// <summary>
-        /// Creates a timestamped message that specifies the major version of the Harp core implemented by the device.
+        /// Creates a timestamped message for the CoreVersionHigh register.
         /// </summary>
         /// <param name="timestamp">The timestamp of the message payload, in seconds.</param>
         /// <param name="messageType">Specifies the type of the created message.</param>
@@ -1784,17 +1799,17 @@ namespace Harp.Generators.Tests
     }
 
     /// <summary>
-    /// Represents an operator that creates a message payload
-    /// that specifies the minor version of the Harp core implemented by the device.
+    /// Represents an operator that creates a message payload for the CoreVersionLow register.
+    /// Specifies the minor version of the Harp core implemented by the device.
     /// </summary>
     [DisplayName("CoreVersionLowPayload")]
-    [Description("Creates a message payload that specifies the minor version of the Harp core implemented by the device.")]
+    [Description("Payload for the CoreVersionLow register. Specifies the minor version of the Harp core implemented by the device.")]
     public partial class CreateCoreVersionLowPayload
     {
         /// <summary>
-        /// Gets or sets the value that specifies the minor version of the Harp core implemented by the device.
+        /// Gets or sets the value for the CoreVersionLow register.
         /// </summary>
-        [Description("The value that specifies the minor version of the Harp core implemented by the device.")]
+        [Description("The value for the CoreVersionLow register.")]
         public byte CoreVersionLow { get; set; }
 
         /// <summary>
@@ -1807,7 +1822,7 @@ namespace Harp.Generators.Tests
         }
 
         /// <summary>
-        /// Creates a message that specifies the minor version of the Harp core implemented by the device.
+        /// Creates a message for the CoreVersionLow register.
         /// </summary>
         /// <param name="messageType">Specifies the type of the created message.</param>
         /// <returns>A new message for the CoreVersionLow register.</returns>
@@ -1818,15 +1833,15 @@ namespace Harp.Generators.Tests
     }
 
     /// <summary>
-    /// Represents an operator that creates a timestamped message payload
-    /// that specifies the minor version of the Harp core implemented by the device.
+    /// Represents an operator that creates a timestamped message payload for the CoreVersionLow register.
+    /// Specifies the minor version of the Harp core implemented by the device.
     /// </summary>
     [DisplayName("TimestampedCoreVersionLowPayload")]
-    [Description("Creates a timestamped message payload that specifies the minor version of the Harp core implemented by the device.")]
+    [Description("Timestamped payload for the CoreVersionLow register. Specifies the minor version of the Harp core implemented by the device.")]
     public partial class CreateTimestampedCoreVersionLowPayload : CreateCoreVersionLowPayload
     {
         /// <summary>
-        /// Creates a timestamped message that specifies the minor version of the Harp core implemented by the device.
+        /// Creates a timestamped message for the CoreVersionLow register.
         /// </summary>
         /// <param name="timestamp">The timestamp of the message payload, in seconds.</param>
         /// <param name="messageType">Specifies the type of the created message.</param>
@@ -1838,17 +1853,17 @@ namespace Harp.Generators.Tests
     }
 
     /// <summary>
-    /// Represents an operator that creates a message payload
-    /// that specifies the major version of the Harp core implemented by the device.
+    /// Represents an operator that creates a message payload for the FirmwareVersionHigh register.
+    /// Specifies the major version of the Harp core implemented by the device.
     /// </summary>
     [DisplayName("FirmwareVersionHighPayload")]
-    [Description("Creates a message payload that specifies the major version of the Harp core implemented by the device.")]
+    [Description("Payload for the FirmwareVersionHigh register. Specifies the major version of the Harp core implemented by the device.")]
     public partial class CreateFirmwareVersionHighPayload
     {
         /// <summary>
-        /// Gets or sets the value that specifies the major version of the Harp core implemented by the device.
+        /// Gets or sets the value for the FirmwareVersionHigh register.
         /// </summary>
-        [Description("The value that specifies the major version of the Harp core implemented by the device.")]
+        [Description("The value for the FirmwareVersionHigh register.")]
         public byte FirmwareVersionHigh { get; set; }
 
         /// <summary>
@@ -1861,7 +1876,7 @@ namespace Harp.Generators.Tests
         }
 
         /// <summary>
-        /// Creates a message that specifies the major version of the Harp core implemented by the device.
+        /// Creates a message for the FirmwareVersionHigh register.
         /// </summary>
         /// <param name="messageType">Specifies the type of the created message.</param>
         /// <returns>A new message for the FirmwareVersionHigh register.</returns>
@@ -1872,15 +1887,15 @@ namespace Harp.Generators.Tests
     }
 
     /// <summary>
-    /// Represents an operator that creates a timestamped message payload
-    /// that specifies the major version of the Harp core implemented by the device.
+    /// Represents an operator that creates a timestamped message payload for the FirmwareVersionHigh register.
+    /// Specifies the major version of the Harp core implemented by the device.
     /// </summary>
     [DisplayName("TimestampedFirmwareVersionHighPayload")]
-    [Description("Creates a timestamped message payload that specifies the major version of the Harp core implemented by the device.")]
+    [Description("Timestamped payload for the FirmwareVersionHigh register. Specifies the major version of the Harp core implemented by the device.")]
     public partial class CreateTimestampedFirmwareVersionHighPayload : CreateFirmwareVersionHighPayload
     {
         /// <summary>
-        /// Creates a timestamped message that specifies the major version of the Harp core implemented by the device.
+        /// Creates a timestamped message for the FirmwareVersionHigh register.
         /// </summary>
         /// <param name="timestamp">The timestamp of the message payload, in seconds.</param>
         /// <param name="messageType">Specifies the type of the created message.</param>
@@ -1892,17 +1907,17 @@ namespace Harp.Generators.Tests
     }
 
     /// <summary>
-    /// Represents an operator that creates a message payload
-    /// that specifies the minor version of the Harp core implemented by the device.
+    /// Represents an operator that creates a message payload for the FirmwareVersionLow register.
+    /// Specifies the minor version of the Harp core implemented by the device.
     /// </summary>
     [DisplayName("FirmwareVersionLowPayload")]
-    [Description("Creates a message payload that specifies the minor version of the Harp core implemented by the device.")]
+    [Description("Payload for the FirmwareVersionLow register. Specifies the minor version of the Harp core implemented by the device.")]
     public partial class CreateFirmwareVersionLowPayload
     {
         /// <summary>
-        /// Gets or sets the value that specifies the minor version of the Harp core implemented by the device.
+        /// Gets or sets the value for the FirmwareVersionLow register.
         /// </summary>
-        [Description("The value that specifies the minor version of the Harp core implemented by the device.")]
+        [Description("The value for the FirmwareVersionLow register.")]
         public byte FirmwareVersionLow { get; set; }
 
         /// <summary>
@@ -1915,7 +1930,7 @@ namespace Harp.Generators.Tests
         }
 
         /// <summary>
-        /// Creates a message that specifies the minor version of the Harp core implemented by the device.
+        /// Creates a message for the FirmwareVersionLow register.
         /// </summary>
         /// <param name="messageType">Specifies the type of the created message.</param>
         /// <returns>A new message for the FirmwareVersionLow register.</returns>
@@ -1926,15 +1941,15 @@ namespace Harp.Generators.Tests
     }
 
     /// <summary>
-    /// Represents an operator that creates a timestamped message payload
-    /// that specifies the minor version of the Harp core implemented by the device.
+    /// Represents an operator that creates a timestamped message payload for the FirmwareVersionLow register.
+    /// Specifies the minor version of the Harp core implemented by the device.
     /// </summary>
     [DisplayName("TimestampedFirmwareVersionLowPayload")]
-    [Description("Creates a timestamped message payload that specifies the minor version of the Harp core implemented by the device.")]
+    [Description("Timestamped payload for the FirmwareVersionLow register. Specifies the minor version of the Harp core implemented by the device.")]
     public partial class CreateTimestampedFirmwareVersionLowPayload : CreateFirmwareVersionLowPayload
     {
         /// <summary>
-        /// Creates a timestamped message that specifies the minor version of the Harp core implemented by the device.
+        /// Creates a timestamped message for the FirmwareVersionLow register.
         /// </summary>
         /// <param name="timestamp">The timestamp of the message payload, in seconds.</param>
         /// <param name="messageType">Specifies the type of the created message.</param>
@@ -1946,17 +1961,17 @@ namespace Harp.Generators.Tests
     }
 
     /// <summary>
-    /// Represents an operator that creates a message payload
-    /// that stores the integral part of the system timestamp, in seconds.
+    /// Represents an operator that creates a message payload for the TimestampSeconds register.
+    /// Stores the integral part of the system timestamp, in seconds.
     /// </summary>
     [DisplayName("TimestampSecondsPayload")]
-    [Description("Creates a message payload that stores the integral part of the system timestamp, in seconds.")]
+    [Description("Payload for the TimestampSeconds register. Stores the integral part of the system timestamp, in seconds.")]
     public partial class CreateTimestampSecondsPayload
     {
         /// <summary>
-        /// Gets or sets the value that stores the integral part of the system timestamp, in seconds.
+        /// Gets or sets the value for the TimestampSeconds register.
         /// </summary>
-        [Description("The value that stores the integral part of the system timestamp, in seconds.")]
+        [Description("The value for the TimestampSeconds register.")]
         public uint TimestampSeconds { get; set; }
 
         /// <summary>
@@ -1969,7 +1984,7 @@ namespace Harp.Generators.Tests
         }
 
         /// <summary>
-        /// Creates a message that stores the integral part of the system timestamp, in seconds.
+        /// Creates a message for the TimestampSeconds register.
         /// </summary>
         /// <param name="messageType">Specifies the type of the created message.</param>
         /// <returns>A new message for the TimestampSeconds register.</returns>
@@ -1980,15 +1995,15 @@ namespace Harp.Generators.Tests
     }
 
     /// <summary>
-    /// Represents an operator that creates a timestamped message payload
-    /// that stores the integral part of the system timestamp, in seconds.
+    /// Represents an operator that creates a timestamped message payload for the TimestampSeconds register.
+    /// Stores the integral part of the system timestamp, in seconds.
     /// </summary>
     [DisplayName("TimestampedTimestampSecondsPayload")]
-    [Description("Creates a timestamped message payload that stores the integral part of the system timestamp, in seconds.")]
+    [Description("Timestamped payload for the TimestampSeconds register. Stores the integral part of the system timestamp, in seconds.")]
     public partial class CreateTimestampedTimestampSecondsPayload : CreateTimestampSecondsPayload
     {
         /// <summary>
-        /// Creates a timestamped message that stores the integral part of the system timestamp, in seconds.
+        /// Creates a timestamped message for the TimestampSeconds register.
         /// </summary>
         /// <param name="timestamp">The timestamp of the message payload, in seconds.</param>
         /// <param name="messageType">Specifies the type of the created message.</param>
@@ -2000,17 +2015,17 @@ namespace Harp.Generators.Tests
     }
 
     /// <summary>
-    /// Represents an operator that creates a message payload
-    /// that stores the fractional part of the system timestamp, in microseconds.
+    /// Represents an operator that creates a message payload for the TimestampMicroseconds register.
+    /// Stores the fractional part of the system timestamp, in microseconds.
     /// </summary>
     [DisplayName("TimestampMicrosecondsPayload")]
-    [Description("Creates a message payload that stores the fractional part of the system timestamp, in microseconds.")]
+    [Description("Payload for the TimestampMicroseconds register. Stores the fractional part of the system timestamp, in microseconds.")]
     public partial class CreateTimestampMicrosecondsPayload
     {
         /// <summary>
-        /// Gets or sets the value that stores the fractional part of the system timestamp, in microseconds.
+        /// Gets or sets the value for the TimestampMicroseconds register.
         /// </summary>
-        [Description("The value that stores the fractional part of the system timestamp, in microseconds.")]
+        [Description("The value for the TimestampMicroseconds register.")]
         public ushort TimestampMicroseconds { get; set; }
 
         /// <summary>
@@ -2023,7 +2038,7 @@ namespace Harp.Generators.Tests
         }
 
         /// <summary>
-        /// Creates a message that stores the fractional part of the system timestamp, in microseconds.
+        /// Creates a message for the TimestampMicroseconds register.
         /// </summary>
         /// <param name="messageType">Specifies the type of the created message.</param>
         /// <returns>A new message for the TimestampMicroseconds register.</returns>
@@ -2034,15 +2049,15 @@ namespace Harp.Generators.Tests
     }
 
     /// <summary>
-    /// Represents an operator that creates a timestamped message payload
-    /// that stores the fractional part of the system timestamp, in microseconds.
+    /// Represents an operator that creates a timestamped message payload for the TimestampMicroseconds register.
+    /// Stores the fractional part of the system timestamp, in microseconds.
     /// </summary>
     [DisplayName("TimestampedTimestampMicrosecondsPayload")]
-    [Description("Creates a timestamped message payload that stores the fractional part of the system timestamp, in microseconds.")]
+    [Description("Timestamped payload for the TimestampMicroseconds register. Stores the fractional part of the system timestamp, in microseconds.")]
     public partial class CreateTimestampedTimestampMicrosecondsPayload : CreateTimestampMicrosecondsPayload
     {
         /// <summary>
-        /// Creates a timestamped message that stores the fractional part of the system timestamp, in microseconds.
+        /// Creates a timestamped message for the TimestampMicroseconds register.
         /// </summary>
         /// <param name="timestamp">The timestamp of the message payload, in seconds.</param>
         /// <param name="messageType">Specifies the type of the created message.</param>
@@ -2054,11 +2069,11 @@ namespace Harp.Generators.Tests
     }
 
     /// <summary>
-    /// Represents an operator that creates a message payload
-    /// that stores the configuration mode of the device.
+    /// Represents an operator that creates a message payload for the OperationControl register.
+    /// Stores the configuration mode of the device.
     /// </summary>
     [DisplayName("OperationControlPayload")]
-    [Description("Creates a message payload that stores the configuration mode of the device.")]
+    [Description("Payload for the OperationControl register. Stores the configuration mode of the device.")]
     public partial class CreateOperationControlPayload
     {
         /// <summary>
@@ -2120,7 +2135,7 @@ namespace Harp.Generators.Tests
         }
 
         /// <summary>
-        /// Creates a message that stores the configuration mode of the device.
+        /// Creates a message for the OperationControl register.
         /// </summary>
         /// <param name="messageType">Specifies the type of the created message.</param>
         /// <returns>A new message for the OperationControl register.</returns>
@@ -2131,15 +2146,15 @@ namespace Harp.Generators.Tests
     }
 
     /// <summary>
-    /// Represents an operator that creates a timestamped message payload
-    /// that stores the configuration mode of the device.
+    /// Represents an operator that creates a timestamped message payload for the OperationControl register.
+    /// Stores the configuration mode of the device.
     /// </summary>
     [DisplayName("TimestampedOperationControlPayload")]
-    [Description("Creates a timestamped message payload that stores the configuration mode of the device.")]
+    [Description("Timestamped payload for the OperationControl register. Stores the configuration mode of the device.")]
     public partial class CreateTimestampedOperationControlPayload : CreateOperationControlPayload
     {
         /// <summary>
-        /// Creates a timestamped message that stores the configuration mode of the device.
+        /// Creates a timestamped message for the OperationControl register.
         /// </summary>
         /// <param name="timestamp">The timestamp of the message payload, in seconds.</param>
         /// <param name="messageType">Specifies the type of the created message.</param>
@@ -2151,17 +2166,17 @@ namespace Harp.Generators.Tests
     }
 
     /// <summary>
-    /// Represents an operator that creates a message payload
-    /// that resets the device and saves non-volatile registers.
+    /// Represents an operator that creates a message payload for the ResetDevice register.
+    /// Resets the device and saves non-volatile registers.
     /// </summary>
     [DisplayName("ResetDevicePayload")]
-    [Description("Creates a message payload that resets the device and saves non-volatile registers.")]
+    [Description("Payload for the ResetDevice register. Resets the device and saves non-volatile registers.")]
     public partial class CreateResetDevicePayload
     {
         /// <summary>
-        /// Gets or sets the value that resets the device and saves non-volatile registers.
+        /// Gets or sets the value for the ResetDevice register.
         /// </summary>
-        [Description("The value that resets the device and saves non-volatile registers.")]
+        [Description("The value for the ResetDevice register.")]
         public ResetFlags ResetDevice { get; set; }
 
         /// <summary>
@@ -2174,7 +2189,7 @@ namespace Harp.Generators.Tests
         }
 
         /// <summary>
-        /// Creates a message that resets the device and saves non-volatile registers.
+        /// Creates a message for the ResetDevice register.
         /// </summary>
         /// <param name="messageType">Specifies the type of the created message.</param>
         /// <returns>A new message for the ResetDevice register.</returns>
@@ -2185,15 +2200,15 @@ namespace Harp.Generators.Tests
     }
 
     /// <summary>
-    /// Represents an operator that creates a timestamped message payload
-    /// that resets the device and saves non-volatile registers.
+    /// Represents an operator that creates a timestamped message payload for the ResetDevice register.
+    /// Resets the device and saves non-volatile registers.
     /// </summary>
     [DisplayName("TimestampedResetDevicePayload")]
-    [Description("Creates a timestamped message payload that resets the device and saves non-volatile registers.")]
+    [Description("Timestamped payload for the ResetDevice register. Resets the device and saves non-volatile registers.")]
     public partial class CreateTimestampedResetDevicePayload : CreateResetDevicePayload
     {
         /// <summary>
-        /// Creates a timestamped message that resets the device and saves non-volatile registers.
+        /// Creates a timestamped message for the ResetDevice register.
         /// </summary>
         /// <param name="timestamp">The timestamp of the message payload, in seconds.</param>
         /// <param name="messageType">Specifies the type of the created message.</param>
@@ -2205,17 +2220,17 @@ namespace Harp.Generators.Tests
     }
 
     /// <summary>
-    /// Represents an operator that creates a message payload
-    /// that stores the user-specified device name.
+    /// Represents an operator that creates a message payload for the DeviceName register.
+    /// Stores the user-specified device name.
     /// </summary>
     [DisplayName("DeviceNamePayload")]
-    [Description("Creates a message payload that stores the user-specified device name.")]
+    [Description("Payload for the DeviceName register. Stores the user-specified device name.")]
     public partial class CreateDeviceNamePayload
     {
         /// <summary>
-        /// Gets or sets the value that stores the user-specified device name.
+        /// Gets or sets the value for the DeviceName register.
         /// </summary>
-        [Description("The value that stores the user-specified device name.")]
+        [Description("The value for the DeviceName register.")]
         public string DeviceName { get; set; } = string.Empty;
 
         /// <summary>
@@ -2228,7 +2243,7 @@ namespace Harp.Generators.Tests
         }
 
         /// <summary>
-        /// Creates a message that stores the user-specified device name.
+        /// Creates a message for the DeviceName register.
         /// </summary>
         /// <param name="messageType">Specifies the type of the created message.</param>
         /// <returns>A new message for the DeviceName register.</returns>
@@ -2239,15 +2254,15 @@ namespace Harp.Generators.Tests
     }
 
     /// <summary>
-    /// Represents an operator that creates a timestamped message payload
-    /// that stores the user-specified device name.
+    /// Represents an operator that creates a timestamped message payload for the DeviceName register.
+    /// Stores the user-specified device name.
     /// </summary>
     [DisplayName("TimestampedDeviceNamePayload")]
-    [Description("Creates a timestamped message payload that stores the user-specified device name.")]
+    [Description("Timestamped payload for the DeviceName register. Stores the user-specified device name.")]
     public partial class CreateTimestampedDeviceNamePayload : CreateDeviceNamePayload
     {
         /// <summary>
-        /// Creates a timestamped message that stores the user-specified device name.
+        /// Creates a timestamped message for the DeviceName register.
         /// </summary>
         /// <param name="timestamp">The timestamp of the message payload, in seconds.</param>
         /// <param name="messageType">Specifies the type of the created message.</param>
@@ -2259,17 +2274,17 @@ namespace Harp.Generators.Tests
     }
 
     /// <summary>
-    /// Represents an operator that creates a message payload
-    /// that specifies the unique serial number of the device.
+    /// Represents an operator that creates a message payload for the SerialNumber register.
+    /// Specifies the unique serial number of the device.
     /// </summary>
     [DisplayName("SerialNumberPayload")]
-    [Description("Creates a message payload that specifies the unique serial number of the device.")]
+    [Description("Payload for the SerialNumber register. Specifies the unique serial number of the device.")]
     public partial class CreateSerialNumberPayload
     {
         /// <summary>
-        /// Gets or sets the value that specifies the unique serial number of the device.
+        /// Gets or sets the value for the SerialNumber register.
         /// </summary>
-        [Description("The value that specifies the unique serial number of the device.")]
+        [Description("The value for the SerialNumber register.")]
         public ushort SerialNumber { get; set; }
 
         /// <summary>
@@ -2282,7 +2297,7 @@ namespace Harp.Generators.Tests
         }
 
         /// <summary>
-        /// Creates a message that specifies the unique serial number of the device.
+        /// Creates a message for the SerialNumber register.
         /// </summary>
         /// <param name="messageType">Specifies the type of the created message.</param>
         /// <returns>A new message for the SerialNumber register.</returns>
@@ -2293,15 +2308,15 @@ namespace Harp.Generators.Tests
     }
 
     /// <summary>
-    /// Represents an operator that creates a timestamped message payload
-    /// that specifies the unique serial number of the device.
+    /// Represents an operator that creates a timestamped message payload for the SerialNumber register.
+    /// Specifies the unique serial number of the device.
     /// </summary>
     [DisplayName("TimestampedSerialNumberPayload")]
-    [Description("Creates a timestamped message payload that specifies the unique serial number of the device.")]
+    [Description("Timestamped payload for the SerialNumber register. Specifies the unique serial number of the device.")]
     public partial class CreateTimestampedSerialNumberPayload : CreateSerialNumberPayload
     {
         /// <summary>
-        /// Creates a timestamped message that specifies the unique serial number of the device.
+        /// Creates a timestamped message for the SerialNumber register.
         /// </summary>
         /// <param name="timestamp">The timestamp of the message payload, in seconds.</param>
         /// <param name="messageType">Specifies the type of the created message.</param>
@@ -2313,17 +2328,17 @@ namespace Harp.Generators.Tests
     }
 
     /// <summary>
-    /// Represents an operator that creates a message payload
-    /// that specifies the configuration for the device synchronization clock.
+    /// Represents an operator that creates a message payload for the ClockConfiguration register.
+    /// Specifies the configuration for the device synchronization clock.
     /// </summary>
     [DisplayName("ClockConfigurationPayload")]
-    [Description("Creates a message payload that specifies the configuration for the device synchronization clock.")]
+    [Description("Payload for the ClockConfiguration register. Specifies the configuration for the device synchronization clock.")]
     public partial class CreateClockConfigurationPayload
     {
         /// <summary>
-        /// Gets or sets the value that specifies the configuration for the device synchronization clock.
+        /// Gets or sets the value for the ClockConfiguration register.
         /// </summary>
-        [Description("The value that specifies the configuration for the device synchronization clock.")]
+        [Description("The value for the ClockConfiguration register.")]
         public ClockConfigurationFlags ClockConfiguration { get; set; }
 
         /// <summary>
@@ -2336,7 +2351,7 @@ namespace Harp.Generators.Tests
         }
 
         /// <summary>
-        /// Creates a message that specifies the configuration for the device synchronization clock.
+        /// Creates a message for the ClockConfiguration register.
         /// </summary>
         /// <param name="messageType">Specifies the type of the created message.</param>
         /// <returns>A new message for the ClockConfiguration register.</returns>
@@ -2347,15 +2362,15 @@ namespace Harp.Generators.Tests
     }
 
     /// <summary>
-    /// Represents an operator that creates a timestamped message payload
-    /// that specifies the configuration for the device synchronization clock.
+    /// Represents an operator that creates a timestamped message payload for the ClockConfiguration register.
+    /// Specifies the configuration for the device synchronization clock.
     /// </summary>
     [DisplayName("TimestampedClockConfigurationPayload")]
-    [Description("Creates a timestamped message payload that specifies the configuration for the device synchronization clock.")]
+    [Description("Timestamped payload for the ClockConfiguration register. Specifies the configuration for the device synchronization clock.")]
     public partial class CreateTimestampedClockConfigurationPayload : CreateClockConfigurationPayload
     {
         /// <summary>
-        /// Creates a timestamped message that specifies the configuration for the device synchronization clock.
+        /// Creates a timestamped message for the ClockConfiguration register.
         /// </summary>
         /// <param name="timestamp">The timestamp of the message payload, in seconds.</param>
         /// <param name="messageType">Specifies the type of the created message.</param>

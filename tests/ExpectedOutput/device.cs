@@ -109,7 +109,7 @@ namespace Harp.Generators.Tests
     }
 
     /// <summary>
-    /// Represents an operator that groups the sequence of <see cref="Tests"/>" messages by register type.
+    /// Represents an operator that groups the sequence of <see cref="Tests"/> messages by register type.
     /// </summary>
     [Description("Groups the sequence of Tests messages by register type.")]
     public partial class GroupByRegister : Combinator<HarpMessage, IGroupedObservable<Type, HarpMessage>>
@@ -130,7 +130,7 @@ namespace Harp.Generators.Tests
     }
 
     /// <summary>
-    /// Represents an operator that writes the sequence of <see cref="Tests"/>" messages
+    /// Represents an operator that writes the sequence of <see cref="Tests"/> messages
     /// to the standard Harp storage format.
     /// </summary>
     [DefaultProperty(nameof(Path))]
@@ -343,10 +343,7 @@ namespace Harp.Generators.Tests
             Register = new DigitalInputs();
         }
 
-        string INamedElement.Name
-        {
-            get => $"{nameof(Tests)}.{GetElementDisplayName(Register)}";
-        }
+        string INamedElement.Name => GetElementDisplayName(Register);
     }
 
     /// <summary>
@@ -436,7 +433,7 @@ namespace Harp.Generators.Tests
             Register = new DigitalInputs();
         }
 
-        string INamedElement.Name => $"{nameof(Tests)}.{GetElementDisplayName(Register)}";
+        string INamedElement.Name => GetElementDisplayName(Register);
     }
 
     /// <summary>
@@ -502,13 +499,13 @@ namespace Harp.Generators.Tests
             Register = new DigitalInputs();
         }
 
-        string INamedElement.Name => $"{nameof(Tests)}.{GetElementDisplayName(Register)}";
+        string INamedElement.Name => GetElementDisplayName(Register);
     }
 
     /// <summary>
-    /// Represents a register that manipulates messages from register DigitalInputs.
+    /// Provides methods for manipulating messages from the DigitalInputs register.
     /// </summary>
-    [Description("")]
+    [Description("The Tests DigitalInputs register.")]
     public partial class DigitalInputs
     {
         /// <summary>
@@ -578,11 +575,10 @@ namespace Harp.Generators.Tests
     }
 
     /// <summary>
-    /// Provides methods for manipulating timestamped messages from the
-    /// DigitalInputs register.
+    /// Provides methods for parsing timestamped values from DigitalInputs register messages.
     /// </summary>
     /// <seealso cref="DigitalInputs"/>
-    [Description("Filters and selects timestamped messages from the DigitalInputs register.")]
+    [Description("The Tests DigitalInputs register, with timestamps.")]
     public partial class TimestampedDigitalInputs
     {
         /// <summary>
@@ -602,9 +598,9 @@ namespace Harp.Generators.Tests
     }
 
     /// <summary>
-    /// Represents a register that manipulates messages from register AnalogData.
+    /// Provides methods for manipulating messages from the AnalogData register.
     /// </summary>
-    [Description("")]
+    [Description("The Tests AnalogData register.")]
     public partial class AnalogData
     {
         /// <summary>
@@ -696,11 +692,10 @@ namespace Harp.Generators.Tests
     }
 
     /// <summary>
-    /// Provides methods for manipulating timestamped messages from the
-    /// AnalogData register.
+    /// Provides methods for parsing timestamped values from AnalogData register messages.
     /// </summary>
     /// <seealso cref="AnalogData"/>
-    [Description("Filters and selects timestamped messages from the AnalogData register.")]
+    [Description("The Tests AnalogData register, with timestamps.")]
     public partial class TimestampedAnalogData
     {
         /// <summary>
@@ -720,9 +715,9 @@ namespace Harp.Generators.Tests
     }
 
     /// <summary>
-    /// Represents a register that manipulates messages from register ComplexConfiguration.
+    /// Provides methods for manipulating messages from the ComplexConfiguration register.
     /// </summary>
-    [Description("")]
+    [Description("The Tests ComplexConfiguration register.")]
     public partial class ComplexConfiguration
     {
         /// <summary>
@@ -822,11 +817,10 @@ namespace Harp.Generators.Tests
     }
 
     /// <summary>
-    /// Provides methods for manipulating timestamped messages from the
-    /// ComplexConfiguration register.
+    /// Provides methods for parsing timestamped values from ComplexConfiguration register messages.
     /// </summary>
     /// <seealso cref="ComplexConfiguration"/>
-    [Description("Filters and selects timestamped messages from the ComplexConfiguration register.")]
+    [Description("The Tests ComplexConfiguration register, with timestamps.")]
     public partial class TimestampedComplexConfiguration
     {
         /// <summary>
@@ -846,9 +840,9 @@ namespace Harp.Generators.Tests
     }
 
     /// <summary>
-    /// Represents a register that manipulates messages from register Version.
+    /// Provides methods for manipulating messages from the Version register.
     /// </summary>
-    [Description("")]
+    [Description("The Tests Version register.")]
     public partial class Version
     {
         /// <summary>
@@ -942,11 +936,10 @@ namespace Harp.Generators.Tests
     }
 
     /// <summary>
-    /// Provides methods for manipulating timestamped messages from the
-    /// Version register.
+    /// Provides methods for parsing timestamped values from Version register messages.
     /// </summary>
     /// <seealso cref="Version"/>
-    [Description("Filters and selects timestamped messages from the Version register.")]
+    [Description("The Tests Version register, with timestamps.")]
     public partial class TimestampedVersion
     {
         /// <summary>
@@ -966,9 +959,9 @@ namespace Harp.Generators.Tests
     }
 
     /// <summary>
-    /// Represents a register that manipulates messages from register CustomPayload.
+    /// Provides methods for manipulating messages from the CustomPayload register.
     /// </summary>
-    [Description("")]
+    [Description("The Tests CustomPayload register.")]
     public partial class CustomPayload
     {
         /// <summary>
@@ -1043,11 +1036,10 @@ namespace Harp.Generators.Tests
     }
 
     /// <summary>
-    /// Provides methods for manipulating timestamped messages from the
-    /// CustomPayload register.
+    /// Provides methods for parsing timestamped values from CustomPayload register messages.
     /// </summary>
     /// <seealso cref="CustomPayload"/>
-    [Description("Filters and selects timestamped messages from the CustomPayload register.")]
+    [Description("The Tests CustomPayload register, with timestamps.")]
     public partial class TimestampedCustomPayload
     {
         /// <summary>
@@ -1067,9 +1059,9 @@ namespace Harp.Generators.Tests
     }
 
     /// <summary>
-    /// Represents a register that manipulates messages from register CustomRawPayload.
+    /// Provides methods for manipulating messages from the CustomRawPayload register.
     /// </summary>
-    [Description("")]
+    [Description("The Tests CustomRawPayload register.")]
     public partial class CustomRawPayload
     {
         /// <summary>
@@ -1145,11 +1137,10 @@ namespace Harp.Generators.Tests
     }
 
     /// <summary>
-    /// Provides methods for manipulating timestamped messages from the
-    /// CustomRawPayload register.
+    /// Provides methods for parsing timestamped values from CustomRawPayload register messages.
     /// </summary>
     /// <seealso cref="CustomRawPayload"/>
-    [Description("Filters and selects timestamped messages from the CustomRawPayload register.")]
+    [Description("The Tests CustomRawPayload register, with timestamps.")]
     public partial class TimestampedCustomRawPayload
     {
         /// <summary>
@@ -1169,9 +1160,9 @@ namespace Harp.Generators.Tests
     }
 
     /// <summary>
-    /// Represents a register that manipulates messages from register CustomMemberConverter.
+    /// Provides methods for manipulating messages from the CustomMemberConverter register.
     /// </summary>
-    [Description("")]
+    [Description("The Tests CustomMemberConverter register.")]
     public partial class CustomMemberConverter
     {
         /// <summary>
@@ -1275,11 +1266,10 @@ namespace Harp.Generators.Tests
     }
 
     /// <summary>
-    /// Provides methods for manipulating timestamped messages from the
-    /// CustomMemberConverter register.
+    /// Provides methods for parsing timestamped values from CustomMemberConverter register messages.
     /// </summary>
     /// <seealso cref="CustomMemberConverter"/>
-    [Description("Filters and selects timestamped messages from the CustomMemberConverter register.")]
+    [Description("The Tests CustomMemberConverter register, with timestamps.")]
     public partial class TimestampedCustomMemberConverter
     {
         /// <summary>
@@ -1299,9 +1289,9 @@ namespace Harp.Generators.Tests
     }
 
     /// <summary>
-    /// Represents a register that manipulates messages from register BitmaskSplitter.
+    /// Provides methods for manipulating messages from the BitmaskSplitter register.
     /// </summary>
-    [Description("")]
+    [Description("The Tests BitmaskSplitter register.")]
     public partial class BitmaskSplitter
     {
         /// <summary>
@@ -1392,11 +1382,10 @@ namespace Harp.Generators.Tests
     }
 
     /// <summary>
-    /// Provides methods for manipulating timestamped messages from the
-    /// BitmaskSplitter register.
+    /// Provides methods for parsing timestamped values from BitmaskSplitter register messages.
     /// </summary>
     /// <seealso cref="BitmaskSplitter"/>
-    [Description("Filters and selects timestamped messages from the BitmaskSplitter register.")]
+    [Description("The Tests BitmaskSplitter register, with timestamps.")]
     public partial class TimestampedBitmaskSplitter
     {
         /// <summary>
@@ -1416,9 +1405,9 @@ namespace Harp.Generators.Tests
     }
 
     /// <summary>
-    /// Represents a register that manipulates messages from register Counter0.
+    /// Provides methods for manipulating messages from the Counter0 register.
     /// </summary>
-    [Description("")]
+    [Description("The Tests Counter0 register.")]
     public partial class Counter0
     {
         /// <summary>
@@ -1488,11 +1477,10 @@ namespace Harp.Generators.Tests
     }
 
     /// <summary>
-    /// Provides methods for manipulating timestamped messages from the
-    /// Counter0 register.
+    /// Provides methods for parsing timestamped values from Counter0 register messages.
     /// </summary>
     /// <seealso cref="Counter0"/>
-    [Description("Filters and selects timestamped messages from the Counter0 register.")]
+    [Description("The Tests Counter0 register, with timestamps.")]
     public partial class TimestampedCounter0
     {
         /// <summary>
@@ -1512,9 +1500,9 @@ namespace Harp.Generators.Tests
     }
 
     /// <summary>
-    /// Represents a register that manipulates messages from register PortDIOSet.
+    /// Provides methods for manipulating messages from the PortDIOSet register.
     /// </summary>
-    [Description("")]
+    [Description("The Tests PortDIOSet register.")]
     public partial class PortDIOSet
     {
         /// <summary>
@@ -1585,11 +1573,10 @@ namespace Harp.Generators.Tests
     }
 
     /// <summary>
-    /// Provides methods for manipulating timestamped messages from the
-    /// PortDIOSet register.
+    /// Provides methods for parsing timestamped values from PortDIOSet register messages.
     /// </summary>
     /// <seealso cref="PortDIOSet"/>
-    [Description("Filters and selects timestamped messages from the PortDIOSet register.")]
+    [Description("The Tests PortDIOSet register, with timestamps.")]
     public partial class TimestampedPortDIOSet
     {
         /// <summary>
@@ -1609,9 +1596,9 @@ namespace Harp.Generators.Tests
     }
 
     /// <summary>
-    /// Represents a register that manipulates messages from register PulseDOPort0.
+    /// Provides methods for manipulating messages from the PulseDOPort0 register.
     /// </summary>
-    [Description("")]
+    [Description("The Tests PulseDOPort0 register.")]
     public partial class PulseDOPort0
     {
         /// <summary>
@@ -1681,11 +1668,10 @@ namespace Harp.Generators.Tests
     }
 
     /// <summary>
-    /// Provides methods for manipulating timestamped messages from the
-    /// PulseDOPort0 register.
+    /// Provides methods for parsing timestamped values from PulseDOPort0 register messages.
     /// </summary>
     /// <seealso cref="PulseDOPort0"/>
-    [Description("Filters and selects timestamped messages from the PulseDOPort0 register.")]
+    [Description("The Tests PulseDOPort0 register, with timestamps.")]
     public partial class TimestampedPulseDOPort0
     {
         /// <summary>
@@ -1705,9 +1691,9 @@ namespace Harp.Generators.Tests
     }
 
     /// <summary>
-    /// Represents a register that manipulates messages from register PulseDO0.
+    /// Provides methods for manipulating messages from the PulseDO0 register.
     /// </summary>
-    [Description("")]
+    [Description("The Tests PulseDO0 register.")]
     public partial class PulseDO0
     {
         /// <summary>
@@ -1777,11 +1763,10 @@ namespace Harp.Generators.Tests
     }
 
     /// <summary>
-    /// Provides methods for manipulating timestamped messages from the
-    /// PulseDO0 register.
+    /// Provides methods for parsing timestamped values from PulseDO0 register messages.
     /// </summary>
     /// <seealso cref="PulseDO0"/>
-    [Description("Filters and selects timestamped messages from the PulseDO0 register.")]
+    [Description("The Tests PulseDO0 register, with timestamps.")]
     public partial class TimestampedPulseDO0
     {
         /// <summary>
@@ -1801,9 +1786,9 @@ namespace Harp.Generators.Tests
     }
 
     /// <summary>
-    /// Represents a register that manipulates messages from register MultiElementPayload.
+    /// Provides methods for manipulating messages from the MultiElementPayload register.
     /// </summary>
-    [Description("")]
+    [Description("The Tests MultiElementPayload register.")]
     public partial class MultiElementPayload
     {
         /// <summary>
@@ -1873,11 +1858,10 @@ namespace Harp.Generators.Tests
     }
 
     /// <summary>
-    /// Provides methods for manipulating timestamped messages from the
-    /// MultiElementPayload register.
+    /// Provides methods for parsing timestamped values from MultiElementPayload register messages.
     /// </summary>
     /// <seealso cref="MultiElementPayload"/>
-    [Description("Filters and selects timestamped messages from the MultiElementPayload register.")]
+    [Description("The Tests MultiElementPayload register, with timestamps.")]
     public partial class TimestampedMultiElementPayload
     {
         /// <summary>
@@ -1897,9 +1881,9 @@ namespace Harp.Generators.Tests
     }
 
     /// <summary>
-    /// Represents a register that manipulates messages from register SingleElementPayload.
+    /// Provides methods for manipulating messages from the SingleElementPayload register.
     /// </summary>
-    [Description("")]
+    [Description("The Tests SingleElementPayload register.")]
     public partial class SingleElementPayload
     {
         /// <summary>
@@ -1969,11 +1953,10 @@ namespace Harp.Generators.Tests
     }
 
     /// <summary>
-    /// Provides methods for manipulating timestamped messages from the
-    /// SingleElementPayload register.
+    /// Provides methods for parsing timestamped values from SingleElementPayload register messages.
     /// </summary>
     /// <seealso cref="SingleElementPayload"/>
-    [Description("Filters and selects timestamped messages from the SingleElementPayload register.")]
+    [Description("The Tests SingleElementPayload register, with timestamps.")]
     public partial class TimestampedSingleElementPayload
     {
         /// <summary>
@@ -1993,9 +1976,9 @@ namespace Harp.Generators.Tests
     }
 
     /// <summary>
-    /// Represents a register that manipulates messages from register MixedMemberLength.
+    /// Provides methods for manipulating messages from the MixedMemberLength register.
     /// </summary>
-    [Description("")]
+    [Description("The Tests MixedMemberLength register.")]
     public partial class MixedMemberLength
     {
         /// <summary>
@@ -2085,11 +2068,10 @@ namespace Harp.Generators.Tests
     }
 
     /// <summary>
-    /// Provides methods for manipulating timestamped messages from the
-    /// MixedMemberLength register.
+    /// Provides methods for parsing timestamped values from MixedMemberLength register messages.
     /// </summary>
     /// <seealso cref="MixedMemberLength"/>
-    [Description("Filters and selects timestamped messages from the MixedMemberLength register.")]
+    [Description("The Tests MixedMemberLength register, with timestamps.")]
     public partial class TimestampedMixedMemberLength
     {
         /// <summary>
@@ -2109,9 +2091,9 @@ namespace Harp.Generators.Tests
     }
 
     /// <summary>
-    /// Represents a register that manipulates messages from register Rgb0.
+    /// Provides methods for manipulating messages from the Rgb0 register.
     /// </summary>
-    [Description("")]
+    [Description("The Tests Rgb0 register.")]
     public partial class Rgb0
     {
         /// <summary>
@@ -2201,11 +2183,10 @@ namespace Harp.Generators.Tests
     }
 
     /// <summary>
-    /// Provides methods for manipulating timestamped messages from the
-    /// Rgb0 register.
+    /// Provides methods for parsing timestamped values from Rgb0 register messages.
     /// </summary>
     /// <seealso cref="Rgb0"/>
-    [Description("Filters and selects timestamped messages from the Rgb0 register.")]
+    [Description("The Tests Rgb0 register, with timestamps.")]
     public partial class TimestampedRgb0
     {
         /// <summary>
@@ -2225,9 +2206,9 @@ namespace Harp.Generators.Tests
     }
 
     /// <summary>
-    /// Represents a register that manipulates messages from register Rgb1.
+    /// Provides methods for manipulating messages from the Rgb1 register.
     /// </summary>
-    [Description("")]
+    [Description("The Tests Rgb1 register.")]
     public partial class Rgb1
     {
         /// <summary>
@@ -2317,11 +2298,10 @@ namespace Harp.Generators.Tests
     }
 
     /// <summary>
-    /// Provides methods for manipulating timestamped messages from the
-    /// Rgb1 register.
+    /// Provides methods for parsing timestamped values from Rgb1 register messages.
     /// </summary>
     /// <seealso cref="Rgb1"/>
-    [Description("Filters and selects timestamped messages from the Rgb1 register.")]
+    [Description("The Tests Rgb1 register, with timestamps.")]
     public partial class TimestampedRgb1
     {
         /// <summary>
@@ -2341,9 +2321,10 @@ namespace Harp.Generators.Tests
     }
 
     /// <summary>
-    /// Represents a register that starts a PWM pulse.
+    /// Provides methods for manipulating messages from the StartPulse register.
+    /// Starts a PWM pulse.
     /// </summary>
-    [Description("Starts a PWM pulse.")]
+    [Description("The Tests StartPulse register. Starts a PWM pulse.")]
     public partial class StartPulse
     {
         /// <summary>
@@ -2430,11 +2411,11 @@ namespace Harp.Generators.Tests
     }
 
     /// <summary>
-    /// Provides methods for manipulating timestamped messages from the
-    /// StartPulse register.
+    /// Provides methods for parsing timestamped values from StartPulse register messages.
+    /// Starts a PWM pulse.
     /// </summary>
     /// <seealso cref="StartPulse"/>
-    [Description("Filters and selects timestamped messages from the StartPulse register.")]
+    [Description("The Tests StartPulse register, with timestamps. Starts a PWM pulse.")]
     public partial class TimestampedStartPulse
     {
         /// <summary>
@@ -2454,9 +2435,10 @@ namespace Harp.Generators.Tests
     }
 
     /// <summary>
-    /// Represents a register that starts a PWM pulse train.
+    /// Provides methods for manipulating messages from the StartPulseTrain register.
+    /// Starts a PWM pulse train.
     /// </summary>
-    [Description("Starts a PWM pulse train.")]
+    [Description("The Tests StartPulseTrain register. Starts a PWM pulse train.")]
     public partial class StartPulseTrain
     {
         /// <summary>
@@ -2548,11 +2530,11 @@ namespace Harp.Generators.Tests
     }
 
     /// <summary>
-    /// Provides methods for manipulating timestamped messages from the
-    /// StartPulseTrain register.
+    /// Provides methods for parsing timestamped values from StartPulseTrain register messages.
+    /// Starts a PWM pulse train.
     /// </summary>
     /// <seealso cref="StartPulseTrain"/>
-    [Description("Filters and selects timestamped messages from the StartPulseTrain register.")]
+    [Description("The Tests StartPulseTrain register, with timestamps. Starts a PWM pulse train.")]
     public partial class TimestampedStartPulseTrain
     {
         /// <summary>
@@ -2572,9 +2554,10 @@ namespace Harp.Generators.Tests
     }
 
     /// <summary>
-    /// Represents a register that configures the operation mode of the encoder.
+    /// Provides methods for manipulating messages from the EncoderMode register.
+    /// Configures the operation mode of the encoder.
     /// </summary>
-    [Description("Configures the operation mode of the encoder.")]
+    [Description("The Tests EncoderMode register. Configures the operation mode of the encoder.")]
     public partial class EncoderMode
     {
         /// <summary>
@@ -2645,11 +2628,11 @@ namespace Harp.Generators.Tests
     }
 
     /// <summary>
-    /// Provides methods for manipulating timestamped messages from the
-    /// EncoderMode register.
+    /// Provides methods for parsing timestamped values from EncoderMode register messages.
+    /// Configures the operation mode of the encoder.
     /// </summary>
     /// <seealso cref="EncoderMode"/>
-    [Description("Filters and selects timestamped messages from the EncoderMode register.")]
+    [Description("The Tests EncoderMode register, with timestamps. Configures the operation mode of the encoder.")]
     public partial class TimestampedEncoderMode
     {
         /// <summary>
@@ -2669,9 +2652,10 @@ namespace Harp.Generators.Tests
     }
 
     /// <summary>
-    /// Represents a register that specifies whether the status LED is enabled.
+    /// Provides methods for manipulating messages from the LedEnabled register.
+    /// Specifies whether the status LED is enabled.
     /// </summary>
-    [Description("Specifies whether the status LED is enabled.")]
+    [Description("The Tests LedEnabled register. Specifies whether the status LED is enabled.")]
     public partial class LedEnabled
     {
         /// <summary>
@@ -2742,11 +2726,11 @@ namespace Harp.Generators.Tests
     }
 
     /// <summary>
-    /// Provides methods for manipulating timestamped messages from the
-    /// LedEnabled register.
+    /// Provides methods for parsing timestamped values from LedEnabled register messages.
+    /// Specifies whether the status LED is enabled.
     /// </summary>
     /// <seealso cref="LedEnabled"/>
-    [Description("Filters and selects timestamped messages from the LedEnabled register.")]
+    [Description("The Tests LedEnabled register, with timestamps. Specifies whether the status LED is enabled.")]
     public partial class TimestampedLedEnabled
     {
         /// <summary>
@@ -2766,9 +2750,9 @@ namespace Harp.Generators.Tests
     }
 
     /// <summary>
-    /// Represents a register that manipulates messages from register PortDIOClear.
+    /// Provides methods for manipulating messages from the PortDIOClear register.
     /// </summary>
-    [Description("")]
+    [Description("The Tests PortDIOClear register.")]
     public partial class PortDIOClear
     {
         /// <summary>
@@ -2839,11 +2823,10 @@ namespace Harp.Generators.Tests
     }
 
     /// <summary>
-    /// Provides methods for manipulating timestamped messages from the
-    /// PortDIOClear register.
+    /// Provides methods for parsing timestamped values from PortDIOClear register messages.
     /// </summary>
     /// <seealso cref="PortDIOClear"/>
-    [Description("Filters and selects timestamped messages from the PortDIOClear register.")]
+    [Description("The Tests PortDIOClear register, with timestamps.")]
     public partial class TimestampedPortDIOClear
     {
         /// <summary>
@@ -2863,9 +2846,9 @@ namespace Harp.Generators.Tests
     }
 
     /// <summary>
-    /// Represents a register that manipulates messages from register WideStatus.
+    /// Provides methods for manipulating messages from the WideStatus register.
     /// </summary>
-    [Description("")]
+    [Description("The Tests WideStatus register.")]
     public partial class WideStatus
     {
         /// <summary>
@@ -2936,11 +2919,10 @@ namespace Harp.Generators.Tests
     }
 
     /// <summary>
-    /// Provides methods for manipulating timestamped messages from the
-    /// WideStatus register.
+    /// Provides methods for parsing timestamped values from WideStatus register messages.
     /// </summary>
     /// <seealso cref="WideStatus"/>
-    [Description("Filters and selects timestamped messages from the WideStatus register.")]
+    [Description("The Tests WideStatus register, with timestamps.")]
     public partial class TimestampedWideStatus
     {
         /// <summary>
@@ -2960,9 +2942,10 @@ namespace Harp.Generators.Tests
     }
 
     /// <summary>
-    /// Represents a register that specifies a threshold whose default needs more than single precision.
+    /// Provides methods for manipulating messages from the Threshold register.
+    /// Specifies a threshold whose default needs more than single precision.
     /// </summary>
-    [Description("Specifies a threshold whose default needs more than single precision.")]
+    [Description("The Tests Threshold register. Specifies a threshold whose default needs more than single precision.")]
     public partial class Threshold
     {
         /// <summary>
@@ -3032,11 +3015,11 @@ namespace Harp.Generators.Tests
     }
 
     /// <summary>
-    /// Provides methods for manipulating timestamped messages from the
-    /// Threshold register.
+    /// Provides methods for parsing timestamped values from Threshold register messages.
+    /// Specifies a threshold whose default needs more than single precision.
     /// </summary>
     /// <seealso cref="Threshold"/>
-    [Description("Filters and selects timestamped messages from the Threshold register.")]
+    [Description("The Tests Threshold register, with timestamps. Specifies a threshold whose default needs more than single precision.")]
     public partial class TimestampedThreshold
     {
         /// <summary>
@@ -3142,21 +3125,20 @@ namespace Harp.Generators.Tests
             Payload = new CreateDigitalInputsPayload();
         }
 
-        string INamedElement.Name => $"{nameof(Tests)}.{GetElementDisplayName(Payload)}";
+        string INamedElement.Name => GetElementDisplayName(Payload);
     }
 
     /// <summary>
-    /// Represents an operator that creates a message payload
-    /// for register DigitalInputs.
+    /// Represents an operator that creates a message payload for the DigitalInputs register.
     /// </summary>
     [DisplayName("DigitalInputsPayload")]
-    [Description("Creates a message payload for register DigitalInputs.")]
+    [Description("Payload for the Tests DigitalInputs register.")]
     public partial class CreateDigitalInputsPayload
     {
         /// <summary>
-        /// Gets or sets the value for register DigitalInputs.
+        /// Gets or sets the value for the DigitalInputs register.
         /// </summary>
-        [Description("The value for register DigitalInputs.")]
+        [Description("The value for the DigitalInputs register.")]
         public byte DigitalInputs { get; set; }
 
         /// <summary>
@@ -3169,7 +3151,7 @@ namespace Harp.Generators.Tests
         }
 
         /// <summary>
-        /// Creates a message for register DigitalInputs.
+        /// Creates a message for the DigitalInputs register.
         /// </summary>
         /// <param name="messageType">Specifies the type of the created message.</param>
         /// <returns>A new message for the DigitalInputs register.</returns>
@@ -3180,15 +3162,14 @@ namespace Harp.Generators.Tests
     }
 
     /// <summary>
-    /// Represents an operator that creates a timestamped message payload
-    /// for register DigitalInputs.
+    /// Represents an operator that creates a timestamped message payload for the DigitalInputs register.
     /// </summary>
     [DisplayName("TimestampedDigitalInputsPayload")]
-    [Description("Creates a timestamped message payload for register DigitalInputs.")]
+    [Description("Timestamped payload for the Tests DigitalInputs register.")]
     public partial class CreateTimestampedDigitalInputsPayload : CreateDigitalInputsPayload
     {
         /// <summary>
-        /// Creates a timestamped message for register DigitalInputs.
+        /// Creates a timestamped message for the DigitalInputs register.
         /// </summary>
         /// <param name="timestamp">The timestamp of the message payload, in seconds.</param>
         /// <param name="messageType">Specifies the type of the created message.</param>
@@ -3200,11 +3181,10 @@ namespace Harp.Generators.Tests
     }
 
     /// <summary>
-    /// Represents an operator that creates a message payload
-    /// for register AnalogData.
+    /// Represents an operator that creates a message payload for the AnalogData register.
     /// </summary>
     [DisplayName("AnalogDataPayload")]
-    [Description("Creates a message payload for register AnalogData.")]
+    [Description("Payload for the Tests AnalogData register.")]
     public partial class CreateAnalogDataPayload
     {
         /// <summary>
@@ -3242,7 +3222,7 @@ namespace Harp.Generators.Tests
         }
 
         /// <summary>
-        /// Creates a message for register AnalogData.
+        /// Creates a message for the AnalogData register.
         /// </summary>
         /// <param name="messageType">Specifies the type of the created message.</param>
         /// <returns>A new message for the AnalogData register.</returns>
@@ -3253,15 +3233,14 @@ namespace Harp.Generators.Tests
     }
 
     /// <summary>
-    /// Represents an operator that creates a timestamped message payload
-    /// for register AnalogData.
+    /// Represents an operator that creates a timestamped message payload for the AnalogData register.
     /// </summary>
     [DisplayName("TimestampedAnalogDataPayload")]
-    [Description("Creates a timestamped message payload for register AnalogData.")]
+    [Description("Timestamped payload for the Tests AnalogData register.")]
     public partial class CreateTimestampedAnalogDataPayload : CreateAnalogDataPayload
     {
         /// <summary>
-        /// Creates a timestamped message for register AnalogData.
+        /// Creates a timestamped message for the AnalogData register.
         /// </summary>
         /// <param name="timestamp">The timestamp of the message payload, in seconds.</param>
         /// <param name="messageType">Specifies the type of the created message.</param>
@@ -3273,11 +3252,10 @@ namespace Harp.Generators.Tests
     }
 
     /// <summary>
-    /// Represents an operator that creates a message payload
-    /// for register ComplexConfiguration.
+    /// Represents an operator that creates a message payload for the ComplexConfiguration register.
     /// </summary>
     [DisplayName("ComplexConfigurationPayload")]
-    [Description("Creates a message payload for register ComplexConfiguration.")]
+    [Description("Payload for the Tests ComplexConfiguration register.")]
     public partial class CreateComplexConfigurationPayload
     {
         /// <summary>
@@ -3339,7 +3317,7 @@ namespace Harp.Generators.Tests
         }
 
         /// <summary>
-        /// Creates a message for register ComplexConfiguration.
+        /// Creates a message for the ComplexConfiguration register.
         /// </summary>
         /// <param name="messageType">Specifies the type of the created message.</param>
         /// <returns>A new message for the ComplexConfiguration register.</returns>
@@ -3350,15 +3328,14 @@ namespace Harp.Generators.Tests
     }
 
     /// <summary>
-    /// Represents an operator that creates a timestamped message payload
-    /// for register ComplexConfiguration.
+    /// Represents an operator that creates a timestamped message payload for the ComplexConfiguration register.
     /// </summary>
     [DisplayName("TimestampedComplexConfigurationPayload")]
-    [Description("Creates a timestamped message payload for register ComplexConfiguration.")]
+    [Description("Timestamped payload for the Tests ComplexConfiguration register.")]
     public partial class CreateTimestampedComplexConfigurationPayload : CreateComplexConfigurationPayload
     {
         /// <summary>
-        /// Creates a timestamped message for register ComplexConfiguration.
+        /// Creates a timestamped message for the ComplexConfiguration register.
         /// </summary>
         /// <param name="timestamp">The timestamp of the message payload, in seconds.</param>
         /// <param name="messageType">Specifies the type of the created message.</param>
@@ -3370,11 +3347,10 @@ namespace Harp.Generators.Tests
     }
 
     /// <summary>
-    /// Represents an operator that creates a message payload
-    /// for register Version.
+    /// Represents an operator that creates a message payload for the Version register.
     /// </summary>
     [DisplayName("VersionPayload")]
-    [Description("Creates a message payload for register Version.")]
+    [Description("Payload for the Tests Version register.")]
     public partial class CreateVersionPayload
     {
         /// <summary>
@@ -3418,7 +3394,7 @@ namespace Harp.Generators.Tests
         }
 
         /// <summary>
-        /// Creates a message for register Version.
+        /// Creates a message for the Version register.
         /// </summary>
         /// <param name="messageType">Specifies the type of the created message.</param>
         /// <returns>A new message for the Version register.</returns>
@@ -3429,15 +3405,14 @@ namespace Harp.Generators.Tests
     }
 
     /// <summary>
-    /// Represents an operator that creates a timestamped message payload
-    /// for register Version.
+    /// Represents an operator that creates a timestamped message payload for the Version register.
     /// </summary>
     [DisplayName("TimestampedVersionPayload")]
-    [Description("Creates a timestamped message payload for register Version.")]
+    [Description("Timestamped payload for the Tests Version register.")]
     public partial class CreateTimestampedVersionPayload : CreateVersionPayload
     {
         /// <summary>
-        /// Creates a timestamped message for register Version.
+        /// Creates a timestamped message for the Version register.
         /// </summary>
         /// <param name="timestamp">The timestamp of the message payload, in seconds.</param>
         /// <param name="messageType">Specifies the type of the created message.</param>
@@ -3449,17 +3424,16 @@ namespace Harp.Generators.Tests
     }
 
     /// <summary>
-    /// Represents an operator that creates a message payload
-    /// for register CustomPayload.
+    /// Represents an operator that creates a message payload for the CustomPayload register.
     /// </summary>
     [DisplayName("CustomPayloadPayload")]
-    [Description("Creates a message payload for register CustomPayload.")]
+    [Description("Payload for the Tests CustomPayload register.")]
     public partial class CreateCustomPayloadPayload
     {
         /// <summary>
-        /// Gets or sets the value for register CustomPayload.
+        /// Gets or sets the value for the CustomPayload register.
         /// </summary>
-        [Description("The value for register CustomPayload.")]
+        [Description("The value for the CustomPayload register.")]
         public HarpVersion CustomPayload { get; set; } = new();
 
         /// <summary>
@@ -3472,7 +3446,7 @@ namespace Harp.Generators.Tests
         }
 
         /// <summary>
-        /// Creates a message for register CustomPayload.
+        /// Creates a message for the CustomPayload register.
         /// </summary>
         /// <param name="messageType">Specifies the type of the created message.</param>
         /// <returns>A new message for the CustomPayload register.</returns>
@@ -3483,15 +3457,14 @@ namespace Harp.Generators.Tests
     }
 
     /// <summary>
-    /// Represents an operator that creates a timestamped message payload
-    /// for register CustomPayload.
+    /// Represents an operator that creates a timestamped message payload for the CustomPayload register.
     /// </summary>
     [DisplayName("TimestampedCustomPayloadPayload")]
-    [Description("Creates a timestamped message payload for register CustomPayload.")]
+    [Description("Timestamped payload for the Tests CustomPayload register.")]
     public partial class CreateTimestampedCustomPayloadPayload : CreateCustomPayloadPayload
     {
         /// <summary>
-        /// Creates a timestamped message for register CustomPayload.
+        /// Creates a timestamped message for the CustomPayload register.
         /// </summary>
         /// <param name="timestamp">The timestamp of the message payload, in seconds.</param>
         /// <param name="messageType">Specifies the type of the created message.</param>
@@ -3503,17 +3476,16 @@ namespace Harp.Generators.Tests
     }
 
     /// <summary>
-    /// Represents an operator that creates a message payload
-    /// for register CustomRawPayload.
+    /// Represents an operator that creates a message payload for the CustomRawPayload register.
     /// </summary>
     [DisplayName("CustomRawPayloadPayload")]
-    [Description("Creates a message payload for register CustomRawPayload.")]
+    [Description("Payload for the Tests CustomRawPayload register.")]
     public partial class CreateCustomRawPayloadPayload
     {
         /// <summary>
-        /// Gets or sets the value for register CustomRawPayload.
+        /// Gets or sets the value for the CustomRawPayload register.
         /// </summary>
-        [Description("The value for register CustomRawPayload.")]
+        [Description("The value for the CustomRawPayload register.")]
         public HarpVersion CustomRawPayload { get; set; } = new();
 
         /// <summary>
@@ -3526,7 +3498,7 @@ namespace Harp.Generators.Tests
         }
 
         /// <summary>
-        /// Creates a message for register CustomRawPayload.
+        /// Creates a message for the CustomRawPayload register.
         /// </summary>
         /// <param name="messageType">Specifies the type of the created message.</param>
         /// <returns>A new message for the CustomRawPayload register.</returns>
@@ -3537,15 +3509,14 @@ namespace Harp.Generators.Tests
     }
 
     /// <summary>
-    /// Represents an operator that creates a timestamped message payload
-    /// for register CustomRawPayload.
+    /// Represents an operator that creates a timestamped message payload for the CustomRawPayload register.
     /// </summary>
     [DisplayName("TimestampedCustomRawPayloadPayload")]
-    [Description("Creates a timestamped message payload for register CustomRawPayload.")]
+    [Description("Timestamped payload for the Tests CustomRawPayload register.")]
     public partial class CreateTimestampedCustomRawPayloadPayload : CreateCustomRawPayloadPayload
     {
         /// <summary>
-        /// Creates a timestamped message for register CustomRawPayload.
+        /// Creates a timestamped message for the CustomRawPayload register.
         /// </summary>
         /// <param name="timestamp">The timestamp of the message payload, in seconds.</param>
         /// <param name="messageType">Specifies the type of the created message.</param>
@@ -3557,11 +3528,10 @@ namespace Harp.Generators.Tests
     }
 
     /// <summary>
-    /// Represents an operator that creates a message payload
-    /// for register CustomMemberConverter.
+    /// Represents an operator that creates a message payload for the CustomMemberConverter register.
     /// </summary>
     [DisplayName("CustomMemberConverterPayload")]
-    [Description("Creates a message payload for register CustomMemberConverter.")]
+    [Description("Payload for the Tests CustomMemberConverter register.")]
     public partial class CreateCustomMemberConverterPayload
     {
         /// <summary>
@@ -3599,7 +3569,7 @@ namespace Harp.Generators.Tests
         }
 
         /// <summary>
-        /// Creates a message for register CustomMemberConverter.
+        /// Creates a message for the CustomMemberConverter register.
         /// </summary>
         /// <param name="messageType">Specifies the type of the created message.</param>
         /// <returns>A new message for the CustomMemberConverter register.</returns>
@@ -3610,15 +3580,14 @@ namespace Harp.Generators.Tests
     }
 
     /// <summary>
-    /// Represents an operator that creates a timestamped message payload
-    /// for register CustomMemberConverter.
+    /// Represents an operator that creates a timestamped message payload for the CustomMemberConverter register.
     /// </summary>
     [DisplayName("TimestampedCustomMemberConverterPayload")]
-    [Description("Creates a timestamped message payload for register CustomMemberConverter.")]
+    [Description("Timestamped payload for the Tests CustomMemberConverter register.")]
     public partial class CreateTimestampedCustomMemberConverterPayload : CreateCustomMemberConverterPayload
     {
         /// <summary>
-        /// Creates a timestamped message for register CustomMemberConverter.
+        /// Creates a timestamped message for the CustomMemberConverter register.
         /// </summary>
         /// <param name="timestamp">The timestamp of the message payload, in seconds.</param>
         /// <param name="messageType">Specifies the type of the created message.</param>
@@ -3630,11 +3599,10 @@ namespace Harp.Generators.Tests
     }
 
     /// <summary>
-    /// Represents an operator that creates a message payload
-    /// for register BitmaskSplitter.
+    /// Represents an operator that creates a message payload for the BitmaskSplitter register.
     /// </summary>
     [DisplayName("BitmaskSplitterPayload")]
-    [Description("Creates a message payload for register BitmaskSplitter.")]
+    [Description("Payload for the Tests BitmaskSplitter register.")]
     public partial class CreateBitmaskSplitterPayload
     {
         /// <summary>
@@ -3660,7 +3628,7 @@ namespace Harp.Generators.Tests
         }
 
         /// <summary>
-        /// Creates a message for register BitmaskSplitter.
+        /// Creates a message for the BitmaskSplitter register.
         /// </summary>
         /// <param name="messageType">Specifies the type of the created message.</param>
         /// <returns>A new message for the BitmaskSplitter register.</returns>
@@ -3671,15 +3639,14 @@ namespace Harp.Generators.Tests
     }
 
     /// <summary>
-    /// Represents an operator that creates a timestamped message payload
-    /// for register BitmaskSplitter.
+    /// Represents an operator that creates a timestamped message payload for the BitmaskSplitter register.
     /// </summary>
     [DisplayName("TimestampedBitmaskSplitterPayload")]
-    [Description("Creates a timestamped message payload for register BitmaskSplitter.")]
+    [Description("Timestamped payload for the Tests BitmaskSplitter register.")]
     public partial class CreateTimestampedBitmaskSplitterPayload : CreateBitmaskSplitterPayload
     {
         /// <summary>
-        /// Creates a timestamped message for register BitmaskSplitter.
+        /// Creates a timestamped message for the BitmaskSplitter register.
         /// </summary>
         /// <param name="timestamp">The timestamp of the message payload, in seconds.</param>
         /// <param name="messageType">Specifies the type of the created message.</param>
@@ -3691,17 +3658,16 @@ namespace Harp.Generators.Tests
     }
 
     /// <summary>
-    /// Represents an operator that creates a message payload
-    /// for register Counter0.
+    /// Represents an operator that creates a message payload for the Counter0 register.
     /// </summary>
     [DisplayName("Counter0Payload")]
-    [Description("Creates a message payload for register Counter0.")]
+    [Description("Payload for the Tests Counter0 register.")]
     public partial class CreateCounter0Payload
     {
         /// <summary>
-        /// Gets or sets the value for register Counter0.
+        /// Gets or sets the value for the Counter0 register.
         /// </summary>
-        [Description("The value for register Counter0.")]
+        [Description("The value for the Counter0 register.")]
         public int Counter0 { get; set; }
 
         /// <summary>
@@ -3714,7 +3680,7 @@ namespace Harp.Generators.Tests
         }
 
         /// <summary>
-        /// Creates a message for register Counter0.
+        /// Creates a message for the Counter0 register.
         /// </summary>
         /// <param name="messageType">Specifies the type of the created message.</param>
         /// <returns>A new message for the Counter0 register.</returns>
@@ -3725,15 +3691,14 @@ namespace Harp.Generators.Tests
     }
 
     /// <summary>
-    /// Represents an operator that creates a timestamped message payload
-    /// for register Counter0.
+    /// Represents an operator that creates a timestamped message payload for the Counter0 register.
     /// </summary>
     [DisplayName("TimestampedCounter0Payload")]
-    [Description("Creates a timestamped message payload for register Counter0.")]
+    [Description("Timestamped payload for the Tests Counter0 register.")]
     public partial class CreateTimestampedCounter0Payload : CreateCounter0Payload
     {
         /// <summary>
-        /// Creates a timestamped message for register Counter0.
+        /// Creates a timestamped message for the Counter0 register.
         /// </summary>
         /// <param name="timestamp">The timestamp of the message payload, in seconds.</param>
         /// <param name="messageType">Specifies the type of the created message.</param>
@@ -3745,17 +3710,16 @@ namespace Harp.Generators.Tests
     }
 
     /// <summary>
-    /// Represents an operator that creates a message payload
-    /// for register PortDIOSet.
+    /// Represents an operator that creates a message payload for the PortDIOSet register.
     /// </summary>
     [DisplayName("PortDIOSetPayload")]
-    [Description("Creates a message payload for register PortDIOSet.")]
+    [Description("Payload for the Tests PortDIOSet register.")]
     public partial class CreatePortDIOSetPayload
     {
         /// <summary>
-        /// Gets or sets the value for register PortDIOSet.
+        /// Gets or sets the value for the PortDIOSet register.
         /// </summary>
-        [Description("The value for register PortDIOSet.")]
+        [Description("The value for the PortDIOSet register.")]
         public PortDigitalIOS PortDIOSet { get; set; } = PortDigitalIOS.DIO0 | PortDigitalIOS.DIO1;
 
         /// <summary>
@@ -3768,7 +3732,7 @@ namespace Harp.Generators.Tests
         }
 
         /// <summary>
-        /// Creates a message for register PortDIOSet.
+        /// Creates a message for the PortDIOSet register.
         /// </summary>
         /// <param name="messageType">Specifies the type of the created message.</param>
         /// <returns>A new message for the PortDIOSet register.</returns>
@@ -3779,15 +3743,14 @@ namespace Harp.Generators.Tests
     }
 
     /// <summary>
-    /// Represents an operator that creates a timestamped message payload
-    /// for register PortDIOSet.
+    /// Represents an operator that creates a timestamped message payload for the PortDIOSet register.
     /// </summary>
     [DisplayName("TimestampedPortDIOSetPayload")]
-    [Description("Creates a timestamped message payload for register PortDIOSet.")]
+    [Description("Timestamped payload for the Tests PortDIOSet register.")]
     public partial class CreateTimestampedPortDIOSetPayload : CreatePortDIOSetPayload
     {
         /// <summary>
-        /// Creates a timestamped message for register PortDIOSet.
+        /// Creates a timestamped message for the PortDIOSet register.
         /// </summary>
         /// <param name="timestamp">The timestamp of the message payload, in seconds.</param>
         /// <param name="messageType">Specifies the type of the created message.</param>
@@ -3799,19 +3762,18 @@ namespace Harp.Generators.Tests
     }
 
     /// <summary>
-    /// Represents an operator that creates a message payload
-    /// for register PulseDOPort0.
+    /// Represents an operator that creates a message payload for the PulseDOPort0 register.
     /// </summary>
     [DisplayName("PulseDOPort0Payload")]
-    [Description("Creates a message payload for register PulseDOPort0.")]
+    [Description("Payload for the Tests PulseDOPort0 register.")]
     public partial class CreatePulseDOPort0Payload
     {
         /// <summary>
-        /// Gets or sets the value for register PulseDOPort0.
+        /// Gets or sets the value for the PulseDOPort0 register.
         /// </summary>
         [Range(min: 1, max: long.MaxValue)]
         [Editor(DesignTypes.NumericUpDownEditor, DesignTypes.UITypeEditor)]
-        [Description("The value for register PulseDOPort0.")]
+        [Description("The value for the PulseDOPort0 register.")]
         public ushort PulseDOPort0 { get; set; } = 500;
 
         /// <summary>
@@ -3824,7 +3786,7 @@ namespace Harp.Generators.Tests
         }
 
         /// <summary>
-        /// Creates a message for register PulseDOPort0.
+        /// Creates a message for the PulseDOPort0 register.
         /// </summary>
         /// <param name="messageType">Specifies the type of the created message.</param>
         /// <returns>A new message for the PulseDOPort0 register.</returns>
@@ -3835,15 +3797,14 @@ namespace Harp.Generators.Tests
     }
 
     /// <summary>
-    /// Represents an operator that creates a timestamped message payload
-    /// for register PulseDOPort0.
+    /// Represents an operator that creates a timestamped message payload for the PulseDOPort0 register.
     /// </summary>
     [DisplayName("TimestampedPulseDOPort0Payload")]
-    [Description("Creates a timestamped message payload for register PulseDOPort0.")]
+    [Description("Timestamped payload for the Tests PulseDOPort0 register.")]
     public partial class CreateTimestampedPulseDOPort0Payload : CreatePulseDOPort0Payload
     {
         /// <summary>
-        /// Creates a timestamped message for register PulseDOPort0.
+        /// Creates a timestamped message for the PulseDOPort0 register.
         /// </summary>
         /// <param name="timestamp">The timestamp of the message payload, in seconds.</param>
         /// <param name="messageType">Specifies the type of the created message.</param>
@@ -3855,19 +3816,18 @@ namespace Harp.Generators.Tests
     }
 
     /// <summary>
-    /// Represents an operator that creates a message payload
-    /// for register PulseDO0.
+    /// Represents an operator that creates a message payload for the PulseDO0 register.
     /// </summary>
     [DisplayName("PulseDO0Payload")]
-    [Description("Creates a message payload for register PulseDO0.")]
+    [Description("Payload for the Tests PulseDO0 register.")]
     public partial class CreatePulseDO0Payload
     {
         /// <summary>
-        /// Gets or sets the value for register PulseDO0.
+        /// Gets or sets the value for the PulseDO0 register.
         /// </summary>
         [Range(min: 1, max: long.MaxValue)]
         [Editor(DesignTypes.NumericUpDownEditor, DesignTypes.UITypeEditor)]
-        [Description("The value for register PulseDO0.")]
+        [Description("The value for the PulseDO0 register.")]
         public ushort PulseDO0 { get; set; } = 500;
 
         /// <summary>
@@ -3880,7 +3840,7 @@ namespace Harp.Generators.Tests
         }
 
         /// <summary>
-        /// Creates a message for register PulseDO0.
+        /// Creates a message for the PulseDO0 register.
         /// </summary>
         /// <param name="messageType">Specifies the type of the created message.</param>
         /// <returns>A new message for the PulseDO0 register.</returns>
@@ -3891,15 +3851,14 @@ namespace Harp.Generators.Tests
     }
 
     /// <summary>
-    /// Represents an operator that creates a timestamped message payload
-    /// for register PulseDO0.
+    /// Represents an operator that creates a timestamped message payload for the PulseDO0 register.
     /// </summary>
     [DisplayName("TimestampedPulseDO0Payload")]
-    [Description("Creates a timestamped message payload for register PulseDO0.")]
+    [Description("Timestamped payload for the Tests PulseDO0 register.")]
     public partial class CreateTimestampedPulseDO0Payload : CreatePulseDO0Payload
     {
         /// <summary>
-        /// Creates a timestamped message for register PulseDO0.
+        /// Creates a timestamped message for the PulseDO0 register.
         /// </summary>
         /// <param name="timestamp">The timestamp of the message payload, in seconds.</param>
         /// <param name="messageType">Specifies the type of the created message.</param>
@@ -3911,17 +3870,16 @@ namespace Harp.Generators.Tests
     }
 
     /// <summary>
-    /// Represents an operator that creates a message payload
-    /// for register MultiElementPayload.
+    /// Represents an operator that creates a message payload for the MultiElementPayload register.
     /// </summary>
     [DisplayName("MultiElementPayloadPayload")]
-    [Description("Creates a message payload for register MultiElementPayload.")]
+    [Description("Payload for the Tests MultiElementPayload register.")]
     public partial class CreateMultiElementPayloadPayload
     {
         /// <summary>
-        /// Gets or sets the value for register MultiElementPayload.
+        /// Gets or sets the value for the MultiElementPayload register.
         /// </summary>
-        [Description("The value for register MultiElementPayload.")]
+        [Description("The value for the MultiElementPayload register.")]
         public ushort[] MultiElementPayload { get; set; } = new ushort[3];
 
         /// <summary>
@@ -3934,7 +3892,7 @@ namespace Harp.Generators.Tests
         }
 
         /// <summary>
-        /// Creates a message for register MultiElementPayload.
+        /// Creates a message for the MultiElementPayload register.
         /// </summary>
         /// <param name="messageType">Specifies the type of the created message.</param>
         /// <returns>A new message for the MultiElementPayload register.</returns>
@@ -3945,15 +3903,14 @@ namespace Harp.Generators.Tests
     }
 
     /// <summary>
-    /// Represents an operator that creates a timestamped message payload
-    /// for register MultiElementPayload.
+    /// Represents an operator that creates a timestamped message payload for the MultiElementPayload register.
     /// </summary>
     [DisplayName("TimestampedMultiElementPayloadPayload")]
-    [Description("Creates a timestamped message payload for register MultiElementPayload.")]
+    [Description("Timestamped payload for the Tests MultiElementPayload register.")]
     public partial class CreateTimestampedMultiElementPayloadPayload : CreateMultiElementPayloadPayload
     {
         /// <summary>
-        /// Creates a timestamped message for register MultiElementPayload.
+        /// Creates a timestamped message for the MultiElementPayload register.
         /// </summary>
         /// <param name="timestamp">The timestamp of the message payload, in seconds.</param>
         /// <param name="messageType">Specifies the type of the created message.</param>
@@ -3965,17 +3922,16 @@ namespace Harp.Generators.Tests
     }
 
     /// <summary>
-    /// Represents an operator that creates a message payload
-    /// for register SingleElementPayload.
+    /// Represents an operator that creates a message payload for the SingleElementPayload register.
     /// </summary>
     [DisplayName("SingleElementPayloadPayload")]
-    [Description("Creates a message payload for register SingleElementPayload.")]
+    [Description("Payload for the Tests SingleElementPayload register.")]
     public partial class CreateSingleElementPayloadPayload
     {
         /// <summary>
-        /// Gets or sets the value for register SingleElementPayload.
+        /// Gets or sets the value for the SingleElementPayload register.
         /// </summary>
-        [Description("The value for register SingleElementPayload.")]
+        [Description("The value for the SingleElementPayload register.")]
         public ushort[] SingleElementPayload { get; set; } = new ushort[1];
 
         /// <summary>
@@ -3988,7 +3944,7 @@ namespace Harp.Generators.Tests
         }
 
         /// <summary>
-        /// Creates a message for register SingleElementPayload.
+        /// Creates a message for the SingleElementPayload register.
         /// </summary>
         /// <param name="messageType">Specifies the type of the created message.</param>
         /// <returns>A new message for the SingleElementPayload register.</returns>
@@ -3999,15 +3955,14 @@ namespace Harp.Generators.Tests
     }
 
     /// <summary>
-    /// Represents an operator that creates a timestamped message payload
-    /// for register SingleElementPayload.
+    /// Represents an operator that creates a timestamped message payload for the SingleElementPayload register.
     /// </summary>
     [DisplayName("TimestampedSingleElementPayloadPayload")]
-    [Description("Creates a timestamped message payload for register SingleElementPayload.")]
+    [Description("Timestamped payload for the Tests SingleElementPayload register.")]
     public partial class CreateTimestampedSingleElementPayloadPayload : CreateSingleElementPayloadPayload
     {
         /// <summary>
-        /// Creates a timestamped message for register SingleElementPayload.
+        /// Creates a timestamped message for the SingleElementPayload register.
         /// </summary>
         /// <param name="timestamp">The timestamp of the message payload, in seconds.</param>
         /// <param name="messageType">Specifies the type of the created message.</param>
@@ -4019,11 +3974,10 @@ namespace Harp.Generators.Tests
     }
 
     /// <summary>
-    /// Represents an operator that creates a message payload
-    /// for register MixedMemberLength.
+    /// Represents an operator that creates a message payload for the MixedMemberLength register.
     /// </summary>
     [DisplayName("MixedMemberLengthPayload")]
-    [Description("Creates a message payload for register MixedMemberLength.")]
+    [Description("Payload for the Tests MixedMemberLength register.")]
     public partial class CreateMixedMemberLengthPayload
     {
         /// <summary>
@@ -4055,7 +4009,7 @@ namespace Harp.Generators.Tests
         }
 
         /// <summary>
-        /// Creates a message for register MixedMemberLength.
+        /// Creates a message for the MixedMemberLength register.
         /// </summary>
         /// <param name="messageType">Specifies the type of the created message.</param>
         /// <returns>A new message for the MixedMemberLength register.</returns>
@@ -4066,15 +4020,14 @@ namespace Harp.Generators.Tests
     }
 
     /// <summary>
-    /// Represents an operator that creates a timestamped message payload
-    /// for register MixedMemberLength.
+    /// Represents an operator that creates a timestamped message payload for the MixedMemberLength register.
     /// </summary>
     [DisplayName("TimestampedMixedMemberLengthPayload")]
-    [Description("Creates a timestamped message payload for register MixedMemberLength.")]
+    [Description("Timestamped payload for the Tests MixedMemberLength register.")]
     public partial class CreateTimestampedMixedMemberLengthPayload : CreateMixedMemberLengthPayload
     {
         /// <summary>
-        /// Creates a timestamped message for register MixedMemberLength.
+        /// Creates a timestamped message for the MixedMemberLength register.
         /// </summary>
         /// <param name="timestamp">The timestamp of the message payload, in seconds.</param>
         /// <param name="messageType">Specifies the type of the created message.</param>
@@ -4086,11 +4039,10 @@ namespace Harp.Generators.Tests
     }
 
     /// <summary>
-    /// Represents an operator that creates a message payload
-    /// for register Rgb0.
+    /// Represents an operator that creates a message payload for the Rgb0 register.
     /// </summary>
     [DisplayName("Rgb0Payload")]
-    [Description("Creates a message payload for register Rgb0.")]
+    [Description("Payload for the Tests Rgb0 register.")]
     public partial class CreateRgb0Payload
     {
         /// <summary>
@@ -4122,7 +4074,7 @@ namespace Harp.Generators.Tests
         }
 
         /// <summary>
-        /// Creates a message for register Rgb0.
+        /// Creates a message for the Rgb0 register.
         /// </summary>
         /// <param name="messageType">Specifies the type of the created message.</param>
         /// <returns>A new message for the Rgb0 register.</returns>
@@ -4133,15 +4085,14 @@ namespace Harp.Generators.Tests
     }
 
     /// <summary>
-    /// Represents an operator that creates a timestamped message payload
-    /// for register Rgb0.
+    /// Represents an operator that creates a timestamped message payload for the Rgb0 register.
     /// </summary>
     [DisplayName("TimestampedRgb0Payload")]
-    [Description("Creates a timestamped message payload for register Rgb0.")]
+    [Description("Timestamped payload for the Tests Rgb0 register.")]
     public partial class CreateTimestampedRgb0Payload : CreateRgb0Payload
     {
         /// <summary>
-        /// Creates a timestamped message for register Rgb0.
+        /// Creates a timestamped message for the Rgb0 register.
         /// </summary>
         /// <param name="timestamp">The timestamp of the message payload, in seconds.</param>
         /// <param name="messageType">Specifies the type of the created message.</param>
@@ -4153,11 +4104,10 @@ namespace Harp.Generators.Tests
     }
 
     /// <summary>
-    /// Represents an operator that creates a message payload
-    /// for register Rgb1.
+    /// Represents an operator that creates a message payload for the Rgb1 register.
     /// </summary>
     [DisplayName("Rgb1Payload")]
-    [Description("Creates a message payload for register Rgb1.")]
+    [Description("Payload for the Tests Rgb1 register.")]
     public partial class CreateRgb1Payload
     {
         /// <summary>
@@ -4189,7 +4139,7 @@ namespace Harp.Generators.Tests
         }
 
         /// <summary>
-        /// Creates a message for register Rgb1.
+        /// Creates a message for the Rgb1 register.
         /// </summary>
         /// <param name="messageType">Specifies the type of the created message.</param>
         /// <returns>A new message for the Rgb1 register.</returns>
@@ -4200,15 +4150,14 @@ namespace Harp.Generators.Tests
     }
 
     /// <summary>
-    /// Represents an operator that creates a timestamped message payload
-    /// for register Rgb1.
+    /// Represents an operator that creates a timestamped message payload for the Rgb1 register.
     /// </summary>
     [DisplayName("TimestampedRgb1Payload")]
-    [Description("Creates a timestamped message payload for register Rgb1.")]
+    [Description("Timestamped payload for the Tests Rgb1 register.")]
     public partial class CreateTimestampedRgb1Payload : CreateRgb1Payload
     {
         /// <summary>
-        /// Creates a timestamped message for register Rgb1.
+        /// Creates a timestamped message for the Rgb1 register.
         /// </summary>
         /// <param name="timestamp">The timestamp of the message payload, in seconds.</param>
         /// <param name="messageType">Specifies the type of the created message.</param>
@@ -4220,11 +4169,11 @@ namespace Harp.Generators.Tests
     }
 
     /// <summary>
-    /// Represents an operator that creates a message payload
-    /// that starts a PWM pulse.
+    /// Represents an operator that creates a message payload for the StartPulse register.
+    /// Starts a PWM pulse.
     /// </summary>
     [DisplayName("StartPulsePayload")]
-    [Description("Creates a message payload that starts a PWM pulse.")]
+    [Description("Payload for the Tests StartPulse register. Starts a PWM pulse.")]
     public partial class CreateStartPulsePayload
     {
         /// <summary>
@@ -4254,7 +4203,7 @@ namespace Harp.Generators.Tests
         }
 
         /// <summary>
-        /// Creates a message that starts a PWM pulse.
+        /// Creates a message for the StartPulse register.
         /// </summary>
         /// <param name="messageType">Specifies the type of the created message.</param>
         /// <returns>A new message for the StartPulse register.</returns>
@@ -4265,15 +4214,15 @@ namespace Harp.Generators.Tests
     }
 
     /// <summary>
-    /// Represents an operator that creates a timestamped message payload
-    /// that starts a PWM pulse.
+    /// Represents an operator that creates a timestamped message payload for the StartPulse register.
+    /// Starts a PWM pulse.
     /// </summary>
     [DisplayName("TimestampedStartPulsePayload")]
-    [Description("Creates a timestamped message payload that starts a PWM pulse.")]
+    [Description("Timestamped payload for the Tests StartPulse register. Starts a PWM pulse.")]
     public partial class CreateTimestampedStartPulsePayload : CreateStartPulsePayload
     {
         /// <summary>
-        /// Creates a timestamped message that starts a PWM pulse.
+        /// Creates a timestamped message for the StartPulse register.
         /// </summary>
         /// <param name="timestamp">The timestamp of the message payload, in seconds.</param>
         /// <param name="messageType">Specifies the type of the created message.</param>
@@ -4285,11 +4234,11 @@ namespace Harp.Generators.Tests
     }
 
     /// <summary>
-    /// Represents an operator that creates a message payload
-    /// that starts a PWM pulse train.
+    /// Represents an operator that creates a message payload for the StartPulseTrain register.
+    /// Starts a PWM pulse train.
     /// </summary>
     [DisplayName("StartPulseTrainPayload")]
-    [Description("Creates a message payload that starts a PWM pulse train.")]
+    [Description("Payload for the Tests StartPulseTrain register. Starts a PWM pulse train.")]
     public partial class CreateStartPulseTrainPayload
     {
         /// <summary>
@@ -4333,7 +4282,7 @@ namespace Harp.Generators.Tests
         }
 
         /// <summary>
-        /// Creates a message that starts a PWM pulse train.
+        /// Creates a message for the StartPulseTrain register.
         /// </summary>
         /// <param name="messageType">Specifies the type of the created message.</param>
         /// <returns>A new message for the StartPulseTrain register.</returns>
@@ -4344,15 +4293,15 @@ namespace Harp.Generators.Tests
     }
 
     /// <summary>
-    /// Represents an operator that creates a timestamped message payload
-    /// that starts a PWM pulse train.
+    /// Represents an operator that creates a timestamped message payload for the StartPulseTrain register.
+    /// Starts a PWM pulse train.
     /// </summary>
     [DisplayName("TimestampedStartPulseTrainPayload")]
-    [Description("Creates a timestamped message payload that starts a PWM pulse train.")]
+    [Description("Timestamped payload for the Tests StartPulseTrain register. Starts a PWM pulse train.")]
     public partial class CreateTimestampedStartPulseTrainPayload : CreateStartPulseTrainPayload
     {
         /// <summary>
-        /// Creates a timestamped message that starts a PWM pulse train.
+        /// Creates a timestamped message for the StartPulseTrain register.
         /// </summary>
         /// <param name="timestamp">The timestamp of the message payload, in seconds.</param>
         /// <param name="messageType">Specifies the type of the created message.</param>
@@ -4364,17 +4313,17 @@ namespace Harp.Generators.Tests
     }
 
     /// <summary>
-    /// Represents an operator that creates a message payload
-    /// that configures the operation mode of the encoder.
+    /// Represents an operator that creates a message payload for the EncoderMode register.
+    /// Configures the operation mode of the encoder.
     /// </summary>
     [DisplayName("EncoderModePayload")]
-    [Description("Creates a message payload that configures the operation mode of the encoder.")]
+    [Description("Payload for the Tests EncoderMode register. Configures the operation mode of the encoder.")]
     public partial class CreateEncoderModePayload
     {
         /// <summary>
-        /// Gets or sets the value that configures the operation mode of the encoder.
+        /// Gets or sets the value for the EncoderMode register.
         /// </summary>
-        [Description("The value that configures the operation mode of the encoder.")]
+        [Description("The value for the EncoderMode register.")]
         public EncoderReading EncoderMode { get; set; } = EncoderReading.Displacement;
 
         /// <summary>
@@ -4387,7 +4336,7 @@ namespace Harp.Generators.Tests
         }
 
         /// <summary>
-        /// Creates a message that configures the operation mode of the encoder.
+        /// Creates a message for the EncoderMode register.
         /// </summary>
         /// <param name="messageType">Specifies the type of the created message.</param>
         /// <returns>A new message for the EncoderMode register.</returns>
@@ -4398,15 +4347,15 @@ namespace Harp.Generators.Tests
     }
 
     /// <summary>
-    /// Represents an operator that creates a timestamped message payload
-    /// that configures the operation mode of the encoder.
+    /// Represents an operator that creates a timestamped message payload for the EncoderMode register.
+    /// Configures the operation mode of the encoder.
     /// </summary>
     [DisplayName("TimestampedEncoderModePayload")]
-    [Description("Creates a timestamped message payload that configures the operation mode of the encoder.")]
+    [Description("Timestamped payload for the Tests EncoderMode register. Configures the operation mode of the encoder.")]
     public partial class CreateTimestampedEncoderModePayload : CreateEncoderModePayload
     {
         /// <summary>
-        /// Creates a timestamped message that configures the operation mode of the encoder.
+        /// Creates a timestamped message for the EncoderMode register.
         /// </summary>
         /// <param name="timestamp">The timestamp of the message payload, in seconds.</param>
         /// <param name="messageType">Specifies the type of the created message.</param>
@@ -4418,17 +4367,17 @@ namespace Harp.Generators.Tests
     }
 
     /// <summary>
-    /// Represents an operator that creates a message payload
-    /// that specifies whether the status LED is enabled.
+    /// Represents an operator that creates a message payload for the LedEnabled register.
+    /// Specifies whether the status LED is enabled.
     /// </summary>
     [DisplayName("LedEnabledPayload")]
-    [Description("Creates a message payload that specifies whether the status LED is enabled.")]
+    [Description("Payload for the Tests LedEnabled register. Specifies whether the status LED is enabled.")]
     public partial class CreateLedEnabledPayload
     {
         /// <summary>
-        /// Gets or sets the value that specifies whether the status LED is enabled.
+        /// Gets or sets the value for the LedEnabled register.
         /// </summary>
-        [Description("The value that specifies whether the status LED is enabled.")]
+        [Description("The value for the LedEnabled register.")]
         public bool LedEnabled { get; set; } = true;
 
         /// <summary>
@@ -4441,7 +4390,7 @@ namespace Harp.Generators.Tests
         }
 
         /// <summary>
-        /// Creates a message that specifies whether the status LED is enabled.
+        /// Creates a message for the LedEnabled register.
         /// </summary>
         /// <param name="messageType">Specifies the type of the created message.</param>
         /// <returns>A new message for the LedEnabled register.</returns>
@@ -4452,15 +4401,15 @@ namespace Harp.Generators.Tests
     }
 
     /// <summary>
-    /// Represents an operator that creates a timestamped message payload
-    /// that specifies whether the status LED is enabled.
+    /// Represents an operator that creates a timestamped message payload for the LedEnabled register.
+    /// Specifies whether the status LED is enabled.
     /// </summary>
     [DisplayName("TimestampedLedEnabledPayload")]
-    [Description("Creates a timestamped message payload that specifies whether the status LED is enabled.")]
+    [Description("Timestamped payload for the Tests LedEnabled register. Specifies whether the status LED is enabled.")]
     public partial class CreateTimestampedLedEnabledPayload : CreateLedEnabledPayload
     {
         /// <summary>
-        /// Creates a timestamped message that specifies whether the status LED is enabled.
+        /// Creates a timestamped message for the LedEnabled register.
         /// </summary>
         /// <param name="timestamp">The timestamp of the message payload, in seconds.</param>
         /// <param name="messageType">Specifies the type of the created message.</param>
@@ -4472,17 +4421,16 @@ namespace Harp.Generators.Tests
     }
 
     /// <summary>
-    /// Represents an operator that creates a message payload
-    /// for register PortDIOClear.
+    /// Represents an operator that creates a message payload for the PortDIOClear register.
     /// </summary>
     [DisplayName("PortDIOClearPayload")]
-    [Description("Creates a message payload for register PortDIOClear.")]
+    [Description("Payload for the Tests PortDIOClear register.")]
     public partial class CreatePortDIOClearPayload
     {
         /// <summary>
-        /// Gets or sets the value for register PortDIOClear.
+        /// Gets or sets the value for the PortDIOClear register.
         /// </summary>
-        [Description("The value for register PortDIOClear.")]
+        [Description("The value for the PortDIOClear register.")]
         public PortDigitalIOS PortDIOClear { get; set; } = PortDigitalIOS.None;
 
         /// <summary>
@@ -4495,7 +4443,7 @@ namespace Harp.Generators.Tests
         }
 
         /// <summary>
-        /// Creates a message for register PortDIOClear.
+        /// Creates a message for the PortDIOClear register.
         /// </summary>
         /// <param name="messageType">Specifies the type of the created message.</param>
         /// <returns>A new message for the PortDIOClear register.</returns>
@@ -4506,15 +4454,14 @@ namespace Harp.Generators.Tests
     }
 
     /// <summary>
-    /// Represents an operator that creates a timestamped message payload
-    /// for register PortDIOClear.
+    /// Represents an operator that creates a timestamped message payload for the PortDIOClear register.
     /// </summary>
     [DisplayName("TimestampedPortDIOClearPayload")]
-    [Description("Creates a timestamped message payload for register PortDIOClear.")]
+    [Description("Timestamped payload for the Tests PortDIOClear register.")]
     public partial class CreateTimestampedPortDIOClearPayload : CreatePortDIOClearPayload
     {
         /// <summary>
-        /// Creates a timestamped message for register PortDIOClear.
+        /// Creates a timestamped message for the PortDIOClear register.
         /// </summary>
         /// <param name="timestamp">The timestamp of the message payload, in seconds.</param>
         /// <param name="messageType">Specifies the type of the created message.</param>
@@ -4526,17 +4473,16 @@ namespace Harp.Generators.Tests
     }
 
     /// <summary>
-    /// Represents an operator that creates a message payload
-    /// for register WideStatus.
+    /// Represents an operator that creates a message payload for the WideStatus register.
     /// </summary>
     [DisplayName("WideStatusPayload")]
-    [Description("Creates a message payload for register WideStatus.")]
+    [Description("Payload for the Tests WideStatus register.")]
     public partial class CreateWideStatusPayload
     {
         /// <summary>
-        /// Gets or sets the value for register WideStatus.
+        /// Gets or sets the value for the WideStatus register.
         /// </summary>
-        [Description("The value for register WideStatus.")]
+        [Description("The value for the WideStatus register.")]
         public WideStatusFlags WideStatus { get; set; }
 
         /// <summary>
@@ -4549,7 +4495,7 @@ namespace Harp.Generators.Tests
         }
 
         /// <summary>
-        /// Creates a message for register WideStatus.
+        /// Creates a message for the WideStatus register.
         /// </summary>
         /// <param name="messageType">Specifies the type of the created message.</param>
         /// <returns>A new message for the WideStatus register.</returns>
@@ -4560,15 +4506,14 @@ namespace Harp.Generators.Tests
     }
 
     /// <summary>
-    /// Represents an operator that creates a timestamped message payload
-    /// for register WideStatus.
+    /// Represents an operator that creates a timestamped message payload for the WideStatus register.
     /// </summary>
     [DisplayName("TimestampedWideStatusPayload")]
-    [Description("Creates a timestamped message payload for register WideStatus.")]
+    [Description("Timestamped payload for the Tests WideStatus register.")]
     public partial class CreateTimestampedWideStatusPayload : CreateWideStatusPayload
     {
         /// <summary>
-        /// Creates a timestamped message for register WideStatus.
+        /// Creates a timestamped message for the WideStatus register.
         /// </summary>
         /// <param name="timestamp">The timestamp of the message payload, in seconds.</param>
         /// <param name="messageType">Specifies the type of the created message.</param>
@@ -4580,17 +4525,17 @@ namespace Harp.Generators.Tests
     }
 
     /// <summary>
-    /// Represents an operator that creates a message payload
-    /// that specifies a threshold whose default needs more than single precision.
+    /// Represents an operator that creates a message payload for the Threshold register.
+    /// Specifies a threshold whose default needs more than single precision.
     /// </summary>
     [DisplayName("ThresholdPayload")]
-    [Description("Creates a message payload that specifies a threshold whose default needs more than single precision.")]
+    [Description("Payload for the Tests Threshold register. Specifies a threshold whose default needs more than single precision.")]
     public partial class CreateThresholdPayload
     {
         /// <summary>
-        /// Gets or sets the value that specifies a threshold whose default needs more than single precision.
+        /// Gets or sets the value for the Threshold register.
         /// </summary>
-        [Description("The value that specifies a threshold whose default needs more than single precision.")]
+        [Description("The value for the Threshold register.")]
         public uint Threshold { get; set; } = 16777217;
 
         /// <summary>
@@ -4603,7 +4548,7 @@ namespace Harp.Generators.Tests
         }
 
         /// <summary>
-        /// Creates a message that specifies a threshold whose default needs more than single precision.
+        /// Creates a message for the Threshold register.
         /// </summary>
         /// <param name="messageType">Specifies the type of the created message.</param>
         /// <returns>A new message for the Threshold register.</returns>
@@ -4614,15 +4559,15 @@ namespace Harp.Generators.Tests
     }
 
     /// <summary>
-    /// Represents an operator that creates a timestamped message payload
-    /// that specifies a threshold whose default needs more than single precision.
+    /// Represents an operator that creates a timestamped message payload for the Threshold register.
+    /// Specifies a threshold whose default needs more than single precision.
     /// </summary>
     [DisplayName("TimestampedThresholdPayload")]
-    [Description("Creates a timestamped message payload that specifies a threshold whose default needs more than single precision.")]
+    [Description("Timestamped payload for the Tests Threshold register. Specifies a threshold whose default needs more than single precision.")]
     public partial class CreateTimestampedThresholdPayload : CreateThresholdPayload
     {
         /// <summary>
-        /// Creates a timestamped message that specifies a threshold whose default needs more than single precision.
+        /// Creates a timestamped message for the Threshold register.
         /// </summary>
         /// <param name="timestamp">The timestamp of the message payload, in seconds.</param>
         /// <param name="messageType">Specifies the type of the created message.</param>
