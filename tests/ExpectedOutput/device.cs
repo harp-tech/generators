@@ -505,7 +505,7 @@ namespace Harp.Generators.Tests
     /// <summary>
     /// Provides methods for manipulating messages from the DigitalInputs register.
     /// </summary>
-    [Description("The Tests DigitalInputs register.")]
+    [Description("")]
     public partial class DigitalInputs
     {
         /// <summary>
@@ -578,7 +578,7 @@ namespace Harp.Generators.Tests
     /// Provides methods for parsing timestamped values from DigitalInputs register messages.
     /// </summary>
     /// <seealso cref="DigitalInputs"/>
-    [Description("The Tests DigitalInputs register, with timestamps.")]
+    [Description("")]
     public partial class TimestampedDigitalInputs
     {
         /// <summary>
@@ -600,7 +600,7 @@ namespace Harp.Generators.Tests
     /// <summary>
     /// Provides methods for manipulating messages from the AnalogData register.
     /// </summary>
-    [Description("The Tests AnalogData register.")]
+    [Description("")]
     public partial class AnalogData
     {
         /// <summary>
@@ -695,7 +695,7 @@ namespace Harp.Generators.Tests
     /// Provides methods for parsing timestamped values from AnalogData register messages.
     /// </summary>
     /// <seealso cref="AnalogData"/>
-    [Description("The Tests AnalogData register, with timestamps.")]
+    [Description("")]
     public partial class TimestampedAnalogData
     {
         /// <summary>
@@ -717,7 +717,7 @@ namespace Harp.Generators.Tests
     /// <summary>
     /// Provides methods for manipulating messages from the ComplexConfiguration register.
     /// </summary>
-    [Description("The Tests ComplexConfiguration register.")]
+    [Description("")]
     public partial class ComplexConfiguration
     {
         /// <summary>
@@ -820,7 +820,7 @@ namespace Harp.Generators.Tests
     /// Provides methods for parsing timestamped values from ComplexConfiguration register messages.
     /// </summary>
     /// <seealso cref="ComplexConfiguration"/>
-    [Description("The Tests ComplexConfiguration register, with timestamps.")]
+    [Description("")]
     public partial class TimestampedComplexConfiguration
     {
         /// <summary>
@@ -842,7 +842,7 @@ namespace Harp.Generators.Tests
     /// <summary>
     /// Provides methods for manipulating messages from the Version register.
     /// </summary>
-    [Description("The Tests Version register.")]
+    [Description("")]
     public partial class Version
     {
         /// <summary>
@@ -939,7 +939,7 @@ namespace Harp.Generators.Tests
     /// Provides methods for parsing timestamped values from Version register messages.
     /// </summary>
     /// <seealso cref="Version"/>
-    [Description("The Tests Version register, with timestamps.")]
+    [Description("")]
     public partial class TimestampedVersion
     {
         /// <summary>
@@ -961,7 +961,7 @@ namespace Harp.Generators.Tests
     /// <summary>
     /// Provides methods for manipulating messages from the CustomPayload register.
     /// </summary>
-    [Description("The Tests CustomPayload register.")]
+    [Description("")]
     public partial class CustomPayload
     {
         /// <summary>
@@ -1039,7 +1039,7 @@ namespace Harp.Generators.Tests
     /// Provides methods for parsing timestamped values from CustomPayload register messages.
     /// </summary>
     /// <seealso cref="CustomPayload"/>
-    [Description("The Tests CustomPayload register, with timestamps.")]
+    [Description("")]
     public partial class TimestampedCustomPayload
     {
         /// <summary>
@@ -1061,7 +1061,7 @@ namespace Harp.Generators.Tests
     /// <summary>
     /// Provides methods for manipulating messages from the CustomRawPayload register.
     /// </summary>
-    [Description("The Tests CustomRawPayload register.")]
+    [Description("")]
     public partial class CustomRawPayload
     {
         /// <summary>
@@ -1140,7 +1140,7 @@ namespace Harp.Generators.Tests
     /// Provides methods for parsing timestamped values from CustomRawPayload register messages.
     /// </summary>
     /// <seealso cref="CustomRawPayload"/>
-    [Description("The Tests CustomRawPayload register, with timestamps.")]
+    [Description("")]
     public partial class TimestampedCustomRawPayload
     {
         /// <summary>
@@ -1162,7 +1162,7 @@ namespace Harp.Generators.Tests
     /// <summary>
     /// Provides methods for manipulating messages from the CustomMemberConverter register.
     /// </summary>
-    [Description("The Tests CustomMemberConverter register.")]
+    [Description("")]
     public partial class CustomMemberConverter
     {
         /// <summary>
@@ -1269,7 +1269,7 @@ namespace Harp.Generators.Tests
     /// Provides methods for parsing timestamped values from CustomMemberConverter register messages.
     /// </summary>
     /// <seealso cref="CustomMemberConverter"/>
-    [Description("The Tests CustomMemberConverter register, with timestamps.")]
+    [Description("")]
     public partial class TimestampedCustomMemberConverter
     {
         /// <summary>
@@ -1291,7 +1291,7 @@ namespace Harp.Generators.Tests
     /// <summary>
     /// Provides methods for manipulating messages from the BitmaskSplitter register.
     /// </summary>
-    [Description("The Tests BitmaskSplitter register.")]
+    [Description("")]
     public partial class BitmaskSplitter
     {
         /// <summary>
@@ -1385,7 +1385,7 @@ namespace Harp.Generators.Tests
     /// Provides methods for parsing timestamped values from BitmaskSplitter register messages.
     /// </summary>
     /// <seealso cref="BitmaskSplitter"/>
-    [Description("The Tests BitmaskSplitter register, with timestamps.")]
+    [Description("")]
     public partial class TimestampedBitmaskSplitter
     {
         /// <summary>
@@ -1407,7 +1407,7 @@ namespace Harp.Generators.Tests
     /// <summary>
     /// Provides methods for manipulating messages from the Counter0 register.
     /// </summary>
-    [Description("The Tests Counter0 register.")]
+    [Description("")]
     public partial class Counter0
     {
         /// <summary>
@@ -1480,7 +1480,7 @@ namespace Harp.Generators.Tests
     /// Provides methods for parsing timestamped values from Counter0 register messages.
     /// </summary>
     /// <seealso cref="Counter0"/>
-    [Description("The Tests Counter0 register, with timestamps.")]
+    [Description("")]
     public partial class TimestampedCounter0
     {
         /// <summary>
@@ -1502,7 +1502,7 @@ namespace Harp.Generators.Tests
     /// <summary>
     /// Provides methods for manipulating messages from the PortDIOSet register.
     /// </summary>
-    [Description("The Tests PortDIOSet register.")]
+    [Description("")]
     public partial class PortDIOSet
     {
         /// <summary>
@@ -1576,7 +1576,7 @@ namespace Harp.Generators.Tests
     /// Provides methods for parsing timestamped values from PortDIOSet register messages.
     /// </summary>
     /// <seealso cref="PortDIOSet"/>
-    [Description("The Tests PortDIOSet register, with timestamps.")]
+    [Description("")]
     public partial class TimestampedPortDIOSet
     {
         /// <summary>
@@ -1598,7 +1598,7 @@ namespace Harp.Generators.Tests
     /// <summary>
     /// Provides methods for manipulating messages from the PulseDOPort0 register.
     /// </summary>
-    [Description("The Tests PulseDOPort0 register.")]
+    [Description("")]
     public partial class PulseDOPort0
     {
         /// <summary>
@@ -1671,7 +1671,7 @@ namespace Harp.Generators.Tests
     /// Provides methods for parsing timestamped values from PulseDOPort0 register messages.
     /// </summary>
     /// <seealso cref="PulseDOPort0"/>
-    [Description("The Tests PulseDOPort0 register, with timestamps.")]
+    [Description("")]
     public partial class TimestampedPulseDOPort0
     {
         /// <summary>
@@ -1693,7 +1693,7 @@ namespace Harp.Generators.Tests
     /// <summary>
     /// Provides methods for manipulating messages from the PulseDO0 register.
     /// </summary>
-    [Description("The Tests PulseDO0 register.")]
+    [Description("")]
     public partial class PulseDO0
     {
         /// <summary>
@@ -1766,7 +1766,7 @@ namespace Harp.Generators.Tests
     /// Provides methods for parsing timestamped values from PulseDO0 register messages.
     /// </summary>
     /// <seealso cref="PulseDO0"/>
-    [Description("The Tests PulseDO0 register, with timestamps.")]
+    [Description("")]
     public partial class TimestampedPulseDO0
     {
         /// <summary>
@@ -1788,7 +1788,7 @@ namespace Harp.Generators.Tests
     /// <summary>
     /// Provides methods for manipulating messages from the MultiElementPayload register.
     /// </summary>
-    [Description("The Tests MultiElementPayload register.")]
+    [Description("")]
     public partial class MultiElementPayload
     {
         /// <summary>
@@ -1861,7 +1861,7 @@ namespace Harp.Generators.Tests
     /// Provides methods for parsing timestamped values from MultiElementPayload register messages.
     /// </summary>
     /// <seealso cref="MultiElementPayload"/>
-    [Description("The Tests MultiElementPayload register, with timestamps.")]
+    [Description("")]
     public partial class TimestampedMultiElementPayload
     {
         /// <summary>
@@ -1883,7 +1883,7 @@ namespace Harp.Generators.Tests
     /// <summary>
     /// Provides methods for manipulating messages from the SingleElementPayload register.
     /// </summary>
-    [Description("The Tests SingleElementPayload register.")]
+    [Description("")]
     public partial class SingleElementPayload
     {
         /// <summary>
@@ -1956,7 +1956,7 @@ namespace Harp.Generators.Tests
     /// Provides methods for parsing timestamped values from SingleElementPayload register messages.
     /// </summary>
     /// <seealso cref="SingleElementPayload"/>
-    [Description("The Tests SingleElementPayload register, with timestamps.")]
+    [Description("")]
     public partial class TimestampedSingleElementPayload
     {
         /// <summary>
@@ -1978,7 +1978,7 @@ namespace Harp.Generators.Tests
     /// <summary>
     /// Provides methods for manipulating messages from the MixedMemberLength register.
     /// </summary>
-    [Description("The Tests MixedMemberLength register.")]
+    [Description("")]
     public partial class MixedMemberLength
     {
         /// <summary>
@@ -2071,7 +2071,7 @@ namespace Harp.Generators.Tests
     /// Provides methods for parsing timestamped values from MixedMemberLength register messages.
     /// </summary>
     /// <seealso cref="MixedMemberLength"/>
-    [Description("The Tests MixedMemberLength register, with timestamps.")]
+    [Description("")]
     public partial class TimestampedMixedMemberLength
     {
         /// <summary>
@@ -2093,7 +2093,7 @@ namespace Harp.Generators.Tests
     /// <summary>
     /// Provides methods for manipulating messages from the Rgb0 register.
     /// </summary>
-    [Description("The Tests Rgb0 register.")]
+    [Description("")]
     public partial class Rgb0
     {
         /// <summary>
@@ -2186,7 +2186,7 @@ namespace Harp.Generators.Tests
     /// Provides methods for parsing timestamped values from Rgb0 register messages.
     /// </summary>
     /// <seealso cref="Rgb0"/>
-    [Description("The Tests Rgb0 register, with timestamps.")]
+    [Description("")]
     public partial class TimestampedRgb0
     {
         /// <summary>
@@ -2208,7 +2208,7 @@ namespace Harp.Generators.Tests
     /// <summary>
     /// Provides methods for manipulating messages from the Rgb1 register.
     /// </summary>
-    [Description("The Tests Rgb1 register.")]
+    [Description("")]
     public partial class Rgb1
     {
         /// <summary>
@@ -2301,7 +2301,7 @@ namespace Harp.Generators.Tests
     /// Provides methods for parsing timestamped values from Rgb1 register messages.
     /// </summary>
     /// <seealso cref="Rgb1"/>
-    [Description("The Tests Rgb1 register, with timestamps.")]
+    [Description("")]
     public partial class TimestampedRgb1
     {
         /// <summary>
@@ -2324,7 +2324,7 @@ namespace Harp.Generators.Tests
     /// Provides methods for manipulating messages from the StartPulse register.
     /// Starts a PWM pulse.
     /// </summary>
-    [Description("The Tests StartPulse register. Starts a PWM pulse.")]
+    [Description("Starts a PWM pulse.")]
     public partial class StartPulse
     {
         /// <summary>
@@ -2415,7 +2415,7 @@ namespace Harp.Generators.Tests
     /// Starts a PWM pulse.
     /// </summary>
     /// <seealso cref="StartPulse"/>
-    [Description("The Tests StartPulse register, with timestamps. Starts a PWM pulse.")]
+    [Description("Starts a PWM pulse.")]
     public partial class TimestampedStartPulse
     {
         /// <summary>
@@ -2438,7 +2438,7 @@ namespace Harp.Generators.Tests
     /// Provides methods for manipulating messages from the StartPulseTrain register.
     /// Starts a PWM pulse train.
     /// </summary>
-    [Description("The Tests StartPulseTrain register. Starts a PWM pulse train.")]
+    [Description("Starts a PWM pulse train.")]
     public partial class StartPulseTrain
     {
         /// <summary>
@@ -2534,7 +2534,7 @@ namespace Harp.Generators.Tests
     /// Starts a PWM pulse train.
     /// </summary>
     /// <seealso cref="StartPulseTrain"/>
-    [Description("The Tests StartPulseTrain register, with timestamps. Starts a PWM pulse train.")]
+    [Description("Starts a PWM pulse train.")]
     public partial class TimestampedStartPulseTrain
     {
         /// <summary>
@@ -2557,7 +2557,7 @@ namespace Harp.Generators.Tests
     /// Provides methods for manipulating messages from the EncoderMode register.
     /// Configures the operation mode of the encoder.
     /// </summary>
-    [Description("The Tests EncoderMode register. Configures the operation mode of the encoder.")]
+    [Description("Configures the operation mode of the encoder.")]
     public partial class EncoderMode
     {
         /// <summary>
@@ -2632,7 +2632,7 @@ namespace Harp.Generators.Tests
     /// Configures the operation mode of the encoder.
     /// </summary>
     /// <seealso cref="EncoderMode"/>
-    [Description("The Tests EncoderMode register, with timestamps. Configures the operation mode of the encoder.")]
+    [Description("Configures the operation mode of the encoder.")]
     public partial class TimestampedEncoderMode
     {
         /// <summary>
@@ -2655,7 +2655,7 @@ namespace Harp.Generators.Tests
     /// Provides methods for manipulating messages from the LedEnabled register.
     /// Specifies whether the status LED is enabled.
     /// </summary>
-    [Description("The Tests LedEnabled register. Specifies whether the status LED is enabled.")]
+    [Description("Specifies whether the status LED is enabled.")]
     public partial class LedEnabled
     {
         /// <summary>
@@ -2730,7 +2730,7 @@ namespace Harp.Generators.Tests
     /// Specifies whether the status LED is enabled.
     /// </summary>
     /// <seealso cref="LedEnabled"/>
-    [Description("The Tests LedEnabled register, with timestamps. Specifies whether the status LED is enabled.")]
+    [Description("Specifies whether the status LED is enabled.")]
     public partial class TimestampedLedEnabled
     {
         /// <summary>
@@ -2752,7 +2752,7 @@ namespace Harp.Generators.Tests
     /// <summary>
     /// Provides methods for manipulating messages from the PortDIOClear register.
     /// </summary>
-    [Description("The Tests PortDIOClear register.")]
+    [Description("")]
     public partial class PortDIOClear
     {
         /// <summary>
@@ -2826,7 +2826,7 @@ namespace Harp.Generators.Tests
     /// Provides methods for parsing timestamped values from PortDIOClear register messages.
     /// </summary>
     /// <seealso cref="PortDIOClear"/>
-    [Description("The Tests PortDIOClear register, with timestamps.")]
+    [Description("")]
     public partial class TimestampedPortDIOClear
     {
         /// <summary>
@@ -2848,7 +2848,7 @@ namespace Harp.Generators.Tests
     /// <summary>
     /// Provides methods for manipulating messages from the WideStatus register.
     /// </summary>
-    [Description("The Tests WideStatus register.")]
+    [Description("")]
     public partial class WideStatus
     {
         /// <summary>
@@ -2922,7 +2922,7 @@ namespace Harp.Generators.Tests
     /// Provides methods for parsing timestamped values from WideStatus register messages.
     /// </summary>
     /// <seealso cref="WideStatus"/>
-    [Description("The Tests WideStatus register, with timestamps.")]
+    [Description("")]
     public partial class TimestampedWideStatus
     {
         /// <summary>
@@ -2945,7 +2945,7 @@ namespace Harp.Generators.Tests
     /// Provides methods for manipulating messages from the Threshold register.
     /// Specifies a threshold whose default needs more than single precision.
     /// </summary>
-    [Description("The Tests Threshold register. Specifies a threshold whose default needs more than single precision.")]
+    [Description("Specifies a threshold whose default needs more than single precision.")]
     public partial class Threshold
     {
         /// <summary>
@@ -3019,7 +3019,7 @@ namespace Harp.Generators.Tests
     /// Specifies a threshold whose default needs more than single precision.
     /// </summary>
     /// <seealso cref="Threshold"/>
-    [Description("The Tests Threshold register, with timestamps. Specifies a threshold whose default needs more than single precision.")]
+    [Description("Specifies a threshold whose default needs more than single precision.")]
     public partial class TimestampedThreshold
     {
         /// <summary>
@@ -3132,7 +3132,7 @@ namespace Harp.Generators.Tests
     /// Represents an operator that creates a message payload for the DigitalInputs register.
     /// </summary>
     [DisplayName("DigitalInputsPayload")]
-    [Description("Payload for the Tests DigitalInputs register.")]
+    [Description("")]
     public partial class CreateDigitalInputsPayload
     {
         /// <summary>
@@ -3165,7 +3165,6 @@ namespace Harp.Generators.Tests
     /// Represents an operator that creates a timestamped message payload for the DigitalInputs register.
     /// </summary>
     [DisplayName("TimestampedDigitalInputsPayload")]
-    [Description("Timestamped payload for the Tests DigitalInputs register.")]
     public partial class CreateTimestampedDigitalInputsPayload : CreateDigitalInputsPayload
     {
         /// <summary>
@@ -3184,7 +3183,7 @@ namespace Harp.Generators.Tests
     /// Represents an operator that creates a message payload for the AnalogData register.
     /// </summary>
     [DisplayName("AnalogDataPayload")]
-    [Description("Payload for the Tests AnalogData register.")]
+    [Description("")]
     public partial class CreateAnalogDataPayload
     {
         /// <summary>
@@ -3236,7 +3235,6 @@ namespace Harp.Generators.Tests
     /// Represents an operator that creates a timestamped message payload for the AnalogData register.
     /// </summary>
     [DisplayName("TimestampedAnalogDataPayload")]
-    [Description("Timestamped payload for the Tests AnalogData register.")]
     public partial class CreateTimestampedAnalogDataPayload : CreateAnalogDataPayload
     {
         /// <summary>
@@ -3255,7 +3253,7 @@ namespace Harp.Generators.Tests
     /// Represents an operator that creates a message payload for the ComplexConfiguration register.
     /// </summary>
     [DisplayName("ComplexConfigurationPayload")]
-    [Description("Payload for the Tests ComplexConfiguration register.")]
+    [Description("")]
     public partial class CreateComplexConfigurationPayload
     {
         /// <summary>
@@ -3331,7 +3329,6 @@ namespace Harp.Generators.Tests
     /// Represents an operator that creates a timestamped message payload for the ComplexConfiguration register.
     /// </summary>
     [DisplayName("TimestampedComplexConfigurationPayload")]
-    [Description("Timestamped payload for the Tests ComplexConfiguration register.")]
     public partial class CreateTimestampedComplexConfigurationPayload : CreateComplexConfigurationPayload
     {
         /// <summary>
@@ -3350,7 +3347,7 @@ namespace Harp.Generators.Tests
     /// Represents an operator that creates a message payload for the Version register.
     /// </summary>
     [DisplayName("VersionPayload")]
-    [Description("Payload for the Tests Version register.")]
+    [Description("")]
     public partial class CreateVersionPayload
     {
         /// <summary>
@@ -3408,7 +3405,6 @@ namespace Harp.Generators.Tests
     /// Represents an operator that creates a timestamped message payload for the Version register.
     /// </summary>
     [DisplayName("TimestampedVersionPayload")]
-    [Description("Timestamped payload for the Tests Version register.")]
     public partial class CreateTimestampedVersionPayload : CreateVersionPayload
     {
         /// <summary>
@@ -3427,7 +3423,7 @@ namespace Harp.Generators.Tests
     /// Represents an operator that creates a message payload for the CustomPayload register.
     /// </summary>
     [DisplayName("CustomPayloadPayload")]
-    [Description("Payload for the Tests CustomPayload register.")]
+    [Description("")]
     public partial class CreateCustomPayloadPayload
     {
         /// <summary>
@@ -3460,7 +3456,6 @@ namespace Harp.Generators.Tests
     /// Represents an operator that creates a timestamped message payload for the CustomPayload register.
     /// </summary>
     [DisplayName("TimestampedCustomPayloadPayload")]
-    [Description("Timestamped payload for the Tests CustomPayload register.")]
     public partial class CreateTimestampedCustomPayloadPayload : CreateCustomPayloadPayload
     {
         /// <summary>
@@ -3479,7 +3474,7 @@ namespace Harp.Generators.Tests
     /// Represents an operator that creates a message payload for the CustomRawPayload register.
     /// </summary>
     [DisplayName("CustomRawPayloadPayload")]
-    [Description("Payload for the Tests CustomRawPayload register.")]
+    [Description("")]
     public partial class CreateCustomRawPayloadPayload
     {
         /// <summary>
@@ -3512,7 +3507,6 @@ namespace Harp.Generators.Tests
     /// Represents an operator that creates a timestamped message payload for the CustomRawPayload register.
     /// </summary>
     [DisplayName("TimestampedCustomRawPayloadPayload")]
-    [Description("Timestamped payload for the Tests CustomRawPayload register.")]
     public partial class CreateTimestampedCustomRawPayloadPayload : CreateCustomRawPayloadPayload
     {
         /// <summary>
@@ -3531,7 +3525,7 @@ namespace Harp.Generators.Tests
     /// Represents an operator that creates a message payload for the CustomMemberConverter register.
     /// </summary>
     [DisplayName("CustomMemberConverterPayload")]
-    [Description("Payload for the Tests CustomMemberConverter register.")]
+    [Description("")]
     public partial class CreateCustomMemberConverterPayload
     {
         /// <summary>
@@ -3583,7 +3577,6 @@ namespace Harp.Generators.Tests
     /// Represents an operator that creates a timestamped message payload for the CustomMemberConverter register.
     /// </summary>
     [DisplayName("TimestampedCustomMemberConverterPayload")]
-    [Description("Timestamped payload for the Tests CustomMemberConverter register.")]
     public partial class CreateTimestampedCustomMemberConverterPayload : CreateCustomMemberConverterPayload
     {
         /// <summary>
@@ -3602,7 +3595,7 @@ namespace Harp.Generators.Tests
     /// Represents an operator that creates a message payload for the BitmaskSplitter register.
     /// </summary>
     [DisplayName("BitmaskSplitterPayload")]
-    [Description("Payload for the Tests BitmaskSplitter register.")]
+    [Description("")]
     public partial class CreateBitmaskSplitterPayload
     {
         /// <summary>
@@ -3642,7 +3635,6 @@ namespace Harp.Generators.Tests
     /// Represents an operator that creates a timestamped message payload for the BitmaskSplitter register.
     /// </summary>
     [DisplayName("TimestampedBitmaskSplitterPayload")]
-    [Description("Timestamped payload for the Tests BitmaskSplitter register.")]
     public partial class CreateTimestampedBitmaskSplitterPayload : CreateBitmaskSplitterPayload
     {
         /// <summary>
@@ -3661,7 +3653,7 @@ namespace Harp.Generators.Tests
     /// Represents an operator that creates a message payload for the Counter0 register.
     /// </summary>
     [DisplayName("Counter0Payload")]
-    [Description("Payload for the Tests Counter0 register.")]
+    [Description("")]
     public partial class CreateCounter0Payload
     {
         /// <summary>
@@ -3694,7 +3686,6 @@ namespace Harp.Generators.Tests
     /// Represents an operator that creates a timestamped message payload for the Counter0 register.
     /// </summary>
     [DisplayName("TimestampedCounter0Payload")]
-    [Description("Timestamped payload for the Tests Counter0 register.")]
     public partial class CreateTimestampedCounter0Payload : CreateCounter0Payload
     {
         /// <summary>
@@ -3713,7 +3704,7 @@ namespace Harp.Generators.Tests
     /// Represents an operator that creates a message payload for the PortDIOSet register.
     /// </summary>
     [DisplayName("PortDIOSetPayload")]
-    [Description("Payload for the Tests PortDIOSet register.")]
+    [Description("")]
     public partial class CreatePortDIOSetPayload
     {
         /// <summary>
@@ -3746,7 +3737,6 @@ namespace Harp.Generators.Tests
     /// Represents an operator that creates a timestamped message payload for the PortDIOSet register.
     /// </summary>
     [DisplayName("TimestampedPortDIOSetPayload")]
-    [Description("Timestamped payload for the Tests PortDIOSet register.")]
     public partial class CreateTimestampedPortDIOSetPayload : CreatePortDIOSetPayload
     {
         /// <summary>
@@ -3765,7 +3755,7 @@ namespace Harp.Generators.Tests
     /// Represents an operator that creates a message payload for the PulseDOPort0 register.
     /// </summary>
     [DisplayName("PulseDOPort0Payload")]
-    [Description("Payload for the Tests PulseDOPort0 register.")]
+    [Description("")]
     public partial class CreatePulseDOPort0Payload
     {
         /// <summary>
@@ -3800,7 +3790,6 @@ namespace Harp.Generators.Tests
     /// Represents an operator that creates a timestamped message payload for the PulseDOPort0 register.
     /// </summary>
     [DisplayName("TimestampedPulseDOPort0Payload")]
-    [Description("Timestamped payload for the Tests PulseDOPort0 register.")]
     public partial class CreateTimestampedPulseDOPort0Payload : CreatePulseDOPort0Payload
     {
         /// <summary>
@@ -3819,7 +3808,7 @@ namespace Harp.Generators.Tests
     /// Represents an operator that creates a message payload for the PulseDO0 register.
     /// </summary>
     [DisplayName("PulseDO0Payload")]
-    [Description("Payload for the Tests PulseDO0 register.")]
+    [Description("")]
     public partial class CreatePulseDO0Payload
     {
         /// <summary>
@@ -3854,7 +3843,6 @@ namespace Harp.Generators.Tests
     /// Represents an operator that creates a timestamped message payload for the PulseDO0 register.
     /// </summary>
     [DisplayName("TimestampedPulseDO0Payload")]
-    [Description("Timestamped payload for the Tests PulseDO0 register.")]
     public partial class CreateTimestampedPulseDO0Payload : CreatePulseDO0Payload
     {
         /// <summary>
@@ -3873,7 +3861,7 @@ namespace Harp.Generators.Tests
     /// Represents an operator that creates a message payload for the MultiElementPayload register.
     /// </summary>
     [DisplayName("MultiElementPayloadPayload")]
-    [Description("Payload for the Tests MultiElementPayload register.")]
+    [Description("")]
     public partial class CreateMultiElementPayloadPayload
     {
         /// <summary>
@@ -3906,7 +3894,6 @@ namespace Harp.Generators.Tests
     /// Represents an operator that creates a timestamped message payload for the MultiElementPayload register.
     /// </summary>
     [DisplayName("TimestampedMultiElementPayloadPayload")]
-    [Description("Timestamped payload for the Tests MultiElementPayload register.")]
     public partial class CreateTimestampedMultiElementPayloadPayload : CreateMultiElementPayloadPayload
     {
         /// <summary>
@@ -3925,7 +3912,7 @@ namespace Harp.Generators.Tests
     /// Represents an operator that creates a message payload for the SingleElementPayload register.
     /// </summary>
     [DisplayName("SingleElementPayloadPayload")]
-    [Description("Payload for the Tests SingleElementPayload register.")]
+    [Description("")]
     public partial class CreateSingleElementPayloadPayload
     {
         /// <summary>
@@ -3958,7 +3945,6 @@ namespace Harp.Generators.Tests
     /// Represents an operator that creates a timestamped message payload for the SingleElementPayload register.
     /// </summary>
     [DisplayName("TimestampedSingleElementPayloadPayload")]
-    [Description("Timestamped payload for the Tests SingleElementPayload register.")]
     public partial class CreateTimestampedSingleElementPayloadPayload : CreateSingleElementPayloadPayload
     {
         /// <summary>
@@ -3977,7 +3963,7 @@ namespace Harp.Generators.Tests
     /// Represents an operator that creates a message payload for the MixedMemberLength register.
     /// </summary>
     [DisplayName("MixedMemberLengthPayload")]
-    [Description("Payload for the Tests MixedMemberLength register.")]
+    [Description("")]
     public partial class CreateMixedMemberLengthPayload
     {
         /// <summary>
@@ -4023,7 +4009,6 @@ namespace Harp.Generators.Tests
     /// Represents an operator that creates a timestamped message payload for the MixedMemberLength register.
     /// </summary>
     [DisplayName("TimestampedMixedMemberLengthPayload")]
-    [Description("Timestamped payload for the Tests MixedMemberLength register.")]
     public partial class CreateTimestampedMixedMemberLengthPayload : CreateMixedMemberLengthPayload
     {
         /// <summary>
@@ -4042,7 +4027,7 @@ namespace Harp.Generators.Tests
     /// Represents an operator that creates a message payload for the Rgb0 register.
     /// </summary>
     [DisplayName("Rgb0Payload")]
-    [Description("Payload for the Tests Rgb0 register.")]
+    [Description("")]
     public partial class CreateRgb0Payload
     {
         /// <summary>
@@ -4088,7 +4073,6 @@ namespace Harp.Generators.Tests
     /// Represents an operator that creates a timestamped message payload for the Rgb0 register.
     /// </summary>
     [DisplayName("TimestampedRgb0Payload")]
-    [Description("Timestamped payload for the Tests Rgb0 register.")]
     public partial class CreateTimestampedRgb0Payload : CreateRgb0Payload
     {
         /// <summary>
@@ -4107,7 +4091,7 @@ namespace Harp.Generators.Tests
     /// Represents an operator that creates a message payload for the Rgb1 register.
     /// </summary>
     [DisplayName("Rgb1Payload")]
-    [Description("Payload for the Tests Rgb1 register.")]
+    [Description("")]
     public partial class CreateRgb1Payload
     {
         /// <summary>
@@ -4153,7 +4137,6 @@ namespace Harp.Generators.Tests
     /// Represents an operator that creates a timestamped message payload for the Rgb1 register.
     /// </summary>
     [DisplayName("TimestampedRgb1Payload")]
-    [Description("Timestamped payload for the Tests Rgb1 register.")]
     public partial class CreateTimestampedRgb1Payload : CreateRgb1Payload
     {
         /// <summary>
@@ -4173,7 +4156,7 @@ namespace Harp.Generators.Tests
     /// Starts a PWM pulse.
     /// </summary>
     [DisplayName("StartPulsePayload")]
-    [Description("Payload for the Tests StartPulse register. Starts a PWM pulse.")]
+    [Description("Starts a PWM pulse.")]
     public partial class CreateStartPulsePayload
     {
         /// <summary>
@@ -4218,7 +4201,6 @@ namespace Harp.Generators.Tests
     /// Starts a PWM pulse.
     /// </summary>
     [DisplayName("TimestampedStartPulsePayload")]
-    [Description("Timestamped payload for the Tests StartPulse register. Starts a PWM pulse.")]
     public partial class CreateTimestampedStartPulsePayload : CreateStartPulsePayload
     {
         /// <summary>
@@ -4238,7 +4220,7 @@ namespace Harp.Generators.Tests
     /// Starts a PWM pulse train.
     /// </summary>
     [DisplayName("StartPulseTrainPayload")]
-    [Description("Payload for the Tests StartPulseTrain register. Starts a PWM pulse train.")]
+    [Description("Starts a PWM pulse train.")]
     public partial class CreateStartPulseTrainPayload
     {
         /// <summary>
@@ -4297,7 +4279,6 @@ namespace Harp.Generators.Tests
     /// Starts a PWM pulse train.
     /// </summary>
     [DisplayName("TimestampedStartPulseTrainPayload")]
-    [Description("Timestamped payload for the Tests StartPulseTrain register. Starts a PWM pulse train.")]
     public partial class CreateTimestampedStartPulseTrainPayload : CreateStartPulseTrainPayload
     {
         /// <summary>
@@ -4317,7 +4298,7 @@ namespace Harp.Generators.Tests
     /// Configures the operation mode of the encoder.
     /// </summary>
     [DisplayName("EncoderModePayload")]
-    [Description("Payload for the Tests EncoderMode register. Configures the operation mode of the encoder.")]
+    [Description("Configures the operation mode of the encoder.")]
     public partial class CreateEncoderModePayload
     {
         /// <summary>
@@ -4351,7 +4332,6 @@ namespace Harp.Generators.Tests
     /// Configures the operation mode of the encoder.
     /// </summary>
     [DisplayName("TimestampedEncoderModePayload")]
-    [Description("Timestamped payload for the Tests EncoderMode register. Configures the operation mode of the encoder.")]
     public partial class CreateTimestampedEncoderModePayload : CreateEncoderModePayload
     {
         /// <summary>
@@ -4371,7 +4351,7 @@ namespace Harp.Generators.Tests
     /// Specifies whether the status LED is enabled.
     /// </summary>
     [DisplayName("LedEnabledPayload")]
-    [Description("Payload for the Tests LedEnabled register. Specifies whether the status LED is enabled.")]
+    [Description("Specifies whether the status LED is enabled.")]
     public partial class CreateLedEnabledPayload
     {
         /// <summary>
@@ -4405,7 +4385,6 @@ namespace Harp.Generators.Tests
     /// Specifies whether the status LED is enabled.
     /// </summary>
     [DisplayName("TimestampedLedEnabledPayload")]
-    [Description("Timestamped payload for the Tests LedEnabled register. Specifies whether the status LED is enabled.")]
     public partial class CreateTimestampedLedEnabledPayload : CreateLedEnabledPayload
     {
         /// <summary>
@@ -4424,7 +4403,7 @@ namespace Harp.Generators.Tests
     /// Represents an operator that creates a message payload for the PortDIOClear register.
     /// </summary>
     [DisplayName("PortDIOClearPayload")]
-    [Description("Payload for the Tests PortDIOClear register.")]
+    [Description("")]
     public partial class CreatePortDIOClearPayload
     {
         /// <summary>
@@ -4457,7 +4436,6 @@ namespace Harp.Generators.Tests
     /// Represents an operator that creates a timestamped message payload for the PortDIOClear register.
     /// </summary>
     [DisplayName("TimestampedPortDIOClearPayload")]
-    [Description("Timestamped payload for the Tests PortDIOClear register.")]
     public partial class CreateTimestampedPortDIOClearPayload : CreatePortDIOClearPayload
     {
         /// <summary>
@@ -4476,7 +4454,7 @@ namespace Harp.Generators.Tests
     /// Represents an operator that creates a message payload for the WideStatus register.
     /// </summary>
     [DisplayName("WideStatusPayload")]
-    [Description("Payload for the Tests WideStatus register.")]
+    [Description("")]
     public partial class CreateWideStatusPayload
     {
         /// <summary>
@@ -4509,7 +4487,6 @@ namespace Harp.Generators.Tests
     /// Represents an operator that creates a timestamped message payload for the WideStatus register.
     /// </summary>
     [DisplayName("TimestampedWideStatusPayload")]
-    [Description("Timestamped payload for the Tests WideStatus register.")]
     public partial class CreateTimestampedWideStatusPayload : CreateWideStatusPayload
     {
         /// <summary>
@@ -4529,7 +4506,7 @@ namespace Harp.Generators.Tests
     /// Specifies a threshold whose default needs more than single precision.
     /// </summary>
     [DisplayName("ThresholdPayload")]
-    [Description("Payload for the Tests Threshold register. Specifies a threshold whose default needs more than single precision.")]
+    [Description("Specifies a threshold whose default needs more than single precision.")]
     public partial class CreateThresholdPayload
     {
         /// <summary>
@@ -4563,7 +4540,6 @@ namespace Harp.Generators.Tests
     /// Specifies a threshold whose default needs more than single precision.
     /// </summary>
     [DisplayName("TimestampedThresholdPayload")]
-    [Description("Timestamped payload for the Tests Threshold register. Specifies a threshold whose default needs more than single precision.")]
     public partial class CreateTimestampedThresholdPayload : CreateThresholdPayload
     {
         /// <summary>

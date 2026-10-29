@@ -717,20 +717,6 @@ internal static partial class TemplateHelper
         return text.Length == 0 || text.EndsWith('.') ? text : $"{text}.";
     }
 
-    public static string GetDescriptionSuffix(string description)
-    {
-        var text = GetDescriptionText(description);
-        return text.Length == 0 ? text : $" {text}";
-    }
-
-    public static string GetRegisterDescription(string name, RegisterInfo register, string? deviceName)
-    {
-        if (string.IsNullOrEmpty(deviceName))
-            return register.Description;
-
-        return $"The {deviceName} {name} register.{GetDescriptionSuffix(register.Description)}";
-    }
-
     public static string GetRangeAttributeDeclaration(double? minValue, double? maxValue)
     {
         var minValueDeclaration = minValue.HasValue ? minValue.Value.ToString() : "long.MinValue";
