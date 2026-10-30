@@ -1211,9 +1211,9 @@ void WriteSummary(string indent, params string[] fragments)
     var text = string.Join(" ", fragments.Select(TemplateHelper.GetDescriptionText).Where(fragment => fragment.Length > 0));
     if (text.Length == 0) return;
     WriteLine($"{indent}/// <summary>");
-    foreach (var line in TemplateHelper.GetDocumentationLines(TemplateHelper.GetXmlText(text), maxLineLength: 100))
+    foreach (var line in TemplateHelper.GetDocumentationComment(indent, TemplateHelper.GetXmlText(text), maxLineLength: 100))
     {
-        WriteLine($"{indent}/// {line}");
+        WriteLine(line);
     }
     WriteLine($"{indent}/// </summary>");
 }
