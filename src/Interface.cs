@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Numerics;
+using System.Text;
+using System.Text.RegularExpressions;
 using Bonsai.Harp;
 using YamlDotNet.Core;
 using YamlDotNet.Core.Events;
@@ -526,6 +528,8 @@ internal static partial class TemplateHelper
 {
     const string CoreMetadataResourceName = "Harp.Generators.core.yml";
 
+    static readonly Regex WordPattern = new(@"(?:<[^>]*>|[^\s<])+");
+
     static readonly Lazy<DeviceMetadata> CoreMetadata = new(() =>
     {
         using var stream = typeof(TemplateHelper).Assembly.GetManifestResourceStream(CoreMetadataResourceName)
@@ -709,6 +713,40 @@ internal static partial class TemplateHelper
     {
         var size = GetPayloadTypeSize(payloadType);
         return size >= 8 ? ulong.MaxValue : (1UL << (size * 8)) - 1;
+    }
+
+    public static string GetDescriptionText(string description)
+    {
+        var text = string.Join(" ", description.Split((char[]?)null, StringSplitOptions.RemoveEmptyEntries));
+        return text.Length == 0 || text.EndsWith('.') ? text : $"{text}.";
+    }
+
+    public static List<string> GetDocumentationLines(string xmlText, int maxLineLength)
+    {
+        return GetWrappedLines(xmlText, maxLineLength - "/// ".Length);
+    }
+
+    public static List<string> GetWrappedLines(string text, int width)
+    {
+        var lines = new List<string>();
+        var line = new StringBuilder();
+        foreach (Match word in WordPattern.Matches(text))
+        {
+            if (line.Length > 0 && line.Length + 1 + word.Length > width)
+            {
+                lines.Add(line.ToString());
+                line.Clear();
+            }
+            if (line.Length > 0) line.Append(' ');
+            line.Append(word.Value);
+        }
+        if (line.Length > 0) lines.Add(line.ToString());
+        return lines;
+    }
+
+    public static string GetXmlText(string text)
+    {
+        return text.Replace("&", "&amp;").Replace("<", "&lt;").Replace(">", "&gt;");
     }
 
     public static string GetRangeAttributeDeclaration(double? minValue, double? maxValue)
@@ -1048,9 +1086,9 @@ class HexValueTypeConverter : IYamlTypeConverter
 {
     public static readonly HexValueTypeConverter Instance = new();
 
-    public bool Accepts(Type type) => false;
-
     static readonly IDeserializer ScalarDeserializer = new DeserializerBuilder().Build();
+
+    public bool Accepts(Type type) => false;
 
     public object? ReadYaml(IParser parser, Type type, ObjectDeserializer rootDeserializer)
     {
