@@ -721,27 +721,29 @@ internal static partial class TemplateHelper
         return text.Length == 0 || text.EndsWith('.') ? text : $"{text}.";
     }
 
-    public static List<string> GetDocumentationLines(string xmlText, int maxLineLength)
+    public static IEnumerable<string> GetDocumentationComment(string indent, string xmlText, int maxLineLength)
     {
-        return GetWrappedLines(xmlText, maxLineLength - "/// ".Length);
+        var words = WordPattern.Matches(xmlText).Select(match => match.Value);
+        foreach (var line in WrapWords(words, maxLineLength - "/// ".Length))
+        {
+            yield return $"{indent}/// {line}";
+        }
     }
 
-    public static List<string> GetWrappedLines(string text, int width)
+    static IEnumerable<string> WrapWords(IEnumerable<string> words, int width)
     {
-        var lines = new List<string>();
         var line = new StringBuilder();
-        foreach (Match word in WordPattern.Matches(text))
+        foreach (var word in words)
         {
             if (line.Length > 0 && line.Length + 1 + word.Length > width)
             {
-                lines.Add(line.ToString());
+                yield return line.ToString();
                 line.Clear();
             }
             if (line.Length > 0) line.Append(' ');
-            line.Append(word.Value);
+            line.Append(word);
         }
-        if (line.Length > 0) lines.Add(line.ToString());
-        return lines;
+        if (line.Length > 0) yield return line.ToString();
     }
 
     public static string GetXmlText(string text)

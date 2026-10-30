@@ -183,9 +183,9 @@ foreach (var registerMetadata in publicRegisters)
 void WriteSummary(string indent, string text)
 {
     WriteLine($"{indent}/// <summary>");
-    foreach (var line in TemplateHelper.GetDocumentationLines(text, maxLineLength: 85))
+    foreach (var line in TemplateHelper.GetDocumentationComment(indent, text, maxLineLength: 85))
     {
-        WriteLine($"{indent}/// {line}");
+        WriteLine(line);
     }
     WriteLine($"{indent}/// </summary>");
 }
