@@ -52,16 +52,24 @@ namespace Harp.Generators.Tests
         public static async Task<AsyncDevice> CreateAsync(string portName, CancellationToken cancellationToken = default)
         {
             var device = new AsyncDevice(portName);
-            var whoAmI = await device.ReadWhoAmIAsync(cancellationToken);
-            if (whoAmI != Device.WhoAmI)
+            try
             {
-                var errorMessage = string.Format(
-                    "The device on {0} reported WhoAmI {1}, which does not match the Tests device. Check whether the Tests device is connected to the specified serial port.",
-                    portName, whoAmI);
-                throw new HarpException(errorMessage);
-            }
+                var whoAmI = await device.ReadWhoAmIAsync(cancellationToken);
+                if (whoAmI != Device.WhoAmI)
+                {
+                    var errorMessage = string.Format(
+                        "The device on {0} reported WhoAmI {1}, which does not match the Tests device. Check whether the Tests device is connected to the specified serial port.",
+                        portName, whoAmI);
+                    throw new HarpException(errorMessage);
+                }
 
-            return device;
+                return device;
+            }
+            catch
+            {
+                device.Dispose();
+                throw;
+            }
         }
     }
 
