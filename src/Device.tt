@@ -967,7 +967,7 @@ foreach (var registerMetadata in deviceRegisters)
         var paramDescription = TemplateHelper.GetDescriptionText(member.Value.Description);
         if (paramDescription.Length == 0) paramDescription = $"The value of the {member.Key} payload member.";
 #>
-        /// <param name="<#= paramName #>"><#= GetXmlText(paramDescription) #></param>
+        /// <param name="<#= paramName #>"><#= TemplateHelper.GetXmlText(paramDescription) #></param>
 <#
     }
 #>
@@ -1211,36 +1211,11 @@ void WriteSummary(string indent, params string[] fragments)
     var text = string.Join(" ", fragments.Select(TemplateHelper.GetDescriptionText).Where(fragment => fragment.Length > 0));
     if (text.Length == 0) return;
     WriteLine($"{indent}/// <summary>");
-    foreach (var line in GetWrappedLines(GetXmlText(text), MaxDocumentationLineLength - 4))
+    foreach (var line in TemplateHelper.GetDocumentationLines(TemplateHelper.GetXmlText(text), maxLineLength: 100))
     {
         WriteLine($"{indent}/// {line}");
     }
     WriteLine($"{indent}/// </summary>");
-}
-
-const int MaxDocumentationLineLength = 100;
-
-List<string> GetWrappedLines(string text, int width)
-{
-    var lines = new List<string>();
-    var line = new StringBuilder();
-    foreach (var word in text.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries))
-    {
-        if (line.Length > 0 && line.Length + 1 + word.Length > width)
-        {
-            lines.Add(line.ToString());
-            line.Clear();
-        }
-        if (line.Length > 0) line.Append(' ');
-        line.Append(word);
-    }
-    if (line.Length > 0) lines.Add(line.ToString());
-    return lines;
-}
-
-string GetXmlText(string text)
-{
-    return text.Replace("&", "&amp;").Replace("<", "&lt;").Replace(">", "&gt;");
 }
 
 void WriteDescriptionAttribute(string indent, params string[] fragments)

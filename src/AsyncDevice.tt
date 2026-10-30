@@ -27,21 +27,38 @@ namespace <#= Namespace #>
     /// <inheritdoc/>
     public partial class Device
     {
-        /// <summary>
-        /// Initializes a new instance of the asynchronous API to configure and interface
-        /// with <#= deviceName #> devices on the specified serial port.
-        /// </summary>
+<# WriteSummary("        ", $"Asynchronously connects to the {deviceName} device on the specified serial port and verifies its identity."); #>
         /// <param name="portName">
-        /// The name of the serial port used to communicate with the Harp device.
+        /// The name of the serial port used to communicate with the <#= deviceName #> device.
         /// </param>
         /// <param name="cancellationToken">
-        /// A <see cref="CancellationToken"/> which can be used to cancel the operation.
+        /// The token to monitor for cancellation requests. The default value is
+        /// <see cref="CancellationToken.None"/>.
         /// </param>
         /// <returns>
-        /// A task that represents the asynchronous initialization operation. The value of
-        /// the <see cref="Task{TResult}.Result"/> parameter contains a new instance of
-        /// the <see cref="AsyncDevice"/> class.
+        /// A task that represents the asynchronous connect operation. The value of its
+        /// <see cref="Task{TResult}.Result"/> property contains a new instance of the
+        /// <see cref="AsyncDevice"/> class.
         /// </returns>
+        /// <exception cref="HarpException">
+        /// The device on the specified serial port does not report the WhoAmI of the
+        /// <#= deviceName #> device, or replied to the WhoAmI read request with an error.
+        /// This exception is stored into the returned task.
+        /// </exception>
+        /// <exception cref="System.IO.IOException">
+        /// The specified serial port could not be found or opened. This exception is stored
+        /// into the returned task.
+        /// </exception>
+        /// <exception cref="System.UnauthorizedAccessException">
+        /// Access to the specified serial port is denied, or another process already has it
+        /// open. This exception is stored into the returned task.
+        /// </exception>
+        /// <exception cref="System.ArgumentException">
+        /// The specified port name is not valid. This exception is stored into the returned task.
+        /// </exception>
+        /// <exception cref="System.OperationCanceledException">
+        /// The cancellation token was canceled. This exception is stored into the returned task.
+        /// </exception>
         public static async Task<AsyncDevice> CreateAsync(string portName, CancellationToken cancellationToken = default)
         {
             var device = new AsyncDevice(portName);
@@ -49,7 +66,7 @@ namespace <#= Namespace #>
             if (whoAmI != Device.WhoAmI)
             {
                 var errorMessage = string.Format(
-                    "The device ID {1} on {0} was unexpected. Check whether a <#= deviceName #> device is connected to the specified serial port.",
+                    "The device on {0} reported WhoAmI {1}, which does not match the <#= deviceName #> device. Check whether the <#= deviceName #> device is connected to the specified serial port.",
                     portName, whoAmI);
                 throw new HarpException(errorMessage);
             }
@@ -76,15 +93,23 @@ foreach (var registerMetadata in publicRegisters)
 #>
 
         /// <summary>
-        /// Asynchronously reads the contents of the <see cref="<#= registerMetadata.Key #>"/> register.
+        /// Asynchronously reads the payload of the <see cref="<#= registerMetadata.Key #>"/> register.
         /// </summary>
         /// <param name="cancellationToken">
-        /// A <see cref="CancellationToken"/> which can be used to cancel the operation.
+        /// The token to monitor for cancellation requests. The default value is
+        /// <see cref="CancellationToken.None"/>.
         /// </param>
         /// <returns>
-        /// A task that represents the asynchronous read operation. The task result contains
-        /// the register payload.
+        /// A task that represents the asynchronous read operation. The value of its
+        /// <see cref="Task{TResult}.Result"/> property contains the register payload.
         /// </returns>
+        /// <exception cref="HarpException">
+        /// The device replied to the read request with an error. This exception is stored into
+        /// the returned task.
+        /// </exception>
+        /// <exception cref="System.OperationCanceledException">
+        /// The cancellation token was canceled. This exception is stored into the returned task.
+        /// </exception>
         public async Task<<#= interfaceType #>> Read<#= registerMetadata.Key #>Async(CancellationToken cancellationToken = default)
         {
             var reply = await CommandAsync(HarpCommand.Read<#= parsePayloadSuffix #>(<#= registerMetadata.Key #>.Address), cancellationToken);
@@ -92,15 +117,23 @@ foreach (var registerMetadata in publicRegisters)
         }
 
         /// <summary>
-        /// Asynchronously reads the timestamped contents of the <see cref="<#= registerMetadata.Key #>"/> register.
+        /// Asynchronously reads the timestamped payload of the <see cref="<#= registerMetadata.Key #>"/> register.
         /// </summary>
         /// <param name="cancellationToken">
-        /// A <see cref="CancellationToken"/> which can be used to cancel the operation.
+        /// The token to monitor for cancellation requests. The default value is
+        /// <see cref="CancellationToken.None"/>.
         /// </param>
         /// <returns>
-        /// A task that represents the asynchronous read operation. The task result contains
-        /// the timestamped register payload.
+        /// A task that represents the asynchronous read operation. The value of its
+        /// <see cref="Task{TResult}.Result"/> property contains the timestamped register payload.
         /// </returns>
+        /// <exception cref="HarpException">
+        /// The device replied to the read request with an error. This exception is stored into
+        /// the returned task.
+        /// </exception>
+        /// <exception cref="System.OperationCanceledException">
+        /// The cancellation token was canceled. This exception is stored into the returned task.
+        /// </exception>
         public async Task<Timestamped<<#= interfaceType #>>> ReadTimestamped<#= registerMetadata.Key #>Async(CancellationToken cancellationToken = default)
         {
             var reply = await CommandAsync(HarpCommand.Read<#= parsePayloadSuffix #>(<#= registerMetadata.Key #>.Address), cancellationToken);
@@ -112,13 +145,21 @@ foreach (var registerMetadata in publicRegisters)
 #>
 
         /// <summary>
-        /// Asynchronously writes a value to the <see cref="<#= registerMetadata.Key #>"/> register.
+        /// Asynchronously writes the specified payload to the <see cref="<#= registerMetadata.Key #>"/> register.
         /// </summary>
-        /// <param name="value">The value to write in the register.</param>
+        /// <param name="value">The payload to write to the register.</param>
         /// <param name="cancellationToken">
-        /// A <see cref="CancellationToken"/> which can be used to cancel the operation.
+        /// The token to monitor for cancellation requests. The default value is
+        /// <see cref="CancellationToken.None"/>.
         /// </param>
-        /// <returns>The task object representing the asynchronous write operation.</returns>
+        /// <returns>A task that represents the asynchronous write operation.</returns>
+        /// <exception cref="HarpException">
+        /// The device replied to the write request with an error. This exception is stored into
+        /// the returned task.
+        /// </exception>
+        /// <exception cref="System.OperationCanceledException">
+        /// The cancellation token was canceled. This exception is stored into the returned task.
+        /// </exception>
         public async Task Write<#= registerMetadata.Key #>Async(<#= interfaceType #> value, CancellationToken cancellationToken = default)
         {
             var request = <#= registerMetadata.Key #>.FromPayload(MessageType.Write, value);
@@ -130,3 +171,14 @@ foreach (var registerMetadata in publicRegisters)
 #>
     }
 }
+<#+
+void WriteSummary(string indent, string text)
+{
+    WriteLine($"{indent}/// <summary>");
+    foreach (var line in TemplateHelper.GetDocumentationLines(text, maxLineLength: 85))
+    {
+        WriteLine($"{indent}/// {line}");
+    }
+    WriteLine($"{indent}/// </summary>");
+}
+#>
