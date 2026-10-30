@@ -52,17 +52,14 @@ namespace <#= Namespace #>
 if (isApplicationDevice)
 {
 #>
-    /// <summary>
-    /// Generates events and processes commands for the <#= deviceName #> device connected
-    /// at the specified serial port.
-    /// </summary>
+<# WriteSummary("    ", $"Represents an operator that sends requests to the {deviceName} device and returns its replies and events.", DeviceMetadata.Description); #>
     [Combinator(MethodName = nameof(Generate))]
     [WorkflowElementCategory(ElementCategory.Source)]
-    [Description("Generates events and processes commands for the <#= deviceName #> device.")]
+<# WriteDescriptionAttribute("    ", $"Sends requests to the {deviceName} device and returns its replies and events.", DeviceMetadata.Description); #>
     public partial class Device : Bonsai.Harp.Device, INamedElement
     {
         /// <summary>
-        /// Represents the unique identity class of the <see cref="<#= deviceName #>"/> device.
+        /// Represents the identity class of the <see cref="<#= deviceName #>"/> device.
         /// This field is constant.
         /// </summary>
         public const int WhoAmI = <#= DeviceMetadata.WhoAmI #>;
@@ -109,7 +106,7 @@ if (isApplicationDevice)
 #>
 
         /// <summary>
-        /// Gets the contents of the metadata file describing the <see cref="<#= deviceName #>"/>
+        /// Represents the contents of the metadata file describing the <see cref="<#= deviceName #>"/>
         /// device registers.
         /// </summary>
         public static readonly string Metadata = GetDeviceMetadata();
@@ -123,6 +120,27 @@ if (isApplicationDevice)
             using var streamReader = new System.IO.StreamReader(metadataStream);
             return streamReader.ReadToEnd();
         }
+
+        internal static AttributeCollection GetRegisterAttributes(Type builderType, object register, string format)
+        {
+            var attributes = TypeDescriptor.GetAttributes(builderType);
+            if (register == null) return attributes;
+
+            var registerType = register switch
+            {
+                ITimestampedRegister timestamped => timestamped.RegisterType,
+                IRegisterPayload payload => payload.RegisterType,
+                _ => register.GetType()
+            };
+            var description = string.Format(format, Bonsai.Expressions.ExpressionBuilder.GetElementDisplayName(registerType));
+            if (TypeDescriptor.GetAttributes(register)[typeof(DescriptionAttribute)] is DescriptionAttribute registerDescription &&
+                !string.IsNullOrEmpty(registerDescription.Description))
+            {
+                description = $"{description} {registerDescription.Description}";
+            }
+
+            return AttributeCollection.FromExisting(attributes, new DescriptionAttribute(description));
+        }
 <#
 } // isApplicationDevice
 #>
@@ -131,6 +149,16 @@ if (isApplicationDevice)
 if (isApplicationDevice)
 {
 #>
+
+    internal interface ITimestampedRegister
+    {
+        Type RegisterType { get; }
+    }
+
+    internal interface IRegisterPayload
+    {
+        Type RegisterType { get; }
+    }
 
     /// <summary>
     /// Represents an operator that returns the contents of the metadata file
@@ -189,9 +217,9 @@ if (isApplicationDevice)
         string INamedElement.Name => nameof(<#= deviceName #>) + "DataWriter";
 
         /// <summary>
-        /// Gets or sets the relative or absolute path on which to save the message data.
+        /// Gets or sets the relative or absolute path of the directory in which to save the message data.
         /// </summary>
-        [Description("The relative or absolute path of the directory on which to save the message data.")]
+        [Description("The relative or absolute path of the directory in which to save the message data.")]
         [Editor("Bonsai.Design.SaveFileNameEditor, Bonsai.Design", DesignTypes.UITypeEditor)]
         public string Path
         {
@@ -200,11 +228,12 @@ if (isApplicationDevice)
         }
 
         /// <summary>
-        /// Gets or sets a value indicating whether element writing should be buffered. If <see langword="true"/>,
-        /// the write commands will be queued in memory as fast as possible and will be processed
-        /// by the writer in a different thread. Otherwise, writing will be done in the same
-        /// thread in which notifications arrive.
+        /// Gets or sets a value indicating whether writing should be buffered.
         /// </summary>
+        /// <remarks>
+        /// <see langword="true"/> to queue writes in memory and process them on a separate thread;
+        /// otherwise, messages are written on the thread that receives them.
+        /// </remarks>
         [Description("Indicates whether writing should be buffered.")]
         public bool Buffered
         {
@@ -215,6 +244,10 @@ if (isApplicationDevice)
         /// <summary>
         /// Gets or sets a value indicating whether to overwrite the output file if it already exists.
         /// </summary>
+        /// <remarks>
+        /// <see langword="true"/> to overwrite the output files if they already exist;
+        /// otherwise, an exception is thrown.
+        /// </remarks>
         [Description("Indicates whether to overwrite the output file if it already exists.")]
         public bool Overwrite
         {
@@ -264,15 +297,15 @@ if (isApplicationDevice)
         }
 
         /// <summary>
-        /// Writes each Harp message in the sequence to the specified binary file, and the
+        /// Writes each Harp message in the sequence to the binary file of its register, and the
         /// contents of the device metadata file to a separate text file.
         /// </summary>
-        /// <param name="source">The sequence of messages to write to the file.</param>
+        /// <param name="source">The sequence of messages to write.</param>
         /// <returns>
         /// An observable sequence that is identical to the <paramref name="source"/>
-        /// sequence but where there is an additional side effect of writing the
-        /// messages to a raw binary file, and the contents of the device metadata file
-        /// to a separate text file.
+        /// sequence but where there is an additional side effect of writing each
+        /// message to the binary file of its register, and the contents of the device
+        /// metadata file to a separate text file.
         /// </returns>
         public override IObservable<HarpMessage> Process(IObservable<HarpMessage> source)
         {
@@ -350,7 +383,7 @@ foreach (var register in publicRegisters)
 }
 #>
     [Description("Filters register-specific messages reported by the <#= deviceName #> device.")]
-    public class FilterRegister : FilterRegisterBuilder, INamedElement
+    public class FilterRegister : FilterRegisterBuilder, INamedElement, ICustomTypeDescriptor
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="FilterRegister"/> class.
@@ -361,10 +394,13 @@ foreach (var register in publicRegisters)
         }
 
         string INamedElement.Name => GetElementDisplayName(Register);
+
+        AttributeCollection ICustomTypeDescriptor.GetAttributes() => Device.GetRegisterAttributes(
+            GetType(), Register, "Filters <#= deviceName #> {0} register messages.");
     }
 
     /// <summary>
-    /// Represents an operator which filters and selects specific messages
+    /// Represents an operator that filters and selects specific messages
     /// reported by the <#= deviceName #> device.
     /// </summary>
 <#
@@ -392,7 +428,7 @@ foreach (var register in publicRegisters)
 }
 #>
     [Description("Filters and selects specific messages reported by the <#= deviceName #> device.")]
-    public partial class Parse : ParseBuilder, INamedElement
+    public partial class Parse : ParseBuilder, INamedElement, ICustomTypeDescriptor
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="Parse"/> class.
@@ -403,10 +439,15 @@ foreach (var register in publicRegisters)
         }
 
         string INamedElement.Name => GetElementDisplayName(Register);
+
+        AttributeCollection ICustomTypeDescriptor.GetAttributes() => Device.GetRegisterAttributes(GetType(), Register,
+            Register is ITimestampedRegister
+                ? "Returns the timestamped payload of <#= deviceName #> {0} register messages."
+                : "Returns the payload of <#= deviceName #> {0} register messages.");
     }
 
     /// <summary>
-    /// Represents an operator which formats a sequence of values as specific
+    /// Represents an operator that formats a sequence of values as specific
     /// <#= deviceName #> register messages.
     /// </summary>
 <#
@@ -426,7 +467,7 @@ foreach (var register in publicRegisters)
 }
 #>
     [Description("Formats a sequence of values as specific <#= deviceName #> register messages.")]
-    public partial class Format : FormatBuilder, INamedElement
+    public partial class Format : FormatBuilder, INamedElement, ICustomTypeDescriptor
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="Format"/> class.
@@ -437,6 +478,9 @@ foreach (var register in publicRegisters)
         }
 
         string INamedElement.Name => GetElementDisplayName(Register);
+
+        AttributeCollection ICustomTypeDescriptor.GetAttributes() => Device.GetRegisterAttributes(
+            GetType(), Register, "Formats values as <#= deviceName #> {0} register messages.");
     }
 <#
 } // deviceRegisters.Count > 0
@@ -466,21 +510,10 @@ foreach (var registerMetadata in deviceRegisters)
     var formatPayloadSuffix = rawPayload ? "Payload" : TemplateHelper.GetPayloadTypeSuffix(register.Type);
     var formatConversion = TemplateHelper.GetFormatConversion(register, "value");
     if (rawPayload) formatConversion = $"PayloadType.{register.Type}, {formatConversion}";
-    var descriptionText = TemplateHelper.GetDescriptionText(register.Description);
 #>
 
-    /// <summary>
-    /// Provides methods for manipulating messages from the <#= registerMetadata.Key #> register.
-<#
-    if (descriptionText.Length > 0)
-    {
-#>
-    /// <#= descriptionText #>
-<#
-    }
-#>
-    /// </summary>
-    [Description("<#= descriptionText #>")]
+<# WriteSummary("    ", $"Provides methods for manipulating {registerMetadata.Key} register messages.", register.Description); #>
+<# WriteDescriptionAttribute("    ", register.Description); #>
     <#= isPrivate ? "internal" : "public" #> partial class <#= registerMetadata.Key #>
     {
         /// <summary>
@@ -620,7 +653,7 @@ if (isPrivate)
     }#>
 
         /// <summary>
-        /// Returns the payload data for <see cref="<#= registerMetadata.Key #>"/> register messages.
+        /// Returns the payload of the specified <see cref="<#= registerMetadata.Key #>"/> register message.
         /// </summary>
         /// <param name="message">A <see cref="HarpMessage"/> object representing the register message.</param>
         /// <returns>A value representing the message payload.</returns>
@@ -638,7 +671,7 @@ if (isPrivate)
         }
 
         /// <summary>
-        /// Returns the timestamped payload data for <see cref="<#= registerMetadata.Key #>"/> register messages.
+        /// Returns the timestamped payload of the specified <see cref="<#= registerMetadata.Key #>"/> register message.
         /// </summary>
         /// <param name="message">A <see cref="HarpMessage"/> object representing the register message.</param>
         /// <returns>A value representing the timestamped message payload.</returns>
@@ -665,7 +698,7 @@ if (isPrivate)
         /// Returns a Harp message for the <see cref="<#= registerMetadata.Key #>"/> register.
         /// </summary>
         /// <param name="messageType">The type of the Harp message.</param>
-        /// <param name="value">The value to be stored in the message payload.</param>
+        /// <param name="value">The payload of the message.</param>
         /// <returns>
         /// A <see cref="HarpMessage"/> object for the <see cref="<#= registerMetadata.Key #>"/> register
         /// with the specified message type and payload.
@@ -679,9 +712,9 @@ if (isPrivate)
         /// Returns a timestamped Harp message for the <see cref="<#= registerMetadata.Key #>"/>
         /// register.
         /// </summary>
-        /// <param name="timestamp">The timestamp of the message payload, in seconds.</param>
+        /// <param name="timestamp">The timestamp of the message, in seconds.</param>
         /// <param name="messageType">The type of the Harp message.</param>
-        /// <param name="value">The value to be stored in the message payload.</param>
+        /// <param name="value">The payload of the message.</param>
         /// <returns>
         /// A <see cref="HarpMessage"/> object for the <see cref="<#= registerMetadata.Key #>"/> register
         /// with the specified message type, timestamp, and payload.
@@ -692,28 +725,27 @@ if (isPrivate)
         }
     }
 
-    /// <summary>
-    /// Provides methods for parsing timestamped values from <#= registerMetadata.Key #> register messages.
+<# WriteSummary("    ", $"Provides methods that return the timestamped payload of {registerMetadata.Key} register messages.", register.Description); #>
+    /// <seealso cref="<#= registerMetadata.Key #>"/>
+<# WriteDescriptionAttribute("    ", register.Description); #>
+    public partial class Timestamped<#= registerMetadata.Key #><#= isApplicationDevice ? " : ITimestampedRegister" : string.Empty #>
+    {
 <#
-    if (descriptionText.Length > 0)
+    if (isApplicationDevice)
     {
 #>
-    /// <#= descriptionText #>
+        Type ITimestampedRegister.RegisterType => typeof(<#= registerMetadata.Key #>);
+
 <#
     }
 #>
-    /// </summary>
-    /// <seealso cref="<#= registerMetadata.Key #>"/>
-    [Description("<#= descriptionText #>")]
-    public partial class Timestamped<#= registerMetadata.Key #>
-    {
         /// <summary>
         /// Represents the address of the <see cref="<#= registerMetadata.Key #>"/> register. This field is constant.
         /// </summary>
         public const int Address = <#= registerMetadata.Key #>.Address;
 
         /// <summary>
-        /// Returns timestamped payload data for <see cref="<#= registerMetadata.Key #>"/> register messages.
+        /// Returns the timestamped payload of the specified <see cref="<#= registerMetadata.Key #>"/> register message.
         /// </summary>
         /// <param name="message">A <see cref="HarpMessage"/> object representing the register message.</param>
         /// <returns>A value representing the timestamped message payload.</returns>
@@ -729,7 +761,7 @@ if (isApplicationDevice && deviceRegisters.Count > 0)
 #>
 
     /// <summary>
-    /// Represents an operator which creates standard message payloads for the
+    /// Represents an operator that creates standard messages for the
     /// <#= deviceName #> device.
     /// </summary>
 <#
@@ -756,8 +788,8 @@ foreach (var register in publicRegisters)
 <#
 }
 #>
-    [Description("Creates standard message payloads for the <#= deviceName #> device.")]
-    public partial class CreateMessage : CreateMessageBuilder, INamedElement
+    [Description("Creates standard messages for the <#= deviceName #> device.")]
+    public partial class CreateMessage : CreateMessageBuilder, INamedElement, ICustomTypeDescriptor
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="CreateMessage"/> class.
@@ -768,6 +800,11 @@ foreach (var register in publicRegisters)
         }
 
         string INamedElement.Name => GetElementDisplayName(Payload);
+
+        AttributeCollection ICustomTypeDescriptor.GetAttributes() => Device.GetRegisterAttributes(GetType(), Payload,
+            Payload is ITimestampedRegister
+                ? "Creates timestamped <#= deviceName #> {0} register messages."
+                : "Creates <#= deviceName #> {0} register messages.");
     }
 <#
 } // isApplicationDevice && deviceRegisters.Count > 0
@@ -777,24 +814,20 @@ foreach (var registerMetadata in publicRegisters)
     var interfaceType = TemplateHelper.GetInterfaceType(registerMetadata.Key, register);
     var defaultValue = TemplateHelper.GetDefaultValueAssignment(DeviceMetadata, register, register.Type, interfaceType, register.Length);
     var summaryDescription = $"for the {registerMetadata.Key} register";
-    var descriptionText = TemplateHelper.GetDescriptionText(register.Description);
 #>
 
-    /// <summary>
-    /// Represents an operator that creates a message payload <#= summaryDescription #>.
-<#
-    if (descriptionText.Length > 0)
+<# WriteSummary("    ", $"Represents an operator that creates {registerMetadata.Key} register messages.", register.Description); #>
+    [DisplayName("<#= registerMetadata.Key #>Payload")]
+<# WriteDescriptionAttribute("    ", isApplicationDevice ? string.Empty : $"Creates {registerMetadata.Key} register messages.", register.Description); #>
+    public partial class Create<#= registerMetadata.Key #>Payload<#= isApplicationDevice ? " : IRegisterPayload" : string.Empty #>
+    {<#
+    if (isApplicationDevice)
     {
 #>
-    /// <#= descriptionText #>
+
+        Type IRegisterPayload.RegisterType => typeof(<#= registerMetadata.Key #>);
 <#
     }
-#>
-    /// </summary>
-    [DisplayName("<#= registerMetadata.Key #>Payload")]
-    [Description("<#= descriptionText #>")]
-    public partial class Create<#= registerMetadata.Key #>Payload
-    {<#
     if (register.PayloadSpec != null)
     {
         foreach (var member in register.PayloadSpec)
@@ -822,10 +855,8 @@ foreach (var registerMetadata in publicRegisters)
     {
 #>
 
-        /// <summary>
-        /// Gets or sets the value <#= summaryDescription #>.
-        /// </summary>
 <#
+        WriteSummary("        ", $"Gets or sets the value {summaryDescription}.", register.Description);
         if (register.MinValue.HasValue || register.MaxValue.HasValue)
         {
 #>
@@ -833,8 +864,8 @@ foreach (var registerMetadata in publicRegisters)
         [Editor(DesignTypes.NumericUpDownEditor, DesignTypes.UITypeEditor)]
 <#
         }
+        WriteDescriptionAttribute("        ", register.Description);
 #>
-        [Description("The value <#= summaryDescription #>.")]
         public <#= interfaceType #> <#= registerMetadata.Key #> { get; set; }<#= defaultValue #>
 <#
     }
@@ -882,24 +913,24 @@ foreach (var registerMetadata in publicRegisters)
         }
     }
 
-    /// <summary>
-    /// Represents an operator that creates a timestamped message payload <#= summaryDescription #>.
+<# WriteSummary("    ", $"Represents an operator that creates timestamped {registerMetadata.Key} register messages.", register.Description); #>
+    [DisplayName("Timestamped<#= registerMetadata.Key #>Payload")]
+<# WriteDescriptionAttribute("    ", isApplicationDevice ? string.Empty : $"Creates timestamped {registerMetadata.Key} register messages.", register.Description); #>
+    public partial class CreateTimestamped<#= registerMetadata.Key #>Payload : Create<#= registerMetadata.Key #>Payload<#= isApplicationDevice ? ", ITimestampedRegister" : string.Empty #>
+    {
 <#
-    if (descriptionText.Length > 0)
+    if (isApplicationDevice)
     {
 #>
-    /// <#= descriptionText #>
+        Type ITimestampedRegister.RegisterType => typeof(<#= registerMetadata.Key #>);
+
 <#
     }
 #>
-    /// </summary>
-    [DisplayName("Timestamped<#= registerMetadata.Key #>Payload")]
-    public partial class CreateTimestamped<#= registerMetadata.Key #>Payload : Create<#= registerMetadata.Key #>Payload
-    {
         /// <summary>
         /// Creates a timestamped message <#= summaryDescription #>.
         /// </summary>
-        /// <param name="timestamp">The timestamp of the message payload, in seconds.</param>
+        /// <param name="timestamp">The timestamp of the message, in seconds.</param>
         /// <param name="messageType">Specifies the type of the created message.</param>
         /// <returns>A new timestamped message for the <#= registerMetadata.Key #> register.</returns>
         public HarpMessage GetMessage(double timestamp, MessageType messageType)
@@ -933,9 +964,8 @@ foreach (var registerMetadata in deviceRegisters)
     foreach (var member in register.PayloadSpec)
     {
         var paramName = CamelCaseNamingConvention.Instance.Apply(member.Key);
-        var paramDescription = string.IsNullOrEmpty(member.Value.Description)
-            ? $"The value of the {member.Key} payload member."
-            : member.Value.Description;
+        var paramDescription = TemplateHelper.GetDescriptionText(member.Value.Description);
+        if (paramDescription.Length == 0) paramDescription = $"The value of the {member.Key} payload member.";
 #>
         /// <param name="<#= paramName #>"><#= GetXmlText(paramDescription) #></param>
 <#
@@ -1023,7 +1053,7 @@ foreach (var bitMask in DeviceMetadata.BitMasks)
         bitCount++;
         if (mask.Bits.Values.Any(fieldInfo => !string.IsNullOrEmpty(fieldInfo.Description)))
         {
-            WriteSummary("        ", "Specifies that no flags are defined.");
+            WriteSummary("        ", "Specifies that no flags are set.");
         }
 #>
         None = 0x0<#= ++bitIndex < bitCount ? "," : string.Empty #>
@@ -1178,14 +1208,34 @@ foreach (var groupMask in DeviceMetadata.GroupMasks)
 <#+
 void WriteSummary(string indent, params string[] fragments)
 {
-    var text = fragments.Where(fragment => !string.IsNullOrEmpty(fragment)).ToList();
-    if (text.Count == 0) return;
+    var text = string.Join(" ", fragments.Select(TemplateHelper.GetDescriptionText).Where(fragment => fragment.Length > 0));
+    if (text.Length == 0) return;
     WriteLine($"{indent}/// <summary>");
-    foreach (var fragment in text)
+    foreach (var line in GetWrappedLines(GetXmlText(text), MaxDocumentationLineLength - 4))
     {
-        WriteLine($"{indent}/// {GetXmlText(fragment)}");
+        WriteLine($"{indent}/// {line}");
     }
     WriteLine($"{indent}/// </summary>");
+}
+
+const int MaxDocumentationLineLength = 100;
+
+List<string> GetWrappedLines(string text, int width)
+{
+    var lines = new List<string>();
+    var line = new StringBuilder();
+    foreach (var word in text.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries))
+    {
+        if (line.Length > 0 && line.Length + 1 + word.Length > width)
+        {
+            lines.Add(line.ToString());
+            line.Clear();
+        }
+        if (line.Length > 0) line.Append(' ');
+        line.Append(word);
+    }
+    if (line.Length > 0) lines.Add(line.ToString());
+    return lines;
 }
 
 string GetXmlText(string text)
@@ -1193,9 +1243,10 @@ string GetXmlText(string text)
     return text.Replace("&", "&amp;").Replace("<", "&lt;").Replace(">", "&gt;");
 }
 
-void WriteDescriptionAttribute(string indent, string text)
+void WriteDescriptionAttribute(string indent, params string[] fragments)
 {
-    if (string.IsNullOrEmpty(text)) return;
+    var text = string.Join(" ", fragments.Select(TemplateHelper.GetDescriptionText).Where(fragment => fragment.Length > 0));
+    if (text.Length == 0) return;
     var escaped = text.Replace("\\", "\\\\").Replace("\"", "\\\"");
     WriteLine($"{indent}[Description(\"{escaped}\")]");
 }

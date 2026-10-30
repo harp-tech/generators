@@ -1,6 +1,8 @@
 # This file was automatically generated and should not be edited directly.
 # To make changes, edit the device metadata and regenerate the interface.
 
+"""Declares registers, masks and payloads covering each feature that the interface generators support, for use in their tests."""
+
 import enum
 from typing import Any, ClassVar
 

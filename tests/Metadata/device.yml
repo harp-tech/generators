@@ -1,4 +1,5 @@
 # yaml-language-server: $schema=https://harp-tech.org/draft-02/schema/registers.json
+description: Declares registers, masks and payloads covering each feature that the interface generators support, for use in their tests.
 device: Tests
 firmwareVersion: "0.1"
 hardwareTargets: "1.0"
