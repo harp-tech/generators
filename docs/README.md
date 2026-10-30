@@ -39,6 +39,8 @@ Every generator takes a `DeviceMetadata` object loaded from the device metadata 
 var deviceMetadata = DeviceMetadata.Load("device.yml");
 ```
 
+Loading also checks rules that the metadata schema cannot express, and throws a `YamlException` listing every problem found. To read metadata from a string, use `DeviceMetadata.Parse`, which applies the same checks.
+
 ## Generating device interface code
 
 A complete reactive interface to communicate with the device can be generated from the device metadata.
