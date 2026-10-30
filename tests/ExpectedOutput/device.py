@@ -157,8 +157,15 @@ class ComplexConfigurationPayload(StructPayload[np.uint8], length=17):
 
     pwm_port: PwmPort = GroupMask(enum=PwmPort, mask=0xFF, default=PwmPort.PWM1)
     invert: bool = Field(BoolConverter(), offset=1, default=True)
-    input_flags: DigitalChannels = BitMask(enum=DigitalChannels, mask=0xF, offset=2, default=DigitalChannels.CHANNEL0 | DigitalChannels.CHANNEL1)
-    output_flags: DigitalChannels = BitMask(enum=DigitalChannels, offset=3, default=DigitalChannels(19))
+    input_flags: DigitalChannels = BitMask(
+        enum=DigitalChannels,
+        mask=0xF,
+        offset=2,
+        default=DigitalChannels.CHANNEL0 | DigitalChannels.CHANNEL1,
+    )
+    output_flags: DigitalChannels = BitMask(
+        enum=DigitalChannels, offset=3, default=DigitalChannels(19)
+    )
     duty_cycle: np.float32 = Field(IdentityConverter(np.float32), offset=4)
     frequency: np.float32 = Field(IdentityConverter(np.float32), offset=8)
     events_enabled: bool = Field(BoolConverter(), offset=12)
@@ -206,7 +213,9 @@ class BitmaskSplitterPayload(StructPayload[np.uint8]):
 class PortDIOSetPayload(AnonymousPayload[np.uint16]):
     """Represents the payload of the PortDIOSet register."""
 
-    __value__: PortDigitalIOS = BitMask(enum=PortDigitalIOS, default=PortDigitalIOS.DIO0 | PortDigitalIOS.DIO1)
+    __value__: PortDigitalIOS = BitMask(
+        enum=PortDigitalIOS, default=PortDigitalIOS.DIO0 | PortDigitalIOS.DIO1
+    )
 
 
 class PulseDOPort0Payload(AnonymousPayload[np.uint16]):
@@ -256,14 +265,18 @@ class StartPulseTrainPayload(StructPayload[np.uint16], length=2):
     pulse_width: np.uint16 = Field(IdentityConverter(np.uint16), mask=0x3FF)
     """Specifies the width of the pulse, where values < 1 mean "no pulse" & are ignored."""
 
-    frequency: np.uint8 = Field(IdentityConverter(np.uint8), mask=0xFF00, offset=1, default=np.uint8(1))
+    frequency: np.uint8 = Field(
+        IdentityConverter(np.uint8), mask=0xFF00, offset=1, default=np.uint8(1)
+    )
     pulse_count: np.uint8 = Field(IdentityConverter(np.uint8), mask=0xFF, offset=1)
 
 
 class EncoderModePayload(AnonymousPayload[np.uint8]):
     """Represents the payload of the EncoderMode register."""
 
-    __value__: EncoderReading = GroupMask(enum=EncoderReading, mask=0xFF, default=EncoderReading.DISPLACEMENT)
+    __value__: EncoderReading = GroupMask(
+        enum=EncoderReading, mask=0xFF, default=EncoderReading.DISPLACEMENT
+    )
 
 
 class LedEnabledPayload(AnonymousPayload[np.uint8]):

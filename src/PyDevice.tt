@@ -197,7 +197,7 @@ class <#= payload.Name #>(StructPayload[<#= payload.ElementType #>]<#= length #>
     {
         if (previousFieldDocumented) WriteLine("");
 #>
-    <#= field.Name #>: <#= field.Annotation #> = <#= field.Descriptor #>
+<# WriteField("    ", $"{field.Name}: {field.Annotation}", field.Descriptor); #>
 <#
         previousFieldDocumented = !string.IsNullOrEmpty(field.Description);
         if (previousFieldDocumented)
@@ -260,3 +260,12 @@ foreach (var register in module.Registers)
 }
 #>
 }
+<#+
+void WriteField(string indent, string declaration, string descriptor)
+{
+    foreach (var line in TemplateHelper.GetPythonAssignment(indent, declaration, descriptor, maxLineLength: 100))
+    {
+        WriteLine(line);
+    }
+}
+#>

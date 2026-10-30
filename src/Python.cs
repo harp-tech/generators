@@ -528,4 +528,53 @@ internal static partial class TemplateHelper
             ? ((long)value).ToString(CultureInfo.InvariantCulture)
             : value.ToString(CultureInfo.InvariantCulture);
     }
+
+    public static IEnumerable<string> GetPythonAssignment(string indent, string target, string value, int maxLineLength)
+    {
+        var line = $"{indent}{target} = {value}";
+        var argumentListStart = value.IndexOf('(') + 1;
+        if (line.Length <= maxLineLength || argumentListStart == 0 || !value.EndsWith(')'))
+        {
+            yield return line;
+            yield break;
+        }
+
+        var argumentIndent = indent + "    ";
+        var arguments = SplitPythonArguments(value[argumentListStart..^1]);
+        var argumentLine = argumentIndent + string.Join(", ", arguments);
+        yield return $"{indent}{target} = {value[..argumentListStart]}";
+        if (argumentLine.Length <= maxLineLength)
+        {
+            yield return argumentLine;
+        }
+        else
+        {
+            foreach (var argument in arguments)
+            {
+                yield return $"{argumentIndent}{argument},";
+            }
+        }
+        yield return $"{indent})";
+    }
+
+    static List<string> SplitPythonArguments(string arguments)
+    {
+        var start = 0;
+        var depth = 0;
+        var result = new List<string>();
+        for (int i = 0; i < arguments.Length; i++)
+        {
+            switch (arguments[i])
+            {
+                case '(' or '[' or '{': depth++; break;
+                case ')' or ']' or '}': depth--; break;
+                case ',' when depth == 0:
+                    result.Add(arguments[start..i].Trim());
+                    start = i + 1;
+                    break;
+            }
+        }
+        result.Add(arguments[start..].Trim());
+        return result;
+    }
 }
