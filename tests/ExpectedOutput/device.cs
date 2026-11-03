@@ -68,7 +68,8 @@ namespace Harp.Generators.Tests
             { 104, typeof(LedEnabled) },
             { 105, typeof(PortDIOClear) },
             { 106, typeof(WideStatus) },
-            { 107, typeof(Threshold) }
+            { 107, typeof(Threshold) },
+            { 108, typeof(Reserved0) }
         };
 
         /// <summary>
@@ -3092,6 +3093,28 @@ namespace Harp.Generators.Tests
         {
             return Threshold.GetTimestampedPayload(message);
         }
+    }
+
+    /// <summary>
+    /// Provides methods for manipulating Reserved0 register messages. Reserved for future use.
+    /// </summary>
+    [Description("Reserved for future use.")]
+    internal partial class Reserved0
+    {
+        /// <summary>
+        /// Represents the address of the <see cref="Reserved0"/> register. This field is constant.
+        /// </summary>
+        public const int Address = 108;
+
+        /// <summary>
+        /// Represents the payload type of the <see cref="Reserved0"/> register. This field is constant.
+        /// </summary>
+        public const PayloadType RegisterType = PayloadType.U8;
+
+        /// <summary>
+        /// Represents the length of the <see cref="Reserved0"/> register. This field is constant.
+        /// </summary>
+        public const int RegisterLength = 1;
     }
 
     /// <summary>

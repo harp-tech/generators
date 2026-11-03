@@ -155,6 +155,7 @@ typedef struct
     uint16_t REG_PORT_DIO_CLEAR;
     uint32_t REG_WIDE_STATUS;
     uint32_t REG_THRESHOLD;
+    uint8_t REG_RESERVED0;
 } AppRegs;
 
 /************************************************************************/
@@ -185,6 +186,7 @@ typedef struct
 #define ADD_REG_PORT_DIO_CLEAR            105 // U16
 #define ADD_REG_WIDE_STATUS               106 // U32
 #define ADD_REG_THRESHOLD                 107 // U32    Specifies a threshold whose default needs more than single precision.
+#define ADD_REG_RESERVED0                 108 // U8     Reserved for future use.
 
 /************************************************************************/
 /* Tests registers' memory limits                                       */
@@ -194,8 +196,8 @@ typedef struct
 /************************************************************************/
 /* Memory limits */
 #define APP_REGS_ADD_MIN                    0x20
-#define APP_REGS_ADD_MAX                    0x6B
-#define APP_NBYTES_OF_REG_BANK              150
+#define APP_REGS_ADD_MAX                    0x6C
+#define APP_NBYTES_OF_REG_BANK              151
 
 /************************************************************************/
 /* Registers' bits                                                      */
