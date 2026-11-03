@@ -71,6 +71,7 @@ internal sealed class PythonRegister
     public int Length;
     public string PayloadType = "";
     public string PayloadClass = "";
+    public RegisterVisibility Visibility;
     public string Description = "";
 }
 
@@ -205,6 +206,7 @@ internal static partial class TemplateHelper
                 Kind = isArray ? PythonRegisterKind.Array : PythonRegisterKind.Scalar,
                 BaseClass = isArray ? $"Register{GetPythonScalarType(register.Type)}Array" : $"Register{GetPythonScalarType(register.Type)}",
                 Length = register.Length,
+                Visibility = register.Visibility,
                 Description = register.Description
             });
             return;
@@ -232,6 +234,7 @@ internal static partial class TemplateHelper
             BaseClass = $"RegisterBase[{typeParameter}]",
             PayloadType = $"PayloadType.{GetPythonScalarType(register.Type)}",
             PayloadClass = payload.Name,
+            Visibility = register.Visibility,
             Description = register.Description
         });
     }

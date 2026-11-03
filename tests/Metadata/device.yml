@@ -261,6 +261,12 @@ registers:
     access: Write
     defaultValue: 16777217
     description: Specifies a threshold whose default needs more than single precision.
+  Reserved0:
+    address: 108
+    type: U8
+    access: Read
+    visibility: private
+    description: Reserved for future use.
 bitMasks:
   PortDigitalIOS:
     bits:

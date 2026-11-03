@@ -116,7 +116,7 @@ foreach (var payload in module.Payloads)
     "<#= payload.Name #>",
 <#
 }
-foreach (var register in module.Registers)
+foreach (var register in module.Registers.Where(register => register.Visibility == RegisterVisibility.Public))
 {
 #>
     "<#= register.Name #>",

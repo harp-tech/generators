@@ -412,6 +412,7 @@ public class RegisterInfo : ValueInfo
     /// <summary>
     /// Specifies whether the register function is exposed in the high-level interface.
     /// </summary>
+    [YamlConverter(typeof(LowerCaseEnumTypeConverter))]
     public RegisterVisibility Visibility;
 
     /// <summary>

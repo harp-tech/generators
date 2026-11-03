@@ -32,7 +32,8 @@ void (*app_func_rd_pointer[])(void) = {
     &app_read_REG_LED_ENABLED,
     &app_read_REG_PORT_DIO_CLEAR,
     &app_read_REG_WIDE_STATUS,
-    &app_read_REG_THRESHOLD
+    &app_read_REG_THRESHOLD,
+    &app_read_REG_RESERVED0
 };
 
 bool (*app_func_wr_pointer[])(void*) = {
@@ -59,7 +60,8 @@ bool (*app_func_wr_pointer[])(void*) = {
     &app_write_REG_LED_ENABLED,
     &app_write_REG_PORT_DIO_CLEAR,
     &app_write_REG_WIDE_STATUS,
-    &app_write_REG_THRESHOLD
+    &app_write_REG_THRESHOLD,
+    &app_write_REG_RESERVED0
 };
 
 /************************************************************************/
@@ -433,3 +435,14 @@ bool app_write_REG_THRESHOLD(void *a)
     app_regs.REG_THRESHOLD = reg;
     return true;
 }
+
+/************************************************************************/
+/* REG_RESERVED0                                                        */
+/************************************************************************/
+void app_read_REG_RESERVED0(void)
+{
+    //app_regs.REG_RESERVED0 = 0;
+
+}
+
+bool app_write_REG_RESERVED0(void *a) { return false; }

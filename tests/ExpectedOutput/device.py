@@ -451,6 +451,12 @@ class Threshold(RegisterBase[np.uint32]):
     payload_class = ThresholdPayload
 
 
+class _Reserved0(RegisterU8):
+    """Reserved for future use."""
+
+    address: ClassVar[int] = 108
+
+
 REGISTER_MAP: dict[int, type[RegisterBase[Any]]] = {
     **_CORE_REGISTER_MAP,
     32: DigitalInputs,
@@ -477,4 +483,5 @@ REGISTER_MAP: dict[int, type[RegisterBase[Any]]] = {
     105: PortDIOClear,
     106: WideStatus,
     107: Threshold,
+    108: _Reserved0,
 }
