@@ -303,6 +303,12 @@ class ThresholdPayload(AnonymousPayload[np.uint32]):
     __value__: np.uint32 = Field(IdentityConverter(np.uint32), default=np.uint32(16777217))
 
 
+class _Reserved1Payload(AnonymousPayload[np.uint8]):
+    """Represents the payload of the Reserved1 register."""
+
+    __value__: EncoderReading = GroupMask(enum=EncoderReading, mask=0xFF)
+
+
 class DigitalInputs(RegisterU8):
     address: ClassVar[int] = 32
 
@@ -457,6 +463,20 @@ class _Reserved0(RegisterU8):
     address: ClassVar[int] = 108
 
 
+class _Reserved1(RegisterBase[EncoderReading]):
+    """Reserved for future use."""
+
+    address: ClassVar[int] = 109
+    payload_type: ClassVar[PayloadType] = PayloadType.U8
+    payload_class = _Reserved1Payload
+
+
+class _Rgb2(RegisterBase[RgbPayload]):
+    address: ClassVar[int] = 110
+    payload_type: ClassVar[PayloadType] = PayloadType.U8
+    payload_class = RgbPayload
+
+
 REGISTER_MAP: dict[int, type[RegisterBase[Any]]] = {
     **_CORE_REGISTER_MAP,
     32: DigitalInputs,
@@ -484,4 +504,6 @@ REGISTER_MAP: dict[int, type[RegisterBase[Any]]] = {
     106: WideStatus,
     107: Threshold,
     108: _Reserved0,
+    109: _Reserved1,
+    110: _Rgb2,
 }

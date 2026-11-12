@@ -45,6 +45,8 @@ void app_read_REG_PORT_DIO_CLEAR(void);
 void app_read_REG_WIDE_STATUS(void);
 void app_read_REG_THRESHOLD(void);
 void app_read_REG_RESERVED0(void);
+void app_read_REG_RESERVED1(void);
+void app_read_REG_RGB2(void);
 
 bool app_write_REG_DIGITAL_INPUTS(void *a);
 bool app_write_REG_ANALOG_DATA(void *a);
@@ -71,6 +73,8 @@ bool app_write_REG_PORT_DIO_CLEAR(void *a);
 bool app_write_REG_WIDE_STATUS(void *a);
 bool app_write_REG_THRESHOLD(void *a);
 bool app_write_REG_RESERVED0(void *a);
+bool app_write_REG_RESERVED1(void *a);
+bool app_write_REG_RGB2(void *a);
 
 
 #endif /* _APP_FUNCTIONS_H_ */

@@ -44,6 +44,7 @@ internal sealed class PythonPayload
     public int? Length;
     public bool IsAnonymous;
     public string UnwrapType = "";
+    public RegisterVisibility Visibility;
     public List<PythonField> Fields = [];
 }
 
@@ -157,8 +158,12 @@ internal static partial class TemplateHelper
         foreach (var groupMask in deviceMetadata.GroupMasks)
             module.Enums.Add(BuildPythonEnum(groupMask.Key, groupMask.Value.Description, groupMask.Value.Values, isFlag: false));
 
+        var publicPayloadTypes = GetPublicRegisters(deviceMetadata)
+            .Where(register => register.Value.PayloadSpec != null)
+            .Select(register => GetInterfaceType(register.Key, register.Value))
+            .ToHashSet();
         foreach (var registerMetadata in deviceMetadata.Registers)
-            BuildPythonRegister(module, registerMetadata.Key, registerMetadata.Value, deviceMetadata);
+            BuildPythonRegister(module, registerMetadata.Key, registerMetadata.Value, deviceMetadata, publicPayloadTypes);
 
         module.ProtocolImports.Add("RegisterBase");
         module.IsApplicationDevice = deviceMetadata.IsApplicationDevice;
@@ -183,7 +188,12 @@ internal static partial class TemplateHelper
         return pythonEnum;
     }
 
-    static void BuildPythonRegister(PythonModule module, string name, RegisterInfo register, DeviceMetadata deviceMetadata)
+    static void BuildPythonRegister(
+        PythonModule module,
+        string name,
+        RegisterInfo register,
+        DeviceMetadata deviceMetadata,
+        HashSet<string> publicPayloadTypes)
     {
         var hasMask = !string.IsNullOrEmpty(register.MaskType);
         var isString = register.InterfaceType == "string";
@@ -218,10 +228,16 @@ internal static partial class TemplateHelper
         var payloadName = register.PayloadSpec != null
             ? GetInterfaceType(name, register)
             : $"{name}Payload";
-        var payload = module.Payloads.Find(existing => existing.Name == payloadName);
+        var payloadVisibility = publicPayloadTypes.Contains(payloadName)
+            ? RegisterVisibility.Public
+            : register.Visibility;
+        var payloadClassName = payloadVisibility == RegisterVisibility.Private ? $"_{payloadName}" : payloadName;
+        var payload = module.Payloads.Find(existing => existing.Name == payloadClassName);
         if (payload == null)
         {
             payload = BuildPythonPayload(module, payloadName, register, deviceMetadata);
+            payload.Name = payloadClassName;
+            payload.Visibility = payloadVisibility;
             module.Payloads.Add(payload);
         }
 

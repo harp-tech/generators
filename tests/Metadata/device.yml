@@ -267,6 +267,27 @@ registers:
     access: Read
     visibility: private
     description: Reserved for future use.
+  Reserved1:
+    address: 109
+    type: U8
+    access: Write
+    visibility: private
+    maskType: EncoderReading
+    description: Reserved for future use.
+  Rgb2:
+    address: 110
+    type: U8
+    length: 3
+    access: Write
+    visibility: private
+    interfaceType: RgbPayload
+    payloadSpec:
+      Red:
+        offset: 0
+      Green:
+        offset: 1
+      Blue:
+        offset: 2
 bitMasks:
   PortDigitalIOS:
     bits:
