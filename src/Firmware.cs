@@ -310,7 +310,7 @@ internal static partial class TemplateHelper
             PayloadType.S32 => "int32_t",
             PayloadType.U64 => "uint64_t",
             PayloadType.S64 => "int64_t",
-            PayloadType.Float => "float_t",
+            PayloadType.Float => "float",
             _ => throw new ArgumentOutOfRangeException(nameof(payloadType)),
         };
     }
