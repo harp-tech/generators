@@ -110,7 +110,7 @@ foreach (var pythonEnum in module.Enums)
     "<#= pythonEnum.Name #>",
 <#
 }
-foreach (var payload in module.Payloads)
+foreach (var payload in module.Payloads.Where(payload => payload.Visibility == RegisterVisibility.Public))
 {
 #>
     "<#= payload.Name #>",

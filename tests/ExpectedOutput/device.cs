@@ -69,7 +69,9 @@ namespace Harp.Generators.Tests
             { 105, typeof(PortDIOClear) },
             { 106, typeof(WideStatus) },
             { 107, typeof(Threshold) },
-            { 108, typeof(Reserved0) }
+            { 108, typeof(Reserved0) },
+            { 109, typeof(Reserved1) },
+            { 110, typeof(Rgb2) }
         };
 
         /// <summary>
@@ -3115,6 +3117,49 @@ namespace Harp.Generators.Tests
         /// Represents the length of the <see cref="Reserved0"/> register. This field is constant.
         /// </summary>
         public const int RegisterLength = 1;
+    }
+
+    /// <summary>
+    /// Provides methods for manipulating Reserved1 register messages. Reserved for future use.
+    /// </summary>
+    [Description("Reserved for future use.")]
+    internal partial class Reserved1
+    {
+        /// <summary>
+        /// Represents the address of the <see cref="Reserved1"/> register. This field is constant.
+        /// </summary>
+        public const int Address = 109;
+
+        /// <summary>
+        /// Represents the payload type of the <see cref="Reserved1"/> register. This field is constant.
+        /// </summary>
+        public const PayloadType RegisterType = PayloadType.U8;
+
+        /// <summary>
+        /// Represents the length of the <see cref="Reserved1"/> register. This field is constant.
+        /// </summary>
+        public const int RegisterLength = 1;
+    }
+
+    /// <summary>
+    /// Provides methods for manipulating Rgb2 register messages.
+    /// </summary>
+    internal partial class Rgb2
+    {
+        /// <summary>
+        /// Represents the address of the <see cref="Rgb2"/> register. This field is constant.
+        /// </summary>
+        public const int Address = 110;
+
+        /// <summary>
+        /// Represents the payload type of the <see cref="Rgb2"/> register. This field is constant.
+        /// </summary>
+        public const PayloadType RegisterType = PayloadType.U8;
+
+        /// <summary>
+        /// Represents the length of the <see cref="Rgb2"/> register. This field is constant.
+        /// </summary>
+        public const int RegisterLength = 3;
     }
 
     /// <summary>
