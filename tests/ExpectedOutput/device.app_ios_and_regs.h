@@ -132,7 +132,7 @@ void init_ios(void);
 typedef struct
 {
     uint8_t REG_DIGITAL_INPUTS;
-    float_t REG_ANALOG_DATA[6];
+    float REG_ANALOG_DATA[6];
     uint8_t REG_COMPLEX_CONFIGURATION[17];
     uint8_t REG_VERSION[32];
     uint32_t REG_CUSTOM_PAYLOAD[3];
