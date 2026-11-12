@@ -71,7 +71,8 @@ namespace Harp.Generators.Tests
             { 107, typeof(Threshold) },
             { 108, typeof(Reserved0) },
             { 109, typeof(Reserved1) },
-            { 110, typeof(Rgb2) }
+            { 110, typeof(Rgb2) },
+            { 111, typeof(Reserved2) }
         };
 
         /// <summary>
@@ -3163,6 +3164,27 @@ namespace Harp.Generators.Tests
     }
 
     /// <summary>
+    /// Provides methods for manipulating Reserved2 register messages.
+    /// </summary>
+    internal partial class Reserved2
+    {
+        /// <summary>
+        /// Represents the address of the <see cref="Reserved2"/> register. This field is constant.
+        /// </summary>
+        public const int Address = 111;
+
+        /// <summary>
+        /// Represents the payload type of the <see cref="Reserved2"/> register. This field is constant.
+        /// </summary>
+        public const PayloadType RegisterType = PayloadType.U8;
+
+        /// <summary>
+        /// Represents the length of the <see cref="Reserved2"/> register. This field is constant.
+        /// </summary>
+        public const int RegisterLength = 2;
+    }
+
+    /// <summary>
     /// Represents an operator that creates standard messages for the
     /// Tests device.
     /// </summary>
@@ -5195,6 +5217,44 @@ namespace Harp.Generators.Tests
                 "PulseWidth = " + PulseWidth + ", " +
                 "Frequency = " + Frequency + ", " +
                 "PulseCount = " + PulseCount + " " +
+            "}";
+        }
+    }
+
+    /// <summary>
+    /// Represents the payload of the Reserved2 register.
+    /// </summary>
+    public struct Reserved2Payload
+    {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Reserved2Payload"/> structure.
+        /// </summary>
+        /// <param name="low">The value of the Low payload member.</param>
+        /// <param name="high">The value of the High payload member.</param>
+        public Reserved2Payload(
+            byte low,
+            byte high)
+        {
+            Low = low;
+            High = high;
+        }
+
+        public byte Low;
+        public byte High;
+
+        /// <summary>
+        /// Returns a <see cref="string"/> that represents the payload of
+        /// the Reserved2 register.
+        /// </summary>
+        /// <returns>
+        /// A <see cref="string"/> that represents the payload of the
+        /// Reserved2 register.
+        /// </returns>
+        public override string ToString()
+        {
+            return "Reserved2Payload { " +
+                "Low = " + Low + ", " +
+                "High = " + High + " " +
             "}";
         }
     }

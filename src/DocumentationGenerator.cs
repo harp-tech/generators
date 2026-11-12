@@ -41,7 +41,7 @@ public sealed class DocumentationGenerator
         var registers = TemplateHelper.GetPublicRegisters(deviceMetadata)
             .Select(register => TemplateHelper.BuildRegisterReference(deviceMetadata, targetNamespace, register.Key, register.Value))
             .ToList();
-        var payloads = TemplateHelper.GetPayloadTypeNames(deviceMetadata)
+        var payloads = TemplateHelper.GetPublicPayloadTypes(deviceMetadata)
             .Select(payloadName => TemplateHelper.BuildPayloadReference(deviceMetadata, targetNamespace, payloadName))
             .ToList();
         var masks = deviceMetadata.BitMasks
