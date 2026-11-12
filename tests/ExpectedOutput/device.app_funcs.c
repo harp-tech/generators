@@ -35,7 +35,8 @@ void (*app_func_rd_pointer[])(void) = {
     &app_read_REG_THRESHOLD,
     &app_read_REG_RESERVED0,
     &app_read_REG_RESERVED1,
-    &app_read_REG_RGB2
+    &app_read_REG_RGB2,
+    &app_read_REG_RESERVED2
 };
 
 bool (*app_func_wr_pointer[])(void*) = {
@@ -65,7 +66,8 @@ bool (*app_func_wr_pointer[])(void*) = {
     &app_write_REG_THRESHOLD,
     &app_write_REG_RESERVED0,
     &app_write_REG_RESERVED1,
-    &app_write_REG_RGB2
+    &app_write_REG_RGB2,
+    &app_write_REG_RESERVED2
 };
 
 /************************************************************************/
@@ -483,5 +485,23 @@ bool app_write_REG_RGB2(void *a)
     uint8_t *reg = ((uint8_t*)a);
 
     app_regs.REG_RGB2[0] = reg[0];
+    return true;
+}
+
+/************************************************************************/
+/* REG_RESERVED2                                                        */
+/************************************************************************/
+// This register is an array with 2 positions
+void app_read_REG_RESERVED2(void)
+{
+    //app_regs.REG_RESERVED2[0] = 0;
+
+}
+
+bool app_write_REG_RESERVED2(void *a)
+{
+    uint8_t *reg = ((uint8_t*)a);
+
+    app_regs.REG_RESERVED2[0] = reg[0];
     return true;
 }

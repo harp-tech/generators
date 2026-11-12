@@ -309,6 +309,13 @@ class _Reserved1Payload(AnonymousPayload[np.uint8]):
     __value__: EncoderReading = GroupMask(enum=EncoderReading, mask=0xFF)
 
 
+class _Reserved2Payload(StructPayload[np.uint8], length=2):
+    """Represents the payload of the Reserved2 register."""
+
+    low: np.uint8 = Field(IdentityConverter(np.uint8))
+    high: np.uint8 = Field(IdentityConverter(np.uint8), offset=1)
+
+
 class DigitalInputs(RegisterU8):
     address: ClassVar[int] = 32
 
@@ -477,6 +484,12 @@ class _Rgb2(RegisterBase[RgbPayload]):
     payload_class = RgbPayload
 
 
+class _Reserved2(RegisterBase[_Reserved2Payload]):
+    address: ClassVar[int] = 111
+    payload_type: ClassVar[PayloadType] = PayloadType.U8
+    payload_class = _Reserved2Payload
+
+
 REGISTER_MAP: dict[int, type[RegisterBase[Any]]] = {
     **_CORE_REGISTER_MAP,
     32: DigitalInputs,
@@ -506,4 +519,5 @@ REGISTER_MAP: dict[int, type[RegisterBase[Any]]] = {
     108: _Reserved0,
     109: _Reserved1,
     110: _Rgb2,
+    111: _Reserved2,
 }

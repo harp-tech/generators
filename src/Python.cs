@@ -158,10 +158,7 @@ internal static partial class TemplateHelper
         foreach (var groupMask in deviceMetadata.GroupMasks)
             module.Enums.Add(BuildPythonEnum(groupMask.Key, groupMask.Value.Description, groupMask.Value.Values, isFlag: false));
 
-        var publicPayloadTypes = GetPublicRegisters(deviceMetadata)
-            .Where(register => register.Value.PayloadSpec != null)
-            .Select(register => GetInterfaceType(register.Key, register.Value))
-            .ToHashSet();
+        var publicPayloadTypes = GetPublicPayloadTypes(deviceMetadata).ToHashSet();
         foreach (var registerMetadata in deviceMetadata.Registers)
             BuildPythonRegister(module, registerMetadata.Key, registerMetadata.Value, deviceMetadata, publicPayloadTypes);
 

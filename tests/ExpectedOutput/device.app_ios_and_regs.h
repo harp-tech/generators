@@ -158,6 +158,7 @@ typedef struct
     uint8_t REG_RESERVED0;
     uint8_t REG_RESERVED1;
     uint8_t REG_RGB2[3];
+    uint8_t REG_RESERVED2[2];
 } AppRegs;
 
 /************************************************************************/
@@ -191,6 +192,7 @@ typedef struct
 #define ADD_REG_RESERVED0                 108 // U8     Reserved for future use.
 #define ADD_REG_RESERVED1                 109 // U8     Reserved for future use.
 #define ADD_REG_RGB2                      110 // U8
+#define ADD_REG_RESERVED2                 111 // U8
 
 /************************************************************************/
 /* Tests registers' memory limits                                       */
@@ -200,8 +202,8 @@ typedef struct
 /************************************************************************/
 /* Memory limits */
 #define APP_REGS_ADD_MIN                    0x20
-#define APP_REGS_ADD_MAX                    0x6E
-#define APP_NBYTES_OF_REG_BANK              155
+#define APP_REGS_ADD_MAX                    0x6F
+#define APP_NBYTES_OF_REG_BANK              157
 
 /************************************************************************/
 /* Registers' bits                                                      */

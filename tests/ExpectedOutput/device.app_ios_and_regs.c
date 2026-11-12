@@ -90,6 +90,7 @@ uint8_t app_regs_type[] = {
     TYPE_U32,
     TYPE_U8,
     TYPE_U8,
+    TYPE_U8,
     TYPE_U8
 };
 
@@ -120,7 +121,8 @@ uint16_t app_regs_n_elements[] = {
     1,
     1,
     1,
-    3
+    3,
+    2
 };
 
 uint8_t *app_regs_pointer[] = {
@@ -150,5 +152,6 @@ uint8_t *app_regs_pointer[] = {
     (uint8_t*)(&app_regs.REG_THRESHOLD),
     (uint8_t*)(&app_regs.REG_RESERVED0),
     (uint8_t*)(&app_regs.REG_RESERVED1),
-    (uint8_t*)(&app_regs.REG_RGB2)
+    (uint8_t*)(&app_regs.REG_RGB2),
+    (uint8_t*)(&app_regs.REG_RESERVED2)
 };

@@ -288,6 +288,17 @@ registers:
         offset: 1
       Blue:
         offset: 2
+  Reserved2:
+    address: 111
+    type: U8
+    length: 2
+    access: Write
+    visibility: private
+    payloadSpec:
+      Low:
+        offset: 0
+      High:
+        offset: 1
 bitMasks:
   PortDigitalIOS:
     bits:

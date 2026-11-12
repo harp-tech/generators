@@ -293,9 +293,9 @@ internal static partial class TemplateHelper
         return page;
     }
 
-    public static IEnumerable<string> GetPayloadTypeNames(DeviceMetadata deviceMetadata)
+    public static IEnumerable<string> GetPublicPayloadTypes(DeviceMetadata deviceMetadata)
     {
-        return deviceMetadata.Registers
+        return GetPublicRegisters(deviceMetadata)
             .Where(register => register.Value.PayloadSpec != null)
             .Select(register => GetInterfaceType(register.Key, register.Value))
             .Distinct();
@@ -350,7 +350,7 @@ internal static partial class TemplateHelper
     {
         if (deviceMetadata.BitMasks.ContainsKey(interfaceType) ||
             deviceMetadata.GroupMasks.ContainsKey(interfaceType) ||
-            GetPayloadTypeNames(deviceMetadata).Contains(interfaceType))
+            GetPublicPayloadTypes(deviceMetadata).Contains(interfaceType))
         {
             return $"{ns}.{interfaceType}";
         }
