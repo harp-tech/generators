@@ -299,6 +299,17 @@ registers:
         offset: 0
       High:
         offset: 1
+  GenericData:
+    address: 112
+    type: U8
+    length: 2
+    access: Write
+    interfaceType: Payload
+    payloadSpec:
+      First:
+        offset: 0
+      Second:
+        offset: 1
 bitMasks:
   PortDigitalIOS:
     bits:

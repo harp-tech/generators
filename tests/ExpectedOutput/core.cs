@@ -2394,7 +2394,7 @@ namespace Harp.Generators.Tests
     }
 
     /// <summary>
-    /// Represents the payload of the OperationControl register.
+    /// Represents the OperationControl payload.
     /// </summary>
     public struct OperationControlPayload
     {
@@ -2460,12 +2460,10 @@ namespace Harp.Generators.Tests
         public EnableFlag Heartbeat;
 
         /// <summary>
-        /// Returns a <see cref="string"/> that represents the payload of
-        /// the OperationControl register.
+        /// Returns a <see cref="string"/> that represents the OperationControl payload.
         /// </summary>
         /// <returns>
-        /// A <see cref="string"/> that represents the payload of the
-        /// OperationControl register.
+        /// A <see cref="string"/> that represents the OperationControl payload.
         /// </returns>
         public override string ToString()
         {

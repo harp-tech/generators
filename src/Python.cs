@@ -259,7 +259,7 @@ internal static partial class TemplateHelper
         var payload = new PythonPayload
         {
             Name = payloadName,
-            Description = $"Represents the payload of the {RemoveSuffix(payloadName, "Payload")} register.",
+            Description = GetPayloadDescription(payloadName),
             ElementType = elementType,
             Length = register.Length > 0 ? register.Length : null
         };

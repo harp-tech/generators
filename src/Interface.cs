@@ -1055,6 +1055,13 @@ internal static partial class TemplateHelper
             ? value.Substring(0, value.Length - suffix.Length)
             : value;
     }
+
+    public static string GetPayloadDescription(string payloadType)
+    {
+        return payloadType == "Payload"
+            ? "Represents a payload."
+            : $"Represents the {RemoveSuffix(payloadType, "Payload")} payload.";
+    }
 }
 
 class HarpVersionTypeConverter : IYamlTypeConverter

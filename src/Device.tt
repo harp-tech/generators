@@ -1,4 +1,4 @@
-﻿<#@ template debug="true" hostspecific="false" visibility="internal" language="C#" inherits="TemplateBase" #>
+﻿<#@ template debug="true" hostspecific="false" visibility="internal" language="C#" inherits="CSharpTemplateBase" #>
 <#@ parameter name="Namespace" type="string" #>
 <#@ parameter name="DeviceMetadata" type="DeviceMetadata" #>
 <#@ import namespace="YamlDotNet.Serialization.NamingConventions" #>
@@ -949,11 +949,11 @@ foreach (var registerMetadata in deviceRegisters)
     if (register.PayloadSpec == null) continue;
     var interfaceType = TemplateHelper.GetInterfaceType(registerMetadata.Key, register);
     if (!payloadTypes.Add(interfaceType)) continue;
-    var registerName = TemplateHelper.RemoveSuffix(interfaceType, "Payload");
+    var payloadDescription = TemplateHelper.GetPayloadDescription(interfaceType);
 #>
 
     /// <summary>
-    /// Represents the payload of the <#= registerName #> register.
+    /// <#= payloadDescription #>
     /// </summary>
     public struct <#= interfaceType #>
     {
@@ -1009,14 +1009,11 @@ foreach (var registerMetadata in deviceRegisters)
     }
 #>
 
-        /// <summary>
-        /// Returns a <see cref="string"/> that represents the payload of
-        /// the <#= registerName #> register.
-        /// </summary>
-        /// <returns>
-        /// A <see cref="string"/> that represents the payload of the
-        /// <#= registerName #> register.
-        /// </returns>
+<#
+    var toStringDescription = TemplateHelper.GetXmlText(char.ToLowerInvariant(payloadDescription[0]) + payloadDescription.Substring(1));
+    WriteDocumentationElement("        ", "summary", $"Returns a <see cref=\"string\"/> that {toStringDescription}");
+    WriteDocumentationElement("        ", "returns", $"A <see cref=\"string\"/> that {toStringDescription}");
+#>
         public override string ToString()
         {
             return "<#= interfaceType #> { " +
@@ -1206,29 +1203,5 @@ foreach (var groupMask in DeviceMetadata.GroupMasks)
     }
 }
 <#+
-void WriteSummary(string indent, params string[] fragments)
-{
-    var text = string.Join(" ", fragments.Select(TemplateHelper.GetDescriptionText).Where(fragment => fragment.Length > 0));
-    if (text.Length == 0) return;
-    WriteLine($"{indent}/// <summary>");
-    foreach (var line in TemplateHelper.GetDocumentationComment(indent, TemplateHelper.GetXmlText(text), maxLineLength: 100))
-    {
-        WriteLine(line);
-    }
-    WriteLine($"{indent}/// </summary>");
-}
-
-void WriteDescriptionAttribute(string indent, params string[] fragments)
-{
-    var text = string.Join(" ", fragments.Select(TemplateHelper.GetDescriptionText).Where(fragment => fragment.Length > 0));
-    if (text.Length == 0) return;
-    var escaped = text.Replace("\\", "\\\\").Replace("\"", "\\\"");
-    WriteLine($"{indent}[Description(\"{escaped}\")]");
-}
-
-void WriteDocumentation(string indent, string text)
-{
-    WriteSummary(indent, text);
-    WriteDescriptionAttribute(indent, text);
-}
+protected override int MaxLineLength => 100;
 #>

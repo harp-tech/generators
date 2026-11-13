@@ -36,7 +36,8 @@ void (*app_func_rd_pointer[])(void) = {
     &app_read_REG_RESERVED0,
     &app_read_REG_RESERVED1,
     &app_read_REG_RGB2,
-    &app_read_REG_RESERVED2
+    &app_read_REG_RESERVED2,
+    &app_read_REG_GENERIC_DATA
 };
 
 bool (*app_func_wr_pointer[])(void*) = {
@@ -67,7 +68,8 @@ bool (*app_func_wr_pointer[])(void*) = {
     &app_write_REG_RESERVED0,
     &app_write_REG_RESERVED1,
     &app_write_REG_RGB2,
-    &app_write_REG_RESERVED2
+    &app_write_REG_RESERVED2,
+    &app_write_REG_GENERIC_DATA
 };
 
 /************************************************************************/
@@ -503,5 +505,23 @@ bool app_write_REG_RESERVED2(void *a)
     uint8_t *reg = ((uint8_t*)a);
 
     app_regs.REG_RESERVED2[0] = reg[0];
+    return true;
+}
+
+/************************************************************************/
+/* REG_GENERIC_DATA                                                     */
+/************************************************************************/
+// This register is an array with 2 positions
+void app_read_REG_GENERIC_DATA(void)
+{
+    //app_regs.REG_GENERIC_DATA[0] = 0;
+
+}
+
+bool app_write_REG_GENERIC_DATA(void *a)
+{
+    uint8_t *reg = ((uint8_t*)a);
+
+    app_regs.REG_GENERIC_DATA[0] = reg[0];
     return true;
 }
