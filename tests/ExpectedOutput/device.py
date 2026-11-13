@@ -43,7 +43,7 @@ __all__ = [
     "DigitalChannels",
     "WideStatusFlags",
     "PwmPort",
-    "EncoderReading",
+    "EncoderModeMask",
     "AnalogDataPayload",
     "ComplexConfigurationPayload",
     "VersionPayload",
@@ -133,7 +133,7 @@ class PwmPort(enum.IntEnum):
     PWM3 = 10
 
 
-class EncoderReading(enum.IntEnum):
+class EncoderModeMask(enum.IntEnum):
     """Specifies the type of encoder mode."""
 
     POSITION = 0
@@ -274,8 +274,8 @@ class StartPulseTrainPayload(StructPayload[np.uint16], length=2):
 class EncoderModePayload(AnonymousPayload[np.uint8]):
     """Represents the payload of the EncoderMode register."""
 
-    __value__: EncoderReading = GroupMask(
-        enum=EncoderReading, mask=0xFF, default=EncoderReading.DISPLACEMENT
+    __value__: EncoderModeMask = GroupMask(
+        enum=EncoderModeMask, mask=0xFF, default=EncoderModeMask.DISPLACEMENT
     )
 
 
@@ -306,7 +306,7 @@ class ThresholdPayload(AnonymousPayload[np.uint32]):
 class _Reserved1Payload(AnonymousPayload[np.uint8]):
     """Represents the payload of the Reserved1 register."""
 
-    __value__: EncoderReading = GroupMask(enum=EncoderReading, mask=0xFF)
+    __value__: EncoderModeMask = GroupMask(enum=EncoderModeMask, mask=0xFF)
 
 
 class _Reserved2Payload(StructPayload[np.uint8], length=2):
@@ -428,7 +428,7 @@ class StartPulseTrain(RegisterBase[StartPulseTrainPayload]):
     payload_class = StartPulseTrainPayload
 
 
-class EncoderMode(RegisterBase[EncoderReading]):
+class EncoderMode(RegisterBase[EncoderModeMask]):
     """Configures the operation mode of the encoder."""
 
     address: ClassVar[int] = 103
@@ -470,7 +470,7 @@ class _Reserved0(RegisterU8):
     address: ClassVar[int] = 108
 
 
-class _Reserved1(RegisterBase[EncoderReading]):
+class _Reserved1(RegisterBase[EncoderModeMask]):
     """Reserved for future use."""
 
     address: ClassVar[int] = 109

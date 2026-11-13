@@ -80,8 +80,8 @@
     name: WideStatusFlags
   - uid: Harp.Generators.Tests.PwmPort
     name: PwmPort
-  - uid: Harp.Generators.Tests.EncoderReading
-    name: EncoderReading
+  - uid: Harp.Generators.Tests.EncoderModeMask
+    name: EncoderModeMask
 --- # Harp.Generators.Tests.DigitalInputs.yml
 ### YamlMime:UniversalReference
 items:
@@ -522,8 +522,8 @@ items:
       - Write
       defaultValue: 1
       interfaceType:
-        name: EncoderReading
-        uid: Harp.Generators.Tests.EncoderReading
+        name: EncoderModeMask
+        uid: Harp.Generators.Tests.EncoderModeMask
       logFile: Tests_103.bin
 --- # Harp.Generators.Tests.LedEnabled.yml
 ### YamlMime:UniversalReference
@@ -1697,14 +1697,14 @@ items:
   harp:
     maskValue:
       value: "10"
---- # Harp.Generators.Tests.EncoderReading.yml
+--- # Harp.Generators.Tests.EncoderModeMask.yml
 ### YamlMime:UniversalReference
 items:
-- uid: Harp.Generators.Tests.EncoderReading
-  id: EncoderReading
-  name: EncoderReading
-  name.python: EncoderReading
-  fullName: Harp.Generators.Tests.EncoderReading
+- uid: Harp.Generators.Tests.EncoderModeMask
+  id: EncoderModeMask
+  name: EncoderModeMask
+  name.python: EncoderModeMask
+  fullName: Harp.Generators.Tests.EncoderModeMask
   type: enum
   langs:
   - csharp
@@ -1714,14 +1714,14 @@ items:
     groupMask:
       type: byte
   children:
-  - Harp.Generators.Tests.EncoderReading.Position
-  - Harp.Generators.Tests.EncoderReading.Displacement
-- uid: Harp.Generators.Tests.EncoderReading.Position
+  - Harp.Generators.Tests.EncoderModeMask.Position
+  - Harp.Generators.Tests.EncoderModeMask.Displacement
+- uid: Harp.Generators.Tests.EncoderModeMask.Position
   id: Position
   name: Position
   name.python: POSITION
-  fullName: Harp.Generators.Tests.EncoderReading.Position
-  parent: Harp.Generators.Tests.EncoderReading
+  fullName: Harp.Generators.Tests.EncoderModeMask.Position
+  parent: Harp.Generators.Tests.EncoderModeMask
   type: field
   langs:
   - csharp
@@ -1730,12 +1730,12 @@ items:
   harp:
     maskValue:
       value: "0"
-- uid: Harp.Generators.Tests.EncoderReading.Displacement
+- uid: Harp.Generators.Tests.EncoderModeMask.Displacement
   id: Displacement
   name: Displacement
   name.python: DISPLACEMENT
-  fullName: Harp.Generators.Tests.EncoderReading.Displacement
-  parent: Harp.Generators.Tests.EncoderReading
+  fullName: Harp.Generators.Tests.EncoderModeMask.Displacement
+  parent: Harp.Generators.Tests.EncoderModeMask
   type: field
   langs:
   - csharp

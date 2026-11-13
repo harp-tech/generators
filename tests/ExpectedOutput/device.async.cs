@@ -1277,7 +1277,7 @@ namespace Harp.Generators.Tests
         /// <exception cref="System.OperationCanceledException">
         /// The cancellation token was canceled. This exception is stored into the returned task.
         /// </exception>
-        public async Task<EncoderReading> ReadEncoderModeAsync(CancellationToken cancellationToken = default)
+        public async Task<EncoderModeMask> ReadEncoderModeAsync(CancellationToken cancellationToken = default)
         {
             var reply = await CommandAsync(HarpCommand.ReadByte(EncoderMode.Address), cancellationToken);
             return EncoderMode.GetPayload(reply);
@@ -1301,7 +1301,7 @@ namespace Harp.Generators.Tests
         /// <exception cref="System.OperationCanceledException">
         /// The cancellation token was canceled. This exception is stored into the returned task.
         /// </exception>
-        public async Task<Timestamped<EncoderReading>> ReadTimestampedEncoderModeAsync(CancellationToken cancellationToken = default)
+        public async Task<Timestamped<EncoderModeMask>> ReadTimestampedEncoderModeAsync(CancellationToken cancellationToken = default)
         {
             var reply = await CommandAsync(HarpCommand.ReadByte(EncoderMode.Address), cancellationToken);
             return EncoderMode.GetTimestampedPayload(reply);
@@ -1323,7 +1323,7 @@ namespace Harp.Generators.Tests
         /// <exception cref="System.OperationCanceledException">
         /// The cancellation token was canceled. This exception is stored into the returned task.
         /// </exception>
-        public async Task WriteEncoderModeAsync(EncoderReading value, CancellationToken cancellationToken = default)
+        public async Task WriteEncoderModeAsync(EncoderModeMask value, CancellationToken cancellationToken = default)
         {
             var request = EncoderMode.FromPayload(MessageType.Write, value);
             await CommandAsync(request, cancellationToken);
