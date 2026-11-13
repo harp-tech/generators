@@ -2634,9 +2634,9 @@ namespace Harp.Generators.Tests
         /// </summary>
         /// <param name="message">A <see cref="HarpMessage"/> object representing the register message.</param>
         /// <returns>A value representing the message payload.</returns>
-        public static EncoderReading GetPayload(HarpMessage message)
+        public static EncoderModeMask GetPayload(HarpMessage message)
         {
-            return (EncoderReading)message.GetPayloadByte();
+            return (EncoderModeMask)message.GetPayloadByte();
         }
 
         /// <summary>
@@ -2644,10 +2644,10 @@ namespace Harp.Generators.Tests
         /// </summary>
         /// <param name="message">A <see cref="HarpMessage"/> object representing the register message.</param>
         /// <returns>A value representing the timestamped message payload.</returns>
-        public static Timestamped<EncoderReading> GetTimestampedPayload(HarpMessage message)
+        public static Timestamped<EncoderModeMask> GetTimestampedPayload(HarpMessage message)
         {
             var (payload, timestamp) = message.GetTimestampedPayloadByte();
-            return Timestamped.Create((EncoderReading)payload, timestamp);
+            return Timestamped.Create((EncoderModeMask)payload, timestamp);
         }
 
         /// <summary>
@@ -2659,7 +2659,7 @@ namespace Harp.Generators.Tests
         /// A <see cref="HarpMessage"/> object for the <see cref="EncoderMode"/> register
         /// with the specified message type and payload.
         /// </returns>
-        public static HarpMessage FromPayload(MessageType messageType, EncoderReading value)
+        public static HarpMessage FromPayload(MessageType messageType, EncoderModeMask value)
         {
             return HarpMessage.FromByte(Address, messageType, (byte)value);
         }
@@ -2675,7 +2675,7 @@ namespace Harp.Generators.Tests
         /// A <see cref="HarpMessage"/> object for the <see cref="EncoderMode"/> register
         /// with the specified message type, timestamp, and payload.
         /// </returns>
-        public static HarpMessage FromPayload(double timestamp, MessageType messageType, EncoderReading value)
+        public static HarpMessage FromPayload(double timestamp, MessageType messageType, EncoderModeMask value)
         {
             return HarpMessage.FromByte(Address, timestamp, messageType, (byte)value);
         }
@@ -2701,7 +2701,7 @@ namespace Harp.Generators.Tests
         /// </summary>
         /// <param name="message">A <see cref="HarpMessage"/> object representing the register message.</param>
         /// <returns>A value representing the timestamped message payload.</returns>
-        public static Timestamped<EncoderReading> GetPayload(HarpMessage message)
+        public static Timestamped<EncoderModeMask> GetPayload(HarpMessage message)
         {
             return EncoderMode.GetTimestampedPayload(message);
         }
@@ -4509,13 +4509,13 @@ namespace Harp.Generators.Tests
         /// encoder.
         /// </summary>
         [Description("Configures the operation mode of the encoder.")]
-        public EncoderReading EncoderMode { get; set; } = EncoderReading.Displacement;
+        public EncoderModeMask EncoderMode { get; set; } = EncoderModeMask.Displacement;
 
         /// <summary>
         /// Creates a message payload for the EncoderMode register.
         /// </summary>
         /// <returns>The created message payload value.</returns>
-        public EncoderReading GetPayload()
+        public EncoderModeMask GetPayload()
         {
             return EncoderMode;
         }
@@ -5328,7 +5328,7 @@ namespace Harp.Generators.Tests
     /// <summary>
     /// Specifies the type of encoder mode.
     /// </summary>
-    public enum EncoderReading : byte
+    public enum EncoderModeMask : byte
     {
         /// <summary>
         /// Specifies that the encoder reports its absolute position.

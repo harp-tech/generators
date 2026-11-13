@@ -320,6 +320,11 @@ internal static partial class TemplateHelper
         return FirmwareNamingConvention.Instance.Apply(value);
     }
 
+    public static string GetFirmwareGroupMaskName(string value)
+    {
+        return GetFirmwareName(RemoveSuffix(value, "Mask"));
+    }
+
     public static string GetOptionalText(string separator, string? text)
     {
         return string.IsNullOrEmpty(text) ? string.Empty : separator + text;
@@ -337,7 +342,7 @@ internal static partial class TemplateHelper
     public static int GetMaxFirmwareGroupMaskNameLength(DeviceMetadata deviceMetadata)
     {
         return (from groupMask in deviceMetadata.GroupMasks
-                let maskName = GetFirmwareName(groupMask.Key)
+                let maskName = GetFirmwareGroupMaskName(groupMask.Key)
                 from member in groupMask.Value.Values
                 let memberName = GetFirmwareName(member.Key)
                 select maskName.Length + memberName.Length)

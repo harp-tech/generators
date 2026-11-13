@@ -234,7 +234,7 @@ registers:
     address: 103
     type: U8
     access: Write
-    maskType: EncoderReading
+    maskType: EncoderModeMask
     defaultValue: 1
     description: Configures the operation mode of the encoder.
   LedEnabled:
@@ -272,7 +272,7 @@ registers:
     type: U8
     access: Write
     visibility: private
-    maskType: EncoderReading
+    maskType: EncoderModeMask
     description: Reserved for future use.
   Rgb2:
     address: 110
@@ -337,7 +337,7 @@ groupMasks:
       Pwm1: 0x2
       Pwm2: 0x4
       Pwm3: 0xA
-  EncoderReading:
+  EncoderModeMask:
     description: Specifies the type of encoder mode.
     values:
       Position:

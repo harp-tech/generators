@@ -1051,7 +1051,7 @@ internal static partial class TemplateHelper
 
     public static string RemoveSuffix(string value, string suffix)
     {
-        return value.EndsWith(suffix)
+        return value.Length > suffix.Length && value.EndsWith(suffix)
             ? value.Substring(0, value.Length - suffix.Length)
             : value;
     }
