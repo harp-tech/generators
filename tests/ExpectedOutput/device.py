@@ -63,6 +63,7 @@ __all__ = [
     "PortDIOClearPayload",
     "WideStatusPayload",
     "ThresholdPayload",
+    "Payload",
     "DigitalInputs",
     "AnalogData",
     "ComplexConfiguration",
@@ -87,6 +88,7 @@ __all__ = [
     "PortDIOClear",
     "WideStatus",
     "Threshold",
+    "GenericData",
     "REGISTER_MAP",
 ]
 
@@ -144,7 +146,7 @@ class EncoderModeMask(enum.IntEnum):
 
 
 class AnalogDataPayload(StructPayload[np.float32], length=6):
-    """Represents the payload of the AnalogData register."""
+    """Represents the AnalogData payload."""
 
     analog0: np.float32 = Field(IdentityConverter(np.float32))
     analog1: np.float32 = Field(IdentityConverter(np.float32), offset=1)
@@ -153,7 +155,7 @@ class AnalogDataPayload(StructPayload[np.float32], length=6):
 
 
 class ComplexConfigurationPayload(StructPayload[np.uint8], length=17):
-    """Represents the payload of the ComplexConfiguration register."""
+    """Represents the ComplexConfiguration payload."""
 
     pwm_port: PwmPort = GroupMask(enum=PwmPort, mask=0xFF, default=PwmPort.PWM1)
     invert: bool = Field(BoolConverter(), offset=1, default=True)
@@ -173,7 +175,7 @@ class ComplexConfigurationPayload(StructPayload[np.uint8], length=17):
 
 
 class VersionPayload(StructPayload[np.uint8], length=32):
-    """Represents the payload of the Version register."""
+    """Represents the Version payload."""
 
     protocol_version: HarpVersion = Field(HarpVersionConverter(np.uint8))
     firmware_version: HarpVersion = Field(HarpVersionConverter(np.uint8), offset=3)
@@ -183,19 +185,19 @@ class VersionPayload(StructPayload[np.uint8], length=32):
 
 
 class CustomPayloadPayload(AnonymousPayload[np.uint32]):
-    """Represents the payload of the CustomPayload register."""
+    """Represents the CustomPayload payload."""
 
     __value__: HarpVersion = Field(HarpVersionConverter(np.uint32))
 
 
 class CustomRawPayloadPayload(AnonymousPayload[np.uint32]):
-    """Represents the payload of the CustomRawPayload register."""
+    """Represents the CustomRawPayload payload."""
 
     __value__: HarpVersion = Field(HarpVersionConverter(np.uint32))
 
 
 class CustomMemberConverterPayload(StructPayload[np.uint8], length=5):
-    """Represents the payload of the CustomMemberConverter register."""
+    """Represents the CustomMemberConverter payload."""
 
     header: np.uint8 = Field(IdentityConverter(np.uint8))
     data: np.int32 = Field(DataConverter(), offset=1)
@@ -204,14 +206,14 @@ class CustomMemberConverterPayload(StructPayload[np.uint8], length=5):
 
 
 class BitmaskSplitterPayload(StructPayload[np.uint8]):
-    """Represents the payload of the BitmaskSplitter register."""
+    """Represents the BitmaskSplitter payload."""
 
     low: np.int32 = Field(LowConverter(), mask=0xF)
     high: np.int32 = Field(IdentityConverter(np.int32), mask=0xF0)
 
 
 class PortDIOSetPayload(AnonymousPayload[np.uint16]):
-    """Represents the payload of the PortDIOSet register."""
+    """Represents the PortDIOSet payload."""
 
     __value__: PortDigitalIOS = BitMask(
         enum=PortDigitalIOS, default=PortDigitalIOS.DIO0 | PortDigitalIOS.DIO1
@@ -219,19 +221,19 @@ class PortDIOSetPayload(AnonymousPayload[np.uint16]):
 
 
 class PulseDOPort0Payload(AnonymousPayload[np.uint16]):
-    """Represents the payload of the PulseDOPort0 register."""
+    """Represents the PulseDOPort0 payload."""
 
     __value__: np.uint16 = Field(IdentityConverter(np.uint16), default=np.uint16(500))
 
 
 class PulseDO0Payload(AnonymousPayload[np.uint16]):
-    """Represents the payload of the PulseDO0 register."""
+    """Represents the PulseDO0 payload."""
 
     __value__: np.uint16 = Field(IdentityConverter(np.uint16), default=np.uint16(500))
 
 
 class MixedMemberLengthPayload(StructPayload[np.uint8], length=4):
-    """Represents the payload of the MixedMemberLength register."""
+    """Represents the MixedMemberLength payload."""
 
     absent: np.uint8 = Field(IdentityConverter(np.uint8))
     single: NDArray[np.uint8] = Field(ArrayConverter(np.uint8, 1), offset=1)
@@ -239,7 +241,7 @@ class MixedMemberLengthPayload(StructPayload[np.uint8], length=4):
 
 
 class RgbPayload(StructPayload[np.uint8], length=3):
-    """Represents the payload of the Rgb register."""
+    """Represents the Rgb payload."""
 
     red: np.uint8 = Field(IdentityConverter(np.uint8))
     green: np.uint8 = Field(IdentityConverter(np.uint8), offset=1)
@@ -247,7 +249,7 @@ class RgbPayload(StructPayload[np.uint8], length=3):
 
 
 class StartPulsePayload(StructPayload[np.uint16]):
-    """Represents the payload of the StartPulse register."""
+    """Represents the StartPulse payload."""
 
     digital_output: PwmPort = GroupMask(enum=PwmPort, mask=0xC00)
     """Specifies the digital output on which to start the pulse."""
@@ -257,7 +259,7 @@ class StartPulsePayload(StructPayload[np.uint16]):
 
 
 class StartPulseTrainPayload(StructPayload[np.uint16], length=2):
-    """Represents the payload of the StartPulseTrain register."""
+    """Represents the StartPulseTrain payload."""
 
     digital_output: PwmPort = GroupMask(enum=PwmPort, mask=0xC00)
     """Specifies the digital output on which to start the pulse."""
@@ -272,7 +274,7 @@ class StartPulseTrainPayload(StructPayload[np.uint16], length=2):
 
 
 class EncoderModePayload(AnonymousPayload[np.uint8]):
-    """Represents the payload of the EncoderMode register."""
+    """Represents the EncoderMode payload."""
 
     __value__: EncoderModeMask = GroupMask(
         enum=EncoderModeMask, mask=0xFF, default=EncoderModeMask.DISPLACEMENT
@@ -280,40 +282,47 @@ class EncoderModePayload(AnonymousPayload[np.uint8]):
 
 
 class LedEnabledPayload(AnonymousPayload[np.uint8]):
-    """Represents the payload of the LedEnabled register."""
+    """Represents the LedEnabled payload."""
 
     __value__: bool = Field(BoolConverter(), default=True)
 
 
 class PortDIOClearPayload(AnonymousPayload[np.uint16]):
-    """Represents the payload of the PortDIOClear register."""
+    """Represents the PortDIOClear payload."""
 
     __value__: PortDigitalIOS = BitMask(enum=PortDigitalIOS, default=PortDigitalIOS(0))
 
 
 class WideStatusPayload(AnonymousPayload[np.uint32]):
-    """Represents the payload of the WideStatus register."""
+    """Represents the WideStatus payload."""
 
     __value__: WideStatusFlags = BitMask(enum=WideStatusFlags)
 
 
 class ThresholdPayload(AnonymousPayload[np.uint32]):
-    """Represents the payload of the Threshold register."""
+    """Represents the Threshold payload."""
 
     __value__: np.uint32 = Field(IdentityConverter(np.uint32), default=np.uint32(16777217))
 
 
 class _Reserved1Payload(AnonymousPayload[np.uint8]):
-    """Represents the payload of the Reserved1 register."""
+    """Represents the Reserved1 payload."""
 
     __value__: EncoderModeMask = GroupMask(enum=EncoderModeMask, mask=0xFF)
 
 
 class _Reserved2Payload(StructPayload[np.uint8], length=2):
-    """Represents the payload of the Reserved2 register."""
+    """Represents the Reserved2 payload."""
 
     low: np.uint8 = Field(IdentityConverter(np.uint8))
     high: np.uint8 = Field(IdentityConverter(np.uint8), offset=1)
+
+
+class Payload(StructPayload[np.uint8], length=2):
+    """Represents a payload."""
+
+    first: np.uint8 = Field(IdentityConverter(np.uint8))
+    second: np.uint8 = Field(IdentityConverter(np.uint8), offset=1)
 
 
 class DigitalInputs(RegisterU8):
@@ -490,6 +499,12 @@ class _Reserved2(RegisterBase[_Reserved2Payload]):
     payload_class = _Reserved2Payload
 
 
+class GenericData(RegisterBase[Payload]):
+    address: ClassVar[int] = 112
+    payload_type: ClassVar[PayloadType] = PayloadType.U8
+    payload_class = Payload
+
+
 REGISTER_MAP: dict[int, type[RegisterBase[Any]]] = {
     **_CORE_REGISTER_MAP,
     32: DigitalInputs,
@@ -520,4 +535,5 @@ REGISTER_MAP: dict[int, type[RegisterBase[Any]]] = {
     109: _Reserved1,
     110: _Rgb2,
     111: _Reserved2,
+    112: GenericData,
 }

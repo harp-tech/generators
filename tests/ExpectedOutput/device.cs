@@ -72,7 +72,8 @@ namespace Harp.Generators.Tests
             { 108, typeof(Reserved0) },
             { 109, typeof(Reserved1) },
             { 110, typeof(Rgb2) },
-            { 111, typeof(Reserved2) }
+            { 111, typeof(Reserved2) },
+            { 112, typeof(GenericData) }
         };
 
         /// <summary>
@@ -349,6 +350,7 @@ namespace Harp.Generators.Tests
     /// <seealso cref="PortDIOClear"/>
     /// <seealso cref="WideStatus"/>
     /// <seealso cref="Threshold"/>
+    /// <seealso cref="GenericData"/>
     [XmlInclude(typeof(DigitalInputs))]
     [XmlInclude(typeof(AnalogData))]
     [XmlInclude(typeof(ComplexConfiguration))]
@@ -373,6 +375,7 @@ namespace Harp.Generators.Tests
     [XmlInclude(typeof(PortDIOClear))]
     [XmlInclude(typeof(WideStatus))]
     [XmlInclude(typeof(Threshold))]
+    [XmlInclude(typeof(GenericData))]
     [Description("Filters register-specific messages reported by the Tests device.")]
     public class FilterRegister : FilterRegisterBuilder, INamedElement, ICustomTypeDescriptor
     {
@@ -418,6 +421,7 @@ namespace Harp.Generators.Tests
     /// <seealso cref="PortDIOClear"/>
     /// <seealso cref="WideStatus"/>
     /// <seealso cref="Threshold"/>
+    /// <seealso cref="GenericData"/>
     [XmlInclude(typeof(DigitalInputs))]
     [XmlInclude(typeof(AnalogData))]
     [XmlInclude(typeof(ComplexConfiguration))]
@@ -442,6 +446,7 @@ namespace Harp.Generators.Tests
     [XmlInclude(typeof(PortDIOClear))]
     [XmlInclude(typeof(WideStatus))]
     [XmlInclude(typeof(Threshold))]
+    [XmlInclude(typeof(GenericData))]
     [XmlInclude(typeof(TimestampedDigitalInputs))]
     [XmlInclude(typeof(TimestampedAnalogData))]
     [XmlInclude(typeof(TimestampedComplexConfiguration))]
@@ -466,6 +471,7 @@ namespace Harp.Generators.Tests
     [XmlInclude(typeof(TimestampedPortDIOClear))]
     [XmlInclude(typeof(TimestampedWideStatus))]
     [XmlInclude(typeof(TimestampedThreshold))]
+    [XmlInclude(typeof(TimestampedGenericData))]
     [Description("Filters and selects specific messages reported by the Tests device.")]
     public partial class Parse : ParseBuilder, INamedElement, ICustomTypeDescriptor
     {
@@ -513,6 +519,7 @@ namespace Harp.Generators.Tests
     /// <seealso cref="PortDIOClear"/>
     /// <seealso cref="WideStatus"/>
     /// <seealso cref="Threshold"/>
+    /// <seealso cref="GenericData"/>
     [XmlInclude(typeof(DigitalInputs))]
     [XmlInclude(typeof(AnalogData))]
     [XmlInclude(typeof(ComplexConfiguration))]
@@ -537,6 +544,7 @@ namespace Harp.Generators.Tests
     [XmlInclude(typeof(PortDIOClear))]
     [XmlInclude(typeof(WideStatus))]
     [XmlInclude(typeof(Threshold))]
+    [XmlInclude(typeof(GenericData))]
     [Description("Formats a sequence of values as specific Tests register messages.")]
     public partial class Format : FormatBuilder, INamedElement, ICustomTypeDescriptor
     {
@@ -3185,6 +3193,119 @@ namespace Harp.Generators.Tests
     }
 
     /// <summary>
+    /// Provides methods for manipulating GenericData register messages.
+    /// </summary>
+    public partial class GenericData
+    {
+        /// <summary>
+        /// Represents the address of the <see cref="GenericData"/> register. This field is constant.
+        /// </summary>
+        public const int Address = 112;
+
+        /// <summary>
+        /// Represents the payload type of the <see cref="GenericData"/> register. This field is constant.
+        /// </summary>
+        public const PayloadType RegisterType = PayloadType.U8;
+
+        /// <summary>
+        /// Represents the length of the <see cref="GenericData"/> register. This field is constant.
+        /// </summary>
+        public const int RegisterLength = 2;
+
+        static Payload ParsePayload(byte[] payload)
+        {
+            Payload result;
+            result.First = payload[0];
+            result.Second = payload[1];
+            return result;
+        }
+
+        static byte[] FormatPayload(Payload value)
+        {
+            byte[] result;
+            result = new byte[2];
+            result[0] = value.First;
+            result[1] = value.Second;
+            return result;
+        }
+
+        /// <summary>
+        /// Returns the payload of the specified <see cref="GenericData"/> register message.
+        /// </summary>
+        /// <param name="message">A <see cref="HarpMessage"/> object representing the register message.</param>
+        /// <returns>A value representing the message payload.</returns>
+        public static Payload GetPayload(HarpMessage message)
+        {
+            return ParsePayload(message.GetPayloadArray<byte>());
+        }
+
+        /// <summary>
+        /// Returns the timestamped payload of the specified <see cref="GenericData"/> register message.
+        /// </summary>
+        /// <param name="message">A <see cref="HarpMessage"/> object representing the register message.</param>
+        /// <returns>A value representing the timestamped message payload.</returns>
+        public static Timestamped<Payload> GetTimestampedPayload(HarpMessage message)
+        {
+            var (payload, timestamp) = message.GetTimestampedPayloadArray<byte>();
+            return Timestamped.Create(ParsePayload(payload), timestamp);
+        }
+
+        /// <summary>
+        /// Returns a Harp message for the <see cref="GenericData"/> register.
+        /// </summary>
+        /// <param name="messageType">The type of the Harp message.</param>
+        /// <param name="value">The payload of the message.</param>
+        /// <returns>
+        /// A <see cref="HarpMessage"/> object for the <see cref="GenericData"/> register
+        /// with the specified message type and payload.
+        /// </returns>
+        public static HarpMessage FromPayload(MessageType messageType, Payload value)
+        {
+            return HarpMessage.FromByte(Address, messageType, FormatPayload(value));
+        }
+
+        /// <summary>
+        /// Returns a timestamped Harp message for the <see cref="GenericData"/>
+        /// register.
+        /// </summary>
+        /// <param name="timestamp">The timestamp of the message, in seconds.</param>
+        /// <param name="messageType">The type of the Harp message.</param>
+        /// <param name="value">The payload of the message.</param>
+        /// <returns>
+        /// A <see cref="HarpMessage"/> object for the <see cref="GenericData"/> register
+        /// with the specified message type, timestamp, and payload.
+        /// </returns>
+        public static HarpMessage FromPayload(double timestamp, MessageType messageType, Payload value)
+        {
+            return HarpMessage.FromByte(Address, timestamp, messageType, FormatPayload(value));
+        }
+    }
+
+    /// <summary>
+    /// Provides methods that return the timestamped payload of GenericData register messages.
+    /// </summary>
+    /// <seealso cref="GenericData"/>
+    public partial class TimestampedGenericData : ITimestampedRegister
+    {
+        Type ITimestampedRegister.RegisterType => typeof(GenericData);
+
+        /// <summary>
+        /// Represents the address of the <see cref="GenericData"/> register. This field is constant.
+        /// </summary>
+        public const int Address = GenericData.Address;
+
+        /// <summary>
+        /// Returns the timestamped payload of the specified <see cref="GenericData"/> register message.
+        /// </summary>
+        /// <param name="message">A <see cref="HarpMessage"/> object representing the register message.</param>
+        /// <returns>A value representing the timestamped message payload.</returns>
+        public static Timestamped<Payload> GetPayload(HarpMessage message)
+        {
+            return GenericData.GetTimestampedPayload(message);
+        }
+    }
+
+    /// <summary>
     /// Represents an operator that creates standard messages for the
     /// Tests device.
     /// </summary>
@@ -3212,6 +3333,7 @@ namespace Harp.Generators.Tests
     /// <seealso cref="CreatePortDIOClearPayload"/>
     /// <seealso cref="CreateWideStatusPayload"/>
     /// <seealso cref="CreateThresholdPayload"/>
+    /// <seealso cref="CreateGenericDataPayload"/>
     [XmlInclude(typeof(CreateDigitalInputsPayload))]
     [XmlInclude(typeof(CreateAnalogDataPayload))]
     [XmlInclude(typeof(CreateComplexConfigurationPayload))]
@@ -3236,6 +3358,7 @@ namespace Harp.Generators.Tests
     [XmlInclude(typeof(CreatePortDIOClearPayload))]
     [XmlInclude(typeof(CreateWideStatusPayload))]
     [XmlInclude(typeof(CreateThresholdPayload))]
+    [XmlInclude(typeof(CreateGenericDataPayload))]
     [XmlInclude(typeof(CreateTimestampedDigitalInputsPayload))]
     [XmlInclude(typeof(CreateTimestampedAnalogDataPayload))]
     [XmlInclude(typeof(CreateTimestampedComplexConfigurationPayload))]
@@ -3260,6 +3383,7 @@ namespace Harp.Generators.Tests
     [XmlInclude(typeof(CreateTimestampedPortDIOClearPayload))]
     [XmlInclude(typeof(CreateTimestampedWideStatusPayload))]
     [XmlInclude(typeof(CreateTimestampedThresholdPayload))]
+    [XmlInclude(typeof(CreateTimestampedGenericDataPayload))]
     [Description("Creates standard messages for the Tests device.")]
     public partial class CreateMessage : CreateMessageBuilder, INamedElement, ICustomTypeDescriptor
     {
@@ -4777,7 +4901,68 @@ namespace Harp.Generators.Tests
     }
 
     /// <summary>
-    /// Represents the payload of the AnalogData register.
+    /// Represents an operator that creates GenericData register messages.
+    /// </summary>
+    [DisplayName("GenericDataPayload")]
+    public partial class CreateGenericDataPayload : IRegisterPayload
+    {
+        Type IRegisterPayload.RegisterType => typeof(GenericData);
+
+        /// <summary>
+        /// Gets or sets the value of the First payload member.
+        /// </summary>
+        public byte First { get; set; }
+
+        /// <summary>
+        /// Gets or sets the value of the Second payload member.
+        /// </summary>
+        public byte Second { get; set; }
+
+        /// <summary>
+        /// Creates a message payload for the GenericData register.
+        /// </summary>
+        /// <returns>The created message payload value.</returns>
+        public Payload GetPayload()
+        {
+            Payload value;
+            value.First = First;
+            value.Second = Second;
+            return value;
+        }
+
+        /// <summary>
+        /// Creates a message for the GenericData register.
+        /// </summary>
+        /// <param name="messageType">Specifies the type of the created message.</param>
+        /// <returns>A new message for the GenericData register.</returns>
+        public HarpMessage GetMessage(MessageType messageType)
+        {
+            return Harp.Generators.Tests.GenericData.FromPayload(messageType, GetPayload());
+        }
+    }
+
+    /// <summary>
+    /// Represents an operator that creates timestamped GenericData register messages.
+    /// </summary>
+    [DisplayName("TimestampedGenericDataPayload")]
+    public partial class CreateTimestampedGenericDataPayload : CreateGenericDataPayload, ITimestampedRegister
+    {
+        Type ITimestampedRegister.RegisterType => typeof(GenericData);
+
+        /// <summary>
+        /// Creates a timestamped message for the GenericData register.
+        /// </summary>
+        /// <param name="timestamp">The timestamp of the message, in seconds.</param>
+        /// <param name="messageType">Specifies the type of the created message.</param>
+        /// <returns>A new timestamped message for the GenericData register.</returns>
+        public HarpMessage GetMessage(double timestamp, MessageType messageType)
+        {
+            return Harp.Generators.Tests.GenericData.FromPayload(timestamp, messageType, GetPayload());
+        }
+    }
+
+    /// <summary>
+    /// Represents the AnalogData payload.
     /// </summary>
     public struct AnalogDataPayload
     {
@@ -4806,12 +4991,10 @@ namespace Harp.Generators.Tests
         public float[] Accelerometer;
 
         /// <summary>
-        /// Returns a <see cref="string"/> that represents the payload of
-        /// the AnalogData register.
+        /// Returns a <see cref="string"/> that represents the AnalogData payload.
         /// </summary>
         /// <returns>
-        /// A <see cref="string"/> that represents the payload of the
-        /// AnalogData register.
+        /// A <see cref="string"/> that represents the AnalogData payload.
         /// </returns>
         public override string ToString()
         {
@@ -4825,7 +5008,7 @@ namespace Harp.Generators.Tests
     }
 
     /// <summary>
-    /// Represents the payload of the ComplexConfiguration register.
+    /// Represents the ComplexConfiguration payload.
     /// </summary>
     public struct ComplexConfigurationPayload
     {
@@ -4870,12 +5053,10 @@ namespace Harp.Generators.Tests
         public uint Delta;
 
         /// <summary>
-        /// Returns a <see cref="string"/> that represents the payload of
-        /// the ComplexConfiguration register.
+        /// Returns a <see cref="string"/> that represents the ComplexConfiguration payload.
         /// </summary>
         /// <returns>
-        /// A <see cref="string"/> that represents the payload of the
-        /// ComplexConfiguration register.
+        /// A <see cref="string"/> that represents the ComplexConfiguration payload.
         /// </returns>
         public override string ToString()
         {
@@ -4893,7 +5074,7 @@ namespace Harp.Generators.Tests
     }
 
     /// <summary>
-    /// Represents the payload of the Version register.
+    /// Represents the Version payload.
     /// </summary>
     public struct VersionPayload
     {
@@ -4926,12 +5107,10 @@ namespace Harp.Generators.Tests
         public byte[] InterfaceHash;
 
         /// <summary>
-        /// Returns a <see cref="string"/> that represents the payload of
-        /// the Version register.
+        /// Returns a <see cref="string"/> that represents the Version payload.
         /// </summary>
         /// <returns>
-        /// A <see cref="string"/> that represents the payload of the
-        /// Version register.
+        /// A <see cref="string"/> that represents the Version payload.
         /// </returns>
         public override string ToString()
         {
@@ -4946,7 +5125,7 @@ namespace Harp.Generators.Tests
     }
 
     /// <summary>
-    /// Represents the payload of the CustomMemberConverter register.
+    /// Represents the CustomMemberConverter payload.
     /// </summary>
     public struct CustomMemberConverterPayload
     {
@@ -4975,12 +5154,10 @@ namespace Harp.Generators.Tests
         public int Mode;
 
         /// <summary>
-        /// Returns a <see cref="string"/> that represents the payload of
-        /// the CustomMemberConverter register.
+        /// Returns a <see cref="string"/> that represents the CustomMemberConverter payload.
         /// </summary>
         /// <returns>
-        /// A <see cref="string"/> that represents the payload of the
-        /// CustomMemberConverter register.
+        /// A <see cref="string"/> that represents the CustomMemberConverter payload.
         /// </returns>
         public override string ToString()
         {
@@ -4994,7 +5171,7 @@ namespace Harp.Generators.Tests
     }
 
     /// <summary>
-    /// Represents the payload of the BitmaskSplitter register.
+    /// Represents the BitmaskSplitter payload.
     /// </summary>
     public struct BitmaskSplitterPayload
     {
@@ -5015,12 +5192,10 @@ namespace Harp.Generators.Tests
         public int High;
 
         /// <summary>
-        /// Returns a <see cref="string"/> that represents the payload of
-        /// the BitmaskSplitter register.
+        /// Returns a <see cref="string"/> that represents the BitmaskSplitter payload.
         /// </summary>
         /// <returns>
-        /// A <see cref="string"/> that represents the payload of the
-        /// BitmaskSplitter register.
+        /// A <see cref="string"/> that represents the BitmaskSplitter payload.
         /// </returns>
         public override string ToString()
         {
@@ -5032,7 +5207,7 @@ namespace Harp.Generators.Tests
     }
 
     /// <summary>
-    /// Represents the payload of the MixedMemberLength register.
+    /// Represents the MixedMemberLength payload.
     /// </summary>
     public struct MixedMemberLengthPayload
     {
@@ -5057,12 +5232,10 @@ namespace Harp.Generators.Tests
         public byte[] Multiple;
 
         /// <summary>
-        /// Returns a <see cref="string"/> that represents the payload of
-        /// the MixedMemberLength register.
+        /// Returns a <see cref="string"/> that represents the MixedMemberLength payload.
         /// </summary>
         /// <returns>
-        /// A <see cref="string"/> that represents the payload of the
-        /// MixedMemberLength register.
+        /// A <see cref="string"/> that represents the MixedMemberLength payload.
         /// </returns>
         public override string ToString()
         {
@@ -5075,7 +5248,7 @@ namespace Harp.Generators.Tests
     }
 
     /// <summary>
-    /// Represents the payload of the Rgb register.
+    /// Represents the Rgb payload.
     /// </summary>
     public struct RgbPayload
     {
@@ -5100,12 +5273,10 @@ namespace Harp.Generators.Tests
         public byte Blue;
 
         /// <summary>
-        /// Returns a <see cref="string"/> that represents the payload of
-        /// the Rgb register.
+        /// Returns a <see cref="string"/> that represents the Rgb payload.
         /// </summary>
         /// <returns>
-        /// A <see cref="string"/> that represents the payload of the
-        /// Rgb register.
+        /// A <see cref="string"/> that represents the Rgb payload.
         /// </returns>
         public override string ToString()
         {
@@ -5118,7 +5289,7 @@ namespace Harp.Generators.Tests
     }
 
     /// <summary>
-    /// Represents the payload of the StartPulse register.
+    /// Represents the StartPulse payload.
     /// </summary>
     public struct StartPulsePayload
     {
@@ -5148,12 +5319,10 @@ namespace Harp.Generators.Tests
         public ushort PulseWidth;
 
         /// <summary>
-        /// Returns a <see cref="string"/> that represents the payload of
-        /// the StartPulse register.
+        /// Returns a <see cref="string"/> that represents the StartPulse payload.
         /// </summary>
         /// <returns>
-        /// A <see cref="string"/> that represents the payload of the
-        /// StartPulse register.
+        /// A <see cref="string"/> that represents the StartPulse payload.
         /// </returns>
         public override string ToString()
         {
@@ -5165,7 +5334,7 @@ namespace Harp.Generators.Tests
     }
 
     /// <summary>
-    /// Represents the payload of the StartPulseTrain register.
+    /// Represents the StartPulseTrain payload.
     /// </summary>
     public struct StartPulseTrainPayload
     {
@@ -5203,12 +5372,10 @@ namespace Harp.Generators.Tests
         public byte PulseCount;
 
         /// <summary>
-        /// Returns a <see cref="string"/> that represents the payload of
-        /// the StartPulseTrain register.
+        /// Returns a <see cref="string"/> that represents the StartPulseTrain payload.
         /// </summary>
         /// <returns>
-        /// A <see cref="string"/> that represents the payload of the
-        /// StartPulseTrain register.
+        /// A <see cref="string"/> that represents the StartPulseTrain payload.
         /// </returns>
         public override string ToString()
         {
@@ -5222,7 +5389,7 @@ namespace Harp.Generators.Tests
     }
 
     /// <summary>
-    /// Represents the payload of the Reserved2 register.
+    /// Represents the Reserved2 payload.
     /// </summary>
     public struct Reserved2Payload
     {
@@ -5243,18 +5410,52 @@ namespace Harp.Generators.Tests
         public byte High;
 
         /// <summary>
-        /// Returns a <see cref="string"/> that represents the payload of
-        /// the Reserved2 register.
+        /// Returns a <see cref="string"/> that represents the Reserved2 payload.
         /// </summary>
         /// <returns>
-        /// A <see cref="string"/> that represents the payload of the
-        /// Reserved2 register.
+        /// A <see cref="string"/> that represents the Reserved2 payload.
         /// </returns>
         public override string ToString()
         {
             return "Reserved2Payload { " +
                 "Low = " + Low + ", " +
                 "High = " + High + " " +
+            "}";
+        }
+    }
+
+    /// <summary>
+    /// Represents a payload.
+    /// </summary>
+    public struct Payload
+    {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Payload"/> structure.
+        /// </summary>
+        /// <param name="first">The value of the First payload member.</param>
+        /// <param name="second">The value of the Second payload member.</param>
+        public Payload(
+            byte first,
+            byte second)
+        {
+            First = first;
+            Second = second;
+        }
+
+        public byte First;
+        public byte Second;
+
+        /// <summary>
+        /// Returns a <see cref="string"/> that represents a payload.
+        /// </summary>
+        /// <returns>
+        /// A <see cref="string"/> that represents a payload.
+        /// </returns>
+        public override string ToString()
+        {
+            return "Payload { " +
+                "First = " + First + ", " +
+                "Second = " + Second + " " +
             "}";
         }
     }

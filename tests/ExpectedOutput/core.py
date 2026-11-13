@@ -122,7 +122,7 @@ class EnableFlag(enum.IntEnum):
 
 
 class OperationControlPayload(StructPayload[np.uint8]):
-    """Represents the payload of the OperationControl register."""
+    """Represents the OperationControl payload."""
 
     operation_mode: OperationMode = GroupMask(enum=OperationMode, mask=0x3)
     """Specifies the operation mode of the device."""
@@ -144,19 +144,19 @@ class OperationControlPayload(StructPayload[np.uint8]):
 
 
 class ResetDevicePayload(AnonymousPayload[np.uint8]):
-    """Represents the payload of the ResetDevice register."""
+    """Represents the ResetDevice payload."""
 
     __value__: ResetFlags = BitMask(enum=ResetFlags)
 
 
 class DeviceNamePayload(AnonymousPayload[np.uint8]):
-    """Represents the payload of the DeviceName register."""
+    """Represents the DeviceName payload."""
 
     __value__: str = Field(StringConverter(25))
 
 
 class ClockConfigurationPayload(AnonymousPayload[np.uint8]):
-    """Represents the payload of the ClockConfiguration register."""
+    """Represents the ClockConfiguration payload."""
 
     __value__: ClockConfigurationFlags = BitMask(enum=ClockConfigurationFlags)
 

@@ -33,13 +33,13 @@ WHO_AM_I: int = 1234
 
 
 class EnableFlowPayload(AnonymousPayload[np.uint8]):
-    """Represents the payload of the EnableFlow register."""
+    """Represents the EnableFlow payload."""
 
     __value__: EnableFlag = GroupMask(enum=EnableFlag, mask=0xFF)
 
 
 class ResetFlowPayload(AnonymousPayload[np.uint8]):
-    """Represents the payload of the ResetFlow register."""
+    """Represents the ResetFlow payload."""
 
     __value__: ResetFlags = BitMask(enum=ResetFlags)
 

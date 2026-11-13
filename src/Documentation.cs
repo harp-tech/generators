@@ -224,7 +224,7 @@ internal static partial class TemplateHelper
             .ToList();
         var payloadSpec = registers[0].Value.PayloadSpec!;
         var uid = $"{ns}.{payloadName}";
-        var description = $"Represents the payload of the {RemoveSuffix(payloadName, "Payload")} register.";
+        var description = GetPayloadDescription(payloadName);
         var item = CreateReferenceItem(uid, payloadName, payloadName, "struct", description);
         item.Harp.Payload = new PayloadDetails
         {

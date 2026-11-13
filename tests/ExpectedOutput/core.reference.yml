@@ -357,7 +357,7 @@ items:
   langs:
   - csharp
   - python
-  summary: Represents the payload of the OperationControl register.
+  summary: Represents the OperationControl payload.
   harp:
     payload:
       registers:

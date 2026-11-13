@@ -50,6 +50,8 @@
     name: WideStatus
   - uid: Harp.Generators.Tests.Threshold
     name: Threshold
+  - uid: Harp.Generators.Tests.GenericData
+    name: GenericData
 - name: Payloads
   items:
   - uid: Harp.Generators.Tests.AnalogDataPayload
@@ -70,6 +72,8 @@
     name: StartPulsePayload
   - uid: Harp.Generators.Tests.StartPulseTrainPayload
     name: StartPulseTrainPayload
+  - uid: Harp.Generators.Tests.Payload
+    name: Payload
 - name: Masks
   items:
   - uid: Harp.Generators.Tests.PortDigitalIOS
@@ -614,6 +618,29 @@ items:
       - Write
       defaultValue: 16777217
       logFile: Tests_107.bin
+--- # Harp.Generators.Tests.GenericData.yml
+### YamlMime:UniversalReference
+items:
+- uid: Harp.Generators.Tests.GenericData
+  id: GenericData
+  name: GenericData
+  name.python: GenericData
+  fullName: Harp.Generators.Tests.GenericData
+  type: class
+  langs:
+  - csharp
+  - python
+  harp:
+    register:
+      address: 112
+      payloadType: U8
+      length: 2
+      access:
+      - Write
+      interfaceType:
+        name: Payload
+        uid: Harp.Generators.Tests.Payload
+      logFile: Tests_112.bin
 --- # Harp.Generators.Tests.AnalogDataPayload.yml
 ### YamlMime:UniversalReference
 items:
@@ -626,7 +653,7 @@ items:
   langs:
   - csharp
   - python
-  summary: Represents the payload of the AnalogData register.
+  summary: Represents the AnalogData payload.
   harp:
     payload:
       registers:
@@ -702,7 +729,7 @@ items:
   langs:
   - csharp
   - python
-  summary: Represents the payload of the ComplexConfiguration register.
+  summary: Represents the ComplexConfiguration payload.
   harp:
     payload:
       registers:
@@ -862,7 +889,7 @@ items:
   langs:
   - csharp
   - python
-  summary: Represents the payload of the Version register.
+  summary: Represents the Version payload.
   harp:
     payload:
       registers:
@@ -967,7 +994,7 @@ items:
   langs:
   - csharp
   - python
-  summary: Represents the payload of the CustomMemberConverter register.
+  summary: Represents the CustomMemberConverter payload.
   harp:
     payload:
       registers:
@@ -1050,7 +1077,7 @@ items:
   langs:
   - csharp
   - python
-  summary: Represents the payload of the BitmaskSplitter register.
+  summary: Represents the BitmaskSplitter payload.
   harp:
     payload:
       registers:
@@ -1101,7 +1128,7 @@ items:
   langs:
   - csharp
   - python
-  summary: Represents the payload of the MixedMemberLength register.
+  summary: Represents the MixedMemberLength payload.
   harp:
     payload:
       registers:
@@ -1164,7 +1191,7 @@ items:
   langs:
   - csharp
   - python
-  summary: Represents the payload of the Rgb register.
+  summary: Represents the Rgb payload.
   harp:
     payload:
       registers:
@@ -1227,7 +1254,7 @@ items:
   langs:
   - csharp
   - python
-  summary: Represents the payload of the StartPulse register.
+  summary: Represents the StartPulse payload.
   harp:
     payload:
       registers:
@@ -1283,7 +1310,7 @@ items:
   langs:
   - csharp
   - python
-  summary: Represents the payload of the StartPulseTrain register.
+  summary: Represents the StartPulseTrain payload.
   harp:
     payload:
       registers:
@@ -1364,6 +1391,53 @@ items:
       mask: "0xFF"
       interfaceType:
         name: byte
+--- # Harp.Generators.Tests.Payload.yml
+### YamlMime:UniversalReference
+items:
+- uid: Harp.Generators.Tests.Payload
+  id: Payload
+  name: Payload
+  name.python: Payload
+  fullName: Harp.Generators.Tests.Payload
+  type: struct
+  langs:
+  - csharp
+  - python
+  summary: Represents a payload.
+  harp:
+    payload:
+      registers:
+      - name: GenericData
+        uid: Harp.Generators.Tests.GenericData
+  children:
+  - Harp.Generators.Tests.Payload.First
+  - Harp.Generators.Tests.Payload.Second
+- uid: Harp.Generators.Tests.Payload.First
+  id: First
+  name: First
+  name.python: first
+  fullName: Harp.Generators.Tests.Payload.First
+  parent: Harp.Generators.Tests.Payload
+  type: field
+  langs:
+  - csharp
+  - python
+  harp:
+    member:
+      offset: 0
+- uid: Harp.Generators.Tests.Payload.Second
+  id: Second
+  name: Second
+  name.python: second
+  fullName: Harp.Generators.Tests.Payload.Second
+  parent: Harp.Generators.Tests.Payload
+  type: field
+  langs:
+  - csharp
+  - python
+  harp:
+    member:
+      offset: 1
 --- # Harp.Generators.Tests.PortDigitalIOS.yml
 ### YamlMime:UniversalReference
 items:
