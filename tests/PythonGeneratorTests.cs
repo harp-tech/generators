@@ -80,17 +80,28 @@ public sealed class PythonGeneratorTests
         // the parsed metadata. The document deliberately ends in a quote with no final newline.
         var metadata = DeviceMetadata.Parse(string.Join("\r\n",
             "# quotes: \"\"\" and \"\"\"\" and a \\ backslash",
+            "# control: \u0001 and\ttab",
             "device: Escapes",
             "whoAmI: 1",
-            "# ends with \""));
+            "# ends with \"\"\""));
         var literal = GetMetadataLiteral(GenerateDeviceLines(metadata));
         CollectionAssert.AreEqual(new[]
         {
             "# quotes: \"\"\\\" and \"\"\\\"\" and a \\\\ backslash",
+            "# control: \\x01 and\ttab",
             "device: Escapes",
             "whoAmI: 1",
-            "# ends with \\\"\"\"\""
+            "# ends with \"\"\\\"\"\"\""
         }, literal);
+    }
+
+    [TestMethod]
+    public void DeviceTemplate_MissingSourceTextReportsError()
+    {
+        var metadata = new DeviceMetadata { Device = "Constructed", WhoAmI = 1 };
+        var generator = new PythonGenerator(metadata);
+        generator.GenerateImplementation();
+        TestHelper.AssertExpectedGeneratorErrors(generator.Errors, "has no source text");
     }
 
     [TestMethod]

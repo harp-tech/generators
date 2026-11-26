@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
-using System.Text;
+using System.Text.RegularExpressions;
 using Bonsai.Harp;
 
 namespace Harp.Generators;
@@ -166,12 +166,7 @@ internal static partial class TemplateHelper
 
         module.ProtocolImports.Add("RegisterBase");
         module.IsApplicationDevice = deviceMetadata.IsApplicationDevice;
-        if (module.IsApplicationDevice)
-        {
-            // Prefer the original document so the constant matches the metadata file embedded
-            // in the C# interface; fall back to serializing objects not read from a document.
-            module.Metadata = deviceMetadata.SourceText ?? MetadataSerializer.Instance.Serialize(deviceMetadata);
-        }
+        module.Metadata = deviceMetadata.SourceText;
         return module;
     }
 
@@ -592,63 +587,24 @@ internal static partial class TemplateHelper
     /// </remarks>
     public static IEnumerable<string> GetPythonMultilineString(string target, string text)
     {
-        if (string.IsNullOrEmpty(text))
-        {
-            yield return $"{target} = \"\"";
-            yield break;
-        }
+        // A quote right before the closing delimiter would merge into it, so it is held back
+        // and appended escaped once the rest of the text has been escaped.
+        var trailingQuote = text.EndsWith('"');
+        if (trailingQuote) text = text[..^1];
+
+        text = text.Replace("\r\n", "\n").Replace('\r', '\n').Replace("\\", "\\\\");
+        text = ControlCharacters.Replace(text, match => $"\\x{(int)match.Value[0]:x2}");
+        text = text.Replace("\"\"\"", "\"\"\\\"");
+        if (trailingQuote) text += "\\\"";
 
         // The opening delimiter ends in a line continuation, so the literal starts at the
         // first character of the text rather than at a leading newline.
-        yield return $"{target} = \"\"\"\\";
-        text = text.Replace("\r\n", "\n").Replace('\r', '\n');
-        var line = new StringBuilder();
-        var quoteRun = 0;
-        for (int i = 0; i < text.Length; i++)
-        {
-            var c = text[i];
-            if (c == '"')
-            {
-                // A third consecutive quote, or a quote adjacent to the closing delimiter,
-                // would terminate the literal, so escape it and restart the run.
-                if (quoteRun == 2 || i == text.Length - 1)
-                {
-                    line.Append("\\\"");
-                    quoteRun = 0;
-                }
-                else
-                {
-                    line.Append('"');
-                    quoteRun++;
-                }
-                continue;
-            }
-
-            quoteRun = 0;
-            switch (c)
-            {
-                case '\n':
-                    yield return line.ToString();
-                    line.Clear();
-                    break;
-                case '\\':
-                    line.Append("\\\\");
-                    break;
-                case '\t':
-                    line.Append(c);
-                    break;
-                default:
-                    if (char.IsControl(c))
-                        line.Append(CultureInfo.InvariantCulture, $"\\x{(int)c:x2}");
-                    else
-                        line.Append(c);
-                    break;
-            }
-        }
-
-        line.Append("\"\"\"");
-        yield return line.ToString();
+        var lines = text.Split('\n');
+        lines[^1] += "\"\"\"";
+        return lines.Prepend($"{target} = \"\"\"\\");
     }
+
+    static readonly Regex ControlCharacters = new(@"[\x00-\x08\x0B-\x1F\x7F-\x9F]");
 
     static List<string> SplitPythonArguments(string arguments)
     {

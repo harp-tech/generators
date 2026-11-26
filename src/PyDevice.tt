@@ -134,6 +134,10 @@ if (module.IsApplicationDevice)
 DEVICE_NAME: str = "<#= module.Device #>"
 WHO_AM_I: int = <#= module.WhoAmI #>
 <#
+    // Like the C# interface, which throws when its embedded metadata resource is missing,
+    // the device metadata is required rather than reconstructed from the parsed object.
+    if (module.Metadata is null)
+        Error("The device metadata has no source text. Read it with DeviceMetadata.Load or DeviceMetadata.Parse.");
     foreach (var line in TemplateHelper.GetPythonMultilineString("DEVICE_METADATA: str", module.Metadata ?? string.Empty))
     {
         WriteLine(line);
