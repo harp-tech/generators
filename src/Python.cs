@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using System.Text;
 using Bonsai.Harp;
 
 namespace Harp.Generators;
@@ -11,6 +12,7 @@ internal sealed class PythonModule
     public string Description = "";
     public string Device = "";
     public int WhoAmI;
+    public string? Metadata;
     public SortedSet<string> ProtocolImports = [];
     public SortedSet<string> CoreImports = [];
     public SortedSet<string> ExtensionImports = [];
@@ -164,6 +166,12 @@ internal static partial class TemplateHelper
 
         module.ProtocolImports.Add("RegisterBase");
         module.IsApplicationDevice = deviceMetadata.IsApplicationDevice;
+        if (module.IsApplicationDevice)
+        {
+            // Prefer the original document so the constant matches the metadata file embedded
+            // in the C# interface; fall back to serializing objects not read from a document.
+            module.Metadata = deviceMetadata.SourceText ?? MetadataSerializer.Instance.Serialize(deviceMetadata);
+        }
         return module;
     }
 
@@ -571,6 +579,75 @@ internal static partial class TemplateHelper
             }
         }
         yield return $"{indent})";
+    }
+
+    /// <summary>
+    /// Returns the source lines of a Python assignment binding the specified text to a
+    /// triple-quoted string literal, with each line of the text on its own source line.
+    /// </summary>
+    /// <remarks>
+    /// Backslashes, control characters and any quote that would close the literal early are
+    /// escaped, so the literal evaluates to the original text for any input. Line endings are
+    /// normalized to line feeds, matching how Python reads newlines in source files.
+    /// </remarks>
+    public static IEnumerable<string> GetPythonMultilineString(string target, string text)
+    {
+        if (string.IsNullOrEmpty(text))
+        {
+            yield return $"{target} = \"\"";
+            yield break;
+        }
+
+        // The opening delimiter ends in a line continuation, so the literal starts at the
+        // first character of the text rather than at a leading newline.
+        yield return $"{target} = \"\"\"\\";
+        text = text.Replace("\r\n", "\n").Replace('\r', '\n');
+        var line = new StringBuilder();
+        var quoteRun = 0;
+        for (int i = 0; i < text.Length; i++)
+        {
+            var c = text[i];
+            if (c == '"')
+            {
+                // A third consecutive quote, or a quote adjacent to the closing delimiter,
+                // would terminate the literal, so escape it and restart the run.
+                if (quoteRun == 2 || i == text.Length - 1)
+                {
+                    line.Append("\\\"");
+                    quoteRun = 0;
+                }
+                else
+                {
+                    line.Append('"');
+                    quoteRun++;
+                }
+                continue;
+            }
+
+            quoteRun = 0;
+            switch (c)
+            {
+                case '\n':
+                    yield return line.ToString();
+                    line.Clear();
+                    break;
+                case '\\':
+                    line.Append("\\\\");
+                    break;
+                case '\t':
+                    line.Append(c);
+                    break;
+                default:
+                    if (char.IsControl(c))
+                        line.Append(CultureInfo.InvariantCulture, $"\\x{(int)c:x2}");
+                    else
+                        line.Append(c);
+                    break;
+            }
+        }
+
+        line.Append("\"\"\"");
+        yield return line.ToString();
     }
 
     static List<string> SplitPythonArguments(string arguments)

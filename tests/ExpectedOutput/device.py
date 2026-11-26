@@ -39,6 +39,7 @@ from .converters import (
 __all__ = [
     "DEVICE_NAME",
     "WHO_AM_I",
+    "DEVICE_METADATA",
     "PortDigitalIOS",
     "DigitalChannels",
     "WideStatusFlags",
@@ -94,6 +95,368 @@ __all__ = [
 
 DEVICE_NAME: str = "Tests"
 WHO_AM_I: int = 0
+DEVICE_METADATA: str = """\
+# yaml-language-server: $schema=https://harp-tech.org/draft-02/schema/registers.json
+description: Declares registers, masks and payloads covering each feature that the interface generators support, for use in their tests.
+device: Tests
+firmwareVersion: "0.1"
+hardwareTargets: "1.0"
+registers:
+  DigitalInputs:
+    address: 32
+    type: U8
+    access: Event
+  AnalogData:
+    address: 33
+    type: Float
+    length: 6
+    access: Event
+    payloadSpec:
+      Analog0:
+        offset: 0
+      Analog1:
+        offset: 1
+      Analog2:
+        offset: 2
+      Accelerometer:
+        offset: 3
+        length: 3
+  ComplexConfiguration:
+    address: 34
+    type: U8
+    length: 17
+    access: Write
+    payloadSpec:
+      PwmPort:
+        offset: 0
+        maskType: PwmPort
+        defaultValue: 2
+      Invert:
+        offset: 1
+        length: 1
+        defaultValue: 1
+        interfaceType: bool
+      InputFlags:
+        offset: 2
+        mask: 0xF
+        maskType: DigitalChannels
+        defaultValue: 3
+      OutputFlags:
+        offset: 3
+        maskType: DigitalChannels
+        defaultValue: 19
+      DutyCycle:
+        offset: 4
+        length: 4
+        interfaceType: float
+      Frequency:
+        offset: 8
+        length: 4
+        interfaceType: float
+      EventsEnabled:
+        offset: 12
+        interfaceType: bool
+      Delta:
+        offset: 13
+        length: 4
+        defaultValue: 1000
+        interfaceType: uint
+  Version:
+    address: 35
+    type: U8
+    length: 32
+    access: Event
+    payloadSpec:
+      ProtocolVersion:
+        offset: 0
+        length: 3
+        interfaceType: HarpVersion
+      FirmwareVersion:
+        offset: 3
+        length: 3
+        interfaceType: HarpVersion
+      HardwareVersion:
+        offset: 6
+        length: 3
+        interfaceType: HarpVersion
+      CoreId:
+        offset: 9
+        length: 3
+        interfaceType: string
+      InterfaceHash:
+        offset: 12
+        length: 20
+  CustomPayload:
+    address: 36
+    type: U32
+    length: 3
+    access: Read
+    interfaceType: HarpVersion
+    converter: Payload
+  CustomRawPayload:
+    address: 37
+    type: U32
+    length: 3
+    access: Read
+    interfaceType: HarpVersion
+    converter: RawPayload
+  CustomMemberConverter:
+    address: 38
+    type: U8
+    length: 5
+    access: Read
+    payloadSpec:
+      Header:
+        offset: 0
+      Data:
+        offset: 1
+        length: 2
+        interfaceType: int
+        converter: Payload
+      Enabled:
+        offset: 3
+        length: 1
+        interfaceType: bool
+        converter: Payload
+      Mode:
+        offset: 4
+        interfaceType: int
+        converter: Payload
+  BitmaskSplitter:
+    address: 39
+    type: U8
+    access: Write
+    payloadSpec:
+      Low:
+        mask: 0xF
+        interfaceType: int
+        converter: Payload
+      High:
+        mask: 0xF0
+        interfaceType: int
+  Counter0:
+    address: 40
+    type: S32
+    access: Event
+  PortDIOSet:
+    address: 41
+    type: U16
+    access: Write
+    maskType: PortDigitalIOS
+    defaultValue: 3
+  PulseDOPort0: &pulseDO
+    address: 42
+    type: U16
+    access: Write
+    minValue: 1
+    defaultValue: 500
+  PulseDO0:
+    <<: *pulseDO
+    address: 43
+  MultiElementPayload:
+    address: 44
+    type: U16
+    length: 3
+    access: Write
+  SingleElementPayload:
+    address: 45
+    type: U16
+    length: 1
+    access: Write
+  MixedMemberLength:
+    address: 46
+    type: U8
+    length: 4
+    access: Write
+    payloadSpec:
+      Absent:
+        offset: 0
+      Single:
+        offset: 1
+        length: 1
+      Multiple:
+        offset: 2
+        length: 2
+  Rgb0: &rgbRegister
+    address: 47
+    type: U8
+    length: 3
+    access: Write
+    interfaceType: RgbPayload
+    payloadSpec:
+      Red:
+        offset: 0
+      Green:
+        offset: 1
+      Blue:
+        offset: 2
+  Rgb1:
+    <<: *rgbRegister
+    address: 48
+  StartPulse:
+    address: 100
+    type: U16
+    access: Write
+    description: Starts a PWM pulse.
+    payloadSpec: &startPulse
+      DigitalOutput:
+        offset: 0
+        mask: 0xC00
+        maskType: PwmPort
+        description: Specifies the digital output on which to start the pulse.
+      PulseWidth:
+        offset: 0
+        mask: 0x3FF
+        interfaceType: ushort
+        description: Specifies the width of the pulse, where values < 1 mean "no pulse" & are ignored.
+  StartPulseTrain:
+    address: 101
+    type: U16
+    length: 2
+    access: Write
+    description: Starts a PWM pulse train.
+    payloadSpec:
+      <<: *startPulse
+      Frequency:
+        offset: 1
+        mask: 0xFF00
+        minValue: 1
+        maxValue: 255
+        defaultValue: 1
+        interfaceType: byte
+      PulseCount:
+        offset: 1
+        mask: 0xFF
+        interfaceType: byte
+  EncoderMode:
+    address: 103
+    type: U8
+    access: Write
+    maskType: EncoderModeMask
+    defaultValue: 1
+    description: Configures the operation mode of the encoder.
+  LedEnabled:
+    address: 104
+    type: U8
+    access: Write
+    defaultValue: 1
+    interfaceType: bool
+    description: Specifies whether the status LED is enabled.
+  PortDIOClear:
+    address: 105
+    type: U16
+    access: Write
+    maskType: PortDigitalIOS
+    defaultValue: 0
+  WideStatus:
+    address: 106
+    type: U32
+    access: Event
+    maskType: WideStatusFlags
+  Threshold:
+    address: 107
+    type: U32
+    access: Write
+    defaultValue: 16777217
+    description: Specifies a threshold whose default needs more than single precision.
+  Reserved0:
+    address: 108
+    type: U8
+    access: Read
+    visibility: private
+    description: Reserved for future use.
+  Reserved1:
+    address: 109
+    type: U8
+    access: Write
+    visibility: private
+    maskType: EncoderModeMask
+    description: Reserved for future use.
+  Rgb2:
+    address: 110
+    type: U8
+    length: 3
+    access: Write
+    visibility: private
+    interfaceType: RgbPayload
+    payloadSpec:
+      Red:
+        offset: 0
+      Green:
+        offset: 1
+      Blue:
+        offset: 2
+  Reserved2:
+    address: 111
+    type: U8
+    length: 2
+    access: Write
+    visibility: private
+    payloadSpec:
+      Low:
+        offset: 0
+      High:
+        offset: 1
+  GenericData:
+    address: 112
+    type: U8
+    length: 2
+    access: Write
+    interfaceType: Payload
+    payloadSpec:
+      First:
+        offset: 0
+      Second:
+        offset: 1
+bitMasks:
+  PortDigitalIOS:
+    bits:
+      None: 0x0
+      DIO0: 0x1
+      DIO1: 0x2
+      DIO2: 0x4
+      DIO3: 0x8
+      DIPort0: 0x100
+      TestDIPort1: 0x200
+      SupplyPort0: 0x400
+      PortDIO1: 0x800
+  DigitalChannels:
+    description: Specifies a set of digital channels.
+    bits:
+      Channel0:
+        value: 0x1
+        description: Specifies digital channel 0.
+      Channel1:
+        value: 0x2
+        description: Specifies digital channel 1.
+      Channel2:
+        value: 0x4
+        description: Specifies digital channel 2.
+      Channel3:
+        value: 0x8
+        description: Specifies digital channel 3.
+  WideStatusFlags:
+    bits:
+      Ready: 0x1
+      Overflow: 0x80000000
+groupMasks:
+  PwmPort:
+    values:
+      Pwm0: 0x1
+      Pwm1: 0x2
+      Pwm2: 0x4
+      Pwm3: 0xA
+  EncoderModeMask:
+    description: Specifies the type of encoder mode.
+    values:
+      Position:
+        value: 0x0
+        description: Specifies that the encoder reports its absolute position.
+      Displacement:
+        value: 0x1
+        description: Specifies that the encoder reports its displacement since the last reading.
+"""
+"""The contents of the metadata file describing the device registers."""
 
 
 class PortDigitalIOS(enum.IntFlag):

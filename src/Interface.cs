@@ -69,6 +69,17 @@ public class DeviceMetadata
     public bool IsApplicationDevice => !string.IsNullOrEmpty(Device);
 
     /// <summary>
+    /// Gets the original text of the metadata document this object was read from.
+    /// </summary>
+    /// <remarks>
+    /// This value is set by <see cref="Load(TextReader)"/> and its overloads, and is
+    /// <see langword="null"/> for metadata objects constructed or deserialized by other means.
+    /// It is not updated if the object is modified after loading.
+    /// </remarks>
+    [YamlIgnore]
+    public string? SourceText { get; private set; }
+
+    /// <summary>
     /// Reads device interface metadata from the specified file.
     /// </summary>
     /// <param name="path">The path of the device metadata file.</param>
@@ -96,10 +107,12 @@ public class DeviceMetadata
     /// </remarks>
     public static DeviceMetadata Load(TextReader reader)
     {
-        var parser = new MergingParser(new Parser(reader));
+        var sourceText = reader.ReadToEnd();
+        var parser = new MergingParser(new Parser(new StringReader(sourceText)));
         var deviceMetadata = MetadataDeserializer.Instance.Deserialize<DeviceMetadata?>(parser)
             ?? throw new YamlException("The device metadata document is empty.");
         deviceMetadata.Validate();
+        deviceMetadata.SourceText = sourceText;
         return deviceMetadata;
     }
 
