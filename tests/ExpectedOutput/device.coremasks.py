@@ -21,6 +21,7 @@ from harp.device.core import (
 __all__ = [
     "DEVICE_NAME",
     "WHO_AM_I",
+    "DEVICE_METADATA",
     "EnableFlowPayload",
     "ResetFlowPayload",
     "EnableFlow",
@@ -30,6 +31,27 @@ __all__ = [
 
 DEVICE_NAME: str = "CoreMasks"
 WHO_AM_I: int = 1234
+DEVICE_METADATA: str = """\
+# yaml-language-server: $schema=https://harp-tech.org/draft-02/schema/registers.json
+device: CoreMasks
+whoAmI: 1234
+firmwareVersion: "0.1"
+hardwareTargets: "1.0"
+registers:
+  EnableFlow:
+    address: 32
+    type: U8
+    access: Write
+    maskType: EnableFlag
+    description: Specifies whether the flow is enabled.
+  ResetFlow:
+    address: 33
+    type: U8
+    access: Write
+    maskType: ResetFlags
+    description: Specifies the reset behavior of the flow controller.
+"""
+"""The contents of the metadata file describing the device registers."""
 
 
 class EnableFlowPayload(AnonymousPayload[np.uint8]):

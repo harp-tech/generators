@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using System.Text.RegularExpressions;
 using Bonsai.Harp;
 
 namespace Harp.Generators;
@@ -11,6 +12,7 @@ internal sealed class PythonModule
     public string Description = "";
     public string Device = "";
     public int WhoAmI;
+    public string? Metadata;
     public SortedSet<string> ProtocolImports = [];
     public SortedSet<string> CoreImports = [];
     public SortedSet<string> ExtensionImports = [];
@@ -164,6 +166,7 @@ internal static partial class TemplateHelper
 
         module.ProtocolImports.Add("RegisterBase");
         module.IsApplicationDevice = deviceMetadata.IsApplicationDevice;
+        module.Metadata = deviceMetadata.SourceText;
         return module;
     }
 
@@ -572,6 +575,36 @@ internal static partial class TemplateHelper
         }
         yield return $"{indent})";
     }
+
+    /// <summary>
+    /// Returns the source lines of a Python assignment binding the specified text to a
+    /// triple-quoted string literal, with each line of the text on its own source line.
+    /// </summary>
+    /// <remarks>
+    /// Backslashes, control characters and any quote that would close the literal early are
+    /// escaped, so the literal evaluates to the original text for any input. Line endings are
+    /// normalized to line feeds, matching how Python reads newlines in source files.
+    /// </remarks>
+    public static IEnumerable<string> GetPythonMultilineString(string target, string text)
+    {
+        // A quote right before the closing delimiter would merge into it, so it is held back
+        // and appended escaped once the rest of the text has been escaped.
+        var trailingQuote = text.EndsWith('"');
+        if (trailingQuote) text = text[..^1];
+
+        text = text.Replace("\r\n", "\n").Replace('\r', '\n').Replace("\\", "\\\\");
+        text = ControlCharacters.Replace(text, match => $"\\x{(int)match.Value[0]:x2}");
+        text = text.Replace("\"\"\"", "\"\"\\\"");
+        if (trailingQuote) text += "\\\"";
+
+        // The opening delimiter ends in a line continuation, so the literal starts at the
+        // first character of the text rather than at a leading newline.
+        var lines = text.Split('\n');
+        lines[^1] += "\"\"\"";
+        return lines.Prepend($"{target} = \"\"\"\\");
+    }
+
+    static readonly Regex ControlCharacters = new(@"[\x00-\x08\x0B-\x1F\x7F-\x9F]");
 
     static List<string> SplitPythonArguments(string arguments)
     {

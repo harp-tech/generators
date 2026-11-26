@@ -99,3 +99,9 @@ def test_register_round_trips_from_csharp(device_module, entry):
         message = HarpMessage.parse(frame)
         parsed = register.parse(message)
         assert _canonical(parsed) == expected
+
+def test_device_metadata_matches_source(device_module):
+    # The C# interface embeds the metadata file as a resource; the Python interface carries it
+    # as a string constant, so both must expose the same document the interfaces came from.
+    source = (OUTPUT_DIRECTORY / "device.yml").read_text(encoding="utf-8")
+    assert device_module.DEVICE_METADATA == source
